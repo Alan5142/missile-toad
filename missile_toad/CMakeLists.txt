@@ -1,11 +1,15 @@
 set(MISSILETOAD_SOURCES
-    src/main.cpp
+    src/dummy.cpp
 )
 
+add_library(libmissiletoad ${MISSILETOAD_SOURCES})
+
 if (WIN32)
-    add_executable(missiletoad WIN32 ${MISSILETOAD_SOURCES})
+    add_executable(missiletoad WIN32 main.cpp)
 else()
-    add_executable(missiletoad ${MISSILETOAD_SOURCES})
+    add_executable(missiletoad main.cpp)
 endif()
 
-target_link_libraries(missiletoad PRIVATE raylib raylib_cpp spdlog fmt::fmt)
+target_link_libraries(libmissiletoad PUBLIC raylib raylib_cpp spdlog fmt::fmt)
+
+target_link_libraries(missiletoad PRIVATE libmissiletoad)
