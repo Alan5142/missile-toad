@@ -1,0 +1,31 @@
+﻿---
+BasedOnStyle: Microsoft
+AccessModifierOffset: -4
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments:
+  Enabled: true
+AlignConsecutiveDeclarations:
+  Enabled: true
+AlignEscapedNewlines: Right
+AlignOperands: 'true'
+AlignTrailingComments: 'true'
+PackConstructorInitializers: NextLine
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: Inline
+AllowShortLoopsOnASingleLine: false
+ColumnLimit: 120
+Cpp11BracedListStyle: true
+FixNamespaceComments: true
+IndentPPDirectives: AfterHash
+IndentWidth: 4
+Language: Cpp
+NamespaceIndentation: All
+PointerAlignment: Right
+TabWidth: 4
+UseTab: Never
+BreakBeforeBraces: Allman
+
+...
