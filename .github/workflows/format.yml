@@ -15,7 +15,7 @@ on:
       - '.github/workflows/format.yml'
 
 jobs:
-  build:
+  format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
