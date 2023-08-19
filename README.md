@@ -3,7 +3,9 @@
 DESC TODO
 
 ## Status
-![Build and test](https://github.com/Alan5142/missile-toad/actions/workflows/build.yml/badge.svg)
+![Build and test](https://github.com/Alan5142/missile-toad/actions/workflows/build_test.yml/badge.svg)
+![Clang Tidy](https://github.com/Alan5142/missile-toad/actions/workflows/clang_tidy.yml/badge.svg)
+![Clang Format](https://github.com/Alan5142/missile-toad/actions/workflows/format.yml/badge.svg)
 
 ## Build
 
