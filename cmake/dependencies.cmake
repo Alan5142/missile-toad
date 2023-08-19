@@ -12,3 +12,10 @@ CPMAddPackage("https://github.com/catchorg/Catch2.git@3.4.0")
 
 # fmt
 CPMAddPackage("https://github.com/fmtlib/fmt.git#10.1.0")
+
+# Disable all warnings for raylib and raylib-cpp
+if (MSVC)
+    target_compile_options(raylib PRIVATE /W0)
+else ()
+    target_compile_options(raylib PRIVATE -w)
+endif ()

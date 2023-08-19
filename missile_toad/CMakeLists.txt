@@ -11,5 +11,5 @@ else()
 endif()
 
 target_link_libraries(libmissiletoad PUBLIC raylib raylib_cpp spdlog fmt::fmt)
-
 target_link_libraries(missiletoad PRIVATE libmissiletoad)
+target_include_directories(libmissiletoad PUBLIC include)
