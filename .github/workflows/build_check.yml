@@ -63,7 +63,7 @@ jobs:
       - name: Test
         working-directory: ${{ steps.strings.outputs.build-output-dir }}
         run: ctest --build-config ${{ matrix.build_type }}
-        
+
   clang-tidy:
     runs-on: ubuntu-latest
     steps:
@@ -94,9 +94,5 @@ jobs:
           -DENABLE_CLANG_TIDY=ON
           -S ${{ github.workspace }}
 
-      - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
-
-      - name: Test
-        working-directory: ${{ steps.strings.outputs.build-output-dir }}
-        run: ctest --build-config ${{ matrix.build_type }}
+      - name: Build with clang-tidy
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Debug
