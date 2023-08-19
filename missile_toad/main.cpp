@@ -6,8 +6,8 @@
 
 int main()
 {
-    int screenWidth  = 800;
-    int screenHeight = 450;
+    int            screenWidth  = 800;
+    int            screenHeight = 450;
     raylib::Window window(screenWidth, screenHeight, "raylib-cpp - basic window");
 
     SetTargetFPS(60);
