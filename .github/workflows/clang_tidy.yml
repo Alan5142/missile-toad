@@ -46,7 +46,7 @@ jobs:
         id: clang-tidy
         uses: mathiasvr/command-output@v2.0.0
         with:
-          run: cd ${{ steps.strings.outputs.build-output-dir }} && ninja
+          run: cd ${{ steps.strings.outputs.build-output-dir }} && ninja --quiet
         continue-on-error: true
       - name: Comment PR
         # Only execute if clang-tidy found errors
