@@ -44,13 +44,10 @@ jobs:
 
       - name: Build with clang-tidy
         id: clang-tidy
-        run: cd ${{ steps.strings.outputs.build-output-dir }} && ninja --quiet > errors.txt
+        uses: mathiasvr/command-output@v2.0.0
+        with:
+          run: cd ${{ steps.strings.outputs.build-output-dir }} && ninja
         continue-on-error: true
-      - name: Set clang-tidy error to variable
-        id: clang-tidy-error
-        if: steps.clang-tidy.outcome == 'failure'
-        run: |
-          echo "clang-tidy-error=$(cat ${{ steps.strings.outputs.build-output-dir }}/errors.txt)" >> "$GITHUB_OUTPUT"
       - name: Comment PR
         # Only execute if clang-tidy found errors
         if: steps.clang-tidy.outcome == 'failure'
@@ -62,7 +59,7 @@ jobs:
             <summary>Click to expand</summary>
 
             ```
-            ${{ steps.clang-tidy-error.outputs.clang-tidy-error }}
+            ${{ steps.clang-tidy.outputs.stdout }}
             ```
 
             </details>
