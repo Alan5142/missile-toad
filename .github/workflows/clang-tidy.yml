@@ -3,8 +3,16 @@ name: Build and Test
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'missile_toad/**'
+      - 'tests/**'
+      - '.github/workflows/build.yml'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'missile_toad/**'
+      - 'tests/**'
+      - '.github/workflows/build.yml'
 
 jobs:
   build:
@@ -20,9 +28,9 @@ jobs:
 
       - name: Install Ubuntu dependencies
         if: matrix.os == 'ubuntu-latest'
-        run: | 
-          sudo deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main
-          sudo deb-src http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main
+        run: |
+          echo "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main" | sudo tee -a /etc/apt/sources.list
           sudo apt update
           sudo apt install -y libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev clang-tidy-17
           sudo ln -s /usr/bin/clang-tidy-17 /usr/bin/clang-tidy
