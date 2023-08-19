@@ -24,9 +24,12 @@ jobs:
           echo "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main" | sudo tee -a /etc/apt/sources.list
           echo "deb-src http://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main" | sudo tee -a /etc/apt/sources.list
           sudo apt-get update
-          sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev clang-tidy-17 ninja-build
+          sudo apt-get install -y libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev clang-tidy-17
           sudo rm /usr/bin/clang-tidy
           sudo ln -s /usr/bin/clang-tidy-17 /usr/bin/clang-tidy
+          wget https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-linux.zip -O ninja-linux.zip && \
+            sudo unzip ninja-linux.zip -d /usr/bin && \
+            sudo rm ninja-linux.zip
 
       - name: Configure CMake
         run: >
@@ -39,4 +42,21 @@ jobs:
           -S ${{ github.workspace }}
 
       - name: Build with clang-tidy
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Debug
+        id: clang-tidy
+        run: cd ${{ steps.strings.outputs.build-output-dir }} && ninja --quiet > errors.txt
+        continue-on-error: true
+      - name: Comment PR
+        # Only execute if clang-tidy found errors
+        if: steps.clang-tidy.outcome == 'failure'
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            ### Clang-Tidy found errors
+            <details>
+            <summary>Click to expand</summary>
+
+            ```
+            ${{ steps.strings.outputs.build-output-dir }}/errors.txt
+            ```
+
+            </details>

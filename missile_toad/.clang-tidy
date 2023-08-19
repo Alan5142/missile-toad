@@ -10,4 +10,4 @@ Checks:
 WarningsAsErrors: >
   -*,
   modernize-*,
-  -cppcoreguidelines-*,
+  cppcoreguidelines-*,
