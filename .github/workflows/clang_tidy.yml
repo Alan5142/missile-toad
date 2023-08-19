@@ -9,6 +9,7 @@ on:
 jobs:
   clang-tidy:
     permissions: write-all
+    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -47,7 +48,6 @@ jobs:
         uses: mathiasvr/command-output@v2.0.0
         with:
           run: cd ${{ steps.strings.outputs.build-output-dir }} && ninja --quiet
-        continue-on-error: true
       - name: Comment PR
         # Only execute if clang-tidy found errors
         if: steps.clang-tidy.outcome == 'failure'
