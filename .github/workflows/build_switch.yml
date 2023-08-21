@@ -18,7 +18,6 @@ jobs:
       - name: Configure CMake
         run: >
           cmake -B build
-          -G Ninja
           -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/Switch.cmake
           -DCMAKE_BUILD_TYPE=Debug
           -DPLATFORM="Nintendo Switch"
