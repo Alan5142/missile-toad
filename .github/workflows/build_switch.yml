@@ -23,7 +23,7 @@ jobs:
           -DPLATFORM="Nintendo Switch"
           -DDCMAKE_CXX_FLAGS="-fexceptions"
           -DBUILD_TESTS=OFF
-          -S ${{ github.workspace }}
+          -S .
 
       - name: Build
         run: cmake --build build --config Debug
