@@ -1,0 +1,29 @@
+name: Build Switch
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build_test:
+    name: Build for switch
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkita64
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure CMake
+        run: >
+          cmake -B build
+          -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/Switch.cmake
+          -DCMAKE_BUILD_TYPE=Debug
+          -DPLATFORM="Nintendo Switch"
+          -DDCMAKE_CXX_FLAGS="-fexceptions"
+          -DBUILD_TESTS=OFF
+          -S .
+
+      - name: Build
+        run: cmake --build build --config Debug

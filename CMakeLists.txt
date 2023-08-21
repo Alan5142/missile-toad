@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.18)
 
 project(Dummy)
 
@@ -32,3 +32,5 @@ add_subdirectory(missile_toad)
 if (BUILD_TESTS)
     add_subdirectory(tests)
 endif ()
+
+add_compile_definitions(NX_USB_DEBUGGER=1)
