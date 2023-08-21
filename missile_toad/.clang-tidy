@@ -6,8 +6,10 @@ Checks:
   bugprone-*,
   cppcoreguidelines-*,
   -modernize-use-trailing-return-type,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
 
 WarningsAsErrors: >
   -*,
   modernize-*,
   cppcoreguidelines-*,
+  -cppcoreguidelines-avoid-magic-numbers

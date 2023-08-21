@@ -3,16 +3,8 @@ name: Format
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'missile_toad/**'
-      - 'tests/**'
-      - '.github/workflows/format.yml'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'missile_toad/**'
-      - 'tests/**'
-      - '.github/workflows/format.yml'
 
 jobs:
   format:
