@@ -1,4 +1,4 @@
-name: Build and test
+name: Build Switch
 
 on:
   push:
@@ -17,14 +17,13 @@ jobs:
 
       - name: Configure CMake
         run: >
-          cmake -B ${{ steps.strings.outputs.build-output-dir }}
-          -G Ninja
+          cmake -B build
           -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/Switch.cmake
           -DCMAKE_BUILD_TYPE=Debug
           -DPLATFORM="Nintendo Switch"
           -DDCMAKE_CXX_FLAGS="-fexceptions"
           -DBUILD_TESTS=OFF
-          -S ${{ github.workspace }}
+          -S .
 
       - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Debug
+        run: cmake --build build --config Debug

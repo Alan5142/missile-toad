@@ -2,12 +2,12 @@
 #include "raylib.h"
 #include <filesystem>
 #include <fmt/format.h>
+#include <gsl/gsl>
 #include <iostream>
 #include <physfs.h>
-#include <gsl/gsl>
 
 #ifdef PLATFORM_NX
-#include <switch.h>
+#    include <switch.h>
 #endif
 
 #ifdef WIN32
@@ -22,7 +22,7 @@ unsigned char *load_file_data_callback(const char *fileName, unsigned int *bytes
         return nullptr;
     }
     PHYSFS_sint64 size = PHYSFS_fileLength(file);
-    auto *data = gsl::owner<unsigned char*>(new unsigned char[size]);
+    auto         *data = gsl::owner<unsigned char *>(new unsigned char[size]);
     PHYSFS_readBytes(file, data, size);
     PHYSFS_close(file);
     *bytesRead = size;
@@ -34,8 +34,8 @@ int main(int argc, char *argv[])
 #ifdef PLATFORM_NX
     romfsInit();
 #endif
-    int            screenWidth  = 1280;
-    int            screenHeight = 720;
+    int screenWidth  = 1280;
+    int screenHeight = 720;
 
     // NO-LINT
     if (PHYSFS_init(argv[0]) == 0)
