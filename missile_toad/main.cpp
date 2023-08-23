@@ -5,6 +5,8 @@
 #include <gsl/gsl>
 #include <iostream>
 #include <physfs.h>
+#include <gsl/gsl>
+#include <chrono>
 
 #ifdef PLATFORM_NX
 #    include <switch.h>
@@ -14,9 +16,9 @@
 #    pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #endif
 
-unsigned char *load_file_data_callback(const char *fileName, unsigned int *bytesRead)
+unsigned char *load_file_data_callback(const char *file_name, unsigned int *bytes_read)
 {
-    PHYSFS_File *file = PHYSFS_openRead(fileName);
+    PHYSFS_File *file = PHYSFS_openRead(file_name);
     if (file == nullptr)
     {
         return nullptr;
@@ -25,19 +27,23 @@ unsigned char *load_file_data_callback(const char *fileName, unsigned int *bytes
     auto         *data = gsl::owner<unsigned char *>(new unsigned char[size]);
     PHYSFS_readBytes(file, data, size);
     PHYSFS_close(file);
-    *bytesRead = size;
+    *bytes_read = size;
     return data;
 }
 
-int main(int argc, char *argv[])
+static constexpr int SCREEN_WIDTH  = 1280;
+static constexpr int SCREEN_HEIGHT = 720;
+
+static constexpr float FIXED_TIMESTEP = 1.0F / 60.0F;
+
+int main(int /*argc*/, char *argv[]) noexcept(false)
 {
 #ifdef PLATFORM_NX
     romfsInit();
 #endif
-    int screenWidth  = 1280;
-    int screenHeight = 720;
+    int            screen_width  = SCREEN_WIDTH;
+    int            screen_height = SCREEN_HEIGHT;
 
-    // NO-LINT
     if (PHYSFS_init(argv[0]) == 0)
     {
         return 1;
@@ -46,16 +52,30 @@ int main(int argc, char *argv[])
     ::SetLoadFileDataCallback(load_file_data_callback);
 
     PHYSFS_mount("romfs:/", "/", 1);
-    raylib::Window window(screenWidth, screenHeight, "raylib-cpp - basic window");
+    raylib::Window window(screen_width, screen_height, "raylib-cpp - basic window");
 
-    raylib::Texture2D texture("/resources/raylib_logo.png");
-
-    raylib::Camera2D camera({0, 0}, {0, 0}, 0, 1);
+    auto current_time = std::chrono::high_resolution_clock::now();
+    auto accumulator  = std::chrono::duration<float>(0);
 
     while (!window.ShouldClose())
     {
-        window.ClearBackground(RAYWHITE);
-        EndDrawing();
+        auto new_time = std::chrono::high_resolution_clock::now();
+        auto frame_time = new_time - current_time;
+        current_time = new_time;
+        accumulator += frame_time;
+
+        while (accumulator >= std::chrono::duration<float>(FIXED_TIMESTEP))
+        {
+            // FixedTick
+            // TODO: Perform fixed frame-dependent updates here (physics)
+            accumulator -= std::chrono::duration<float>(FIXED_TIMESTEP);
+        }
+
+        // Tick
+        // TODO: Perform frame-dependent updates here
+
+        // Render
+        // TODO: Perform render here
     }
 
     // UnloadTexture() and CloseWindow() are called automatically.
