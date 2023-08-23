@@ -17,7 +17,7 @@ jobs:
       - name: Install newest CMake
         # https://github.com/Kitware/CMake/releases/download/v3.27.3/cmake-3.27.3-linux-x86_64.sh
         run: |
-          wget "https://github.com/Kitware/CMake/releases/download/v3.27.3/cmake-3.27.3-linux-x86_64.sh"
+          wget -q "https://github.com/Kitware/CMake/releases/download/v3.27.3/cmake-3.27.3-linux-x86_64.sh"
           chmod +x cmake-3.27.3-linux-x86_64.sh
           sudo ./cmake-3.27.3-linux-x86_64.sh --skip-license --prefix=/usr
       - name: Install Ninja
@@ -35,4 +35,5 @@ jobs:
           -S .
 
       - name: Build
+        timeout-minutes: 10
         run: cmake --build build --config Debug

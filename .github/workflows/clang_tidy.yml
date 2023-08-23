@@ -45,6 +45,7 @@ jobs:
       - name: Build with clang-tidy
         id: clang-tidy
         uses: mathiasvr/command-output@v2.0.0
+        timeout-minutes: 10
         with:
           run: cd ${{ steps.strings.outputs.build-output-dir }} && ninja --quiet
       - name: Comment PR
