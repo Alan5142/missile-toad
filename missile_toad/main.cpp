@@ -1,12 +1,11 @@
 #include "raylib-cpp.hpp"
 #include "raylib.h"
+#include <chrono>
 #include <filesystem>
 #include <fmt/format.h>
 #include <gsl/gsl>
 #include <iostream>
 #include <physfs.h>
-#include <gsl/gsl>
-#include <chrono>
 
 #ifdef PLATFORM_NX
 #    include <switch.h>
@@ -41,8 +40,8 @@ int main(int /*argc*/, char *argv[]) noexcept(false)
 #ifdef PLATFORM_NX
     romfsInit();
 #endif
-    int            screen_width  = SCREEN_WIDTH;
-    int            screen_height = SCREEN_HEIGHT;
+    int screen_width  = SCREEN_WIDTH;
+    int screen_height = SCREEN_HEIGHT;
 
     if (PHYSFS_init(argv[0]) == 0)
     {
@@ -59,9 +58,9 @@ int main(int /*argc*/, char *argv[]) noexcept(false)
 
     while (!window.ShouldClose())
     {
-        auto new_time = std::chrono::high_resolution_clock::now();
+        auto new_time   = std::chrono::high_resolution_clock::now();
         auto frame_time = new_time - current_time;
-        current_time = new_time;
+        current_time    = new_time;
         accumulator += frame_time;
 
         while (accumulator >= std::chrono::duration<float>(FIXED_TIMESTEP))
