@@ -26,7 +26,7 @@ unsigned char *load_file_data_callback(const char *file_name, unsigned int *byte
     auto         *data = gsl::owner<unsigned char *>(new unsigned char[size]);
     PHYSFS_readBytes(file, data, size);
     PHYSFS_close(file);
-    *bytes_read = size;
+    *bytes_read = static_cast<unsigned int>(size);
     return data;
 }
 
