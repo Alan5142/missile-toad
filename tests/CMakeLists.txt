@@ -5,7 +5,7 @@
 set(TEST_SOURCES src/dummy.cpp)
 
 add_executable(tests ${TEST_SOURCES})
-target_link_libraries(tests PRIVATE libmissiletoad Catch2::Catch2WithMain)
+target_link_libraries(tests PRIVATE missiletoad Catch2::Catch2WithMain)
 target_include_directories(tests PRIVATE include)
 
 include(CTest)
