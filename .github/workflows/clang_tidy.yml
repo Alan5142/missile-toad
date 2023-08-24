@@ -45,11 +45,12 @@ jobs:
       - name: Build with clang-tidy
         id: clang-tidy
         uses: mathiasvr/command-output@v2.0.0
+        timeout-minutes: 10
         with:
           run: cd ${{ steps.strings.outputs.build-output-dir }} && ninja --quiet
       - name: Comment PR
         # Only execute if clang-tidy found errors
-        if: ${{ always() }} && steps.clang-tidy.outcome == 'failure' && {{ github.event_name == 'pull_request' }}
+        if: ${{ failure() && github.event_name == 'pull_request' }}
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
