@@ -16,6 +16,13 @@ CPMAddPackage("https://github.com/Alan5142/physfs-nx.git#switch")
 # GSL
 CPMAddPackage("https://github.com/microsoft/GSL.git#4300304")
 
+# Box2D options
+set(BOX2D_BUILD_UNIT_TESTS OFF)
+set(BOX2D_BUILD_TESTBED OFF)
+
+# Box2D
+CPMAddPackage("https://github.com/erincatto/box2d.git#411acc3")
+
 # Disable all warnings for raylib and physfs
 if (MSVC)
     target_compile_options(raylib PRIVATE /W0)

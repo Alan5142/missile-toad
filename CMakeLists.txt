@@ -33,4 +33,6 @@ if (BUILD_TESTS)
     add_subdirectory(tests)
 endif ()
 
+add_subdirectory(third_party)
+
 add_compile_definitions(NX_USB_DEBUGGER=1)
