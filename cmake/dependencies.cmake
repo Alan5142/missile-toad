@@ -16,6 +16,15 @@ CPMAddPackage("https://github.com/Alan5142/physfs-nx.git#switch")
 # GSL
 CPMAddPackage("https://github.com/microsoft/GSL.git#4300304")
 
+# ENTT
+CPMAddPackage("https://github.com/skypjack/entt.git@3.12.2")
+
+# Raylib-nuklear
+CPMAddPackage("https://github.com/RobLoach/raylib-nuklear.git#988c447")
+
+# GLM
+CPMAddPackage("https://github.com/g-truc/glm.git#47585fd")
+
 # Box2D options
 set(BOX2D_BUILD_UNIT_TESTS OFF)
 set(BOX2D_BUILD_TESTBED OFF)

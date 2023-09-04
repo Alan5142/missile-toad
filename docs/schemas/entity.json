@@ -1,0 +1,15 @@
+{
+  "$id": "https://missile-toad.com/schemas/entity.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Entity",
+  "description": "An entity in the game world.",
+  "type": "object",
+  "properties": {
+    "components": {
+      "type": "array",
+      "items": {
+        "$ref": "https://missile-toad.com/schemas/component.json"
+      }
+    }
+  }
+}

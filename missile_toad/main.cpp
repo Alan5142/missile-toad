@@ -6,6 +6,10 @@
 #include <gsl/gsl>
 #include <iostream>
 #include <physfs.h>
+#include <memory>
+
+#include "missile_toad/common.hpp"
+#include "missile_toad/game.hpp"
 
 #ifdef PLATFORM_NX
 #    include <switch.h>
@@ -33,9 +37,7 @@ unsigned char *load_file_data_callback(const char *file_name, unsigned int *byte
 static constexpr int SCREEN_WIDTH  = 1280;
 static constexpr int SCREEN_HEIGHT = 720;
 
-static constexpr float FIXED_TIMESTEP = 1.0F / 60.0F;
-
-int main(int /*argc*/, char *argv[]) noexcept(false)
+int main(int argc, char *argv[]) noexcept(false)
 {
 #ifdef PLATFORM_NX
     romfsInit();
@@ -56,6 +58,14 @@ int main(int /*argc*/, char *argv[]) noexcept(false)
     auto current_time = std::chrono::high_resolution_clock::now();
     auto accumulator  = std::chrono::duration<float>(0);
 
+    auto game = std::make_unique<missiletoad::Game>(argc, argv);
+
+    raylib::Music music = raylib::Music("romfs:/resources/Maxwell.mp3");
+
+    music.Play();
+
+    SetTargetFPS(60);
+
     while (!window.ShouldClose())
     {
         auto new_time   = std::chrono::high_resolution_clock::now();
@@ -63,21 +73,22 @@ int main(int /*argc*/, char *argv[]) noexcept(false)
         current_time    = new_time;
         accumulator += frame_time;
 
-        while (accumulator >= std::chrono::duration<float>(FIXED_TIMESTEP))
+        while (accumulator >= std::chrono::duration<float>(missiletoad::UPDATE_RATE))
         {
             // FixedTick
-            // TODO: Perform fixed frame-dependent updates here (physics)
-            accumulator -= std::chrono::duration<float>(FIXED_TIMESTEP);
+            game->fixed_update(missiletoad::UPDATE_RATE);
+            accumulator -= std::chrono::duration<float>(missiletoad::UPDATE_RATE);
         }
 
         // Tick
-        // TODO: Perform frame-dependent updates here
+        auto delta_time = std::chrono::duration<float>(frame_time).count();
+        game->update(delta_time);
+        music.Update();
 
         // Render
-        // TODO: Perform render here
+        game->render();
     }
 
-    // UnloadTexture() and CloseWindow() are called automatically.
 
 #ifdef PLATFORM_NX
     romfsExit();
