@@ -16,9 +16,10 @@ namespace missiletoad
      */
     class Game
     {
-        int argc;
-        char **argv;
+        int                                                 argc;
+        char                                              **argv;
         std::unique_ptr<nk_context, void (*)(nk_context *)> nuklear_context;
+
     public:
         /**
          * The constructor of the game. It initializes all of the systems and managers in the game.
@@ -30,10 +31,10 @@ namespace missiletoad
         Game(int argc, char **argv) noexcept;
         ~Game() noexcept;
 
-        Game(const Game &) = delete;
-        Game(Game &&) = delete;
+        Game(const Game &)            = delete;
+        Game(Game &&)                 = delete;
         Game &operator=(const Game &) = delete;
-        Game &operator=(Game &&) = delete;
+        Game &operator=(Game &&)      = delete;
 
         /**
          * The main loop of the game. It updates all of the systems and managers in the game.
@@ -55,4 +56,4 @@ namespace missiletoad
          */
         void render() noexcept;
     };
-}
+} // namespace missiletoad

@@ -5,8 +5,8 @@
 #include <fmt/format.h>
 #include <gsl/gsl>
 #include <iostream>
-#include <physfs.h>
 #include <memory>
+#include <physfs.h>
 
 #include "missile_toad/common.hpp"
 #include "missile_toad/game.hpp"
@@ -88,7 +88,6 @@ int main(int argc, char *argv[]) noexcept(false)
         // Render
         game->render();
     }
-
 
 #ifdef PLATFORM_NX
     romfsExit();
