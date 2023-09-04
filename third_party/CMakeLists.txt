@@ -3,5 +3,7 @@
 ##################################################################
 
 # Raygui
-add_library(raygui INTERFACE)
-target_include_directories(raygui SYSTEM INTERFACE raygui/src)
+add_library(nuklear-gui STATIC nuklear/src/nuklear.cpp)
+target_link_libraries(nuklear-gui PUBLIC raylib raylib_nuklear)
+
+add_library(nuklear::nuklear ALIAS nuklear-gui)

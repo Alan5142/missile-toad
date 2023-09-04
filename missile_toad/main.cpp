@@ -50,6 +50,8 @@ int main(int argc, char *argv[]) noexcept(false)
         return 1;
     }
 
+    InitAudioDevice();
+
     ::SetLoadFileDataCallback(load_file_data_callback);
 
     PHYSFS_mount("romfs:/", "/", 1);
