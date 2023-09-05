@@ -5,12 +5,13 @@ Checks:
     clang-analyzer-*,
     bugprone-*,
     cppcoreguidelines-*,
+    readability-identifier-naming,
     -modernize-use-trailing-return-type,
     -cppcoreguidelines-pro-bounds-pointer-arithmetic,
-    readability-identifier-naming,
+    -cppcoreguidelines-avoid-magic-numbers
 
 CheckOptions:
-    readability-identifier-naming.NamespaceCase: CamelCase
+    readability-identifier-naming.NamespaceCase: lower_case
     readability-identifier-naming.ClassCase: CamelCase
     readability-identifier-naming.StructCase: CamelCase
     readability-identifier-naming.FunctionCase: lower_case
@@ -48,9 +49,6 @@ CheckOptions:
     readability-identifier-naming.PrivateTypeCase: CamelCase
     readability-identifier-naming.ProtectedTypeCase: CamelCase
     readability-identifier-naming.PublicTypeCase: CamelCase
-    readability-identifier-naming.PrivateNamespaceCase: CamelCase
-    readability-identifier-naming.ProtectedNamespaceCase: CamelCase
-    readability-identifier-naming.PublicNamespaceCase: CamelCase
     readability-identifier-naming.PrivateMacroCase: UPPER_CASE
     readability-identifier-naming.ProtectedMacroCase: UPPER_CASE
     readability-identifier-naming.PublicMacroCase: UPPER_CASE
@@ -68,10 +66,10 @@ CheckOptions:
     readability-identifier-naming.PublicVariableCase: lower_case
 
 
-
 WarningsAsErrors: >
     -*,
     modernize-*,
     cppcoreguidelines-*,
+    readability-identifier-naming  
     -cppcoreguidelines-avoid-magic-numbers
-    readability-identifier-naming
+    -readability-magic-numbers

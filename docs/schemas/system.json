@@ -1,0 +1,17 @@
+{
+  "$id": "https://missile-toad.com/schemas/scene.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "System",
+  "description": "An ECS system to run",
+  "type": "object",
+  "properties": {
+    "class": {
+      "type": "string",
+      "description": "The class name of the system to run"
+    },
+    "priority": {
+      "type": "integer",
+      "description": "The priority of the system to run, lower numbers run first, starting at 0"
+    }
+  }
+}

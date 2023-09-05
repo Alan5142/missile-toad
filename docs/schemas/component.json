@@ -1,0 +1,30 @@
+{
+  "$id": "https://missile-toad.com/schemas/component.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Entity",
+  "description": "An entity in the game world.",
+  "type": "object",
+  "properties": {
+    "class": {
+      "description": "The class of the entity. Must be reflected and provide a parameterless constructor.",
+      "type": "string"
+    },
+    "args": {
+      "description": "The arguments to pass to the constructor.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the argument.",
+            "type": "string"
+          },
+          "value": {
+            "description": "The value of the argument.",
+            "type": "any"
+          }
+        }
+      }
+    }
+  }
+}

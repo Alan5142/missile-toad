@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 enable_testing()
 
+include(cmake/compiler.cmake)
 include(cmake/options.cmake)
 include(cmake/CPM.cmake)
 

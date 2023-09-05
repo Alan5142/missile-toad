@@ -1,0 +1,397 @@
+classDiagram
+    class Game {
+        -SceneManager scene_manager
+        -InputManager input_manager
+        -AssetManager asset_manager
+        -Scene current_scene
+        -RenderManager render_manager
+        -list~Manager~ user_managers
+        +Game()
+        +Destructor()
+        +run(int argc, list~string~ argv): int
+        +get_scene_manager(): SceneManager
+        +get_input_manager(): InputManager
+        +get_asset_manager(): AssetManager
+        +get_render_manager(): RenderManager
+    }
+
+    class Scene {
+        -std:: vector~GameObject~ game_objects
+        -std:: vector~Component~ components
+        +Scene()
+        +Destructor()
+        +add_game_object(GameObject game_object): void
+        +remove_game_object(GameObject game_object): void
+        +find_objects_by_name(string name): std:: vector~GameObject~
+        +find_objects_by_component~T~ (): std:: vector~GameObject~
+    }
+
+    class GameObject {
+        -std:: vector~Component~ components
+        -std:: string name
+        +GameObject()
+        +Destructor()
+        +add_component~T~ (): void
+        +remove_component~T~ (): void
+        +get_component~T~ (): Component
+        +get_components(): std:: vector~Component~
+        +get_name(): std:: string
+        +set_name(std:: string name): void
+    }
+
+    class Component {
+        -std:: weak_ptr~GameObject~ owner
+        -bool enabled
+
+        +Component()
+        +Destructor()*
+        +get_owner(): std:: weak_ptr~GameObject~
+        update(): void
+        render(): void
+        fixed_update(): void
+
+        on_attach(): void
+        on_detach(): void
+
+        on_enable(): void
+        on_disable(): void
+
+        set_enabled(bool enabled): void
+        is_enabled(): bool
+    }
+    <<abstract>> Component
+
+    class RenderManager {
+        -std::weak_ptr~Scene~ scene
+
+        +RenderManager()
+        +Destructor()
+
+        +render(): void
+        +set_scene(std::weak_ptr~Scene~ scene): void
+    }
+
+    class AssetManager {
+        -std::vector~Texture~ textures
+        -std::vector~AudioClip~ audio_clips
+
+        +load_texture(string path): Texture
+        +load_audio_clip(string path): AudioClip
+    }
+
+    class SceneDescriptor {
+        -std::string name
+        -std::string path
+
+        +SceneDescriptor(string name, string path)
+        +Destructor()
+
+        +get_name(): std:: string
+        +get_path(): std:: string
+    }
+
+    class SceneManager {
+        -map[string, SceneDescriptor] scenes
+        -std::unique_ptr~Scene~ current_scene
+
+        +SceneManager()
+        +Destructor()
+
+        +find_scenes_in_directory(string path): std::vector~SceneDescriptor~
+        +load_scene(string name): void
+        +get_current_scene(): std:: weak_ptr~Scene~
+    }
+
+    class InputAction {
+        -std::string name
+        -std::vector~int~ keys
+        -std::vector~int~ mouse_buttons
+        -std::vector~int~ gamepad_buttons
+
+        +InputAction(string name)
+        +Destructor()
+
+        +add_key(Key key): void
+        +add_mouse_button(MouseButton mouse_button): void
+        +is_pressed(): bool
+        +is_released(): bool
+        +is_down(): bool
+        +is_up(): bool
+    }
+
+    class Vector2 {
+        -float x
+        -float y
+
+        +Vector2()
+        +Vector2(float x, float y)
+        +Destructor()
+
+        +get_x(): float
+        +get_y(): float
+        +set_x(float x): void
+        +set_y(float y): void
+    }
+
+    class InputAxis {
+        -std::string name
+        -std::vector~int~ negative_keys
+        -std::vector~int~ positive_keys
+
+        -std::vector~int~ negative_mouse_buttons
+        -std::vector~int~ positive_mouse_buttons
+
+        -std::vector~int~ negative_gamepad_buttons
+        -std::vector~int~ positive_gamepad_buttons
+
+        +InputAxis(string name)
+        +Destructor()
+
+        +add_key(Key key): void
+        +add_mouse_button(MouseButton mouse_button): void
+        +get_value(): float
+    }
+
+    class InputManager {
+        -std::vector~InputAction~ actions
+        -std::vector~InputAxis~ axes
+
+        +InputManager()
+        +Destructor()
+
+        +load_config(string path): void
+        +add_action(InputAction action): void
+        +add_axis(InputAxis axis): void
+
+        +is_action_pressed(string name): bool
+        +is_action_released(string name): bool
+        +is_action_down(string name): bool
+        +is_action_up(string name): bool
+
+        +get_axis_value(string name): float
+
+        +is_key_pressed(int key): bool
+        +is_key_released(int key): bool
+        +is_key_down(int key): bool
+        +is_key_up(int key): bool
+
+        +is_mouse_button_pressed(int mouse_button): bool
+        +is_mouse_button_released(int mouse_button): bool
+        +is_mouse_button_down(int mouse_button): bool
+        +is_mouse_button_up(int mouse_button): bool
+
+        +is_gamepad_button_pressed(int gamepad_button): bool
+        +is_gamepad_button_released(int gamepad_button): bool
+        +is_gamepad_button_down(int gamepad_button): bool
+        +is_gamepad_button_up(int gamepad_button): bool
+
+        +get_mouse_position(): Vector2
+        +get_mouse_delta(): Vector2
+        +get_mouse_wheel_delta(): Vector2
+    }
+
+    class SpriteRenderer {
+        -std::shared_ptr~Texture~ texture
+
+        +SpriteRenderer()
+        +Destructor()
+
+        +set_texture(std::shared_ptr~Texture~ texture): void
+        +get_texture(): std::shared_ptr~Texture~
+
+        render(): void
+    }
+
+class Texture {
+        -unsigned int id
+        -int width
+        -int height
+
+        +Texture()
+        +Destructor()
+
+        +get_id(): unsigned int
+        +get_width(): int
+        +get_height(): int
+    }
+
+    class AudioClip {
+        -unsigned int id
+        -int channels
+        -int sample_rate
+        -int bits_per_sample
+
+        +AudioClip()
+        +Destructor()
+
+        +get_id(): unsigned int
+        +get_channels(): int
+        +get_sample_rate(): int
+        +get_bits_per_sample(): int
+    }
+
+    class AudioSource {
+        -std::shared_ptr~AudioClip~ audio_clip
+
+        +AudioSource()
+
+        +set_audio_clip(std::shared_ptr~AudioClip~ audio_clip): void
+        +get_audio_clip(): std::shared_ptr~AudioClip~
+
+        play(): void
+        stop(): void
+
+        update(): void
+    }
+
+    class Rigidbody2D {
+
+        -b2Body* body
+        -b2BodyDef body_def
+        -b2FixtureDef fixture_def
+        -b2PolygonShape shap
+        -std::function~void~ on_collision_enter
+        -std::function~void~ on_collision_exit
+        -std::function~void~ on_collision_stay
+
+        +Rigidbody2D()
+        +Destructor()
+
+
+        +set_position(Vector2 position): void
+        +set_rotation(float rotation): void
+        +set_linear_velocity(Vector2 linear_velocity): void
+        +set_angular_velocity(float angular_velocity): void
+        +set_linear_damping(float linear_damping): void
+        +set_angular_damping(float angular_damping): void
+        +set_gravity_scale(float gravity_scale): void
+        +set_type(b2BodyType type): void
+        +set_fixed_rotation(bool fixed_rotation): void
+        +set_bullet(bool bullet): void
+        +set_active(bool active): void
+        +set_sensor(bool sensor): void
+        +set_awake(bool awake): void
+        +set_enabled(bool enabled): void
+        +set_user_data(void* user_data): void
+
+        +get_position(): Vector2
+        +get_rotation(): float
+        +get_linear_velocity(): Vector2
+        +get_angular_velocity(): float
+        +get_linear_damping(): float
+        +get_angular_damping(): float
+        +get_gravity_scale(): float
+        +get_type(): b2BodyType
+        +get_fixed_rotation(): bool
+        +get_bullet(): bool
+        +get_active(): bool
+        +get_awake(): bool
+        +get_enabled(): bool
+        +get_user_data(): void*
+
+        +apply_force(Vector2 force, Vector2 point, bool wake): void
+        +apply_force_to_center(Vector2 force, bool wake): void
+        +apply_torque(float torque, bool wake): void
+        +apply_linear_impulse(Vector2 impulse, Vector2 point, bool wake): void
+        +apply_linear_impulse_to_center(Vector2 impulse, bool wake): void
+        +apply_angular_impulse(float impulse, bool wake): void
+        +reset_mass_data(): void
+
+
+        +fixed_update(): void
+
+        +on_collision_enter(std::function~void~ on_collision_enter): void
+        +on_collision_exit(std::function~void~ on_collision_exit): void
+        +on_collision_stay(std::function~void~ on_collision_stay): void
+    }
+
+    class Collision2DComponent {
+        -std::function~void~ on_collision_enter
+        -std::function~void~ on_collision_exit
+        -std::function~void~ on_collision_stay
+        -bB2Fixture* fixture
+
+        +Collision2DComponent()
+        +Destructor()
+
+        +on_collision_enter(std::function~void~ on_collision_enter): void
+        +on_collision_exit(std::function~void~ on_collision_exit): void
+        +on_collision_stay(std::function~void~ on_collision_stay): void
+
+    }
+
+    class TimerComponent {
+        -std::function~void~ on_timer
+        -float time
+        -float time_left
+        -bool is_active
+        -bool is_looping
+
+        +TimerComponent()
+        +Destructor()
+
+        +on_timer(std::function~void~ on_timer): void
+        +set_time(float time): void
+        +set_looping(bool is_looping): void
+        +start(): void
+        +get_time(): float
+        +get_time_left(): float
+        +reset(): void
+        +stop(): void
+        +is_active(): bool
+        +is_looping(): bool
+    }
+
+    class InputComponent {
+        -std::weak_ptr~InputManager~ input_manager
+
+        +InputComponent()
+        +Destructor()
+
+        +on_axis(std::string name, std::function~void~ on_axis): void
+    }
+
+    class AnimationComponent {
+        -std::vector[std::shared_ptr[Texture]] frames
+        -float frame_time
+        -float time_left
+        -int current_frame
+        -bool is_playing
+        -bool is_looping
+
+        +AnimationComponent()
+        +Destructor()
+
+        +set_frames(std::vector[std::shared_ptr[Texture]] frames): void
+        +set_frame_time(float frame_time): void
+        +set_looping(bool is_looping): void
+        +play(): void
+        +stop(): void
+        +is_playing(): bool
+        +is_looping(): bool
+
+        +update(): void
+    }
+
+    Game *-- InputManager
+    Game *-- SceneManager
+    Game *-- AssetManager
+    Game *-- RenderManager
+    SceneManager *-- Scene
+    Scene *-- GameObject
+    GameObject *-- Component
+    SceneManager *-- SceneDescriptor
+
+    InputManager *-- InputAction
+    InputManager *-- InputAxis
+    InputManager -- Vector2
+
+    Component <|-- SpriteRenderer
+    Component <|-- AudioSource
+    Component <|-- Rigidbody2D
+    Component <|-- InputComponent
+    Component <|-- Collision2DComponent
+    Component <|-- TimerComponent
+    Component <|-- AnimationComponent
+
+

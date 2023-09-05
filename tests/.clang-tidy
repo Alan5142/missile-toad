@@ -5,9 +5,71 @@ Checks:
   clang-analyzer-*,
   bugprone-*,
   cppcoreguidelines-*,
+  readability-identifier-naming,
   -modernize-use-trailing-return-type,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-avoid-magic-numbers
+
+CheckOptions:
+  readability-identifier-naming.NamespaceCase: lower_case
+  readability-identifier-naming.ClassCase: CamelCase
+  readability-identifier-naming.StructCase: CamelCase
+  readability-identifier-naming.FunctionCase: lower_case
+  readability-identifier-naming.VariableCase: lower_case
+  readability-identifier-naming.MemberCase: lower_case
+  readability-identifier-naming.ParameterCase: lower_case
+  readability-identifier-naming.GlobalConstantCase: UPPER_CASE
+  readability-identifier-naming.GlobalVariableCase: UPPER_CASE
+  readability-identifier-naming.ConstantCase: UPPER_CASE
+  readability-identifier-naming.EnumCase: UPPER_CASE
+  readability-identifier-naming.EnumConstantCase: UPPER_CASE
+  readability-identifier-naming.LocalConstantCase: lower_case
+  readability-identifier-naming.LocalVariableCase: lower_case
+  readability-identifier-naming.PrivateMemberCase: lower_case
+  readability-identifier-naming.ProtectedMemberCase: lower_case
+  readability-identifier-naming.PublicMemberCase: lower_case
+  readability-identifier-naming.PrivateMethodCase: lower_case
+  readability-identifier-naming.ProtectedMethodCase: lower_case
+  readability-identifier-naming.PublicMethodCase: lower_case
+  readability-identifier-naming.PrivateStaticMemberCase: lower_case
+  readability-identifier-naming.ProtectedStaticMemberCase: lower_case
+  readability-identifier-naming.PublicStaticMemberCase: lower_case
+  readability-identifier-naming.PrivateStaticMethodCase: lower_case
+  readability-identifier-naming.ProtectedStaticMethodCase: lower_case
+  readability-identifier-naming.PublicStaticMethodCase: lower_case
+  readability-identifier-naming.PrivateFunctionCase: lower_case
+  readability-identifier-naming.ProtectedFunctionCase: lower_case
+  readability-identifier-naming.PublicFunctionCase: lower_case
+  readability-identifier-naming.PrivateStaticFunctionCase: lower_case
+  readability-identifier-naming.ProtectedStaticFunctionCase: lower_case
+  readability-identifier-naming.PublicStaticFunctionCase: lower_case
+  readability-identifier-naming.PrivateTemplateParameterCase: lower_case
+  readability-identifier-naming.ProtectedTemplateParameterCase: lower_case
+  readability-identifier-naming.PublicTemplateParameterCase: lower_case
+  readability-identifier-naming.PrivateTypeCase: CamelCase
+  readability-identifier-naming.ProtectedTypeCase: CamelCase
+  readability-identifier-naming.PublicTypeCase: CamelCase
+  readability-identifier-naming.PrivateMacroCase: UPPER_CASE
+  readability-identifier-naming.ProtectedMacroCase: UPPER_CASE
+  readability-identifier-naming.PublicMacroCase: UPPER_CASE
+  readability-identifier-naming.PrivateEnumCase: UPPER_CASE
+  readability-identifier-naming.ProtectedEnumCase: UPPER_CASE
+  readability-identifier-naming.PublicEnumCase: UPPER_CASE
+  readability-identifier-naming.PrivateEnumConstantCase: UPPER_CASE
+  readability-identifier-naming.ProtectedEnumConstantCase: UPPER_CASE
+  readability-identifier-naming.PublicEnumConstantCase: UPPER_CASE
+  readability-identifier-naming.PrivateConstantCase: UPPER_CASE
+  readability-identifier-naming.ProtectedConstantCase: UPPER_CASE
+  readability-identifier-naming.PublicConstantCase: UPPER_CASE
+  readability-identifier-naming.PrivateVariableCase: lower_case
+  readability-identifier-naming.ProtectedVariableCase: lower_case
+  readability-identifier-naming.PublicVariableCase: lower_case
+
 
 WarningsAsErrors: >
   -*,
   modernize-*,
   cppcoreguidelines-*,
+  readability-identifier-naming  
+  -cppcoreguidelines-avoid-magic-numbers
+  -readability-magic-numbers
