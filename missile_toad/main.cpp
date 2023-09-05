@@ -15,10 +15,6 @@
 #    include <switch.h>
 #endif
 
-#ifdef WIN32
-#    pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
-#endif
-
 unsigned char *load_file_data_callback(const char *file_name, unsigned int *bytes_read)
 {
     PHYSFS_File *file = PHYSFS_openRead(file_name);
