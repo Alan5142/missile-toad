@@ -28,8 +28,7 @@ namespace missiletoad
     constexpr const float UPDATE_RATE = 1.0F / 60.0F;
 } // namespace missiletoad
 
-template <class T>
-void unused(const T &param) noexcept
+template <class T> void unused(const T &param) noexcept
 {
     (void)param;
 }

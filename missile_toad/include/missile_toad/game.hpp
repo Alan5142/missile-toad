@@ -3,8 +3,8 @@
 #include "missile_toad/common.hpp"
 #include "raylib-nuklear.h"
 
-#include <vector>
 #include <entt/meta/factory.hpp>
+#include <vector>
 
 namespace missiletoad
 {
@@ -24,7 +24,7 @@ namespace missiletoad
         int                                                 argc;
         char                                              **argv;
         std::unique_ptr<nk_context, void (*)(nk_context *)> nuklear_context;
-        std::vector<std::unique_ptr<BaseSystem>>         components;
+        std::vector<std::unique_ptr<BaseSystem>>            components;
         entt::meta_ctx                                      meta_context;
 
     public:

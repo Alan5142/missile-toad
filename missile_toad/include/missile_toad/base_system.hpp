@@ -8,7 +8,9 @@ namespace missiletoad
     public:
         virtual ~BaseSystem() = default;
 
-        virtual void on_start(){}
+        virtual void on_start()
+        {
+        }
 
         virtual void on_update(float delta_time)
         {
@@ -20,8 +22,12 @@ namespace missiletoad
             unused(delta_time);
         }
 
-        virtual void on_destroy(){}
+        virtual void on_destroy()
+        {
+        }
 
-        virtual void on_render(){}
+        virtual void on_render()
+        {
+        }
     };
-}
+} // namespace missiletoad

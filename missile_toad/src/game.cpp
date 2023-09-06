@@ -1,10 +1,10 @@
 #include "missile_toad/game.hpp"
 #include "fmt/format.h"
+#include "missile_toad/base_system.hpp"
 #include "nuklear.h"
 #include "raylib-nuklear.h"
-#include "missile_toad/base_system.hpp"
 
-extern void register_system(entt::meta_ctx& ctx);
+extern void register_system(entt::meta_ctx &ctx);
 
 missiletoad::Game::Game(int argc, char **argv) noexcept : argc(argc), argv(argv), nuklear_context(nullptr, nullptr)
 {
