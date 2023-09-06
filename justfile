@@ -18,3 +18,9 @@ lint:
 
 test:
     cd build && ctest --output-on-failure
+
+clean:
+    rm -rf build build-release
+
+gen-system:
+    python3 scripts/missiletoad.py system $(name)

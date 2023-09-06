@@ -1,39 +1,48 @@
 #include "missile_toad/game.hpp"
 #include "fmt/format.h"
+#include "missile_toad/base_system.hpp"
 #include "nuklear.h"
 #include "raylib-nuklear.h"
+
+extern void register_system(entt::meta_ctx &ctx);
 
 missiletoad::Game::Game(int argc, char **argv) noexcept : argc(argc), argv(argv), nuklear_context(nullptr, nullptr)
 {
     nuklear_context = std::unique_ptr<nk_context, void (*)(nk_context *)>(InitNuklear(16), UnloadNuklear);
+
+    // Register Systems meta types.
+    register_system(this->meta_context);
+    using namespace entt::literals;
+    auto klass = entt::resolve("missiletoad::DummySystem"_hs);
+
+    // Create a new instance of the DummySystem.
+    auto instance = klass.construct();
+
+    auto system = instance.try_cast<missiletoad::BaseSystem>();
+    if (system)
+    {
+        fmt::print("Hello from DummyComponent!\n");
+    }
 }
 
 // TODO: Implement this.
 missiletoad::Game::~Game() noexcept = default;
 
-void missiletoad::Game::update(float /*delta_time*/) noexcept
+void missiletoad::Game::update(float delta_time) noexcept
 {
-    (void)this->argc;
-    (void)this->argv;
+    unused(delta_time);
+    unused(this->argc);
+    unused(this->argv);
 
     // The first step is to update the nuklear context so that it can handle input.
     UpdateNuklear(nuklear_context.get());
 
-    if (nk_begin(nuklear_context.get(), "Demo", nk_rect(50, 50, 200, 200),
-                 NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_SCALABLE | NK_WINDOW_CLOSABLE |
-                     NK_WINDOW_MINIMIZABLE | NK_WINDOW_TITLE))
-    {
-        nk_layout_row_dynamic(nuklear_context.get(), 30, 1);
-        if (nk_button_label(nuklear_context.get(), "button") == 1)
-        {
-            fmt::print("button pressed!\n");
-        }
-    }
-    nk_end(nuklear_context.get());
+    // TODO: Update the scene.
 }
 
 void missiletoad::Game::fixed_update(float /*delta_time*/) noexcept
 {
+    // TODO: Update the scene.
 }
 
 void missiletoad::Game::render() noexcept
@@ -42,6 +51,10 @@ void missiletoad::Game::render() noexcept
     BeginDrawing();
     {
         ClearBackground(RAYWHITE);
+
+        // TODO: Update the scene.
+        // this->current_scene->render();
+
         DrawNuklear(nuklear_context.get());
     }
     EndDrawing();
