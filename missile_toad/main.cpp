@@ -58,12 +58,6 @@ int main(int argc, char *argv[]) noexcept(false)
 
     auto game = std::make_unique<missiletoad::Game>(argc, argv);
 
-    raylib::Music music = raylib::Music("romfs:/resources/Maxwell.mp3");
-
-    music.Play();
-
-    SetTargetFPS(60);
-
     while (!window.ShouldClose())
     {
         auto new_time   = std::chrono::high_resolution_clock::now();
@@ -81,7 +75,6 @@ int main(int argc, char *argv[]) noexcept(false)
         // Tick
         auto delta_time = std::chrono::duration<float>(frame_time).count();
         game->update(delta_time);
-        music.Update();
 
         // Render
         game->render();

@@ -1,0 +1,210 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+package missiletoad.core {
+    class Game
+    class SceneManager
+    class Scene
+    class SceneDescriptor
+    abstract BaseSystem
+    class Entity
+    class InputManager
+    class AudioManager
+    class AssetManager
+
+    class PhysicsSystem extends BaseSystem
+    class RenderSystem extends BaseSystem
+    class InputSystem extends BaseSystem
+    class AudioSystem extends BaseSystem
+
+    class Transform2DComponent
+    class Collider2DComponent
+    class RigidBody2DComponent
+    class SpriteComponent
+    class AnimationComponent
+    class AudioComponent
+    class InputComponent
+    class CameraComponent
+
+
+    Game *-- SceneManager
+    Game *-- InputManager
+    Game *-- AudioManager
+    Game *-- AssetManager
+
+    SceneManager *-- Scene
+    SceneManager *-- SceneDescriptor
+
+    Scene *-- Entity
+    Scene *-- BaseSystem
+
+    BaseSystem -- Entity
+
+    PhysicsSystem -- Collider2DComponent
+    PhysicsSystem -- RigidBody2DComponent
+    PhysicsSystem -- Transform2DComponent
+
+    RenderSystem <-- SpriteComponent
+    RenderSystem <-- AnimationComponent
+    RenderSystem <-- CameraComponent
+    RenderSystem <-- Transform2DComponent
+
+    InputSystem <-- InputComponent
+
+    AudioSystem <-- AudioComponent
+
+    InputManager <-- InputSystem
+    AudioManager <-- AudioSystem
+
+    /'
+    Find a way to specify the relationship between the entity and its components
+    '/
+
+    /'
+    Define methods
+    '/
+
+    class Game {
+
+    }
+
+    class AssetManager {
+        - std::unordered_map<std::string, std::shared_ptr<Texture2D>> textures
+        - std::unordered_map<std::string, std::shared_ptr<Font>> fonts
+        - std::unordered_map<std::string, std::shared_ptr<Sound>> sounds
+        - std::unordered_map<std::string, std::shared_ptr<Music>> music
+        - Game &game
+
+        + AssetManager(Game &game)
+        + ~AssetManager()
+        + std::shared_ptr<Texture2D> load_texture(std::string path)
+        + std::shared_ptr<Font> load_font(std::string path)
+        + std::shared_ptr<Sound> load_sound(std::string path)
+        + std::shared_ptr<Music> load_music(std::string path)
+    }
+
+    class Scene {
+        - entt::registry registry
+        - std::vector<std::unique_ptr<BaseSystem>> systems
+
+        + Scene(Game &game)
+        + ~Scene()
+        + void update(float dt)
+        + void fixed_update(float dt)
+        + void render()
+        + Entity create_entity()
+        + void destroy_entity(Entity entity)
+        + void add_system(std::unique_ptr<BaseSystem> system)
+        + void remove_system(BaseSystem &system)
+        + const std::vector<std::unique_ptr<BaseSystem>>& get_systems()
+        + entt::registry& get_registry()
+    }
+
+    class Entity {
+        - id: uint32_t
+        - scene: Scene&
+        
+        + Entity(uint32_t id, Scene &scene)
+        + uint32_t get_id()
+        + Scene& get_scene()
+        + void destroy()
+        + T& add_component<T>()
+        + T& get_component<T>()
+        + void remove_component<T>()
+        + bool has_component<T>()
+    }
+
+    abstract BaseSystem {
+        # Scene& scene
+
+        # BaseSystem(Scene& scene)
+        + ~BaseSystem()
+        + void on_start()
+        + void on_update(float dt)
+        + void on_fixed_update(float dt)
+        + void on_destroy()
+        + void on_render()
+    }
+
+    class Transform2DComponent {
+        +Vector2 position
+        +Vector2 scale
+        +float rotation
+
+        Transform2DComponent(Vector2 position, Vector2 scale, float rotation)
+    }
+
+    class SpriteComponent {
+        +std::shared_ptr<Texture2D> texture
+
+        SpriteComponent(Texture2D texture)
+    }
+
+    class AnimationComponent {
+        +std::vector<std::shared_ptr<Texture2D>> frames
+        +float frame_time
+        +float current_time
+        +uint32_t current_frame
+
+        AnimationComponent(std::vector<std::shared_ptr<Texture2D>> frames, float frame_time)
+    }
+
+    class CameraComponent {
+        +Camera2D camera
+
+        +CameraComponent(Camera2D camera)
+    }
+}
+
+package missiletoad::game {
+    class HealthComponent {
+        -float health
+        -float max_health
+
+        +HealthComponent(float health, float max_health)
+
+        +void take_damage(float damage)
+        +void heal(float amount)
+        +bool is_dead()
+
+        +float get_health()
+        +float get_max_health()
+    }
+    class PlayerComponent {
+        /' TODO
+        '/
+    }
+
+    class PlayerSystem extends missiletoad.core.BaseSystem {
+        +PlayerSystem(missiletoad.core.Scene& scene)
+        + void on_start()
+        + void on_update(float dt)
+        + void on_fixed_update(float dt)
+        + void on_destroy()
+        + void on_render()
+    }
+
+    class EnemyComponent {
+        /' TODO
+        '/
+    }
+
+    class EnemySystem extends missiletoad.core.BaseSystem {
+        +EnemySystem(missiletoad.core.Scene& scene)
+        + void on_start()
+        + void on_update(float dt)
+        + void on_fixed_update(float dt)
+        + void on_destroy()
+        + void on_render()
+    }
+
+    PlayerSystem --> PlayerComponent
+    PlayerSystem --> HealthComponent
+
+    EnemySystem --> EnemyComponent
+    EnemySystem --> HealthComponent
+}
+
+
+@enduml
