@@ -25,6 +25,9 @@ CPMAddPackage("https://github.com/RobLoach/raylib-nuklear.git#988c447")
 # GLM
 CPMAddPackage("https://github.com/g-truc/glm.git#47585fd")
 
+# spdlog
+CPMAddPackage("https://github.com/gabime/spdlog.git@1.12.0")
+
 # Box2D options
 set(BOX2D_BUILD_UNIT_TESTS OFF)
 set(BOX2D_BUILD_TESTBED OFF)

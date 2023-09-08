@@ -7,6 +7,7 @@
 #include <iostream>
 #include <memory>
 #include <physfs.h>
+#include <spdlog/spdlog.h>
 
 #include "missile_toad/common.hpp"
 #include "missile_toad/game.hpp"
@@ -35,27 +36,39 @@ static constexpr int SCREEN_HEIGHT = 720;
 
 int main(int argc, char *argv[]) noexcept(false)
 {
+    // Disable raylib logging.
+//    ::SetTraceLogLevel(LOG_NONE);
+
 #ifdef PLATFORM_NX
     romfsInit();
 #endif
     int screen_width  = SCREEN_WIDTH;
     int screen_height = SCREEN_HEIGHT;
 
+    spdlog::info("Initializing PhysFS.");
     if (PHYSFS_init(argv[0]) == 0)
     {
         return 1;
     }
 
-    InitAudioDevice();
+    spdlog::info("Initializing audio device.");
+//    InitAudioDevice();
 
+    spdlog::info("Setting PhysFS callbacks.");
     ::SetLoadFileDataCallback(load_file_data_callback);
 
+    spdlog::info("Mounting romfs.");
     PHYSFS_mount("romfs:/", "/", 1);
+
+    spdlog::info("Creating window of size {}x{}.", screen_width, screen_height);
     raylib::Window window(screen_width, screen_height, "raylib-cpp - basic window");
 
     auto current_time = std::chrono::high_resolution_clock::now();
     auto accumulator  = std::chrono::duration<float>(0);
 
+    SetTargetFPS(60);
+
+    // Init spdlog
     auto game = std::make_unique<missiletoad::Game>(argc, argv);
 
     while (!window.ShouldClose())
@@ -65,6 +78,12 @@ int main(int argc, char *argv[]) noexcept(false)
         current_time    = new_time;
         accumulator += frame_time;
 
+        // We do this to guarantee that the fixed update is called at a fixed rate.
+        // For instance, if the game is running at 60 FPS, and the fixed update rate is 30 FPS,
+        // then the fixed update will be called every 2 frames.
+        // But if the game is running at 30 FPS, then the fixed update will be called every frame.
+        // To achieve this, we accumulate the time between frames, and call the fixed update
+        // as many times as needed.
         while (accumulator >= std::chrono::duration<float>(missiletoad::UPDATE_RATE))
         {
             // FixedTick
@@ -80,9 +99,19 @@ int main(int argc, char *argv[]) noexcept(false)
         game->render();
     }
 
+    spdlog::info("Closing window.");
+
+    if (PHYSFS_deinit() == 0)
+    {
+        spdlog::error("Failed to deinitialize PhysFS.");
+        return 1;
+    }
+
 #ifdef PLATFORM_NX
     romfsExit();
 #endif
+
+//    CloseAudioDevice();
 
     return 0;
 }

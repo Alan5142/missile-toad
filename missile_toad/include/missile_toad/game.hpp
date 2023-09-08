@@ -21,12 +21,13 @@ namespace missiletoad
      */
     class Game
     {
-        int                                                 argc;
-        char                                              **argv;
-        std::unique_ptr<nk_context, void (*)(nk_context *)> nuklear_context;
+        entt::meta_ctx                                      systems_meta_ctx;
+        entt::meta_ctx                                      components_meta_ctx;
         std::vector<std::unique_ptr<BaseSystem>>            components;
-        entt::meta_ctx                                      meta_context;
-
+        std::unique_ptr<nk_context, void (*)(nk_context *)> nuklear_context;
+        char                                              **argv;
+        int                                                 argc;
+        bool                                               debug_mode;
     public:
         /**
          * The constructor of the game. It initializes all of the systems and managers in the game.
@@ -35,7 +36,7 @@ namespace missiletoad
          * @param argc argc passed to main.
          * @param argv argv passed to main.
          */
-        Game(int argc, char **argv) noexcept;
+        Game(int argc, char **argv);
         ~Game() noexcept;
 
         Game(const Game &)            = delete;
@@ -62,5 +63,11 @@ namespace missiletoad
          * So, this is not a place to put game logic.
          */
         void render() noexcept;
+
+    private:
+        /**
+         *
+         */
+        void debug_gui() noexcept;
     };
 } // namespace missiletoad
