@@ -34,10 +34,26 @@ unsigned char *load_file_data_callback(const char *file_name, unsigned int *byte
 static constexpr int SCREEN_WIDTH  = 1280;
 static constexpr int SCREEN_HEIGHT = 720;
 
+void raylib_log_callback(int log_level, const char *format, va_list args)
+{
+    constexpr size_t buffer_size = 4096;
+    std::array<char, buffer_size> buffer{};
+    vsnprintf(buffer.data(), sizeof(buffer), format, args);
+    switch (log_level)
+    {
+        case LOG_INFO: spdlog::info(buffer.data()); break;
+        case LOG_ERROR: spdlog::error(buffer.data()); break;
+        case LOG_WARNING: spdlog::warn(buffer.data()); break;
+        case LOG_DEBUG: spdlog::debug(buffer.data()); break;
+        case LOG_TRACE: spdlog::trace(buffer.data()); break;
+        case LOG_FATAL: spdlog::critical(buffer.data()); break;
+        default: break;
+    }
+}
+
 int main(int argc, char *argv[]) noexcept(false)
 {
-    // Disable raylib logging.
-//    ::SetTraceLogLevel(LOG_NONE);
+    SetTraceLogCallback(raylib_log_callback);
 
 #ifdef PLATFORM_NX
     romfsInit();

@@ -2,7 +2,7 @@
 skinparam classAttributeIconSize 0
 hide circle
 
-package missiletoad.core {
+package missiletoad {
     class Game
     class SceneManager
     class Scene
@@ -155,9 +155,7 @@ package missiletoad.core {
 
         +CameraComponent(Camera2D camera)
     }
-}
 
-package missiletoad::game {
     class HealthComponent {
         -float health
         -float max_health
