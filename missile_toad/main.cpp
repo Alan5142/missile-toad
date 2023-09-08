@@ -1,13 +1,10 @@
 #include "raylib-cpp.hpp"
 #include "raylib.h"
 #include <chrono>
-#include <filesystem>
 #include <fmt/format.h>
 #include <gsl/gsl>
-#include <iostream>
 #include <memory>
 #include <physfs.h>
-#include <spdlog/spdlog.h>
 
 #include "missile_toad/common.hpp"
 #include "missile_toad/game.hpp"

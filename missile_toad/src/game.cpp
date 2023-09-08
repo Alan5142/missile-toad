@@ -3,7 +3,6 @@
 #include "missile_toad/base_system.hpp"
 #include "nuklear.h"
 #include "raylib-nuklear.h"
-#include <spdlog/spdlog.h>
 
 extern void register_system(entt::meta_ctx &ctx);
 
