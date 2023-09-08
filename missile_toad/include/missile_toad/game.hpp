@@ -27,7 +27,8 @@ namespace missiletoad
         std::unique_ptr<nk_context, void (*)(nk_context *)> nuklear_context;
         char                                              **argv;
         int                                                 argc;
-        bool                                               debug_mode;
+        bool                                                debug_mode;
+
     public:
         /**
          * The constructor of the game. It initializes all of the systems and managers in the game.

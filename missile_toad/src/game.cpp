@@ -82,7 +82,7 @@ void missiletoad::Game::render() noexcept
 void missiletoad::Game::debug_gui() noexcept
 {
     // Show FPS and frame time
-    const auto fps = fmt::format("FPS: {}", GetFPS());
+    const auto fps        = fmt::format("FPS: {}", GetFPS());
     const auto frame_time = fmt::format("Frame time: {:.2f} ms", GetFrameTime() * 1000);
 
     DrawText(fps.c_str(), 0, 0, 20, RED);

@@ -36,18 +36,31 @@ static constexpr int SCREEN_HEIGHT = 720;
 
 void raylib_log_callback(int log_level, const char *format, va_list args)
 {
-    constexpr size_t buffer_size = 4096;
+    constexpr size_t              buffer_size = 4096;
     std::array<char, buffer_size> buffer{};
     vsnprintf(buffer.data(), sizeof(buffer), format, args);
     switch (log_level)
     {
-        case LOG_INFO: spdlog::info(buffer.data()); break;
-        case LOG_ERROR: spdlog::error(buffer.data()); break;
-        case LOG_WARNING: spdlog::warn(buffer.data()); break;
-        case LOG_DEBUG: spdlog::debug(buffer.data()); break;
-        case LOG_TRACE: spdlog::trace(buffer.data()); break;
-        case LOG_FATAL: spdlog::critical(buffer.data()); break;
-        default: break;
+    case LOG_INFO:
+        spdlog::info(buffer.data());
+        break;
+    case LOG_ERROR:
+        spdlog::error(buffer.data());
+        break;
+    case LOG_WARNING:
+        spdlog::warn(buffer.data());
+        break;
+    case LOG_DEBUG:
+        spdlog::debug(buffer.data());
+        break;
+    case LOG_TRACE:
+        spdlog::trace(buffer.data());
+        break;
+    case LOG_FATAL:
+        spdlog::critical(buffer.data());
+        break;
+    default:
+        break;
     }
 }
 
@@ -68,7 +81,7 @@ int main(int argc, char *argv[]) noexcept(false)
     }
 
     spdlog::info("Initializing audio device.");
-//    InitAudioDevice();
+    //    InitAudioDevice();
 
     spdlog::info("Setting PhysFS callbacks.");
     ::SetLoadFileDataCallback(load_file_data_callback);
@@ -127,7 +140,7 @@ int main(int argc, char *argv[]) noexcept(false)
     romfsExit();
 #endif
 
-//    CloseAudioDevice();
+    //    CloseAudioDevice();
 
     return 0;
 }
