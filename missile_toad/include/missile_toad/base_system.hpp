@@ -8,6 +8,12 @@ namespace missiletoad
     public:
         virtual ~BaseSystem() = default;
 
+        BaseSystem()                              = default;
+        BaseSystem(const BaseSystem &)            = delete;
+        BaseSystem(BaseSystem &&)                 = delete;
+        BaseSystem &operator=(const BaseSystem &) = delete;
+        BaseSystem &operator=(BaseSystem &&)      = delete;
+
         virtual void on_start()
         {
         }

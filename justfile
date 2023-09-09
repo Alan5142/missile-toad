@@ -1,26 +1,30 @@
-default: configure-debug build-debug
+# Default is to build the project
+default: build
 
-configure-debug:
-    mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug -DGRAPHICS=GRAPHICS_API_OPENGL_43
+# Configure the project. Requires build type (Debug, Release, MinSizeRel, RelWithDebInfo)
+configure type:
+    mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE={{type}} -DGRAPHICS=GRAPHICS_API_OPENGL_ES2
 
-configure-release:
-    mkdir -p build-release && cd build-release && cmake .. -DCMAKE_BUILD_TYPE=Release -DGRAPHICS=GRAPHICS_API_OPENGL_43
+# Build the project, requires configure
+build:
+    cd build && cmake --build . -j 8
 
-build-debug:
-    cd build && cmake --build . --config Debug -j 8
+# Format the project, requires configure
+format:
+    cd build && cmake --build . --target format
 
-build-release:
-    cd build-release && cmake --build . --config Release -j 8
+# Lint the project, requires configure
+lint: format
+    cd build && cmake --build . --target lint
 
-lint:
-    find missile_toad/ -iname *.cpp -o -iname *.hpp | xargs clang-format -i
-    find tests/ -iname *.cpp -o -iname *.hpp | xargs clang-format -i
-
+# Run the project, requires configure
 test:
     cd build && ctest --output-on-failure
 
+# Clean the project
 clean:
-    rm -rf build build-release
+    rm -rf build
 
-gen-system:
-    python3 scripts/missiletoad.py system $(name)
+# Generate a new system, requires name
+gen-system name:
+    python scripts/missiletoad.py --name {{name}}

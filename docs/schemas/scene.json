@@ -1,27 +1,27 @@
 {
-    "$id": "https://missile-toad.com/schemas/scene.json",
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "Scene",
-    "description": "A scene in a game.",
-    "type": "object",
-    "properties": {
-        "name": {
-            "description": "The name of the scene.",
-            "type": "string"
-        },
-        "systems": {
-            "description": "The systems in the scene.",
-            "type": "array",
-            "items": {
-                "$ref": "system.json"
-            }
-        },
-        "entities": {
-            "description": "The objects in the scene.",
-            "type": "array",
-            "items": {
-                "$ref": "entity.json"
-            }
-        }
+  "$id": "https://missile-toad.com/schemas/scene.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scene",
+  "description": "A scene in a game.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the scene.",
+      "type": "string"
+    },
+    "systems": {
+      "description": "The systems in the scene.",
+      "type": "array",
+      "items": {
+        "$ref": "system.json"
+      }
+    },
+    "entities": {
+      "description": "The objects in the scene.",
+      "type": "array",
+      "items": {
+        "$ref": "entity.json"
+      }
     }
+  }
 }
