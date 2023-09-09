@@ -37,3 +37,20 @@ endif ()
 add_subdirectory(third_party)
 
 add_compile_definitions(NX_USB_DEBUGGER=1)
+
+# Add format target
+file(GLOB_RECURSE ALL_SOURCE_FILES missile_toad/*.cpp missile_toad/*.hpp tests/*.cpp tests/*.hpp)
+
+add_custom_target(format
+        COMMAND clang-format
+        -style=file
+        -i
+        ${ALL_SOURCE_FILES}
+        )
+
+# Add clang-tidy target
+add_custom_target(tidy
+        COMMAND clang-tidy
+        -p=${CMAKE_BINARY_DIR}
+        ${ALL_SOURCE_FILES}
+        )

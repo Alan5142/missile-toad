@@ -1,4 +1,5 @@
 ﻿---
+Language: Cpp
 BasedOnStyle: Microsoft
 AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
@@ -21,11 +22,12 @@ Cpp11BracedListStyle: true
 FixNamespaceComments: true
 IndentPPDirectives: AfterHash
 IndentWidth: 4
-Language: Cpp
 NamespaceIndentation: All
 PointerAlignment: Right
 TabWidth: 4
 UseTab: Never
 BreakBeforeBraces: Allman
 
-...
+---
+Language: Json
+BasedOnStyle: llvm

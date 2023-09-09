@@ -3,6 +3,16 @@
 #include <chrono>
 #include <cstdint>
 #include <memory>
+#if defined(_WIN32)
+#    define NOGDI  // All GDI defines and routines
+#    define NOUSER // All USER defines and routines
+#endif
+#include <spdlog/spdlog.h>
+
+#if defined(_WIN32) // raylib uses these names as function parameters
+#    undef near
+#    undef far
+#endif
 
 using std::uint16_t;
 using std::uint32_t;
@@ -28,7 +38,7 @@ namespace missiletoad
     constexpr const float UPDATE_RATE = 1.0F / 60.0F;
 } // namespace missiletoad
 
-template <class T> void unused(const T &param) noexcept
+template <class T> inline void unused(const T &param) noexcept
 {
     (void)param;
 }

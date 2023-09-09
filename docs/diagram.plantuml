@@ -2,7 +2,7 @@
 skinparam classAttributeIconSize 0
 hide circle
 
-package missiletoad.core {
+package missiletoad {
     class Game
     class SceneManager
     class Scene
@@ -104,7 +104,7 @@ package missiletoad.core {
     class Entity {
         - id: uint32_t
         - scene: Scene&
-        
+
         + Entity(uint32_t id, Scene &scene)
         + uint32_t get_id()
         + Scene& get_scene()
@@ -155,9 +155,7 @@ package missiletoad.core {
 
         +CameraComponent(Camera2D camera)
     }
-}
 
-package missiletoad::game {
     class HealthComponent {
         -float health
         -float max_health
@@ -176,8 +174,8 @@ package missiletoad::game {
         '/
     }
 
-    class PlayerSystem extends missiletoad.core.BaseSystem {
-        +PlayerSystem(missiletoad.core.Scene& scene)
+    class PlayerSystem extends missiletoad.BaseSystem {
+        +PlayerSystem(missiletoad.Scene& scene)
         + void on_start()
         + void on_update(float dt)
         + void on_fixed_update(float dt)
@@ -190,8 +188,8 @@ package missiletoad::game {
         '/
     }
 
-    class EnemySystem extends missiletoad.core.BaseSystem {
-        +EnemySystem(missiletoad.core.Scene& scene)
+    class EnemySystem extends missiletoad.BaseSystem {
+        +EnemySystem(missiletoad.Scene& scene)
         + void on_start()
         + void on_update(float dt)
         + void on_fixed_update(float dt)

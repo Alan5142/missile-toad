@@ -6,23 +6,26 @@
 
 extern void register_system(entt::meta_ctx &ctx);
 
-missiletoad::Game::Game(int argc, char **argv) noexcept : argc(argc), argv(argv), nuklear_context(nullptr, nullptr)
+missiletoad::Game::Game(int argc, char **argv)
+    : nuklear_context(nullptr, nullptr), argv(argv), argc(argc), debug_mode(true)
 {
-    nuklear_context = std::unique_ptr<nk_context, void (*)(nk_context *)>(InitNuklear(16), UnloadNuklear);
+    // TODO: use argc and argv to select some game options, such as the debug mode. etc.
+
+    spdlog::info("Initializing game.");
+
+    nuklear_context = std::unique_ptr<nk_context, void (*)(nk_context *)>(InitNuklear(12), UnloadNuklear);
+    if (nuklear_context == nullptr)
+    {
+        spdlog::error("Failed to initialize nuklear.");
+        throw std::runtime_error("Failed to initialize nuklear.");
+    }
+    spdlog::trace("Nuklear initialized.");
 
     // Register Systems meta types.
-    register_system(this->meta_context);
-    using namespace entt::literals;
-    auto klass = entt::resolve("missiletoad::DummySystem"_hs);
+    register_system(this->systems_meta_ctx);
+    spdlog::trace("Systems registered.");
 
-    // Create a new instance of the DummySystem.
-    auto instance = klass.construct();
-
-    auto system = instance.try_cast<missiletoad::BaseSystem>();
-    if (system)
-    {
-        fmt::print("Hello from DummyComponent!\n");
-    }
+    spdlog::trace("Game::Game() finished.");
 }
 
 // TODO: Implement this.
@@ -30,6 +33,8 @@ missiletoad::Game::~Game() noexcept = default;
 
 void missiletoad::Game::update(float delta_time) noexcept
 {
+    spdlog::trace("Game::update() called.");
+
     unused(delta_time);
     unused(this->argc);
     unused(this->argv);
@@ -38,15 +43,27 @@ void missiletoad::Game::update(float delta_time) noexcept
     UpdateNuklear(nuklear_context.get());
 
     // TODO: Update the scene.
+
+    spdlog::trace("Game::update() finished.");
+
+    if (debug_mode)
+    {
+        this->debug_gui();
+    }
 }
 
 void missiletoad::Game::fixed_update(float /*delta_time*/) noexcept
 {
+    spdlog::trace("Game::fixed_update() called.");
     // TODO: Update the scene.
+    unused(this);
+
+    spdlog::trace("Game::fixed_update() finished.");
 }
 
 void missiletoad::Game::render() noexcept
 {
+    spdlog::trace("Game::render() called.");
     // TODO: Implement this.
     BeginDrawing();
     {
@@ -58,4 +75,15 @@ void missiletoad::Game::render() noexcept
         DrawNuklear(nuklear_context.get());
     }
     EndDrawing();
+    spdlog::trace("Game::render() finished.");
+}
+
+void missiletoad::Game::debug_gui() noexcept
+{
+    // Show FPS and frame time
+    const auto fps        = fmt::format("FPS: {}", GetFPS());
+    const auto frame_time = fmt::format("Frame time: {:.2f} ms", GetFrameTime() * 1000);
+
+    DrawText(fps.c_str(), 0, 0, 20, RED);
+    DrawText(frame_time.c_str(), 150, 0, 20, RED);
 }

@@ -23,4 +23,3 @@ jobs:
         run: |
           find missile_toad -iname *.hpp -o -iname *.cpp | xargs clang-format -i -style=file --dry-run --Werror
           find tests -iname *.hpp -o -iname *.cpp | xargs clang-format -i -style=file --dry-run --Werror
-        
