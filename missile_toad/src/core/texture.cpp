@@ -4,7 +4,6 @@ missiletoad::core::Texture::Texture(std::unique_ptr<raylib::Texture> &&texture) 
 {
 }
 
-
 raylib::Texture &missiletoad::core::Texture::get_texture() const noexcept
 {
     return *texture_;

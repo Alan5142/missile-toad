@@ -21,7 +21,7 @@ namespace missiletoad::core
         Texture(const Texture &)            = delete;
         Texture &operator=(const Texture &) = delete;
 
-        Texture(Texture &&) noexcept            = default;
+        Texture(Texture &&) noexcept = default;
         explicit Texture(std::unique_ptr<raylib::Texture> &&texture) noexcept;
         Texture &operator=(Texture &&) noexcept = default;
 

@@ -12,7 +12,7 @@ namespace missiletoad
     {
         class BaseSystem;
         class AssetManager;
-    }
+    } // namespace core
 
     /**
      * A class that represents the game.

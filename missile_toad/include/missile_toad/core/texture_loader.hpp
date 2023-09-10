@@ -12,4 +12,4 @@ namespace missiletoad::core
 
         result_type operator()(std::string_view name) const;
     };
-}
+} // namespace missiletoad::core

@@ -2,11 +2,11 @@
 
 #include <chrono>
 #include <cstdint>
-#include <memory>
-#include <string_view>
 #include <gsl/gsl>
-#include <utility>
+#include <memory>
 #include <optional>
+#include <string_view>
+#include <utility>
 
 #if defined(_WIN32)
 #    define NOGDI  // All GDI defines and routines
@@ -42,7 +42,9 @@ namespace missiletoad::core
      */
     constexpr const float UPDATE_RATE = 1.0F / 60.0F;
 
-    std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> load_file(std::string_view name); // NOLINT(*-avoid-c-arrays)
+    // NOLINTNEXTLINE(*-avoid-c-arrays)
+    std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> load_file(
+        std::string_view name);
 } // namespace missiletoad::core
 
 template <class T>
