@@ -48,6 +48,9 @@ add_custom_target(format
         ${ALL_SOURCE_FILES}
         )
 
+# Add clang-tidy files
+file(GLOB_RECURSE ALL_SOURCE_FILES missile_toad/*.cpp missile_toad/*.hpp tests/*.cpp tests/*.hpp)
+
 # Add clang-tidy target
 add_custom_target(tidy
         COMMAND clang-tidy

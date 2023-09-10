@@ -6,7 +6,7 @@
 #include <memory>
 #include <physfs.h>
 
-#include "missile_toad/common.hpp"
+#include "missile_toad/core/common.hpp"
 #include "missile_toad/game.hpp"
 
 #ifdef PLATFORM_NX
@@ -72,19 +72,12 @@ int main(int argc, char *argv[]) noexcept(false)
     int screen_height = SCREEN_HEIGHT;
 
     spdlog::info("Initializing PhysFS.");
-    if (PHYSFS_init(argv[0]) == 0)
-    {
-        return 1;
-    }
 
     spdlog::info("Initializing audio device.");
     //    InitAudioDevice();
 
     spdlog::info("Setting PhysFS callbacks.");
     ::SetLoadFileDataCallback(load_file_data_callback);
-
-    spdlog::info("Mounting romfs.");
-    PHYSFS_mount("romfs:/", "/", 1);
 
     spdlog::info("Creating window of size {}x{}.", screen_width, screen_height);
     raylib::Window window(screen_width, screen_height, "raylib-cpp - basic window");
@@ -110,11 +103,11 @@ int main(int argc, char *argv[]) noexcept(false)
         // But if the game is running at 30 FPS, then the fixed update will be called every frame.
         // To achieve this, we accumulate the time between frames, and call the fixed update
         // as many times as needed.
-        while (accumulator >= std::chrono::duration<float>(missiletoad::UPDATE_RATE))
+        while (accumulator >= std::chrono::duration<float>(missiletoad::core::UPDATE_RATE))
         {
             // FixedTick
-            game->fixed_update(missiletoad::UPDATE_RATE);
-            accumulator -= std::chrono::duration<float>(missiletoad::UPDATE_RATE);
+            game->fixed_update(missiletoad::core::UPDATE_RATE);
+            accumulator -= std::chrono::duration<float>(missiletoad::core::UPDATE_RATE);
         }
 
         // Tick

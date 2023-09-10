@@ -1,14 +1,6 @@
 Checks:
   -*,
-  modernize-*,
-  readability-*,
-  clang-analyzer-*,
-  bugprone-*,
-  cppcoreguidelines-*,
   readability-identifier-naming,
-  -modernize-use-trailing-return-type,
-  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
-  -cppcoreguidelines-avoid-magic-numbers
 
 CheckOptions:
   readability-identifier-naming.NamespaceCase: lower_case
@@ -64,12 +56,3 @@ CheckOptions:
   readability-identifier-naming.PrivateVariableCase: lower_case
   readability-identifier-naming.ProtectedVariableCase: lower_case
   readability-identifier-naming.PublicVariableCase: lower_case
-
-
-WarningsAsErrors: >
-  -*,
-  modernize-*,
-  cppcoreguidelines-*,
-  readability-identifier-naming
-  -cppcoreguidelines-avoid-magic-numbers
-  -readability-magic-numbers

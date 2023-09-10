@@ -1,12 +1,13 @@
 from argparse import ArgumentParser, Namespace
 import sys
 
+
 # Utilities scripts for missiletoad
 # It contains the following scripts:
 # - generate_component: Generate a new component
 
-def generate_system(name_nms:Namespace):
-    name:str = name_nms.name
+def generate_system(name_nms: Namespace):
+    name: str = name_nms.name
     if not name:
         print('System name is required')
         return
@@ -57,9 +58,11 @@ void missiletoad::{pascal_case_name}System::register_system(entt::meta_ctx &ctx)
         f.write(component_template_cpp)
 
     with open(f'missile_toad/cmake/systems.cmake', 'a') as f:
-        f.write(f'''include_system(missile_toad/systems/{name}.system.hpp src/systems/{name}.system.cpp missiletoad::{pascal_case_name}System)''')
+        f.write(
+            f'''include_system(missile_toad/systems/{name}.system.hpp src/systems/{name}.system.cpp missiletoad::{pascal_case_name}System)''')
 
     print(f'Generated system {name}')
+
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Missile Toad utilities')

@@ -1,0 +1,54 @@
+#pragma once
+#include "common.hpp"
+#include "texture_loader.hpp"
+
+#include <entt/core/hashed_string.hpp>
+#include <entt/resource/cache.hpp>
+#include <unordered_map>
+
+#include <raylib-cpp.hpp>
+
+namespace missiletoad::core
+{
+    class AssetManager
+    {
+    private:
+        entt::resource_cache<Texture, TextureLoader> texture_cache_;
+
+    public:
+        AssetManager();
+        ~AssetManager();
+
+        AssetManager(const AssetManager &)            = delete;
+        AssetManager &operator=(const AssetManager &) = delete;
+
+        AssetManager(AssetManager &&)            = delete;
+        AssetManager &operator=(AssetManager &&) = delete;
+
+        // GCC has a bug that prevents template specializations in non-namespace scope.
+        // See: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85282
+        // Workaround is to use partial specializations with std::same_as.
+
+        /**
+         * Dummy load function that will fail to compile if the type is not supported.
+         */
+        template <typename T>
+        entt::resource<T> load(std::string_view name)
+        {
+            unused(name);
+            static_assert("Asset type not supported");
+        }
+
+        /**
+         * Loads a texture.
+         * @tparam T Texture
+         * @param name The name of the texture in the filesystem.
+         * @return The texture.
+         */
+        template <std::same_as<Texture> T>
+        entt::resource<T> load(std::string_view name)
+        {
+            return texture_cache_.load(entt::hashed_string{name.data()}, name.data()).first->second;
+        }
+    };
+} // namespace missiletoad::core
