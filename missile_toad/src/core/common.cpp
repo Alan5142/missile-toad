@@ -2,8 +2,7 @@
 #include <physfs.h>
 
 // NOLINTNEXTLINE(*-avoid-c-arrays)
-std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> missiletoad::core::load_file(
-    std::string_view name)
+std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> missiletoad::core::load_file(std::string_view name)
 {
     spdlog::trace("load_file() called. with file: {}", name);
     // Load texture from memory using PhysFS

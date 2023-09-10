@@ -43,8 +43,7 @@ namespace missiletoad::core
     constexpr const float UPDATE_RATE = 1.0F / 60.0F;
 
     // NOLINTNEXTLINE(*-avoid-c-arrays)
-    std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> load_file(
-        std::string_view name);
+    std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> load_file(std::string_view name);
 } // namespace missiletoad::core
 
 template <class T>
