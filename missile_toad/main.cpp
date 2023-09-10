@@ -7,7 +7,6 @@
 #include <physfs.h>
 
 #include "missile_toad/core/common.hpp"
-#include "missile_toad/core/resource_ptr.hpp"
 #include "missile_toad/game.hpp"
 
 #ifdef PLATFORM_NX
@@ -72,22 +71,13 @@ int main(int argc, char *argv[]) noexcept(false)
     int screen_width  = SCREEN_WIDTH;
     int screen_height = SCREEN_HEIGHT;
 
-    missiletoad::core::ResourcePtr<int> test;
-
     spdlog::info("Initializing PhysFS.");
-    if (PHYSFS_init(argv[0]) == 0)
-    {
-        return 1;
-    }
 
     spdlog::info("Initializing audio device.");
     //    InitAudioDevice();
 
     spdlog::info("Setting PhysFS callbacks.");
     ::SetLoadFileDataCallback(load_file_data_callback);
-
-    spdlog::info("Mounting romfs.");
-    PHYSFS_mount("romfs:/", "/", 1);
 
     spdlog::info("Creating window of size {}x{}.", screen_width, screen_height);
     raylib::Window window(screen_width, screen_height, "raylib-cpp - basic window");

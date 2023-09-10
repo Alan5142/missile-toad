@@ -1,19 +1,19 @@
 #pragma once
 #include "common.hpp"
+#include "texture_loader.hpp"
 
+#include <entt/core/hashed_string.hpp>
+#include <entt/resource/cache.hpp>
 #include <unordered_map>
 
-#include "raylib-cpp.hpp"
+#include <raylib-cpp.hpp>
 
 namespace missiletoad::core
 {
     class AssetManager
     {
     private:
-        std::unordered_map<std::string, std::shared_ptr<raylib::Texture>> textures;
-        std::unordered_map<std::string, std::shared_ptr<raylib::Sound>>   sounds;
-        std::unordered_map<std::string, std::shared_ptr<raylib::Music>>   music;
-        std::unordered_map<std::string, std::shared_ptr<raylib::Font>>    fonts;
+        entt::resource_cache<Texture, TextureLoader> texture_cache_;
 
     public:
         AssetManager();
@@ -25,40 +25,30 @@ namespace missiletoad::core
         AssetManager(AssetManager &&)            = delete;
         AssetManager &operator=(AssetManager &&) = delete;
 
-        /**
-         * Get a texture from the asset manager. If the texture is not loaded, it will be loaded.
-         * @param name Path to the texture in the VFS.
-         * @return A shared pointer to the texture.
-         */
-        std::shared_ptr<raylib::Texture> get_texture(std::string_view name);
+        // GCC has a bug that prevents template specializations in non-namespace scope.
+        // See: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85282
+        // Workaround is to use partial specializations with std::same_as.
 
         /**
-         * Get a sound from the asset manager. If the sound is not loaded, it will be loaded.
-         * @param name Path to the sound in the VFS.
-         * @return A shared pointer to the sound.
+         * Dummy load function that will fail to compile if the type is not supported.
          */
-        std::shared_ptr<raylib::Sound> get_sound(std::string_view name);
+        template <typename T>
+        entt::resource<T> load(std::string_view name)
+        {
+            unused(name);
+            static_assert("Asset type not supported");
+        }
 
         /**
-         * Get a music from the asset manager. If the music is not loaded, it will be loaded.
-         * @param name Path to the music in the VFS.
-         * @return A shared pointer to the music.
+         * Loads a texture.
+         * @tparam T Texture
+         * @param name The name of the texture in the filesystem.
+         * @return The texture.
          */
-        std::shared_ptr<raylib::Music> get_music(std::string_view name);
-
-        /**
-         * Get a font from the asset manager. If the font is not loaded, it will be loaded.
-         * @param name Path to the font in the VFS.
-         * @return A shared pointer to the font.
-         */
-        std::shared_ptr<raylib::Font> get_font(std::string_view name);
-
-    private:
-        /**
-         * Load a file from the VFS.
-         * @param name Path to the file in the VFS.
-         * @return A vector of bytes containing the file.
-         */
-        static std::vector<std::byte> load_file(std::string_view name);
+        template <std::same_as<Texture> T>
+        entt::resource<T> load(std::string_view name)
+        {
+            return texture_cache_.load(entt::hashed_string{name.data()}, name.data()).first->second;
+        }
     };
 } // namespace missiletoad::core

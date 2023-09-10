@@ -6,12 +6,13 @@ generate_systems()
 
 set(MISSILETOAD_CORE_SOURCES
         src/core/asset_manager.cpp
-        src/core/resource_ptr.cpp
+        src/core/texture.cpp
+        src/core/texture_loader.cpp
+        src/core/common.cpp
 )
 
 set(MISSILETOAD_SOURCES
         ${MISSILETOAD_CORE_SOURCES}
-        src/dummy.cpp
         src/game.cpp
 
         ${CMAKE_CURRENT_BINARY_DIR}/systems.cpp
