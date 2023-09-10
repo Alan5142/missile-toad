@@ -17,7 +17,7 @@ endfunction()
 function (generate_systems)
     set(SYSTEM_GENERATED_FILES "\
 #include <entt/meta/factory.hpp>\n\
-#include <missile_toad/common.hpp>\n\
+#include <missile_toad/core/common.hpp>\n\
 #include <entt/meta/meta.hpp>\n")
 
     foreach (SYSTEM_INCLUDE ${SYSTEMS_INCLUDES})

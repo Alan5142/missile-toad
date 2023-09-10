@@ -1,6 +1,6 @@
 #pragma once
 
-#include "missile_toad/common.hpp"
+#include "missile_toad/core/common.hpp"
 #include "raylib-nuklear.h"
 
 #include <entt/meta/factory.hpp>
@@ -8,7 +8,10 @@
 
 namespace missiletoad
 {
-    class BaseSystem;
+    namespace core
+    {
+        class BaseSystem;
+    }
 
     /**
      * A class that represents the game.
@@ -23,7 +26,7 @@ namespace missiletoad
     {
         entt::meta_ctx                                      systems_meta_ctx;
         entt::meta_ctx                                      components_meta_ctx;
-        std::vector<std::unique_ptr<BaseSystem>>            components;
+        std::vector<std::unique_ptr<core::BaseSystem>>      components;
         std::unique_ptr<nk_context, void (*)(nk_context *)> nuklear_context;
         char                                              **argv;
         int                                                 argc;

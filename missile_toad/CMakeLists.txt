@@ -1,24 +1,30 @@
-include (cmake/add_system.cmake)
+include(cmake/add_system.cmake)
 
 include(cmake/systems.cmake)
 
 generate_systems()
 
-set(MISSILETOAD_SOURCES
-    src/dummy.cpp
-    src/game.cpp
+set(MISSILETOAD_CORE_SOURCES
+        src/core/asset_manager.cpp
+        src/core/resource_ptr.cpp
+)
 
-    ${CMAKE_CURRENT_BINARY_DIR}/systems.cpp
-    ${SYSTEMS_SOURCE_FILES}
+set(MISSILETOAD_SOURCES
+        ${MISSILETOAD_CORE_SOURCES}
+        src/dummy.cpp
+        src/game.cpp
+
+        ${CMAKE_CURRENT_BINARY_DIR}/systems.cpp
+        ${SYSTEMS_SOURCE_FILES}
 )
 
 add_library(missiletoad ${MISSILETOAD_SOURCES})
 
 if (WIN32)
     add_executable(missiletoad-game WIN32 main.cpp)
-else()
+else ()
     add_executable(missiletoad-game main.cpp)
-endif()
+endif ()
 
 target_link_libraries(missiletoad PUBLIC raylib raylib_cpp fmt::fmt physfs-static Microsoft.GSL::GSL box2d nuklear::nuklear glm::glm EnTT::EnTT spdlog::spdlog_header_only)
 target_link_libraries(missiletoad-game PRIVATE missiletoad)
@@ -31,7 +37,7 @@ endif ()
 if (MSVC)
     target_compile_options(missiletoad PRIVATE /W4 /WX)
     target_compile_options(missiletoad-game PRIVATE /W4 /WX)
-else()
+else ()
     target_compile_options(missiletoad PRIVATE -Wall -Wextra -pedantic -Werror)
     target_compile_options(missiletoad-game PRIVATE -Wall -Wextra -pedantic -Werror)
-endif()
+endif ()

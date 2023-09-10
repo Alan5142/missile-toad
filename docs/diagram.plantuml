@@ -13,6 +13,10 @@ package missiletoad {
     class AudioManager
     class AssetManager
 
+    class ResourceLoader<T>
+    class ResourceCache<T>
+    class ResourceHandle<T>
+
     class PhysicsSystem extends BaseSystem
     class RenderSystem extends BaseSystem
     class InputSystem extends BaseSystem
@@ -27,11 +31,19 @@ package missiletoad {
     class InputComponent
     class CameraComponent
 
+    class Texture2D
+    class Font
+    class Sound
+    class Music
 
     Game *-- SceneManager
     Game *-- InputManager
     Game *-- AudioManager
     Game *-- AssetManager
+
+    AssetManager *-- ResourceCache
+
+    ResourceCache *-- ResourceLoader
 
     SceneManager *-- Scene
     SceneManager *-- SceneDescriptor
@@ -155,6 +167,66 @@ package missiletoad {
 
         +CameraComponent(Camera2D camera)
     }
+
+    class ResourceCache<T> {
+        - std::unordered_map<std::string, std::shared_ptr<T>> resources
+
+        + ResourceCache()
+        + ~ResourceCache()
+        + std::shared_ptr<T> load(std::string path)
+        + std::shared_ptr<T> get(std::string path)
+        + void unload(std::string path)
+        + void unload_all()
+    }
+
+    class ResourcePtrInner<T> {
+        - T *resource
+        - size_t *ref_count
+        - size_t *weak_ref_count
+        - Function<void> deleter
+
+        + ResourcePtrInner(T *resource, size_t *ref_count, size_t *weak_ref_count, std::function<void(T*)> deleter)
+        + ~ResourcePtrInner()
+        + get(): T*
+        + get_ref_count(): size_t
+        + get_weak_ref_count(): size_t
+        + increment_ref_count()
+        + increment_weak_ref_count()
+        + decrement_ref_count()
+        + decrement_weak_ref_count()
+        + delete()
+    }
+
+    class ResourcePtr<T> {
+        - ResourcePtrInner<T> *inner
+
+        + ResourcePtr(T *resource, std::function<void(T*)> deleter)
+        + ResourcePtr(const ResourcePtr<T> &other)
+        + ResourcePtr(ResourcePtr<T> &&other)
+        + ~ResourcePtr()
+        + operator=(const ResourcePtr<T> &other): ResourcePtr<T>&
+        + operator=(ResourcePtr<T> &&other): ResourcePtr<T>&
+        + get(): T*
+        + get_ref_count(): size_t
+        + get_weak_ref_count(): size_t
+        + increment_ref_count()
+        + increment_weak_ref_count()
+        + decrement_ref_count()
+        + decrement_weak_ref_count()
+        + delete()
+        + operator->(): T*
+        + operator*(): T&
+    }
+
+    ResourcePtr *-- ResourcePtrInner
+
+    class ResourceHandle<T> {
+
+    }
+
+    /'
+    Game related classes
+    '/
 
     class HealthComponent {
         -float health

@@ -6,7 +6,8 @@
 #include <memory>
 #include <physfs.h>
 
-#include "missile_toad/common.hpp"
+#include "missile_toad/core/common.hpp"
+#include "missile_toad/core/resource_ptr.hpp"
 #include "missile_toad/game.hpp"
 
 #ifdef PLATFORM_NX
@@ -71,6 +72,8 @@ int main(int argc, char *argv[]) noexcept(false)
     int screen_width  = SCREEN_WIDTH;
     int screen_height = SCREEN_HEIGHT;
 
+    missiletoad::core::ResourcePtr<int> test;
+
     spdlog::info("Initializing PhysFS.");
     if (PHYSFS_init(argv[0]) == 0)
     {
@@ -110,11 +113,11 @@ int main(int argc, char *argv[]) noexcept(false)
         // But if the game is running at 30 FPS, then the fixed update will be called every frame.
         // To achieve this, we accumulate the time between frames, and call the fixed update
         // as many times as needed.
-        while (accumulator >= std::chrono::duration<float>(missiletoad::UPDATE_RATE))
+        while (accumulator >= std::chrono::duration<float>(missiletoad::core::UPDATE_RATE))
         {
             // FixedTick
-            game->fixed_update(missiletoad::UPDATE_RATE);
-            accumulator -= std::chrono::duration<float>(missiletoad::UPDATE_RATE);
+            game->fixed_update(missiletoad::core::UPDATE_RATE);
+            accumulator -= std::chrono::duration<float>(missiletoad::core::UPDATE_RATE);
         }
 
         // Tick

@@ -1,7 +1,7 @@
 #pragma once
-#include "missile_toad/common.hpp"
+#include "common.hpp"
 
-namespace missiletoad
+namespace missiletoad::core
 {
     class BaseSystem
     {
@@ -36,4 +36,4 @@ namespace missiletoad
         {
         }
     };
-} // namespace missiletoad
+} // namespace missiletoad::core

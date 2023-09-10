@@ -13,6 +13,7 @@ def generate_system(name_nms:Namespace):
     if not name.islower():
         print('System name must be in snake_case')
         return
+    # Name may come with a namespace, such as core::MySystem, extract the namespace name and the system name
 
     print(f'Generating system {name}')
 
