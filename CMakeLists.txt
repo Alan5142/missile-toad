@@ -19,16 +19,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # Set library output directory
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-if (ENABLE_CLANG_TIDY)
-    find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
-    if (CLANG_TIDY_EXE)
-        set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-        set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE}")
-    else ()
-        message(FATAL_ERROR "clang-tidy requested but executable not found")
-    endif ()
-endif ()
-
 add_subdirectory(missile_toad)
 if (BUILD_TESTS)
     add_subdirectory(tests)

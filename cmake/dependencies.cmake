@@ -44,3 +44,6 @@ else ()
     target_compile_options(raylib PRIVATE -w)
     target_compile_options(physfs-static PRIVATE -w)
 endif ()
+
+# Disable shared libraries for physfs
+set(PHYSFS_BUILD_SHARED OFF)

@@ -20,8 +20,6 @@ jobs:
           wget -q "https://github.com/Kitware/CMake/releases/download/v3.27.3/cmake-3.27.3-linux-x86_64.sh"
           chmod +x cmake-3.27.3-linux-x86_64.sh
           sudo ./cmake-3.27.3-linux-x86_64.sh --skip-license --prefix=/usr
-      - name: Install Ninja
-        run: sudo apt-get update && sudo apt-get install ninja-build
 
       - name: Configure CMake
         run: >
@@ -31,9 +29,9 @@ jobs:
           -DPLATFORM="Nintendo Switch"
           -DDCMAKE_CXX_FLAGS="-fexceptions"
           -DBUILD_TESTS=OFF
-          -G Ninja
+          -G "Unix Makefiles"
           -S .
 
       - name: Build
         timeout-minutes: 10
-        run: cmake --build build --config Debug
+        run: cmake --build build --config Debug -j 5
