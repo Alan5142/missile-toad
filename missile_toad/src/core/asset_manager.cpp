@@ -1,6 +1,8 @@
 #include "missile_toad/core/asset_manager.hpp"
 #include "physfs.h"
 
+#include <filesystem>
+
 #if defined(PLATFORM_NX)
 static constexpr std::string_view ASSETS_PATH      = "romfs:/assets";
 static constexpr std::string_view PREFERENCES_PATH = "sdmc:/missiletoad.preferences";
@@ -32,7 +34,17 @@ missiletoad::core::AssetManager::AssetManager()
     }
     spdlog::trace("Assets directory mounted.");
 
-    // Mount the preferences directory
+    // Create the preferences directory if it doesn't exist.
+    if (!std::filesystem::exists(PREFERENCES_PATH.data()))
+    {
+        if (!std::filesystem::create_directory(PREFERENCES_PATH.data()))
+        {
+            spdlog::error("Failed to create preferences directory: {}", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+            throw std::runtime_error("Failed to create preferences directory");
+        }
+    }
+
+    // Mount the preferences directory, first creating it if it doesn't exist.
     if (PHYSFS_mount(PREFERENCES_PATH.data(), PREFERENCES_PATH_MOUNT_POINT.data(), 0) == 0)
     {
         spdlog::error("Failed to mount preferences directory: {}", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
