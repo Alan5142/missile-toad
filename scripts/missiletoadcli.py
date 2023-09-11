@@ -1,3 +1,4 @@
+import os
 from argparse import ArgumentParser, Namespace
 import sys
 
@@ -15,20 +16,37 @@ def generate_system(name_nms: Namespace):
         print('System name must be in snake_case')
         return
 
-    print(f'Generating system {name}')
+    # Name might contain a namespace in the form of namespace::name (only one level)
+    # If it does, we need to create the namespace folder. If only the name is provided, we don't need to create any folder
+    # More than one level of namespace is not supported and will throw an error
+    namespace = ''
+    if '::' in name:
+        splitted = name.split('::')
+        if len(splitted) != 2:
+            print('Only one level of namespace is supported')
+            return
+        namespace = splitted[0]
+        name = splitted[1]
+        # Create namespace folder
+        os.mkdir(f'missile_toad/include/missile_toad/{namespace}/systems')
+        os.mkdir(f'missile_toad/src/{namespace}/systems')
+    else:
+        namespace = 'missiletoad'
+
+    print(f'Generating system {name} in namespace {namespace}')
 
     # Convert snake_case to PascalCase
     pascal_case_name = ''.join([word.capitalize() for word in name.split('_')])
 
     component_template_h = f'''
-#include "missile_toad/base_system.hpp"
-#include "missile_toad/common.hpp"
+#include "missile_toad/core/base_system.hpp"
+#include "missile_toad/core/common.hpp"
 
 #include <entt/meta/meta.hpp>
 
-namespace missiletoad
+namespace {namespace}
 {{
-    class {pascal_case_name}System : public missiletoad::BaseSystem
+    class {pascal_case_name}System : public missiletoad::core::BaseSystem
     {{
     public:
         static void register_system(entt::meta_ctx& ctx);
@@ -37,32 +55,34 @@ namespace missiletoad
 '''
 
     component_template_cpp = f'''
-#include "missile_toad/systems/{name}.system.hpp"
+#include "missile_toad/{namespace}/systems/{name}.system.hpp"
 #include <entt/meta/meta.hpp>
 #include <entt/meta/factory.hpp>
 
 
-void missiletoad::{pascal_case_name}System::register_system(entt::meta_ctx &ctx)
+void {namespace}::{pascal_case_name}System::register_system(entt::meta_ctx &ctx)
 {{
     using namespace entt::literals;
-    entt::meta<missiletoad::{pascal_case_name}System>(ctx)
-            .type("missiletoad::{pascal_case_name}System"_hs)
-            .base<missiletoad::BaseSystem>()
+    entt::meta<{namespace}::{pascal_case_name}System>(ctx)
+            .type("{namespace}::{pascal_case_name}System"_hs)
+            .base<missiletoad::core::BaseSystem>()
             .ctor<>();
 }}'''
 
-    with open(f'missile_toad/include/missile_toad/systems/{name}.system.hpp', 'w') as f:
+    with open(f'missile_toad/include/missile_toad/{namespace}/systems/{name}.system.hpp', 'w') as f:
         f.write(component_template_h)
 
-    with open(f'missile_toad/src/systems/{name}.system.cpp', 'w') as f:
+    with open(f'missile_toad/src/{namespace}/systems/{name}.system.cpp', 'w') as f:
         f.write(component_template_cpp)
 
     with open(f'missile_toad/cmake/systems.cmake', 'a') as f:
         f.write(
-            f'''include_system(missile_toad/systems/{name}.system.hpp src/systems/{name}.system.cpp missiletoad::{pascal_case_name}System)''')
+            f'''include_system(missile_toad/{namespace}/systems/{name}.system.hpp src/{namespace}/systems/{name}.system.cpp {namespace}::{pascal_case_name}System)''')
 
     print(f'Generated system {name}')
 
+def generate_component(name_nms: Namespace):
+    pass
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Missile Toad utilities')

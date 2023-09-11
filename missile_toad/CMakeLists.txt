@@ -1,6 +1,7 @@
-include(cmake/add_system.cmake)
+include(cmake/system_component_registry.cmake)
 
 include(cmake/systems.cmake)
+include(cmake/components.cmake)
 
 generate_systems()
 
@@ -9,6 +10,7 @@ set(MISSILETOAD_CORE_SOURCES
         src/core/texture.cpp
         src/core/texture_loader.cpp
         src/core/common.cpp
+        src/core/scene.cpp
 )
 
 set(MISSILETOAD_SOURCES
@@ -17,6 +19,7 @@ set(MISSILETOAD_SOURCES
 
         ${CMAKE_CURRENT_BINARY_DIR}/systems.cpp
         ${SYSTEMS_SOURCE_FILES}
+        ${COMPONENTS_SOURCE_FILES}
 )
 
 add_library(missiletoad ${MISSILETOAD_SOURCES})
