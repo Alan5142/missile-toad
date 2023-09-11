@@ -1,6 +1,7 @@
 #pragma once
 
 #include "missile_toad/core/common.hpp"
+#include "missile_toad/core/scene.hpp"
 #include "raylib-nuklear.h"
 
 #include <entt/meta/factory.hpp>
@@ -30,6 +31,7 @@ namespace missiletoad
         std::vector<std::unique_ptr<core::BaseSystem>>      components_;
         std::unique_ptr<core::AssetManager>                 asset_manager_;
         std::unique_ptr<nk_context, void (*)(nk_context *)> nuklear_context_;
+        std::unique_ptr<core::Scene>                        scene_;
         char                                              **argv_;
         int                                                 argc_;
         bool                                                debug_mode_;

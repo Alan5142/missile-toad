@@ -2,14 +2,16 @@
 #include "fmt/format.h"
 #include "missile_toad/core/asset_manager.hpp"
 #include "missile_toad/core/base_system.hpp"
+#include "missile_toad/core/components/camera_2d.component.hpp"
+#include "missile_toad/core/components/sprite.component.hpp"
+#include "missile_toad/core/components/transform.component.hpp"
+#include "missile_toad/core/systems/renderer.system.hpp"
 #include "nuklear.h"
 #include "raylib-nuklear.h"
 
 #include <entt/locator/locator.hpp>
 
 extern void register_system(entt::meta_ctx &ctx);
-
-static entt::resource<missiletoad::core::Texture> MISSILE_TOAD; // NOLINT(*-avoid-non-const-global-variables)
 
 missiletoad::Game::Game(int argc, char **argv)
     : nuklear_context_(nullptr, nullptr), argv_(argv), argc_(argc), debug_mode_(true)
@@ -29,7 +31,29 @@ missiletoad::Game::Game(int argc, char **argv)
     asset_manager_ = std::make_unique<core::AssetManager>();
     entt::locator<core::AssetManager *>::emplace(asset_manager_.get());
 
-    MISSILE_TOAD = asset_manager_->load<core::Texture>("/assets/textures/missiletoad.png");
+    auto missile_toad_tex = asset_manager_->load<core::Texture>("/assets/textures/missiletoad.png");
+
+    scene_ = std::make_unique<missiletoad::core::Scene>();
+
+    scene_->add_system<core::RendererSystem>();
+
+    auto &registry = scene_->get_registry();
+
+    auto missile_toad_entity = registry.create();
+
+    registry.emplace<core::SpriteComponent>(missile_toad_entity, missile_toad_tex);
+    auto transform     = core::TransformComponent{};
+    transform.position = {30, 30};
+    transform.scale    = {1, 1};
+    transform.rotation = 0;
+    registry.emplace<core::TransformComponent>(missile_toad_entity, transform);
+
+    // Create a camera
+    auto camera_entity = registry.create();
+    auto camera        = core::Camera2dComponent{};
+    camera.camera      = Camera2D{.offset = Vector2{0, 0}, .target = Vector2{0, 0}, .rotation = 0, .zoom = 1};
+    registry.emplace<core::Camera2dComponent>(camera_entity, camera);
+    registry.emplace<core::TransformComponent>(camera_entity, transform);
 
     // Register Systems meta types.
     register_system(systems_meta_ctx_);
@@ -52,7 +76,10 @@ void missiletoad::Game::update(float delta_time) noexcept
     // The first step is to update the nuklear context so that it can handle input.
     UpdateNuklear(nuklear_context_.get());
 
-    // TODO: Update the scene.
+    if (scene_)
+    {
+        scene_->update(delta_time);
+    }
 
     spdlog::trace("Game::update() finished.");
 
@@ -62,11 +89,13 @@ void missiletoad::Game::update(float delta_time) noexcept
     }
 }
 
-void missiletoad::Game::fixed_update(float /*delta_time*/) noexcept
+void missiletoad::Game::fixed_update(float delta_time) noexcept
 {
     spdlog::trace("Game::fixed_update() called.");
-    // TODO: Update the scene.
-    unused(this);
+    if (scene_)
+    {
+        scene_->fixed_update(delta_time);
+    }
 
     spdlog::trace("Game::fixed_update() finished.");
 }
@@ -77,12 +106,12 @@ void missiletoad::Game::render() noexcept
     // TODO: Implement this.
     BeginDrawing();
     {
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
-        // TODO: Update the scene.
-        // this->current_scene->render();
-
-        ::DrawTexture(MISSILE_TOAD->get_texture(), 0, 0, WHITE);
+        if (scene_)
+        {
+            scene_->on_render();
+        }
 
         DrawNuklear(nuklear_context_.get());
     }
