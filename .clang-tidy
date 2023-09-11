@@ -17,6 +17,7 @@ Checks:
     -hicpp-invalid-access-moved,
     -readability-magic-numbers,
     -readability-convert-member-functions-to-static,
+    -cppcoreguidelines-pro-type-union-access,
 
 
 CheckOptions:

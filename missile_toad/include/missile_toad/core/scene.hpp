@@ -22,7 +22,7 @@ namespace missiletoad::core
         std::vector<std::unique_ptr<BaseSystem>> systems_;
 
     public:
-        Scene()  = default;
+        Scene();
         ~Scene() = default;
 
         Scene(const Scene &)            = delete;

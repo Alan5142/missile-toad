@@ -28,3 +28,6 @@ clean:
 # Generate a new system, requires name
 gen-system name:
     python scripts/missiletoadcli.py system {{name}}
+
+gen-component name:
+    python scripts/missiletoadcli.py component {{name}}

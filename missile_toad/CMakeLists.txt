@@ -3,7 +3,11 @@ include(cmake/system_component_registry.cmake)
 include(cmake/systems.cmake)
 include(cmake/components.cmake)
 
+message(STATUS "Systems to include ${SYSTEMS}")
+message(STATUS "Components to include ${COMPONENTS}")
+
 generate_systems()
+generate_components()
 
 set(MISSILETOAD_CORE_SOURCES
         src/core/asset_manager.cpp

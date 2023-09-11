@@ -54,7 +54,7 @@ set(COMPONENTS_SOURCE_FILES "")
 #   name: System name. It must include the namespace. Example: "missiletoad::systems::physics".
 function (include_component include source name )
     # Add the system to the list of systems.
-    set(COMPONENTS ${SYSTEMS} ${name} PARENT_SCOPE)
+    set(COMPONENTS ${COMPONENTS} ${name} PARENT_SCOPE)
     set(COMPONENTS_INCLUDES ${COMPONENTS_INCLUDES} "#include \"${include}\"" PARENT_SCOPE)
     set(COMPONENTS_SOURCE_FILES ${COMPONENTS_SOURCE_FILES} ${source} PARENT_SCOPE)
 endfunction()
@@ -65,8 +65,8 @@ function (generate_components)
 #include <missile_toad/core/common.hpp>\n\
 #include <entt/meta/meta.hpp>\n")
 
-    foreach (COMPONENTS_INCLUDE ${SYSTEMS_INCLUDES})
-        set(COMPONENTS_GENERATED_FILES "${SYSTEM_GENERATED_FILES}\n${SYSTEM_INCLUDE}")
+    foreach (COMPONENTS_INCLUDE ${COMPONENTS_INCLUDES})
+        set(COMPONENTS_GENERATED_FILES "${COMPONENTS_GENERATED_FILES}\n${COMPONENTS_INCLUDE}")
     endforeach()
 
     set (COMPONENTS_GENERATED_FILES "${COMPONENTS_GENERATED_FILES}\n\
@@ -75,7 +75,7 @@ void register_components(entt::meta_ctx& ctx)\n{\n")
     # Generate the reflection code for the systems.
     # It must generate a function that calls the static function "register_system" of the system.
     foreach(COMPONENT ${COMPONENTS})
-        set(COMPONENTS_GENERATED_FILES "${COMPONENTS_GENERATED_FILES}    ${COMPONENT}::register_system(ctx);\n")
+        set(COMPONENTS_GENERATED_FILES "${COMPONENTS_GENERATED_FILES}    ${COMPONENT}::register_component(ctx);\n")
     endforeach()
     # Check if len of SYSTEMS is 0
     if (NOT COMPONENTS)
