@@ -39,7 +39,8 @@ missiletoad::core::AssetManager::AssetManager()
     {
         if (!std::filesystem::create_directory(PREFERENCES_PATH.data()))
         {
-            spdlog::error("Failed to create preferences directory: {}", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+            spdlog::error("Failed to create preferences directory: {}",
+                          PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
             throw std::runtime_error("Failed to create preferences directory");
         }
     }
