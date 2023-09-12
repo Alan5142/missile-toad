@@ -15,6 +15,7 @@ set(MISSILETOAD_CORE_SOURCES
         src/core/texture_loader.cpp
         src/core/common.cpp
         src/core/scene.cpp
+        src/core/timer.cpp
 )
 
 set(MISSILETOAD_SOURCES

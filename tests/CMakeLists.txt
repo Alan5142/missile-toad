@@ -2,7 +2,7 @@
 
 ## Running the tests
 
-set(TEST_SOURCES src/core/dummy.cpp)
+set(TEST_SOURCES src/core/dummy.cpp src/core/timer.cpp)
 
 add_executable(tests ${TEST_SOURCES})
 target_link_libraries(tests PRIVATE missiletoad Catch2::Catch2WithMain)
