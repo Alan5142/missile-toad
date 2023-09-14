@@ -24,6 +24,11 @@ missiletoad::Game::Game(int argc, char **argv)
 
     spdlog::info("Initializing game.");
 
+    spdlog::info("Creating window.");
+    window_.Init(1280, 720, "Missile Toad");
+
+    spdlog::info("Game initialized.");
+
     nuklear_context_ = std::unique_ptr<nk_context, void (*)(nk_context *)>(InitNuklear(12), UnloadNuklear);
     if (nuklear_context_ == nullptr)
     {
@@ -150,4 +155,44 @@ void missiletoad::Game::debug_gui() noexcept
 
     DrawText(fps.c_str(), 0, 0, 20, RED);
     DrawText(frame_time.c_str(), 150, 0, 20, RED);
+}
+
+void missiletoad::Game::run() noexcept
+{
+    auto current_time = std::chrono::high_resolution_clock::now();
+    auto accumulator  = std::chrono::duration<float>(0);
+
+    while (!window_.ShouldClose())
+    {
+        auto new_time   = std::chrono::high_resolution_clock::now();
+        auto frame_time = new_time - current_time;
+        current_time    = new_time;
+        accumulator += frame_time;
+
+        // We do this to guarantee that the fixed update is called at a fixed rate.
+        // For instance, if the game is running at 60 FPS, and the fixed update rate is 30 FPS,
+        // then the fixed update will be called every 2 frames.
+        // But if the game is running at 30 FPS, then the fixed update will be called every frame.
+        // To achieve this, we accumulate the time between frames, and call the fixed update
+        // as many times as needed.
+        while (accumulator >= std::chrono::duration<float>(missiletoad::core::UPDATE_RATE))
+        {
+            // FixedTick
+            this->fixed_update(missiletoad::core::UPDATE_RATE);
+            accumulator -= std::chrono::duration<float>(missiletoad::core::UPDATE_RATE);
+        }
+
+        // Tick
+        auto delta_time = std::chrono::duration<float>(frame_time).count();
+        this->update(delta_time);
+
+        // Render
+        this->render();
+    }
+}
+void missiletoad::Game::close() noexcept
+{
+    spdlog::trace("Game::close() called.");
+    window_.Close();
+    spdlog::trace("Game::close() finished.");
 }

@@ -183,12 +183,13 @@ if __name__ == '__main__':
     subparsers = parser.add_subparsers(help='Sub commands')
 
     # Generate system
-    parser_generate_system = subparsers.add_parser('system', help='Generate a new system')
+    parser_generate_system = subparsers.add_parser('system', help='Generate a new system', aliases=['s', 'sys'])
     parser_generate_system.add_argument('name', help='System name in snake_case')
     parser_generate_system.set_defaults(func=generate_system)
 
     # Generate component
-    parser_generate_component = subparsers.add_parser('component', help='Generate a new component')
+    parser_generate_component = subparsers.add_parser('component', help='Generate a new component',
+                                                      aliases=['c', 'comp'])
     parser_generate_component.add_argument('name', help='Component name in snake_case')
     parser_generate_component.set_defaults(func=generate_component)
 

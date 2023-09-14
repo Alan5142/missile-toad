@@ -5,6 +5,7 @@
 #include "raylib-nuklear.h"
 
 #include <entt/meta/factory.hpp>
+#include <raylib-cpp.hpp>
 #include <vector>
 
 namespace missiletoad
@@ -34,6 +35,7 @@ namespace missiletoad
         std::unique_ptr<core::Scene>                        scene_;
         char                                              **argv_;
         int                                                 argc_;
+        raylib::Window                                      window_;
         bool                                                debug_mode_;
 
     public:
@@ -71,6 +73,18 @@ namespace missiletoad
          * So, this is not a place to put game logic.
          */
         void render() noexcept;
+
+        /**
+         * The game loop of the game. It runs the game.
+         * @param argc main's argc
+         * @param argv main's argv
+         */
+        void run() noexcept;
+
+        /**
+         * Closes the game.
+         */
+        void close() noexcept;
 
     private:
         /**

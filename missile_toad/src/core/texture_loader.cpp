@@ -11,10 +11,13 @@ missiletoad::core::TextureLoader::result_type missiletoad::core::TextureLoader::
         spdlog::error("Failed to load texture");
         throw std::runtime_error("Failed to load texture");
     }
+    spdlog::trace("Loaded texture from {}", name);
 
     auto &[data, size] = data_opt.value();
     // Get file extension (including .)
     std::string_view extension = name.substr(name.find_last_of('.'));
+
+    spdlog::trace("Texture has extension {}", extension);
 
     // Load the texture from memory
     auto texture = LoadImageFromMemory(extension.data(), data.get(), static_cast<int>(size));
@@ -25,9 +28,11 @@ missiletoad::core::TextureLoader::result_type missiletoad::core::TextureLoader::
         spdlog::error("Failed to load texture");
         throw std::runtime_error("Failed to load texture");
     }
+    spdlog::trace("Loaded texture from memory");
 
     // Generate the texture
     auto texture_ptr = std::make_unique<raylib::Texture>(LoadTextureFromImage(texture));
+    spdlog::info("Loaded texture to GPU");
 
     // Unload the image
     UnloadImage(texture);

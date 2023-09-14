@@ -26,6 +26,13 @@ Optionally, you can install the following tools to improve your development expe
 * [Ccache](https://ccache.dev/): used to cache compilation results
 * [Just](https://github.com/casey/just): used to run some scripts (see justfile)
 
+To build the docs, you will need the following tools:
+* [Doxygen](https://www.doxygen.nl/download.html): used to generate documentation
+* [PlantUML](https://plantuml.com/download): used to generate UML diagrams
+* [Sphinx](https://www.sphinx-doc.org/en/master/usage/installation.html): used to generate the website
+    * Dependencies, which are included in `Pipfile`
+    * [Pipenv](https://pipenv.pypa.io/en/latest/): used to manage dependencies
+
 ## Building
 
 The process of building Missile Toad is very simple. In fact, we only rely on CMake to do all the work for us.
@@ -93,3 +100,11 @@ just lint
 ```
 
 Check the justfile for more commands.
+
+## Generating documentation
+Run the following command to generate the documentation:
+```bash
+just docs
+```
+
+Output will be generated in `build/docs/sphinx/`

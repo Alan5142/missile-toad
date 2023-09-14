@@ -1,6 +1,13 @@
 # Default is to build the project
 default: build
 
+alias fmt := format
+alias b := build
+alias c := configure
+alias l := lint
+alias t := test
+alias g := gen
+
 # Configure the project. Requires build type (Debug, Release, MinSizeRel, RelWithDebInfo)
 configure type:
     mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE={{type}} -DGRAPHICS=GRAPHICS_API_OPENGL_ES2
@@ -25,9 +32,10 @@ test:
 clean:
     rm -rf build
 
-# Generate a new system, requires name
-gen-system name:
-    python scripts/missiletoadcli.py system {{name}}
+# Generate a new project file (component, system) in the project
+gen type name:
+    python scripts/missiletoadcli.py {{type}} {{name}}
 
-gen-component name:
-    python scripts/missiletoadcli.py component {{name}}
+docs:
+    doxygen docs/Doxyfile
+    sphinx-build -b html docs build/docs/sphinx

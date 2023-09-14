@@ -13,25 +13,13 @@
 #    include <switch.h>
 #endif
 
-unsigned char *load_file_data_callback(const char *file_name, unsigned int *bytes_read)
-{
-    PHYSFS_File *file = PHYSFS_openRead(file_name);
-    if (file == nullptr)
-    {
-        return nullptr;
-    }
-    PHYSFS_sint64 size = PHYSFS_fileLength(file);
-    auto         *data = gsl::owner<unsigned char *>(new unsigned char[size]);
-    PHYSFS_readBytes(file, data, size);
-    PHYSFS_close(file);
-    *bytes_read = static_cast<unsigned int>(size);
-    return data;
-}
-
-static constexpr int SCREEN_WIDTH  = 1280;
-static constexpr int SCREEN_HEIGHT = 720;
-
-void raylib_log_callback(int log_level, const char *format, va_list args)
+/**
+ * The callback function for raylib's logging system. It forwards the log to spdlog.
+ * @param log_level log level
+ * @param format format string
+ * @param args format arguments
+ */
+static void raylib_log_callback(int log_level, const char *format, va_list args)
 {
     constexpr size_t              buffer_size = 4096;
     std::array<char, buffer_size> buffer{};
@@ -61,6 +49,12 @@ void raylib_log_callback(int log_level, const char *format, va_list args)
     }
 }
 
+/**
+ * The entry point of the game.
+ * @param argc argument count
+ * @param argv argument vector
+ * @return the exit code of the game
+ */
 int main(int argc, char *argv[]) noexcept(false)
 {
     SetTraceLogCallback(raylib_log_callback);
@@ -68,69 +62,17 @@ int main(int argc, char *argv[]) noexcept(false)
 #ifdef PLATFORM_NX
     romfsInit();
 #endif
-    int screen_width  = SCREEN_WIDTH;
-    int screen_height = SCREEN_HEIGHT;
 
-    spdlog::info("Initializing PhysFS.");
-
-    spdlog::info("Initializing audio device.");
-    //    InitAudioDevice();
-
-    spdlog::info("Setting PhysFS callbacks.");
-    ::SetLoadFileDataCallback(load_file_data_callback);
-
-    spdlog::info("Creating window of size {}x{}.", screen_width, screen_height);
-    raylib::Window window(screen_width, screen_height, "raylib-cpp - basic window");
-
-    auto current_time = std::chrono::high_resolution_clock::now();
-    auto accumulator  = std::chrono::duration<float>(0);
-
+    auto game = std::make_unique<missiletoad::Game>(argc, argv);
     SetTargetFPS(60);
 
-    // Init spdlog
-    auto game = std::make_unique<missiletoad::Game>(argc, argv);
+    game->run();
 
-    while (!window.ShouldClose())
-    {
-        auto new_time   = std::chrono::high_resolution_clock::now();
-        auto frame_time = new_time - current_time;
-        current_time    = new_time;
-        accumulator += frame_time;
-
-        // We do this to guarantee that the fixed update is called at a fixed rate.
-        // For instance, if the game is running at 60 FPS, and the fixed update rate is 30 FPS,
-        // then the fixed update will be called every 2 frames.
-        // But if the game is running at 30 FPS, then the fixed update will be called every frame.
-        // To achieve this, we accumulate the time between frames, and call the fixed update
-        // as many times as needed.
-        while (accumulator >= std::chrono::duration<float>(missiletoad::core::UPDATE_RATE))
-        {
-            // FixedTick
-            game->fixed_update(missiletoad::core::UPDATE_RATE);
-            accumulator -= std::chrono::duration<float>(missiletoad::core::UPDATE_RATE);
-        }
-
-        // Tick
-        auto delta_time = std::chrono::duration<float>(frame_time).count();
-        game->update(delta_time);
-
-        // Render
-        game->render();
-    }
-
-    spdlog::info("Closing window.");
-
-    if (PHYSFS_deinit() == 0)
-    {
-        spdlog::error("Failed to deinitialize PhysFS.");
-        return 1;
-    }
+    spdlog::info("Game ended.");
 
 #ifdef PLATFORM_NX
     romfsExit();
 #endif
-
-    //    CloseAudioDevice();
 
     return 0;
 }
