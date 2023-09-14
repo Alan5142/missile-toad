@@ -1,5 +1,7 @@
 @startuml
 skinparam classAttributeIconSize 0
+skinparam monochrome true
+skinparam backgroundColor FloralWhite
 hide circle
 
 package missiletoad {
