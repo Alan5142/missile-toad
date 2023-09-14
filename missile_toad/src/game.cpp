@@ -2,9 +2,12 @@
 #include "fmt/format.h"
 #include "missile_toad/core/asset_manager.hpp"
 #include "missile_toad/core/base_system.hpp"
+#include "missile_toad/core/components/box_collider_2d.component.hpp"
 #include "missile_toad/core/components/camera_2d.component.hpp"
+#include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/sprite.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
+#include "missile_toad/core/systems/physics.system.hpp"
 #include "missile_toad/core/systems/renderer.system.hpp"
 #include "nuklear.h"
 #include "raylib-nuklear.h"
@@ -12,6 +15,7 @@
 #include <entt/locator/locator.hpp>
 
 extern void register_system(entt::meta_ctx &ctx);
+extern void register_components(entt::meta_ctx &ctx);
 
 missiletoad::Game::Game(int argc, char **argv)
     : nuklear_context_(nullptr, nullptr), argv_(argv), argc_(argc), debug_mode_(true)
@@ -36,6 +40,7 @@ missiletoad::Game::Game(int argc, char **argv)
     scene_ = std::make_unique<missiletoad::core::Scene>();
 
     scene_->add_system<core::RendererSystem>();
+    scene_->add_system<core::PhysicsSystem>();
 
     auto &registry = scene_->get_registry();
 
@@ -43,20 +48,38 @@ missiletoad::Game::Game(int argc, char **argv)
 
     registry.emplace<core::SpriteComponent>(missile_toad_entity, missile_toad_tex);
     auto transform     = core::TransformComponent{};
-    transform.position = {30, 30};
+    transform.position = {0, 0};
     transform.scale    = {1, 1};
     transform.rotation = 0;
     registry.emplace<core::TransformComponent>(missile_toad_entity, transform);
+    registry.emplace<core::BoxCollider2dComponent>(missile_toad_entity);
+    auto &rigidbody = registry.get<core::Rigidbody2dComponent>(missile_toad_entity);
+    rigidbody.set_static(false);
 
     // Create a camera
     auto camera_entity = registry.create();
     auto camera        = core::Camera2dComponent{};
-    camera.camera      = Camera2D{.offset = Vector2{0, 0}, .target = Vector2{0, 0}, .rotation = 0, .zoom = 1};
+    camera.camera      = Camera2D{.offset   = Vector2{GetScreenWidth() / 2.0F, GetScreenHeight() / 2.0F},
+                                  .target   = Vector2{0, 0},
+                                  .rotation = 0,
+                                  .zoom     = 20};
     registry.emplace<core::Camera2dComponent>(camera_entity, camera);
     registry.emplace<core::TransformComponent>(camera_entity, transform);
 
+    // Create a custom box
+    auto box_entity        = registry.create();
+    auto box_transform     = core::TransformComponent{};
+    box_transform.position = {10, 10};
+    box_transform.scale    = {2, 2};
+    box_transform.rotation = 0;
+    registry.emplace<core::TransformComponent>(box_entity, box_transform);
+    registry.emplace<core::BoxCollider2dComponent>(box_entity);
+    registry.emplace<core::SpriteComponent>(box_entity, missile_toad_tex);
+    registry.patch<core::TransformComponent>(box_entity);
+
     // Register Systems meta types.
     register_system(systems_meta_ctx_);
+    register_components(components_meta_ctx_);
     spdlog::trace("Systems registered.");
 
     spdlog::trace("Game::Game() finished.");

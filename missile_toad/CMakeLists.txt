@@ -23,6 +23,8 @@ set(MISSILETOAD_SOURCES
         src/game.cpp
 
         ${CMAKE_CURRENT_BINARY_DIR}/systems.cpp
+        ${CMAKE_CURRENT_BINARY_DIR}/components.cpp
+
         ${SYSTEMS_SOURCE_FILES}
         ${COMPONENTS_SOURCE_FILES}
 )

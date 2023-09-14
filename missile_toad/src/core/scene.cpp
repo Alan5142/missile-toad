@@ -1,4 +1,6 @@
 #include "missile_toad/core/scene.hpp"
+#include "missile_toad/core/components/box_collider_2d.component.hpp"
+#include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/sprite.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
 #include <entt/locator/locator.hpp>
@@ -35,38 +37,40 @@ void missiletoad::core::Scene::update(float delta_time)
         system->on_update(delta_time);
     }
 
-    for (auto entity : scene_entities_.view<core::SpriteComponent, core::TransformComponent>())
+    for (auto entity :
+         scene_entities_.view<core::SpriteComponent, core::TransformComponent, core::Rigidbody2dComponent>())
     {
-        auto &transform = scene_entities_.get<core::TransformComponent>(entity);
+        //        auto &transform = scene_entities_.get<core::TransformComponent>(entity);
+        auto &physics = scene_entities_.get<core::Rigidbody2dComponent>(entity);
 
+        if (physics.is_static())
+        {
+            continue;
+        }
+
+        auto x_velocity = 0.0F;
+        auto y_velocity = 0.0F;
         if (IsKeyDown(KEY_LEFT))
         {
-            transform.position.x += 20 * delta_time;
+            x_velocity = -1;
         }
         if (IsKeyDown(KEY_RIGHT))
         {
-            transform.position.x -= 20 * delta_time;
+            x_velocity = 1;
         }
 
         if (IsKeyDown(KEY_UP))
         {
-            transform.position.y += 20 * delta_time;
+            y_velocity = -1;
         }
 
         if (IsKeyDown(KEY_DOWN))
         {
-            transform.position.y -= 20 * delta_time;
+            y_velocity = 1;
         }
 
-        if (IsKeyDown(KEY_A))
-        {
-            transform.rotation -= 20 * delta_time;
-        }
-
-        if (IsKeyDown(KEY_D))
-        {
-            transform.rotation += 20 * delta_time;
-        }
+        physics.set_linear_velocity({x_velocity * 5, y_velocity * 5});
+        scene_entities_.patch<core::Rigidbody2dComponent>(entity);
     }
 
     spdlog::trace("Scene::update() finished.");

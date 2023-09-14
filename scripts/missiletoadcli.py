@@ -31,8 +31,11 @@ def generate_system(name_nms: Namespace):
         name = splitted[1]
         # Create namespace folder
         try:
-            os.mkdir(f'missile_toad/include/missile_toad/{namespace}/systems')
-            os.mkdir(f'missile_toad/src/{namespace}/systems')
+            os.mkdir(f'missile_toad/include/missile_toad/{namespace_folder}/systems')
+        except FileExistsError:
+            pass
+        try:
+            os.mkdir(f'missile_toad/src/{namespace_folder}/systems')
         except FileExistsError:
             pass
     else:
