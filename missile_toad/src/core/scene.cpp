@@ -1,5 +1,6 @@
 #include "missile_toad/core/scene.hpp"
-#include "missile_toad/core/components/physics_2d.component.hpp"
+#include "missile_toad/core/components/box_collider_2d.component.hpp"
+#include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/sprite.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
 #include <entt/locator/locator.hpp>
@@ -37,10 +38,10 @@ void missiletoad::core::Scene::update(float delta_time)
     }
 
     for (auto entity :
-         scene_entities_.view<core::SpriteComponent, core::TransformComponent, core::Physics2dComponent>())
+         scene_entities_.view<core::SpriteComponent, core::TransformComponent, core::Rigidbody2dComponent>())
     {
         //        auto &transform = scene_entities_.get<core::TransformComponent>(entity);
-        auto &physics = scene_entities_.get<core::Physics2dComponent>(entity);
+        auto &physics = scene_entities_.get<core::Rigidbody2dComponent>(entity);
 
         if (physics.is_static())
         {
@@ -68,12 +69,8 @@ void missiletoad::core::Scene::update(float delta_time)
             y_velocity = 1;
         }
 
-        scene_entities_.patch<core::Physics2dComponent>(entity,
-                                                        [&](auto &physics)
-                                                        {
-                                                            physics.set_linear_velocity(x_velocity * 5,
-                                                                                        y_velocity * 5); //
-                                                        });
+        physics.set_linear_velocity({x_velocity * 5, y_velocity * 5});
+        scene_entities_.patch<core::Rigidbody2dComponent>(entity);
     }
 
     spdlog::trace("Scene::update() finished.");

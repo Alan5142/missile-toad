@@ -1,8 +1,9 @@
 
 #include "missile_toad/core/systems/renderer.system.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "missile_toad/core/components/box_collider_2d.component.hpp"
 #include "missile_toad/core/components/camera_2d.component.hpp"
-#include "missile_toad/core/components/physics_2d.component.hpp"
+#include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/sprite.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
 #include <entt/meta/factory.hpp>
@@ -62,7 +63,11 @@ void missiletoad::core::RendererSystem::on_render()
                                             .width  = PIXELS_PER_UNIT * transform.scale.x,
                                             .height = PIXELS_PER_UNIT * transform.scale.y};
 
-            DrawTexturePro(sprite_tex, rectangle_src, rectangle_dest, {1.0F, 1.0F}, transform.rotation, WHITE);
+            DrawTexturePro(sprite_tex,
+                           rectangle_src,                          //
+                           rectangle_dest,                         //
+                           {transform.scale.x, transform.scale.y}, //
+                           transform.rotation, WHITE);
         }
         EndMode2D();
     }
@@ -72,27 +77,22 @@ void missiletoad::core::RendererSystem::on_render()
     {
         auto &cam = registry_.get<core::Camera2dComponent>(cam_entity);
         BeginMode2D(cam.camera);
-        for (auto entity : registry_.view<core::Physics2dComponent>())
+        for (auto entity : registry_.view<core::BoxCollider2dComponent, core::TransformComponent>())
         {
-            auto &physics = registry_.get<missiletoad::core::Physics2dComponent>(entity);
+            const auto &box_collider = registry_.get<missiletoad::core::BoxCollider2dComponent>(entity);
             //        auto &transform = registry.get<missiletoad::core::TransformComponent>(entity);
-            auto *body     = physics.get_body();
-            auto  position = body->GetPosition();
-            //        auto  angle    = body->GetAngle();
-            auto shape = body->GetFixtureList()->GetShape();
-            auto type  = shape->GetType();
-            if (type == b2Shape::e_polygon)
+            const auto &transform = view.get<core::TransformComponent>(entity);
+            const auto &position  = transform.position;
+
+            auto *polygon      = dynamic_cast<b2PolygonShape *>(box_collider.get_fixture()->GetShape());
+            auto  vertex_count = polygon->m_count;
+            auto *vertices     = polygon->m_vertices;
+            for (auto i = 0; i < vertex_count; i++)
             {
-                auto *polygon      = static_cast<b2PolygonShape *>(shape);
-                auto  vertex_count = polygon->m_count;
-                auto *vertices     = polygon->m_vertices;
-                for (auto i = 0; i < vertex_count; i++)
-                {
-                    auto vertex      = vertices[i];
-                    auto next_vertex = vertices[(i + 1) % vertex_count];
-                    DrawLineEx({position.x + vertex.x + 0.5F, position.y + vertex.y + 0.5F},
-                               {position.x + next_vertex.x + 0.5F, position.y + next_vertex.y + 0.5F}, 0.1F, GREEN);
-                }
+                auto vertex      = vertices[i];
+                auto next_vertex = vertices[(i + 1) % vertex_count];
+                DrawLineEx({position.x + vertex.x + 0.5F, position.y + vertex.y + 0.5F},
+                           {position.x + next_vertex.x + 0.5F, position.y + next_vertex.y + 0.5F}, 0.05F, GREEN);
             }
         }
         EndMode2D();

@@ -2,8 +2,9 @@
 #include "fmt/format.h"
 #include "missile_toad/core/asset_manager.hpp"
 #include "missile_toad/core/base_system.hpp"
+#include "missile_toad/core/components/box_collider_2d.component.hpp"
 #include "missile_toad/core/components/camera_2d.component.hpp"
-#include "missile_toad/core/components/physics_2d.component.hpp"
+#include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/sprite.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
 #include "missile_toad/core/systems/physics.system.hpp"
@@ -51,11 +52,9 @@ missiletoad::Game::Game(int argc, char **argv)
     transform.scale    = {1, 1};
     transform.rotation = 0;
     registry.emplace<core::TransformComponent>(missile_toad_entity, transform);
-    auto physics = core::Physics2dComponent{};
-    physics.set_static(false);
-    physics.set_collidable(true);
-    physics.set_position(transform.position.x, transform.position.y);
-    registry.emplace<core::Physics2dComponent>(missile_toad_entity, physics);
+    registry.emplace<core::BoxCollider2dComponent>(missile_toad_entity);
+    auto &rigidbody = registry.get<core::Rigidbody2dComponent>(missile_toad_entity);
+    rigidbody.set_static(false);
 
     // Create a camera
     auto camera_entity = registry.create();
@@ -70,16 +69,13 @@ missiletoad::Game::Game(int argc, char **argv)
     // Create a custom box
     auto box_entity        = registry.create();
     auto box_transform     = core::TransformComponent{};
-    auto box_physics       = core::Physics2dComponent{};
     box_transform.position = {10, 10};
-    box_transform.scale    = {1, 1};
+    box_transform.scale    = {2, 2};
     box_transform.rotation = 0;
-    box_physics.set_static(true);
-    box_physics.set_collidable(true);
-    box_physics.set_position(box_transform.position.x, box_transform.position.y);
     registry.emplace<core::TransformComponent>(box_entity, box_transform);
-    registry.emplace<core::Physics2dComponent>(box_entity, box_physics);
+    registry.emplace<core::BoxCollider2dComponent>(box_entity);
     registry.emplace<core::SpriteComponent>(box_entity, missile_toad_tex);
+    registry.patch<core::TransformComponent>(box_entity);
 
     // Register Systems meta types.
     register_system(systems_meta_ctx_);
