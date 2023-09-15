@@ -9,7 +9,6 @@
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 #include <glm/glm.hpp>
-#include <rlgl.h>
 
 constexpr auto PIXELS_PER_UNIT = 3.0F;
 
@@ -64,12 +63,29 @@ void missiletoad::core::RendererSystem::on_render()
                                             .height = PIXELS_PER_UNIT * transform.scale.y};
 
             DrawTexturePro(sprite_tex,
-                           rectangle_src,                          //
-                           rectangle_dest,                         //
-                           {transform.scale.x, transform.scale.y}, //
+                           rectangle_src,                                                      //
+                           rectangle_dest,                                                     //
+                           Vector2{rectangle_dest.width / 2.0F, rectangle_dest.height / 2.0F}, //
                            transform.rotation, WHITE);
         }
         EndMode2D();
+    }
+
+    // Draw Rigidbody2dComponent
+    for (const auto &cam_entity : camera_view)
+    {
+        auto &cam = registry_.get<core::Camera2dComponent>(cam_entity);
+        BeginMode2D(cam.camera);
+        for (auto entity : registry_.view<core::Rigidbody2dComponent, core::TransformComponent>())
+        {
+            const auto &transform = view.get<core::TransformComponent>(entity);
+            const auto &position  = transform.position;
+            const auto  rec       = Rectangle{.x      = position.x,
+                                              .y      = position.y,
+                                              .width  = transform.scale.x * PIXELS_PER_UNIT,
+                                              .height = transform.scale.y * PIXELS_PER_UNIT};
+            DrawRectanglePro(rec, Vector2{rec.width / 2.0F, rec.height / 2.0F}, transform.rotation, {230, 41, 55, 50});
+        }
     }
 
     // Draw Physics Objects
@@ -80,19 +96,25 @@ void missiletoad::core::RendererSystem::on_render()
         for (auto entity : registry_.view<core::BoxCollider2dComponent, core::TransformComponent>())
         {
             const auto &box_collider = registry_.get<missiletoad::core::BoxCollider2dComponent>(entity);
-            //        auto &transform = registry.get<missiletoad::core::TransformComponent>(entity);
-            const auto &transform = view.get<core::TransformComponent>(entity);
-            const auto &position  = transform.position;
+            const auto &transform    = view.get<core::TransformComponent>(entity);
+            const auto &position     = transform.position;
 
             auto *polygon      = dynamic_cast<b2PolygonShape *>(box_collider.get_fixture()->GetShape());
             auto  vertex_count = polygon->m_count;
             auto *vertices     = polygon->m_vertices;
+            // Consider rotating the vertices by the transform.rotation
             for (auto i = 0; i < vertex_count; i++)
             {
                 auto vertex      = vertices[i];
                 auto next_vertex = vertices[(i + 1) % vertex_count];
-                DrawLineEx({position.x + vertex.x + 0.5F, position.y + vertex.y + 0.5F},
-                           {position.x + next_vertex.x + 0.5F, position.y + next_vertex.y + 0.5F}, 0.05F, GREEN);
+                // Rotate the vertices by the transform.rotation
+                auto rotation_matrix =
+                    glm::rotate(glm::mat4(1.0F), glm::radians(transform.rotation), glm::vec3(0, 0, 1));
+                auto rotated_vertex      = rotation_matrix * glm::vec4(vertex.x, vertex.y, 0, 1);
+                auto rotated_next_vertex = rotation_matrix * glm::vec4(next_vertex.x, next_vertex.y, 0, 1);
+                DrawLineEx(Vector2{position.x + rotated_vertex.x, position.y + rotated_vertex.y},
+                           Vector2{position.x + rotated_next_vertex.x, position.y + rotated_next_vertex.y}, 0.05F,
+                           GREEN);
             }
         }
         EndMode2D();

@@ -41,7 +41,8 @@ void missiletoad::core::Scene::update(float delta_time)
          scene_entities_.view<core::SpriteComponent, core::TransformComponent, core::Rigidbody2dComponent>())
     {
         //        auto &transform = scene_entities_.get<core::TransformComponent>(entity);
-        auto &physics = scene_entities_.get<core::Rigidbody2dComponent>(entity);
+        auto &physics   = scene_entities_.get<core::Rigidbody2dComponent>(entity);
+        auto &transform = scene_entities_.get<core::TransformComponent>(entity);
 
         if (physics.is_static())
         {
@@ -69,8 +70,18 @@ void missiletoad::core::Scene::update(float delta_time)
             y_velocity = 1;
         }
 
+        if (IsKeyDown(KEY_R))
+        {
+            transform.rotation -= 90 * delta_time;
+        }
+        if (IsKeyDown(KEY_T))
+        {
+            transform.rotation += 90 * delta_time;
+        }
+
         physics.set_linear_velocity({x_velocity * 5, y_velocity * 5});
         scene_entities_.patch<core::Rigidbody2dComponent>(entity);
+        scene_entities_.patch<core::TransformComponent>(entity);
     }
 
     spdlog::trace("Scene::update() finished.");

@@ -37,7 +37,7 @@ else ()
     add_executable(missiletoad-game main.cpp)
 endif ()
 
-target_link_libraries(missiletoad PUBLIC raylib raylib_cpp fmt::fmt physfs-static Microsoft.GSL::GSL box2d nuklear::nuklear glm::glm EnTT::EnTT spdlog::spdlog_header_only)
+target_link_libraries(missiletoad PUBLIC raylib raylib_cpp fmt::fmt physfs-static Microsoft.GSL::GSL box2d nuklear::nuklear glm::glm EnTT::EnTT spdlog::spdlog_header_only LDtkLoader)
 target_link_libraries(missiletoad-game PRIVATE missiletoad)
 target_include_directories(missiletoad PUBLIC include)
 

@@ -10,7 +10,7 @@
       "type": "string"
     },
     "args": {
-      "description": "The arguments to pass to the constructor.",
+      "description": "The arguments to pass to the component.",
       "type": "array",
       "items": {
         "type": "object",

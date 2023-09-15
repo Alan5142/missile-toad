@@ -7,6 +7,7 @@
 #include <entt/locator/locator.hpp>
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
+#include <glm/trigonometric.hpp>
 
 void missiletoad::core::PhysicsSystem::register_system(entt::meta_ctx &ctx)
 {
@@ -42,7 +43,7 @@ void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
 
         auto *body = physics.get_body();
 
-        body->SetTransform({transform.position.x, transform.position.y}, transform.rotation);
+        body->SetTransform({transform.position.x, transform.position.y}, glm::radians(transform.rotation));
 
         // Also update the size of the box collider if it contains a box collider.
         if (auto *box_collider = registry.try_get<missiletoad::core::BoxCollider2dComponent>(entity);
@@ -72,7 +73,7 @@ void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
 
         transform.position.x = position.x;
         transform.position.y = position.y;
-        transform.rotation   = body->GetAngle();
+        transform.rotation   = glm::degrees(body->GetAngle());
 
         registry.patch<core::TransformComponent>(entity);
     }
@@ -110,7 +111,7 @@ void missiletoad::core::PhysicsSystem::on_rigidbody_created(entt::registry &regi
     body_def.type = b2_staticBody;
     body_def.position.Set(transform.position.x, transform.position.y);
     body_def.fixedRotation = true;
-    body_def.angle         = transform.rotation;
+    body_def.angle         = glm::radians(transform.rotation);
     body_def.enabled       = true;
     rigidbody.body_        = world_.CreateBody(&body_def);
 }
