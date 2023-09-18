@@ -36,5 +36,10 @@ gen type name:
     python scripts/missiletoadcli.py {{type}} {{name}}
 
 docs:
+    # If docs folder doesn't exist, create it
+    mkdir -p build/docs
     doxygen docs/Doxyfile
     sphinx-build -b html docs build/docs/sphinx
+
+clean-docs:
+    rm -rf build/docs

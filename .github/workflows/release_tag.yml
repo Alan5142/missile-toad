@@ -1,0 +1,97 @@
+name: Release Tag
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build_test:
+    name: Build and test
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        c_compiler: [ gcc, clang, cl ]
+        include:
+          - os: windows-latest
+            c_compiler: cl
+            cpp_compiler: cl
+          - os: ubuntu-latest
+            c_compiler: gcc
+            cpp_compiler: g++
+          - os: ubuntu-latest
+            c_compiler: clang
+            cpp_compiler: clang++
+          - os: macos-latest
+            c_compiler: clang
+            cpp_compiler: clang++
+        exclude:
+          - os: windows-latest
+            c_compiler: gcc
+          - os: windows-latest
+            c_compiler: clang
+          - os: ubuntu-latest
+            c_compiler: cl
+          - os: macos-latest
+            c_compiler: cl
+          - os: macos-latest
+            c_compiler: gcc
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Ubuntu dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt update && \
+          sudo apt install -y libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev
+          wget https://github.com/ninja-build/ninja/releases/download/v1.11.1/ninja-linux.zip -O ninja-linux.zip && \
+            sudo unzip ninja-linux.zip -d /usr/bin && \
+            sudo rm ninja-linux.zip
+
+      - name: Configure CMake on Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: >
+          cmake -B build
+          -G Ninja
+          -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+          -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+          -DCMAKE_BUILD_TYPE=Release
+          -DGRAPHICS=GRAPHICS_API_OPENGL_ES2
+          -DBUILD_TESTS=OFF
+          -S ${{ github.workspace }}
+      - name: Configure CMake on Windows
+        if: matrix.os == 'windows-latest'
+        run: >
+          cmake -E env CXXFLAGS="/MP"
+          cmake -B build
+          -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+          -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+          -DCMAKE_BUILD_TYPE=Release
+          -DGRAPHICS=GRAPHICS_API_OPENGL_ES2
+          -DBUILD_TESTS=OFF
+          -S ${{ github.workspace }}
+      - name: Configure CMake on macOS
+        if: matrix.os == 'macos-latest'
+        run: >
+          cmake -B build
+          -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+          -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+          -DCMAKE_BUILD_TYPE=Release
+          -DGRAPHICS=GRAPHICS_API_OPENGL_ES2
+          -DBUILD_TESTS=OFF
+          -S ${{ github.workspace }}
+
+      - name: Build
+        timeout-minutes: 10
+        run: cmake --build build --config Release
+
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          # missiletoad-os-compiler-arch-version
+          name: missiletoad-${{ matrix.os }}-${{ matrix.cpp_compiler }}-${{ github.ref }}
+          path: build/bin/missiletoad-*

@@ -1,3 +1,5 @@
+/// @file missile_toad/src/core/texture_loader.cpp
+
 #include "missile_toad/core/texture_loader.hpp"
 #include <gsl/gsl>
 #include <physfs.h>

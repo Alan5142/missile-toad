@@ -1,3 +1,5 @@
+/// @file missile_toad/src/core/texture.cpp
+
 #include "missile_toad/core/texture.hpp"
 
 missiletoad::core::Texture::Texture(std::unique_ptr<raylib::Texture> &&texture) noexcept : texture_(std::move(texture))
