@@ -33,6 +33,7 @@ jobs:
           -DCMAKE_CXX_COMPILER=clang++
           -DCMAKE_C_COMPILER=clang
           -DCMAKE_BUILD_TYPE=Debug
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
           -S ${{ github.workspace }}
 
       - name: Run clang tidy
