@@ -6,16 +6,43 @@
 
 namespace missiletoad::core
 {
+    /**
+     * @brief A timer that calls a callback after a certain amount of time.
+     */
     class Timer
     {
     private:
-        std::function<void()>        callback_;
-        std::chrono::duration<float> interval_   = std::chrono::duration<float>(0);
-        std::chrono::duration<float> time_left_  = std::chrono::duration<float>(0);
-        bool                         is_running_ = false;
-        bool                         loop_       = false;
+        /**
+         * The callback to call when the timer reaches 0.
+         */
+        std::function<void()> callback_;
+
+        /**
+         * The interval of the timer.
+         * A interval of 0 means the timer will only call the callback once.
+         */
+        std::chrono::duration<float> interval_ = std::chrono::duration<float>(0);
+
+        /**
+         * The time left on the timer.
+         */
+        std::chrono::duration<float> time_left_ = std::chrono::duration<float>(0);
+
+        /**
+         * Whether the timer is running.
+         */
+        bool is_running_ = false;
+
+        /**
+         * Whether the timer is looping.
+         */
+        bool loop_ = false;
 
     public:
+        /**
+         * Default constructor.
+         * @param callback callback to call when the timer reaches 0
+         */
         Timer(std::function<void()> callback);
 
         /**
@@ -126,6 +153,12 @@ namespace missiletoad::core
         }
     };
 
+    /**
+     * @brief A builder for a timer.
+     * @tparam has_callback Callback is set
+     * @tparam has_interval Interval is set
+     * @tparam has_loop Loop is set
+     */
     template <bool has_callback = false, bool has_interval = false, bool has_loop = false>
     class TimerBuilder
     {
@@ -182,6 +215,10 @@ namespace missiletoad::core
             return TimerBuilder<has_callback, has_interval, true>(*this);
         }
 
+        /**
+         * Builds the timer.
+         * @return
+         */
         [[nodiscard]] Timer build() const
         {
             static_assert(has_callback && has_interval, "TimerBuilder must have callback, interval, and loop");

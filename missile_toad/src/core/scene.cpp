@@ -1,11 +1,7 @@
-#include "missile_toad/core/scene.hpp"
-#include "missile_toad/core/components/box_collider_2d.component.hpp"
-#include "missile_toad/core/components/rigidbody_2d.component.hpp"
-#include "missile_toad/core/components/sprite.component.hpp"
-#include "missile_toad/core/components/transform.component.hpp"
-#include "missile_toad/core/locator.hpp"
+/// @file missile_toad/src/core/scene.cpp
 
-#include <entt/locator/locator.hpp>
+#include "missile_toad/core/scene.hpp"
+#include "missile_toad/core/locator.hpp"
 
 void missiletoad::core::Scene::on_start()
 {

@@ -8,14 +8,28 @@
 
 namespace missiletoad::core
 {
+    /**
+     * A box collider component.
+     * @note This component is used for 2d physics.
+     */
     class BoxCollider2dComponent
     {
+        /**
+         * The fixture of the collider.
+         */
         b2Fixture *fixture_{};
         friend class PhysicsSystem;
 
     public:
+        /**
+         * Registers the component with entt.
+         * @param ctx
+         */
         static void register_component(entt::meta_ctx &ctx);
 
+        /**
+         * Constructs a box collider component.
+         */
         BoxCollider2dComponent();
 
         // Size and position are handled in the transform component.
