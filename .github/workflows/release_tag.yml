@@ -6,8 +6,8 @@ on:
       - v*
 
 jobs:
-  build_test:
-    name: Build and test
+  release_desktop:
+    name: Release Linux, Windows, and macOS
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -92,6 +92,40 @@ jobs:
       - name: Publish Artifacts
         uses: actions/upload-artifact@v3
         with:
-          # missiletoad-os-compiler-arch-version
-          name: missiletoad-${{ matrix.os }}-${{ matrix.cpp_compiler }}-${{ github.ref }}
+          name: missiletoad-${{ matrix.os }}-${{ matrix.c_compiler }}-${{ github.ref_name }}
+          path: build/bin/missiletoad-*
+
+  release_switch:
+    name: Release Switch
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkita64
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install newest CMake
+        # https://github.com/Kitware/CMake/releases/download/v3.27.3/cmake-3.27.3-linux-x86_64.sh
+        run: |
+          wget -q "https://github.com/Kitware/CMake/releases/download/v3.27.3/cmake-3.27.3-linux-x86_64.sh"
+          chmod +x cmake-3.27.3-linux-x86_64.sh
+          sudo ./cmake-3.27.3-linux-x86_64.sh --skip-license --prefix=/usr
+
+      - name: Configure CMake
+        run: >
+          cmake -B build
+          -DCMAKE_TOOLCHAIN_FILE=/opt/devkitpro/cmake/Switch.cmake
+          -DCMAKE_BUILD_TYPE=Release
+          -DPLATFORM="Nintendo Switch"
+          -DDCMAKE_CXX_FLAGS="-fexceptions"
+          -DBUILD_TESTS=OFF
+          -G "Unix Makefiles"
+          -S .
+
+      - name: Build
+        timeout-minutes: 10
+        run: cmake --build build --config Debug -j 5
+
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: missiletoad-switch-${{ github.ref_name }}
           path: build/bin/missiletoad-*
