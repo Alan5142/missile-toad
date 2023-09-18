@@ -11,7 +11,7 @@ namespace missiletoad::core
     {
     public:
         entt::resource<Texture> texture;
-        uint32_t                z_index;
+        uint32_t                z_index = 0;
         static void             register_component(entt::meta_ctx &ctx);
     };
 } // namespace missiletoad::core

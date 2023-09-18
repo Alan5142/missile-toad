@@ -13,12 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set reusable strings
-        id: strings
-        shell: bash
-        run: |
-          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-
       - name: Install Ubuntu dependencies
         run: |
           sudo wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
@@ -34,20 +28,19 @@ jobs:
 
       - name: Configure CMake
         run: >
-          cmake -B ${{ steps.strings.outputs.build-output-dir }}
+          cmake -B build
           -G Ninja
           -DCMAKE_CXX_COMPILER=clang++
           -DCMAKE_C_COMPILER=clang
           -DCMAKE_BUILD_TYPE=Debug
-          -DENABLE_CLANG_TIDY=ON
           -S ${{ github.workspace }}
 
-      - name: Build with clang-tidy
+      - name: Run clang tidy
         id: clang-tidy
         uses: mathiasvr/command-output@v2.0.0
         timeout-minutes: 10
         with:
-          run: cd ${{ steps.strings.outputs.build-output-dir }} && ninja --quiet
+          run: cd build && cmake --build . --target tidy -j 4
       - name: Comment PR
         # Only execute if clang-tidy found errors
         if: ${{ failure() && github.event_name == 'pull_request' }}

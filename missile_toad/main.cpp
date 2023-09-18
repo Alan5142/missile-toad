@@ -64,7 +64,6 @@ int main(int argc, char *argv[]) noexcept(false)
 #endif
 
     auto game = std::make_unique<missiletoad::Game>(argc, argv);
-    SetTargetFPS(60);
 
     game->run();
 

@@ -37,50 +37,13 @@ missiletoad::Game::Game(int argc, char **argv)
     }
     spdlog::trace("Nuklear initialized.");
 
+    spdlog::trace("Registering Game systems in the locator.");
+    locator_.emplace<missiletoad::core::AssetManager *>(asset_manager_.get());
+    locator_.emplace<missiletoad::Game *>(this);
+    locator_.emplace<nk_context *>(nuklear_context_.get());
+    spdlog::trace("Game systems registered in the locator.");
+
     asset_manager_ = std::make_unique<core::AssetManager>();
-    entt::locator<core::AssetManager *>::emplace(asset_manager_.get());
-
-    auto missile_toad_tex = asset_manager_->load<core::Texture>("/assets/textures/missiletoad.png");
-
-    scene_ = std::make_unique<missiletoad::core::Scene>();
-
-    scene_->add_system<core::RendererSystem>();
-    scene_->add_system<core::PhysicsSystem>();
-
-    auto &registry = scene_->get_registry();
-
-    auto missile_toad_entity = registry.create();
-
-    registry.emplace<core::SpriteComponent>(missile_toad_entity, missile_toad_tex);
-    auto transform     = core::TransformComponent{};
-    transform.position = {0, 0};
-    transform.scale    = {1, 1};
-    transform.rotation = 0;
-    registry.emplace<core::TransformComponent>(missile_toad_entity, transform);
-    registry.emplace<core::BoxCollider2dComponent>(missile_toad_entity);
-    auto &rigidbody = registry.get<core::Rigidbody2dComponent>(missile_toad_entity);
-    rigidbody.set_static(false);
-
-    // Create a camera
-    auto camera_entity = registry.create();
-    auto camera        = core::Camera2dComponent{};
-    camera.camera      = Camera2D{.offset   = Vector2{GetScreenWidth() / 2.0F, GetScreenHeight() / 2.0F},
-                                  .target   = Vector2{0, 0},
-                                  .rotation = 0,
-                                  .zoom     = 20};
-    registry.emplace<core::Camera2dComponent>(camera_entity, camera);
-    registry.emplace<core::TransformComponent>(camera_entity, transform);
-
-    // Create a custom box
-    auto box_entity        = registry.create();
-    auto box_transform     = core::TransformComponent{};
-    box_transform.position = {10, 10};
-    box_transform.scale    = {2, 2};
-    box_transform.rotation = 0;
-    registry.emplace<core::TransformComponent>(box_entity, box_transform);
-    registry.emplace<core::BoxCollider2dComponent>(box_entity);
-    registry.emplace<core::SpriteComponent>(box_entity, missile_toad_tex);
-    registry.patch<core::TransformComponent>(box_entity);
 
     // Register Systems meta types.
     register_system(systems_meta_ctx_);
@@ -149,12 +112,18 @@ void missiletoad::Game::render() noexcept
 
 void missiletoad::Game::debug_gui() noexcept
 {
-    // Show FPS and frame time
-    const auto fps        = fmt::format("FPS: {}", GetFPS());
-    const auto frame_time = fmt::format("Frame time: {:.2f} ms", GetFrameTime() * 1000);
-
-    DrawText(fps.c_str(), 0, 0, 20, RED);
-    DrawText(frame_time.c_str(), 150, 0, 20, RED);
+    try
+    {
+        // Show FPS and frame time
+        const auto fps        = fmt::format("FPS: {}", GetFPS());
+        const auto frame_time = fmt::format("Frame time: {:.2f} ms", GetFrameTime() * 1000);
+        DrawText(fps.c_str(), 0, 0, 20, RED);
+        DrawText(frame_time.c_str(), 150, 0, 20, RED);
+    }
+    catch (const std::exception &e)
+    {
+        spdlog::error("{}", e.what());
+    }
 }
 
 void missiletoad::Game::run() noexcept

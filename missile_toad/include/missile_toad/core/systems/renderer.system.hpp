@@ -8,6 +8,7 @@
 
 namespace missiletoad::core
 {
+    class Locator;
     /**
      * @brief System that renders all entities with a `SpriteComponent` and `TransformComponent`.
      * @details It first sorts all entities by their `SpriteComponent`'s `z_index` value, then renders them.
@@ -17,13 +18,13 @@ namespace missiletoad::core
      */
     class RendererSystem : public missiletoad::core::BaseSystem
     {
-        entt::registry &registry_;
+        entt::registry *registry_;
 
     public:
         /**
          * @brief Construct a new RendererSystem object.
          */
-        RendererSystem();
+        RendererSystem(Locator &locator);
 
         /**
          * Register this system with the meta context.

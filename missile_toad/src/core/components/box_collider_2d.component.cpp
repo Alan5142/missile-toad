@@ -9,6 +9,16 @@ void missiletoad::core::BoxCollider2dComponent::register_component(entt::meta_ct
     using namespace entt::literals;
     entt::meta<missiletoad::core::BoxCollider2dComponent>(ctx)
         .type("missiletoad::core::BoxCollider2dComponent"_hs)
+        .func<&missiletoad::core::BoxCollider2dComponent::set_sensor>("set_sensor"_hs)
+        .func<&missiletoad::core::BoxCollider2dComponent::get_fixture>("get_fixture"_hs)
+        .func<&missiletoad::core::BoxCollider2dComponent::is_sensor>("is_sensor"_hs)
+        .func<&missiletoad::core::BoxCollider2dComponent::set_friction>("set_friction"_hs)
+        .func<&missiletoad::core::BoxCollider2dComponent::set_restitution>("set_restitution"_hs)
+        .func<&missiletoad::core::BoxCollider2dComponent::set_density>("set_density"_hs)
+        .func<&missiletoad::core::BoxCollider2dComponent::get_friction>("get_friction"_hs)
+        .func<&missiletoad::core::BoxCollider2dComponent::get_restitution>("get_restitution"_hs)
+        .func<&missiletoad::core::BoxCollider2dComponent::get_density>("get_density"_hs)
+        .func<&missiletoad::core::BoxCollider2dComponent::set_size>("set_size"_hs)
         .ctor<>();
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.hpp"
+#include "locator.hpp"
 #include <chrono>
 
 namespace missiletoad::core
@@ -9,8 +10,8 @@ namespace missiletoad::core
     {
     private:
         std::function<void()>        callback_;
-        std::chrono::duration<float> interval_;
-        std::chrono::duration<float> time_left_;
+        std::chrono::duration<float> interval_   = std::chrono::duration<float>(0);
+        std::chrono::duration<float> time_left_  = std::chrono::duration<float>(0);
         bool                         is_running_ = false;
         bool                         loop_       = false;
 

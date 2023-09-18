@@ -3,8 +3,9 @@
 #include "missile_toad/core/components/box_collider_2d.component.hpp"
 #include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
+#include "missile_toad/core/locator.hpp"
+
 #include <entt/entity/registry.hpp>
-#include <entt/locator/locator.hpp>
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 #include <glm/trigonometric.hpp>
@@ -18,35 +19,39 @@ void missiletoad::core::PhysicsSystem::register_system(entt::meta_ctx &ctx)
         .ctor<>();
 }
 
-missiletoad::core::PhysicsSystem::PhysicsSystem() : world_(b2Vec2(0.0F, 0.0F))
+missiletoad::core::PhysicsSystem::PhysicsSystem(missiletoad::core::Locator &locator) : world_({0, 0})
 {
-    entt::locator<b2World *>::emplace(&world_);
-    auto &registry = *entt::locator<entt::registry *>::value();
-    transform_observer_.connect(registry,
+    locator.emplace<PhysicsSystem *>(this);
+    auto registry_opt = locator.get<entt::registry *>();
+    if (!registry_opt.has_value())
+    {
+        throw std::runtime_error("PhysicsSystem requires an entt::registry to be in the locator.");
+    }
+    registry_ = registry_opt.value();
+
+    transform_observer_.connect(*registry_,
                                 entt::collector
                                     .update<missiletoad::core::Rigidbody2dComponent>() //
                                     .where<missiletoad::core::TransformComponent>());
 
-    registry.on_construct<core::BoxCollider2dComponent>().connect<&PhysicsSystem::on_box_collider_created>(this);
-    registry.on_construct<core::Rigidbody2dComponent>().connect<&PhysicsSystem::on_rigidbody_created>(this);
+    registry_->on_construct<core::BoxCollider2dComponent>().connect<&PhysicsSystem::on_box_collider_created>(this);
+    registry_->on_construct<core::Rigidbody2dComponent>().connect<&PhysicsSystem::on_rigidbody_created>(this);
 }
 
 void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
 {
-    auto &registry = *entt::locator<entt::registry *>::value();
-
     // First, we need to update the physics bodies with the transform. This just in case the transform was updated
     for (const auto entity : transform_observer_)
     {
-        auto &physics   = registry.get<missiletoad::core::Rigidbody2dComponent>(entity);
-        auto &transform = registry.get<missiletoad::core::TransformComponent>(entity);
+        auto &physics   = registry_->get<missiletoad::core::Rigidbody2dComponent>(entity);
+        auto &transform = registry_->get<missiletoad::core::TransformComponent>(entity);
 
         auto *body = physics.get_body();
 
         body->SetTransform({transform.position.x, transform.position.y}, glm::radians(transform.rotation));
 
         // Also update the size of the box collider if it contains a box collider.
-        if (auto *box_collider = registry.try_get<missiletoad::core::BoxCollider2dComponent>(entity);
+        if (auto *box_collider = registry_->try_get<missiletoad::core::BoxCollider2dComponent>(entity);
             box_collider != nullptr)
         {
             box_collider->set_size(transform.scale);
@@ -57,10 +62,10 @@ void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
     world_.Step(delta_time, 6, 2);
 
     // After updating the physics bodies, we need to update the transforms with the physics bodies.
-    for (auto entity : registry.view<core::Rigidbody2dComponent, core::TransformComponent>())
+    for (auto entity : registry_->view<core::Rigidbody2dComponent, core::TransformComponent>())
     {
-        auto &rigidbody = registry.get<missiletoad::core::Rigidbody2dComponent>(entity);
-        auto &transform = registry.get<missiletoad::core::TransformComponent>(entity);
+        auto &rigidbody = registry_->get<missiletoad::core::Rigidbody2dComponent>(entity);
+        auto &transform = registry_->get<missiletoad::core::TransformComponent>(entity);
         auto *body      = rigidbody.get_body();
         auto  position  = body->GetPosition();
 
@@ -75,7 +80,7 @@ void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
         transform.position.y = position.y;
         transform.rotation   = glm::degrees(body->GetAngle());
 
-        registry.patch<core::TransformComponent>(entity);
+        registry_->patch<core::TransformComponent>(entity);
     }
 }
 
