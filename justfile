@@ -4,7 +4,6 @@ default: build
 alias fmt := format
 alias b := build
 alias c := configure
-alias l := lint
 alias t := test
 alias g := gen
 
@@ -20,9 +19,9 @@ build:
 format:
     cd build && cmake --build . --target format
 
-# Lint the project, requires configure
-lint: format
-    cd build && cmake --build . --target lint
+# Run clang-tidy on the project, requires configure
+tidy: format
+    cd build && cmake --build . --target tidy -j 8
 
 # Run the project, requires configure
 test:

@@ -4,6 +4,7 @@
 
 set(TEST_SOURCES src/core/timer.cpp
         src/core/physics.cpp
+        src/core/locator.cpp
 )
 
 add_executable(tests ${TEST_SOURCES})

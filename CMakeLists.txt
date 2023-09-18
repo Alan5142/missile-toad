@@ -43,7 +43,10 @@ file(GLOB_RECURSE ALL_SOURCE_FILES missile_toad/*.cpp missile_toad/*.hpp tests/*
 
 # Add clang-tidy target
 add_custom_target(tidy
-        COMMAND clang-tidy
-        -p=${CMAKE_BINARY_DIR}
-        ${ALL_SOURCE_FILES}
+        COMMAND python ${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py
+        -p ${CMAKE_BINARY_DIR}
+        -config-file ${PROJECT_SOURCE_DIR}/.clang-tidy
+        ${PROJECT_SOURCE_DIR}/missile_toad
+        -quiet
+        -header-filter=.*
         )

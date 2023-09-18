@@ -49,6 +49,7 @@ breathe_projects = {
 }
 breathe_default_project = "missile_toad"
 breathe_default_members = ('members', 'undoc-members')
+breathe_implementation_filename_extensions = ['.c', '.cc', '.cpp']
 
 # -- Exhale configuration -------------------------------------------------
 exhale_args = {

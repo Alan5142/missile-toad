@@ -1,6 +1,7 @@
 #pragma once
 
 #include "missile_toad/core/common.hpp"
+#include "missile_toad/core/locator.hpp"
 #include "missile_toad/core/scene.hpp"
 #include "raylib-nuklear.h"
 
@@ -27,6 +28,7 @@ namespace missiletoad
      */
     class Game
     {
+        missiletoad::core::Locator                          locator_;
         entt::meta_ctx                                      systems_meta_ctx_;
         entt::meta_ctx                                      components_meta_ctx_;
         std::vector<std::unique_ptr<core::BaseSystem>>      components_;
@@ -34,9 +36,9 @@ namespace missiletoad
         std::unique_ptr<nk_context, void (*)(nk_context *)> nuklear_context_;
         std::unique_ptr<core::Scene>                        scene_;
         char                                              **argv_;
-        int                                                 argc_;
+        int                                                 argc_{};
         raylib::Window                                      window_;
-        bool                                                debug_mode_;
+        bool                                                debug_mode_{};
 
     public:
         /**

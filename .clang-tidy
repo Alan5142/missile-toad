@@ -18,6 +18,10 @@ Checks:
     -readability-magic-numbers,
     -readability-convert-member-functions-to-static,
     -cppcoreguidelines-pro-type-union-access,
+    -misc-confusable-identifiers,
+    -modernize-type-traits,
+    -bugprone-stringview-nullptr
+    -readability-static-accessed-through-instance
 
 
 CheckOptions:
@@ -81,6 +85,8 @@ WarningsAsErrors: >
     -*,
     modernize-*,
     cppcoreguidelines-*,
+    readability-*,
+
     readability-identifier-naming
     -cppcoreguidelines-avoid-magic-numbers
     -readability-magic-numbers

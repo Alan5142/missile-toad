@@ -53,11 +53,17 @@ def generate_system(name_nms: Namespace):
 
 #include <entt/meta/meta.hpp>
 
+namespace missiletoad::core
+{{
+    class Locator;
+}}
+
 namespace {namespace}
 {{
     class {pascal_case_name}System : public missiletoad::core::BaseSystem
     {{
     public:
+        {pascal_case_name}System(missiletoad::core::Locator &locator);
         static void register_system(entt::meta_ctx& ctx);
     }};
 }}
@@ -65,9 +71,15 @@ namespace {namespace}
 
     component_template_cpp = f'''
 #include "missile_toad/{namespace_folder}/systems/{name}.system.hpp"
+#include "missile_toad/core/locator.hpp"
+
 #include <entt/meta/meta.hpp>
 #include <entt/meta/factory.hpp>
 
+{namespace}::{pascal_case_name}System::{pascal_case_name}System(missiletoad::core::Locator &locator)
+{{
+    // TODO: Add your constructor code here
+}}
 
 void {namespace}::{pascal_case_name}System::register_system(entt::meta_ctx &ctx)
 {{
@@ -76,6 +88,7 @@ void {namespace}::{pascal_case_name}System::register_system(entt::meta_ctx &ctx)
             .type("{namespace}::{pascal_case_name}System"_hs)
             .base<missiletoad::core::BaseSystem>()
             .ctor<>();
+    // TODO: Add your register code here
 }}'''
 
     with open(f'missile_toad/include/missile_toad/{namespace_folder}/systems/{name}.system.hpp', 'w') as f:
