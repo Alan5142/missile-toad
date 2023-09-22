@@ -6,14 +6,11 @@
 #include <filesystem>
 
 #if defined(PLATFORM_NX)
-static constexpr std::string_view ASSETS_PATH      = "romfs:/assets";
 static constexpr std::string_view PREFERENCES_PATH = "sdmc:/missiletoad.preferences";
 #else
-static constexpr std::string_view ASSETS_PATH      = "missiletoad.assets";
 static constexpr std::string_view PREFERENCES_PATH = "preferences";
 #endif
 
-static constexpr std::string_view ASSETS_PATH_MOUNT_POINT      = "/assets";
 static constexpr std::string_view PREFERENCES_PATH_MOUNT_POINT = "/preferences";
 
 missiletoad::core::AssetManager::AssetManager()
@@ -27,14 +24,6 @@ missiletoad::core::AssetManager::AssetManager()
         throw std::runtime_error("Failed to init PhysFS");
     }
     spdlog::trace("PhysFS initialized.");
-
-    // Mount the base directory
-    if (PHYSFS_mount(ASSETS_PATH.data(), ASSETS_PATH_MOUNT_POINT.data(), 0) == 0)
-    {
-        spdlog::error("Failed to mount assets directory: {}", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
-        throw std::runtime_error("Failed to mount assets directory");
-    }
-    spdlog::trace("Assets directory mounted.");
 
     // Create the preferences directory if it doesn't exist.
     if (!std::filesystem::exists(PREFERENCES_PATH.data()))
@@ -63,4 +52,26 @@ missiletoad::core::AssetManager::~AssetManager()
     PHYSFS_deinit();
     spdlog::trace("PhysFS deinitialized.");
     spdlog::trace("AssetManager::~AssetManager() finished.");
+}
+
+void missiletoad::core::AssetManager::push_asset_folder(std::string_view path, std::string_view mount_point)
+{
+    spdlog::trace("AssetManager::push_asset_folder() called.");
+    if (PHYSFS_mount(path.data(), mount_point.data(), 0) == 0)
+    {
+        spdlog::error("Failed to mount assets directory: {}", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+        throw std::runtime_error("Failed to mount assets directory");
+    }
+    spdlog::trace("AssetManager::push_asset_folder() finished.");
+}
+
+void missiletoad::core::AssetManager::pop_asset_folder(std::string_view mount_point)
+{
+    spdlog::trace("AssetManager::pop_asset_folder() called.");
+    if (PHYSFS_unmount(mount_point.data()) == 0)
+    {
+        spdlog::error("Failed to unmount assets directory: {}", PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+        throw std::runtime_error("Failed to unmount assets directory");
+    }
+    spdlog::trace("AssetManager::pop_asset_folder() finished.");
 }

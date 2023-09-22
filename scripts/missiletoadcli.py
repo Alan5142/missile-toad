@@ -188,6 +188,28 @@ void {namespace}::{pascal_case_name}Component::register_component(entt::meta_ctx
 
     print(f'Generated component {name}')
 
+def generate_schema_includes(nms: Namespace):
+    # Get all schemas inside docs/schemas and convert it to a hpp file with strings
+    # This file will be included in the schema registry
+
+    schemas = os.listdir('docs/schemas')
+
+    schema_includes = '''#pragma once
+#include "missile_toad/core/common.hpp"
+
+namespace missiletoad::core::schemas
+{
+    '''
+    for schema in schemas:
+        file_content = open(f"docs/schemas/{schema}").read()
+        # Convert file name to SCREAMING_SNAKE_CASE
+        schema_name = (schema.split(".")[0]).upper()
+        schema_includes += f'    constexpr std::string_view {schema_name} = R"({file_content})";\n'
+
+    schema_includes += '}'
+
+    with open(f'missile_toad/include/missile_toad/core/schema_includes.hpp', 'w') as f:
+        f.write(schema_includes)
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Missile Toad utilities')
@@ -205,6 +227,10 @@ if __name__ == '__main__':
                                                       aliases=['c', 'comp'])
     parser_generate_component.add_argument('name', help='Component name in snake_case')
     parser_generate_component.set_defaults(func=generate_component)
+
+    # Generate schema includes
+    parser_generate_schema_includes = subparsers.add_parser('schemas', help='Generate schema includes')
+    parser_generate_schema_includes.set_defaults(func=generate_schema_includes)
 
     args = parser.parse_args(sys.argv[1:])
     args.func(args)

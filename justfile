@@ -35,6 +35,9 @@ clean:
 gen type name:
     python scripts/missiletoadcli.py {{type}} {{name}}
 
+gen-schemas:
+    python scripts/missiletoadcli.py schemas
+
 docs:
     # If docs folder doesn't exist, create it
     mkdir -p build/docs

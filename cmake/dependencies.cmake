@@ -10,9 +10,6 @@ CPMAddPackage("https://github.com/catchorg/Catch2.git@3.4.0")
 # fmt
 CPMAddPackage("https://github.com/fmtlib/fmt.git#10.1.0")
 
-# PhysFS
-CPMAddPackage("https://github.com/Alan5142/physfs-nx.git#switch")
-
 # GSL
 CPMAddPackage("https://github.com/microsoft/GSL.git#4300304")
 
@@ -31,12 +28,40 @@ CPMAddPackage("https://github.com/gabime/spdlog.git@1.12.0")
 # LDtk
 CPMAddPackage("https://github.com/Madour/LDtkLoader.git#1.2.2")
 
+
+
 # Box2D options
 set(BOX2D_BUILD_UNIT_TESTS OFF)
 set(BOX2D_BUILD_TESTBED OFF)
 
 # Box2D
 CPMAddPackage("https://github.com/erincatto/box2d.git#411acc3")
+
+# RapidJSON options
+set(RAPIDJSON_BUILD_DOC OFF)
+set(RAPIDJSON_BUILD_EXAMPLES OFF)
+set(RAPIDJSON_BUILD_TESTS OFF)
+set(RAPIDJSON_BUILD_CXX17 ON)
+
+# RapidJSON
+CPMAddPackage("https://github.com/Tencent/rapidjson.git#b4a6da3")
+
+# Check if RapidJSON is found
+if (NOT TARGET RapidJSON)
+    message(FATAL_ERROR "RapidJSON not found")
+endif ()
+
+# Set the target include directories to the target directory
+get_target_property(RAPIDJSON_SOURCE_DIR RapidJSON SOURCE_DIR)
+set(RAPIDJSON_INCLUDE_DIRS ${RAPIDJSON_SOURCE_DIR}/include)
+
+# Set PhysFS to only build static library
+set(PHYSFS_BUILD_SHARED OFF)
+set(PHYSFS_BUILD_DOCS OFF)
+set(PHYSFS_BUILD_TEST OFF)
+
+# PhysFS
+CPMAddPackage("https://github.com/Alan5142/physfs-nx.git#e616454")
 
 # Disable all warnings for raylib and physfs
 if (MSVC)
