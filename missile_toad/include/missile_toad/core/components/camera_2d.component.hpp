@@ -79,15 +79,6 @@ namespace missiletoad::core
         }
 
         /**
-         * Gets the rotation of the camera.
-         * @return rotation
-         */
-        [[nodiscard]] float get_rotation() const
-        {
-            return camera_.rotation;
-        }
-
-        /**
          * Gets the offset of the camera.
          * @return offset
          */

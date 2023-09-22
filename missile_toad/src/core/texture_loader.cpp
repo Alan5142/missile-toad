@@ -33,7 +33,7 @@ missiletoad::core::TextureLoader::result_type missiletoad::core::TextureLoader::
     spdlog::trace("Loaded texture from memory");
 
     // Generate the texture
-    auto texture_ptr = std::make_unique<raylib::Texture>(LoadTextureFromImage(texture));
+    auto texture_ptr = raylib::Texture(LoadTextureFromImage(texture));
     spdlog::info("Loaded texture to GPU");
 
     // Unload the image

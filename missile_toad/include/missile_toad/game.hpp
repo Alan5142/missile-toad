@@ -57,6 +57,19 @@ namespace missiletoad
         Game &operator=(Game &&)      = delete;
 
         /**
+         * The game loop of the game. It runs the game.
+         * @param argc main's argc
+         * @param argv main's argv
+         */
+        void run() noexcept;
+
+        /**
+         * Closes the game.
+         */
+        void close() noexcept;
+
+    private:
+        /**
          * The main loop of the game. It updates all of the systems and managers in the game.
          * @param delta_time The time in seconds since the last frame.
          */
@@ -76,19 +89,6 @@ namespace missiletoad
          */
         void render() noexcept;
 
-        /**
-         * The game loop of the game. It runs the game.
-         * @param argc main's argc
-         * @param argv main's argv
-         */
-        void run() noexcept;
-
-        /**
-         * Closes the game.
-         */
-        void close() noexcept;
-
-    private:
         /**
          *
          */
