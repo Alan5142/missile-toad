@@ -3,280 +3,370 @@ skinparam classAttributeIconSize 0
 skinparam monochrome true
 skinparam backgroundColor FloralWhite
 hide circle
+skinparam linetype ortho
 
-package missiletoad {
-    class Game
-    class SceneManager
-    class Scene
-    class SceneDescriptor
-    abstract BaseSystem
-    class Entity
-    class InputManager
-    class AudioManager
-    class AssetManager
 
-    class ResourceLoader<T>
-    class ResourceCache<T>
-    class ResourceHandle<T>
-
-    class PhysicsSystem extends BaseSystem
-    class RenderSystem extends BaseSystem
-    class InputSystem extends BaseSystem
-    class AudioSystem extends BaseSystem
-
-    class Transform2DComponent
-    class Collider2DComponent
-    class RigidBody2DComponent
-    class SpriteComponent
-    class AnimationComponent
-    class AudioComponent
-    class InputComponent
-    class CameraComponent
-
-    class Texture2D
-    class Font
-    class Sound
-    class Music
-
-    Game *-- SceneManager
-    Game *-- InputManager
-    Game *-- AudioManager
-    Game *-- AssetManager
-
-    AssetManager *-- ResourceCache
-
-    ResourceCache *-- ResourceLoader
-
-    SceneManager *-- Scene
-    SceneManager *-- SceneDescriptor
-
-    Scene *-- Entity
-    Scene *-- BaseSystem
-
-    BaseSystem -- Entity
-
-    PhysicsSystem -- Collider2DComponent
-    PhysicsSystem -- RigidBody2DComponent
-    PhysicsSystem -- Transform2DComponent
-
-    RenderSystem <-- SpriteComponent
-    RenderSystem <-- AnimationComponent
-    RenderSystem <-- CameraComponent
-    RenderSystem <-- Transform2DComponent
-
-    InputSystem <-- InputComponent
-
-    AudioSystem <-- AudioComponent
-
-    InputManager <-- InputSystem
-    AudioManager <-- AudioSystem
-
-    /'
-    Find a way to specify the relationship between the entity and its components
-    '/
-
-    /'
-    Define methods
-    '/
-
-    class Game {
-
-    }
-
+package missiletoad.core {
     class AssetManager {
-        - std::unordered_map<std::string, std::shared_ptr<Texture2D>> textures
-        - std::unordered_map<std::string, std::shared_ptr<Font>> fonts
-        - std::unordered_map<std::string, std::shared_ptr<Sound>> sounds
-        - std::unordered_map<std::string, std::shared_ptr<Music>> music
-        - Game &game
+        -texture_cache_: entt::resource_cache<Texture, TextureLoader>
+        -sound_cache_: entt::resource_cache<Sound, SoundLoader>
 
-        + AssetManager(Game &game)
-        + ~AssetManager()
-        + std::shared_ptr<Texture2D> load_texture(std::string path)
-        + std::shared_ptr<Font> load_font(std::string path)
-        + std::shared_ptr<Sound> load_sound(std::string path)
-        + std::shared_ptr<Music> load_music(std::string path)
+        +AssetManager()
+        +~AssetManager()
+        +push_asset_folder(path: std::string_view, mount_point: std::string_view)
+        +pop_asset_folder(mount_point: std::string_view)
+        +load<T>(path: std::string_view): entt::resource<T>
     }
+
+    AssetManager --> TextureLoader
+    AssetManager --> SoundLoader
+
+
+    abstract class BaseSystem {
+        +~BaseSystem()
+        +on_start()
+        +on_update(delta_time: float)
+        +on_fixed_update(delta_time: float)
+        +on_destroy()
+        +on_render()
+    }
+
+    class PathFolder {
+        +path: std::string
+        +mount_point: std::string
+    }
+
+    class GameDescriptor {
+        +name: std::string
+        +assets_folders: std::vector<PathFolder>
+    }
+
+    GameDescriptor *-- PathFolder
+
+    class Service {
+        name_hash: std::size_t
+        service: std::any
+    }
+
+    class Locator {
+        -services_: std::unordered_map<entt::id_type, Service>
+
+        +Locator()
+
+        +emplace<T, Args...>(args: Args...): bool
+        +emplace_named<T, Args...>(name: std::string_view, args: Args...): bool
+        +get<T>(): std::optional<std::reference_wrapper<T>>
+        +get<T>(name: std::string_view): std::optional<std::reference_wrapper<T>>
+        +size(): std::size_t
+        +erase<T>(name: std::string_view)
+        +clear()
+    }
+
+    Locator *-- Service
+
+    /'
+    TODO: Add Scene, SceneDescriptor, SceneManager
+    '/
+
+    class ComponentDescriptor {
+        +type: std::string
+        +params: std::vector<std::pair<std::string, std::string>>
+    }
+
+    class EntityDescriptor {
+        +name: std::string
+        +components: std::vector<ComponentDescriptor>
+    }
+
+    EntityDescriptor *-- ComponentDescriptor
+
+    class SceneDescriptor {
+        +name: std::string
+        +systems: std::vector<std::string>
+        +entities: std::vector<EntityDescriptor>
+    }
+
+    SceneDescriptor *-- EntityDescriptor
 
     class Scene {
-        - entt::registry registry
-        - std::vector<std::unique_ptr<BaseSystem>> systems
+        -registry_: entt::registry
+        -systems_: std::vector<std::unique_ptr<BaseSystem>>
 
-        + Scene(Game &game)
-        + ~Scene()
-        + void update(float dt)
-        + void fixed_update(float dt)
-        + void render()
-        + Entity create_entity()
-        + void destroy_entity(Entity entity)
-        + void add_system(std::unique_ptr<BaseSystem> system)
-        + void remove_system(BaseSystem &system)
-        + const std::vector<std::unique_ptr<BaseSystem>>& get_systems()
-        + entt::registry& get_registry()
+        +Scene()
+        +~Scene()
+        +add_system<T, Args...>(args: Args...)
+        +add_system(system: std::unique_ptr<BaseSystem>)
+        +add_entity(): entt::entity
+        +add_entity(name: std::string_view): entt::entity
+        +on_start()
+        +on_destroy()
+        +update(delta_time: float)
+        +fixed_update(delta_time: float)
+        +render()
+        +get_registry(): entt::registry&
+        +get_systems(): std::vector<std::unique_ptr<BaseSystem>>&
     }
 
-    class Entity {
-        - id: uint32_t
-        - scene: Scene&
+    Scene *-- BaseSystem
 
-        + Entity(uint32_t id, Scene &scene)
-        + uint32_t get_id()
-        + Scene& get_scene()
-        + void destroy()
-        + T& add_component<T>()
-        + T& get_component<T>()
-        + void remove_component<T>()
-        + bool has_component<T>()
+    class SceneManager {
+        -scenes_: std::unordered_map<uint64_t, SceneDescriptor>
+        -current_scene_: std::unique_ptr<Scene>
+        -locator_: Locator
+
+        +SceneManager(locator: Locator&)
+        +~SceneManager()
+        +load_scene(name: std::string_view)
+        +add_descriptor(descriptor: SceneDescriptor&&)
+        +get_current_scene(): Scene&
     }
 
-    abstract BaseSystem {
-        # Scene& scene
+    SceneManager *-- SceneDescriptor
+    SceneManager *-- Scene
 
-        # BaseSystem(Scene& scene)
-        + ~BaseSystem()
-        + void on_start()
-        + void on_update(float dt)
-        + void on_fixed_update(float dt)
-        + void on_destroy()
-        + void on_render()
+    class Texture {
+        -texture_: raylib::Texture
+
+        +Texture()
+        +Texture(texture: raylib::Texture&&)
+        +Texture(texture: Texture&&)
+        +~Texture()
+        +operator=(texture: Texture&&): Texture&
+        +operator=(texture: raylib::Texture&&): Texture&
+        +get_texture(): raylib::Texture&
+        +set_texture(texture: raylib::Texture&&)
     }
 
-    class Transform2DComponent {
-        +Vector2 position
-        +Vector2 scale
-        +float rotation
+    class TextureLoader {
+        +operator()(name: std::string_view): std::shared_ptr<Texture>
+    }
 
-        Transform2DComponent(Vector2 position, Vector2 scale, float rotation)
+    TextureLoader ..> Texture
+
+    class Timer {
+        -callback_: std::function<void()>
+        -interval_: std::chrono::duration<float>
+        -time_left_: std::chrono::duration<float>
+        -is_running_: bool
+        -loop_: bool
+        +Timer(callback: std::function<void()>)
+        +tick(delta_time: std::chrono::duration<float>)
+        +start()
+        +stop()
+        +reset()
+        +set_interval(interval: std::chrono::duration<float>)
+        +set_loop(loop: bool)
+        +is_running(): bool
+        +is_looping(): bool
+        +get_interval(): std::chrono::duration<float>
+        +get_time_left(): std::chrono::duration<float>
+    }
+
+    class TimerBuilder {
+        -callback_: std::function<void()>
+        -interval_: std::chrono::duration<float>
+        -loop_: bool
+
+        -TimerBuilder(builder: TimerBuilder&&)
+        +TimerBuilder()
+        +with_callback(callback: std::function<void()>): TimerBuilder&
+        +with_interval(interval: std::chrono::duration<float>): TimerBuilder&
+        +with_loop(loop: bool): TimerBuilder&
+        +build(): Timer
+    }
+
+    TimerBuilder ..> Timer
+
+    class Sound {
+        /'
+        TODO: Add sound implementation
+        '/
+    }
+
+    class SoundLoader {
+        +operator()(name: std::string_view): std::shared_ptr<Sound>
+    }
+
+    SoundLoader ..> Sound
+
+    /'
+    Components
+    '/
+
+    class BoxCollider2dComponent {
+        -fixture: b2Fixture*
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +BoxCollider2dComponent()
+        +set_sensor(sensor: bool)
+        +set_friction(friction: float)
+        +set_restitution(restitution: float)
+        +set_density(density: float)
+        +set_size(size: glm::vec2)
+        +get_fixture(): b2Fixture*
+        +is_sensor(): bool
+        +get_friction(): float
+        +get_restitution(): float
+        +get_density(): float
+    }
+
+    class Camer2dComponent {
+        -camera_: raylib::Camera2D
+
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +set_zoom(zoom: float)
+        +set_target(target: glm::vec2)
+        +set_offset(offset: glm::vec2)
+        +get_zoom(): float
+        +get_target(): glm::vec2
+        +get_offset(): glm::vec2
+        +get_screen_to_world(point: glm::vec2): glm::vec2
+        +get_world_to_screen(point: glm::vec2): glm::vec2
+        +get_camera(): raylib::Camera2D&
+    }
+
+    class Rigidbody2dComponent {
+        -body_: b2Body*
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +set_static(is_static: bool)
+        +set_linear_velocity(velocity: glm::vec2)
+        +apply_force(force: glm::vec2, point: glm::vec2)
+        +apply_force_to_center(force: glm::vec2)
+        +apply_torque(torque: float)
+        +apply_linear_impulse(impulse: glm::vec2, point: glm::vec2)
+        +apply_linear_impulse_to_center(impulse: glm::vec2)
+        +set_is_bullet(is_bullet: bool)
+        +get_body(): b2Body*
+        +is_static(): bool
+        +is_dynamic(): bool
+        +get_linear_velocity(): glm::vec2
+        +get_angular_velocity(): float
+        +is_bullet(): bool
+        +is_fixed_rotation(): bool
     }
 
     class SpriteComponent {
-        +std::shared_ptr<Texture2D> texture
-
-        SpriteComponent(Texture2D texture)
+       {static} +register_component(ctx: entt::meta_ctx&)
+        +texture: entt::resource<Texture>
+        +z_index: uint32_t
     }
 
-    class AnimationComponent {
-        +std::vector<std::shared_ptr<Texture2D>> frames
-        +float frame_time
-        +float current_time
-        +uint32_t current_frame
+    SpriteComponent *.. Texture
 
-        AnimationComponent(std::vector<std::shared_ptr<Texture2D>> frames, float frame_time)
+    class TransformComponent {
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +position: glm::vec2
+        +scale: glm::vec2
+        +rotation: float
     }
 
-    class CameraComponent {
-        +Camera2D camera
-
-        +CameraComponent(Camera2D camera)
+    class AudioComponent {
+        -sound_: Sound
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +sound: entt::resource<Sound>
     }
 
-    class ResourceCache<T> {
-        - std::unordered_map<std::string, std::shared_ptr<T>> resources
+    AudioComponent *.. Sound
 
-        + ResourceCache()
-        + ~ResourceCache()
-        + std::shared_ptr<T> load(std::string path)
-        + std::shared_ptr<T> get(std::string path)
-        + void unload(std::string path)
-        + void unload_all()
+    class SpriteAnimation {
+        -frame_timer: Timer
+        -current_frame: uint32_t
+        -is_playing: bool
+        -loop: bool
+
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +texture_frames: std::vector<entt::resource<Texture>>
+        +play()
+        +stop()
+        +update()
+        +reset()
+        +set_loop(loop: bool)
+        +is_playing(): bool
+        +get_current_frame(): uint32_t
+        +get_frame_timer(): Timer&
     }
 
-    class ResourcePtrInner<T> {
-        - T *resource
-        - size_t *ref_count
-        - size_t *weak_ref_count
-        - Function<void> deleter
+    SpriteAnimation *.. Texture
+    SpriteAnimation *-- Timer
 
-        + ResourcePtrInner(T *resource, size_t *ref_count, size_t *weak_ref_count, std::function<void(T*)> deleter)
-        + ~ResourcePtrInner()
-        + get(): T*
-        + get_ref_count(): size_t
-        + get_weak_ref_count(): size_t
-        + increment_ref_count()
-        + increment_weak_ref_count()
-        + decrement_ref_count()
-        + decrement_weak_ref_count()
-        + delete()
-    }
-
-    class ResourcePtr<T> {
-        - ResourcePtrInner<T> *inner
-
-        + ResourcePtr(T *resource, std::function<void(T*)> deleter)
-        + ResourcePtr(const ResourcePtr<T> &other)
-        + ResourcePtr(ResourcePtr<T> &&other)
-        + ~ResourcePtr()
-        + operator=(const ResourcePtr<T> &other): ResourcePtr<T>&
-        + operator=(ResourcePtr<T> &&other): ResourcePtr<T>&
-        + get(): T*
-        + get_ref_count(): size_t
-        + get_weak_ref_count(): size_t
-        + increment_ref_count()
-        + increment_weak_ref_count()
-        + decrement_ref_count()
-        + decrement_weak_ref_count()
-        + delete()
-        + operator->(): T*
-        + operator*(): T&
-    }
-
-    ResourcePtr *-- ResourcePtrInner
-
-    class ResourceHandle<T> {
-
-    }
 
     /'
-    Game related classes
+    Systems
     '/
 
-    class HealthComponent {
-        -float health
-        -float max_health
-
-        +HealthComponent(float health, float max_health)
-
-        +void take_damage(float damage)
-        +void heal(float amount)
-        +bool is_dead()
-
-        +float get_health()
-        +float get_max_health()
-    }
-    class PlayerComponent {
-        /' TODO
-        '/
+    class PhysicsSystem extends BaseSystem {
+        -world_: b2World
+        -transform_observer_: entt::observer
+        -registry_: entt::registry*
+        {static} +register_system(ctx: entt::meta_ctx&)
+        +PhysicsSystem(locator: Locator&)
+        +~PhysicsSystem()
+        +on_fixed_update(delta_time: float)
+        -on_box_collider_created(entt::registry&, entt::entity)
+        -on_rigidbody_created(entt::registry&, entt::entity)
     }
 
-    class PlayerSystem extends missiletoad.BaseSystem {
-        +PlayerSystem(missiletoad.Scene& scene)
-        + void on_start()
-        + void on_update(float dt)
-        + void on_fixed_update(float dt)
-        + void on_destroy()
-        + void on_render()
+    PhysicsSystem *.. Locator
+    PhysicsSystem ..> BoxCollider2dComponent
+    PhysicsSystem ..> Rigidbody2dComponent
+    PhysicsSystem ..> TransformComponent
+
+    class RendererSystem extends BaseSystem {
+        -registry_: entt::registry*
+
+        {static} +register_system(ctx: entt::meta_ctx&)
+        +RendererSystem(locator: Locator&)
+        +on_render()
     }
 
-    class EnemyComponent {
-        /' TODO
-        '/
+    RendererSystem *.. Locator
+    RendererSystem ..> SpriteComponent
+    RendererSystem ..> TransformComponent
+    RendererSystem ..> Camer2dComponent
+    RendererSystem ..> BoxCollider2dComponent
+    RendererSystem ..> Rigidbody2dComponent
+
+    class SpriteAnimationSystem extends BaseSystem {
+        -registry: entt::registry*
+
+        {static} +register_system(ctx: entt::meta_ctx&)
+        +SpriteAnimationSystem(locator: Locator&)
+        +on_update(delta_time: float)
     }
 
-    class EnemySystem extends missiletoad.BaseSystem {
-        +EnemySystem(missiletoad.Scene& scene)
-        + void on_start()
-        + void on_update(float dt)
-        + void on_fixed_update(float dt)
-        + void on_destroy()
-        + void on_render()
-    }
-
-    PlayerSystem --> PlayerComponent
-    PlayerSystem --> HealthComponent
-
-    EnemySystem --> EnemyComponent
-    EnemySystem --> HealthComponent
+    SpriteAnimationSystem *.. Locator
+    SpriteAnimationSystem ..> SpriteAnimation
+    SpriteAnimationSystem ..> SpriteComponent
 }
 
+package missiletoad {
+    class Game {
+        -locator_: missiletoad.core.Locator
+        -systems_meta_ctx_: entt::meta_ctx
+        -components_meta_ctx_: entt::meta_ctx
+        -systems_: std::vector<std::unique_ptr<missiletoad.core.BaseSystem>>
+        -asset_manager_: missiletoad.core.AssetManager
+        -nuklear_context_: std::unique_ptr<nk_context, void(*)(nk_context*)>
+        -scene_manager_: std::unique_ptr<missiletoad.core.SceneManager>
+        -argv: char**
+        -argc: int
+        -window: raylib::Window
+        -debug_mode_: bool
+
+        +Game(argc: int, argv: char**)
+        +~Game()
+        +run(): int
+        +close()
+        -update(delta_time: float)
+        -fixed_update(delta_time: float)
+        -render()
+        -debug_gui()
+    }
+
+    Game *-- missiletoad.core.Locator
+    Game *-- missiletoad.core.SceneManager
+    Game *-- missiletoad.core.AssetManager
+    Game *-- missiletoad.core.BaseSystem
+    Game ..> missiletoad.core.GameDescriptor
+}
 
 @enduml

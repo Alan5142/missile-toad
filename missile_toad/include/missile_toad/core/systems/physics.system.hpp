@@ -16,9 +16,12 @@ namespace missiletoad::core
         b2World         world_;
         entt::observer  transform_observer_;
         entt::registry *registry_;
+        Locator        *locator_;
 
     public:
         PhysicsSystem(Locator &locator);
+
+        ~PhysicsSystem() override;
 
         static void register_system(entt::meta_ctx &ctx);
 
