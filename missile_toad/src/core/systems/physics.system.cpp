@@ -44,7 +44,7 @@ missiletoad::core::PhysicsSystem::~PhysicsSystem()
     registry_->on_construct<core::BoxCollider2dComponent>().disconnect<&PhysicsSystem::on_box_collider_created>(this);
     registry_->on_construct<core::Rigidbody2dComponent>().disconnect<&PhysicsSystem::on_rigidbody_created>(this);
 
-    locator_.erase<PhysicsSystem *>();
+    locator_->erase<PhysicsSystem *>();
 }
 
 void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
