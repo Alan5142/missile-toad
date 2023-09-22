@@ -20,6 +20,11 @@ namespace missiletoad::core
 
     public:
         PhysicsSystem(Locator &locator);
+        PhysicsSystem(const PhysicsSystem &)        = delete;
+        PhysicsSystem(PhysicsSystem &&rhs) noexcept = delete;
+
+        PhysicsSystem &operator=(const PhysicsSystem &)        = delete;
+        PhysicsSystem &operator=(PhysicsSystem &&rhs) noexcept = delete;
 
         ~PhysicsSystem() override;
 

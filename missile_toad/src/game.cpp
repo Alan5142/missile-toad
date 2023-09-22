@@ -26,7 +26,13 @@ missiletoad::Game::Game(int argc, char **argv)
     }
     // Read all contents of the file into a string.
     std::string game_json_str((std::istreambuf_iterator<char>(game_json)), std::istreambuf_iterator<char>());
-    auto        game_descriptor = missiletoad::core::load_game_descriptor(game_json_str).value();
+    auto        game_descriptor_opt = missiletoad::core::load_game_descriptor(game_json_str);
+    if (!game_descriptor_opt.has_value())
+    {
+        spdlog::error("Failed to load game.json.");
+        throw std::runtime_error("Failed to load game.json.");
+    }
+    auto &game_descriptor = game_descriptor_opt.value();
 
     spdlog::info("Initializing game {}.", game_descriptor.name);
 
