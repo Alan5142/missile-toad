@@ -1,0 +1,38 @@
+{
+  "$id": "https://missile-toad.com/schemas/game.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Game Definition",
+  "description": "Defines options for a game.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The name of the game.",
+      "type": "string"
+    },
+    "assets": {
+      "description": "The asset folder for the game.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "mount"
+        ],
+        "properties": {
+          "path": {
+            "description": "The path to the asset folder.",
+            "type": "string"
+          },
+          "mount": {
+            "description": "The mount point for the asset folder.",
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "assets",
+    "name"
+  ]
+}

@@ -1,20 +1,15 @@
 /// @file missile_toad/src/game.cpp
 
 #include "missile_toad/game.hpp"
-#include "fmt/format.h"
 #include "missile_toad/core/asset_manager.hpp"
 #include "missile_toad/core/base_system.hpp"
-#include "missile_toad/core/components/box_collider_2d.component.hpp"
-#include "missile_toad/core/components/camera_2d.component.hpp"
-#include "missile_toad/core/components/rigidbody_2d.component.hpp"
-#include "missile_toad/core/components/sprite.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
-#include "missile_toad/core/systems/physics.system.hpp"
-#include "missile_toad/core/systems/renderer.system.hpp"
-#include "nuklear.h"
-#include "raylib-nuklear.h"
+#include "missile_toad/core/game_descriptor.hpp"
 
 #include <entt/locator/locator.hpp>
+#include <fstream>
+#include <nuklear.h>
+#include <raylib-nuklear.h>
 
 extern void register_system(entt::meta_ctx &ctx);
 extern void register_components(entt::meta_ctx &ctx);
@@ -23,11 +18,20 @@ missiletoad::Game::Game(int argc, char **argv)
     : nuklear_context_(nullptr, nullptr), argv_(argv), argc_(argc), debug_mode_(true)
 {
     // TODO: use argc and argv to select some game options, such as the debug mode. etc.
+    auto game_json = std::ifstream("game.json");
+    if (!game_json.is_open())
+    {
+        spdlog::error("Failed to open game.json.");
+        throw std::runtime_error("Failed to open game.json.");
+    }
+    // Read all contents of the file into a string.
+    std::string game_json_str((std::istreambuf_iterator<char>(game_json)), std::istreambuf_iterator<char>());
+    auto        game_descriptor = missiletoad::core::load_game_descriptor(game_json_str).value();
 
-    spdlog::info("Initializing game.");
+    spdlog::info("Initializing game {}.", game_descriptor.name);
 
     spdlog::info("Creating window.");
-    window_.Init(1280, 720, "Missile Toad");
+    window_.Init(1280, 720, game_descriptor.name);
 
     spdlog::info("Game initialized.");
 
@@ -39,13 +43,19 @@ missiletoad::Game::Game(int argc, char **argv)
     }
     spdlog::trace("Nuklear initialized.");
 
+    asset_manager_ = std::make_unique<core::AssetManager>();
+
+    // Append asset folder paths to the asset manager.
+    for (const auto &asset_folder : game_descriptor.assets_folders)
+    {
+        asset_manager_->push_asset_folder(asset_folder.path, asset_folder.mount_point);
+    }
+
     spdlog::trace("Registering Game systems in the locator.");
     locator_.emplace<missiletoad::core::AssetManager *>(asset_manager_.get());
     locator_.emplace<missiletoad::Game *>(this);
     locator_.emplace<nk_context *>(nuklear_context_.get());
     spdlog::trace("Game systems registered in the locator.");
-
-    asset_manager_ = std::make_unique<core::AssetManager>();
 
     // Register Systems meta types.
     register_system(systems_meta_ctx_);

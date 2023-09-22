@@ -25,6 +25,18 @@ namespace missiletoad::core
         AssetManager(AssetManager &&)            = delete;
         AssetManager &operator=(AssetManager &&) = delete;
 
+        /**
+         * Pushes an asset folder to the stack.
+         * @param path Path to the folder.
+         * @param mount_point The mount point for the folder.
+         */
+        void push_asset_folder(std::string_view path, std::string_view mount_point);
+
+        /**
+         * Pops an asset folder from the stack.
+         */
+        void pop_asset_folder(std::string_view mount_point);
+
         // GCC has a bug that prevents template specializations in non-namespace scope.
         // See: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=85282
         // Workaround is to use partial specializations with std::same_as.
