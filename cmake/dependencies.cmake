@@ -61,7 +61,7 @@ set(PHYSFS_BUILD_DOCS OFF)
 set(PHYSFS_BUILD_TEST OFF)
 
 # PhysFS
-CPMAddPackage("https://github.com/Alan5142/physfs-nx.git#switch")
+CPMAddPackage("https://github.com/Alan5142/physfs-nx.git#e616454")
 
 # Disable all warnings for raylib and physfs
 if (MSVC)
