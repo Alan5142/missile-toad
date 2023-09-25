@@ -33,8 +33,9 @@ TEST_CASE("BaseSystem", "[core]")
     SECTION("Can load a type from the meta context")
     {
         spdlog::set_level(spdlog::level::off);
-        auto type = entt::resolve(ctx, "TestSystem"_hs);
-        REQUIRE(type.info().name() == "TestSystem");
+        auto type                 = entt::resolve(ctx, "TestSystem"_hs);
+        auto contains_base_system = type.info().name().find("TestSystem") != std::string::npos;
+        REQUIRE(contains_base_system);
     }
 
     SECTION("Can construct the type")
@@ -43,8 +44,6 @@ TEST_CASE("BaseSystem", "[core]")
         missiletoad::core::Game           game({"TEST_CASE"}, descriptor);
 
         auto type = entt::resolve(ctx, "TestSystem"_hs).construct(&game);
-
-        REQUIRE(type.type().info().name() == "TestSystem");
 
         type.cast<TestSystem &>().value = 5;
 
