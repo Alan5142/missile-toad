@@ -5,7 +5,7 @@
 #include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/sprite.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
-#include "missile_toad/core/locator.hpp"
+#include "missile_toad/core/game.hpp"
 
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
@@ -14,23 +14,18 @@
 
 constexpr auto PIXELS_PER_UNIT = 3.0F;
 
-missiletoad::core::RendererSystem::RendererSystem(missiletoad::core::Locator &locator)
-{
-    auto registry = locator.get<entt::registry *>();
-    if (!registry.has_value())
-    {
-        throw std::runtime_error("RendererSystem requires an entt::registry to be in the locator.");
-    }
-    registry_ = registry.value();
-}
-
 void missiletoad::core::RendererSystem::register_system(entt::meta_ctx &ctx)
 {
     using namespace entt::literals;
     entt::meta<core::RendererSystem>(ctx)
         .type("core::RendererSystem"_hs)
         .base<missiletoad::core::BaseSystem>()
-        .ctor<>();
+        .ctor<missiletoad::core::Game *>();
+}
+
+missiletoad::core::RendererSystem::RendererSystem(missiletoad::core::Game *game)
+    : registry_(&game->active_scene().get_registry())
+{
 }
 
 void missiletoad::core::RendererSystem::on_render()

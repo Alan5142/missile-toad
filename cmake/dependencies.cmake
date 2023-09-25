@@ -14,7 +14,7 @@ CPMAddPackage("https://github.com/fmtlib/fmt.git#10.1.0")
 CPMAddPackage("https://github.com/microsoft/GSL.git#4300304")
 
 # ENTT
-CPMAddPackage("https://github.com/skypjack/entt.git@3.12.2")
+CPMAddPackage("https://github.com/skypjack/entt.git#9d3b4b8")
 
 # Raylib-nuklear
 CPMAddPackage("https://github.com/RobLoach/raylib-nuklear.git#988c447")

@@ -13,11 +13,6 @@ namespace missiletoad::core
     {
     private:
         /**
-         * The callback to call when the timer reaches 0.
-         */
-        std::function<void()> callback_;
-
-        /**
          * The interval of the timer.
          * A interval of 0 means the timer will only call the callback once.
          */
@@ -38,12 +33,17 @@ namespace missiletoad::core
          */
         bool loop_ = false;
 
+        /**
+         * Whether the timer has finished.
+         */
+        bool finished_ = false;
+
     public:
         /**
          * Default constructor.
          * @param callback callback to call when the timer reaches 0
          */
-        Timer(std::function<void()> callback);
+        Timer() = default;
 
         /**
          * Decrements the timer by delta_time and calls the callback if the timer has reached 0.
@@ -52,6 +52,7 @@ namespace missiletoad::core
          */
         void tick(std::chrono::duration<float> delta_time)
         {
+            finished_ = false;
             if (!is_running_)
             {
                 return;
@@ -61,7 +62,7 @@ namespace missiletoad::core
 
             if (time_left_ <= std::chrono::duration<float>(0))
             {
-                callback_();
+                finished_ = true;
                 if (loop_)
                 {
                     reset();
@@ -79,6 +80,7 @@ namespace missiletoad::core
         void start()
         {
             is_running_ = true;
+            finished_   = false;
         }
 
         /**
@@ -151,6 +153,11 @@ namespace missiletoad::core
         {
             return time_left_;
         }
+
+        [[nodiscard]] bool finished() const
+        {
+            return finished_;
+        }
     };
 
     /**
@@ -159,20 +166,19 @@ namespace missiletoad::core
      * @tparam has_interval Interval is set
      * @tparam has_loop Loop is set
      */
-    template <bool has_callback = false, bool has_interval = false, bool has_loop = false>
+    template <bool has_interval = false, bool has_loop = false>
     class TimerBuilder
     {
     private:
-        std::function<void()>        callback_;
         std::chrono::duration<float> interval_ = std::chrono::duration<float>(0);
         bool                         loop_     = false;
 
-        template <bool has_callback_, bool has_interval_, bool has_loop_>
+        template <bool has_interval_, bool has_loop_>
         friend class TimerBuilder;
 
-        template <bool has_callback_, bool has_interval_, bool has_loop_>
-        TimerBuilder(TimerBuilder<has_callback_, has_interval_, has_loop_> builder)
-            : callback_(std::move(builder.callback_)), interval_(builder.interval_), loop_(builder.loop_)
+        template <bool has_interval_, bool has_loop_>
+        TimerBuilder(TimerBuilder<has_interval_, has_loop_> builder)
+            : interval_(builder.interval_), loop_(builder.loop_)
         {
         }
 
@@ -183,25 +189,14 @@ namespace missiletoad::core
         TimerBuilder() = default;
 
         /**
-         * Sets the callback of the timer.
-         * @param callback callback to set
-         * @return this
-         */
-        TimerBuilder<true, has_interval, has_loop> with_callback(std::function<void()> callback)
-        {
-            callback_ = std::move(callback);
-            return TimerBuilder<true, has_interval, has_loop>(*this);
-        }
-
-        /**
          * Sets the interval of the timer.
          * @param interval interval to set
          * @return this
          */
-        TimerBuilder<has_callback, true, has_loop> with_interval(std::chrono::duration<float> interval)
+        TimerBuilder<true, has_loop> with_interval(std::chrono::duration<float> interval)
         {
             interval_ = interval;
-            return TimerBuilder<has_callback, true, has_loop>(*this);
+            return TimerBuilder<true, has_loop>(*this);
         }
 
         /**
@@ -209,10 +204,10 @@ namespace missiletoad::core
          * @param loop whether the timer should loop
          * @return this
          */
-        TimerBuilder<has_callback, has_interval, has_loop> with_loop(bool loop)
+        TimerBuilder<has_interval, has_loop> with_loop(bool loop)
         {
             loop_ = loop;
-            return TimerBuilder<has_callback, has_interval, true>(*this);
+            return TimerBuilder<has_interval, true>(*this);
         }
 
         /**
@@ -221,8 +216,8 @@ namespace missiletoad::core
          */
         [[nodiscard]] Timer build() const
         {
-            static_assert(has_callback && has_interval, "TimerBuilder must have callback, interval, and loop");
-            auto timer = Timer(callback_);
+            static_assert(has_interval, "TimerBuilder must have callback, interval, and loop");
+            auto timer = Timer();
             timer.set_interval(interval_);
             timer.set_loop(loop_);
             return timer;

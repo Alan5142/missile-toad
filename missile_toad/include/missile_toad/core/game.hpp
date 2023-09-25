@@ -1,7 +1,6 @@
 #pragma once
 
 #include "missile_toad/core/common.hpp"
-#include "missile_toad/core/locator.hpp"
 #include "missile_toad/core/scene.hpp"
 #include "raylib-nuklear.h"
 
@@ -9,13 +8,13 @@
 #include <raylib-cpp.hpp>
 #include <vector>
 
-namespace missiletoad
+namespace missiletoad::core
 {
-    namespace core
-    {
-        class BaseSystem;
-        class AssetManager;
-    } // namespace core
+    class BaseSystem;
+    class AssetManager;
+    class SceneManager;
+    struct GameDescriptor;
+    class InputManager;
 
     /**
      * A class that represents the game.
@@ -28,15 +27,13 @@ namespace missiletoad
      */
     class Game
     {
-        missiletoad::core::Locator                          locator_;
         entt::meta_ctx                                      systems_meta_ctx_;
         entt::meta_ctx                                      components_meta_ctx_;
         std::vector<std::unique_ptr<core::BaseSystem>>      components_;
         std::unique_ptr<core::AssetManager>                 asset_manager_;
+        std::unique_ptr<core::SceneManager>                 scene_manager_;
+        std::unique_ptr<core::InputManager>                 input_manager_;
         std::unique_ptr<nk_context, void (*)(nk_context *)> nuklear_context_;
-        std::unique_ptr<core::Scene>                        scene_;
-        char                                              **argv_;
-        int                                                 argc_{};
         raylib::Window                                      window_;
         bool                                                debug_mode_{};
 
@@ -48,7 +45,14 @@ namespace missiletoad
          * @param argc argc passed to main.
          * @param argv argv passed to main.
          */
-        Game(int argc, char **argv);
+        Game(std::vector<std::string_view> &&arguments, const GameDescriptor &game_descriptor);
+
+        /**
+         * Returns the instance of the game.
+         * @return The instance of the game.
+         */
+        static Game &get_instance() noexcept;
+
         ~Game() noexcept;
 
         Game(const Game &)            = delete;
@@ -67,6 +71,28 @@ namespace missiletoad
          * Closes the game.
          */
         void close() noexcept;
+
+        /**
+         * Returns the asset manager of the game.
+         * @return The asset manager of the game.
+         */
+        [[nodiscard]] missiletoad::core::AssetManager &asset_manager() noexcept;
+
+        [[nodiscard]] missiletoad::core::SceneManager &scene_manager() noexcept;
+
+        [[nodiscard]] missiletoad::core::InputManager &input_manager() noexcept;
+
+        [[nodiscard]] missiletoad::core::Scene &active_scene() noexcept;
+
+        [[nodiscard]] entt::meta_ctx &systems_meta_ctx() noexcept
+        {
+            return systems_meta_ctx_;
+        }
+
+        [[nodiscard]] entt::meta_ctx &components_meta_ctx() noexcept
+        {
+            return components_meta_ctx_;
+        }
 
     private:
         /**
@@ -94,4 +120,4 @@ namespace missiletoad
          */
         void debug_gui() noexcept;
     };
-} // namespace missiletoad
+} // namespace missiletoad::core

@@ -55,7 +55,7 @@ def generate_system(name_nms: Namespace):
 
 namespace missiletoad::core
 {{
-    class Locator;
+    class Game;
 }}
 
 namespace {namespace}
@@ -63,7 +63,7 @@ namespace {namespace}
     class {pascal_case_name}System : public missiletoad::core::BaseSystem
     {{
     public:
-        {pascal_case_name}System(missiletoad::core::Locator &locator);
+        {pascal_case_name}System(missiletoad::core::Game *game);
         static void register_system(entt::meta_ctx& ctx);
     }};
 }}
@@ -71,12 +71,12 @@ namespace {namespace}
 
     component_template_cpp = f'''
 #include "missile_toad/{namespace_folder}/systems/{name}.system.hpp"
-#include "missile_toad/core/locator.hpp"
+#include "missile_toad/core/game.hpp"
 
 #include <entt/meta/meta.hpp>
 #include <entt/meta/factory.hpp>
 
-{namespace}::{pascal_case_name}System::{pascal_case_name}System(missiletoad::core::Locator &locator)
+{namespace}::{pascal_case_name}System::{pascal_case_name}System(missiletoad::core::Game *game)
 {{
     // TODO: Add your constructor code here
 }}
@@ -87,7 +87,7 @@ void {namespace}::{pascal_case_name}System::register_system(entt::meta_ctx &ctx)
     entt::meta<{namespace}::{pascal_case_name}System>(ctx)
             .type("{namespace}::{pascal_case_name}System"_hs)
             .base<missiletoad::core::BaseSystem>()
-            .ctor<>();
+            .ctor<missiletoad::core::Game*>();
     // TODO: Add your register code here
 }}'''
 

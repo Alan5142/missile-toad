@@ -15,10 +15,14 @@ set(MISSILETOAD_CORE_SOURCES
         src/core/texture_loader.cpp
         src/core/music.cpp
         src/core/music_loader.cpp
+        src/core/game.cpp
         src/core/common.cpp
         src/core/scene.cpp
         src/core/timer.cpp
         src/core/game_descriptor.cpp
+        src/core/scene_descriptor.cpp
+        src/core/scene_manager.cpp
+        src/core/input_manager.cpp
 )
 
 set(MISSILETOAD_CORE_LIBS
@@ -28,7 +32,8 @@ set(MISSILETOAD_CORE_LIBS
         Microsoft.GSL::GSL
         box2d
         nuklear::nuklear
-        glm::glm EnTT::EnTT
+        glm::glm
+        EnTT::EnTT
         spdlog::spdlog_header_only
         LDtkLoader
         rapidjson
@@ -36,7 +41,6 @@ set(MISSILETOAD_CORE_LIBS
 
 set(MISSILETOAD_SOURCES
         ${MISSILETOAD_CORE_SOURCES}
-        src/game.cpp
 
         ${CMAKE_CURRENT_BINARY_DIR}/systems.cpp
         ${CMAKE_CURRENT_BINARY_DIR}/components.cpp

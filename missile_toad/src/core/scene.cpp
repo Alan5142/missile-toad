@@ -1,7 +1,10 @@
 /// @file missile_toad/src/core/scene.cpp
 
 #include "missile_toad/core/scene.hpp"
-#include "missile_toad/core/locator.hpp"
+#include "missile_toad/core/game.hpp"
+#include "missile_toad/core/systems/physics.system.hpp"
+#include "missile_toad/core/systems/renderer.system.hpp"
+#include "missile_toad/core/systems/sprite_animation.system.hpp"
 
 void missiletoad::core::Scene::on_start()
 {
@@ -62,12 +65,17 @@ void missiletoad::core::Scene::on_render()
     spdlog::trace("Scene::on_render() finished.");
 }
 
-missiletoad::core::Scene::Scene(missiletoad::core::Locator &locator)
+missiletoad::core::Scene::Scene(missiletoad::core::Game &game)
 {
-    spdlog::trace("Scene::Scene(Locator &) called.");
+    spdlog::trace("Scene::Scene() called.");
 
-    locator.emplace<Scene *>(this);
-    locator.emplace<entt::registry *>(&scene_entities_);
+    // Load the systems.
+    this->systems_.emplace_back(std::make_unique<PhysicsSystem>(&game));
+    this->systems_.emplace_back(std::make_unique<RendererSystem>(&game));
+    this->systems_.emplace_back(std::make_unique<SpriteAnimationSystem>(&game));
 
-    spdlog::trace("Scene::Scene(Locator &) finished.");
+    // Call the on_start() method of all the systems.
+    on_start();
+
+    spdlog::trace("Scene::Scene() finished.");
 }
