@@ -61,14 +61,10 @@ int main(int argc, char *argv[]) noexcept(false)
 {
     SetTraceLogCallback(raylib_log_callback);
 
-    spdlog::set_level(spdlog::level::trace);
-
 #ifdef PLATFORM_NX
     romfsInit();
 #endif
     InitAudioDevice();
-    auto game = std::make_unique<missiletoad::Game>(argc, argv);
-
     auto game_json = std::ifstream("game.json");
     if (!game_json.is_open())
     {

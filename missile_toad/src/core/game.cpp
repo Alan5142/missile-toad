@@ -28,27 +28,8 @@ missiletoad::core::Game::Game(std::vector<std::string_view> &&arguments, const G
         throw std::runtime_error("Game instance already exists.");
     }
     // TODO: use argc and argv to select some game options, such as the debug mode. etc.
-<<<<<<< HEAD:missile_toad/src/game.cpp
-    auto game_json = std::ifstream("game.json");
-    rayMusic       = std::make_unique<raylib::Music>("assets/fnf.mp3");
-    if (!game_json.is_open())
-    {
-        spdlog::error("Failed to open game.json.");
-        throw std::runtime_error("Failed to open game.json.");
-    }
-    // Read all contents of the file into a string.
-    std::string game_json_str((std::istreambuf_iterator<char>(game_json)), std::istreambuf_iterator<char>());
-    auto        game_descriptor_opt = missiletoad::core::load_game_descriptor(game_json_str);
-    if (!game_descriptor_opt.has_value())
-    {
-        spdlog::error("Failed to load game.json.");
-        throw std::runtime_error("Failed to load game.json.");
-    }
-    auto &game_descriptor = game_descriptor_opt.value();
-    == == == =
->>>>>>> main:missile_toad/src/core/game.cpp
 
-                 spdlog::info("Initializing game {}.", game_descriptor.name);
+    spdlog::info("Initializing game {}.", game_descriptor.name);
 
     spdlog::info("Creating window.");
     if (args.size() != 1 || args[0] != "TEST_CASE")
@@ -84,10 +65,6 @@ missiletoad::core::Game::Game(std::vector<std::string_view> &&arguments, const G
     INSTANCE = this;
 
     spdlog::trace("Game::Game() finished.");
-
-    music_to_play = asset_manager_->load<missiletoad::core::Music>("/assets/fnf.mp3");
-    music_to_play->get_music().Play();
-    // rayMusic->Play();
 }
 
 // TODO: Implement this.
@@ -108,8 +85,6 @@ void missiletoad::core::Game::update(float delta_time) noexcept
     {
         scene_manager_->active_scene()->update(delta_time);
     }
-    music_to_play->get_music().SetVolume(0.05f);
-    music_to_play->get_music().Update();
 
     spdlog::trace("Game::update() finished.");
 
