@@ -17,6 +17,7 @@
 #if defined(_WIN32) // raylib uses these names as function parameters
 #    undef near
 #    undef far
+#    undef DELETE
 #endif
 
 using std::uint16_t;

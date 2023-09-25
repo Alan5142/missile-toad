@@ -2,12 +2,14 @@
 
 #include <chrono>
 #include <fmt/format.h>
+#include <fstream>
 #include <gsl/gsl>
 #include <memory>
 #include <raylib.h>
 
 #include "missile_toad/core/common.hpp"
-#include "missile_toad/game.hpp"
+#include "missile_toad/core/game.hpp"
+#include "missile_toad/core/game_descriptor.hpp"
 
 #ifdef PLATFORM_NX
 #    include <switch.h>
@@ -63,9 +65,40 @@ int main(int argc, char *argv[]) noexcept(false)
     romfsInit();
 #endif
 
-    auto game = std::make_unique<missiletoad::Game>(argc, argv);
+    auto game_json = std::ifstream("game.json");
+    if (!game_json.is_open())
+    {
+        spdlog::error("Failed to open game.json.");
+        throw std::runtime_error("Failed to open game.json.");
+    }
 
-    game->run();
+    // Read all contents of the file into a string.
+    std::string game_json_str((std::istreambuf_iterator<char>(game_json)), std::istreambuf_iterator<char>());
+    auto        game_descriptor_opt = missiletoad::core::load_game_descriptor(game_json_str);
+    if (!game_descriptor_opt.has_value())
+    {
+        spdlog::error("Failed to load game.json.");
+        return 1;
+    }
+
+    std::vector<std::string_view> arguments;
+    arguments.reserve(argc);
+    for (auto i = 0; i < argc; i++)
+    {
+        spdlog::debug("argv[{}] = {}", i, argv[i]);
+        arguments.emplace_back(argv[i]);
+    }
+
+    try
+    {
+        auto game = std::make_unique<missiletoad::core::Game>(std::move(arguments), game_descriptor_opt.value());
+        game->run();
+    }
+    catch (const std::exception &e)
+    {
+        spdlog::error("An exception occurred: {}", e.what());
+        return 1;
+    }
 
     spdlog::info("Game ended.");
 

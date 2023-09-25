@@ -1,11 +1,13 @@
 #pragma once
 #include "base_system.hpp"
 #include "common.hpp"
+
 #include <entt/entity/registry.hpp>
 
 namespace missiletoad::core
 {
-    class Locator;
+    class Game;
+
     /**
      * @brief The scene class contains all the entities and systems in the game.
      * In other words, a scene represents a level in the game.
@@ -23,7 +25,8 @@ namespace missiletoad::core
         std::vector<std::unique_ptr<BaseSystem>> systems_;
 
     public:
-        Scene(Locator &locator);
+        Scene(Game &game);
+
         ~Scene() = default;
 
         Scene(const Scene &)            = delete;

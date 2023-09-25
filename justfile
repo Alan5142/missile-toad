@@ -21,7 +21,7 @@ format:
 
 # Run clang-tidy on the project, requires configure
 tidy: format
-    cd build && cmake --build . --target tidy -j 8
+    cd build && cmake --build . --target tidy -j $(nproc)
 
 # Run the project, requires configure
 test:
