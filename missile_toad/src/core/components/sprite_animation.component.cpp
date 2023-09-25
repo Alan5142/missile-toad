@@ -67,7 +67,7 @@ uint32_t missiletoad::core::SpriteAnimationComponent::get_frame() const
 
 uint32_t missiletoad::core::SpriteAnimationComponent::get_frame_count() const
 {
-    return frames_.size();
+    return static_cast<uint32_t>(frames_.size());
 }
 
 entt::resource<missiletoad::core::Texture> missiletoad::core::SpriteAnimationComponent::get_current_frame_texture()
