@@ -3,7 +3,7 @@
 #include "missile_toad/core/components/box_collider_2d.component.hpp"
 #include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
-#include "missile_toad/core/locator.hpp"
+#include "missile_toad/core/game.hpp"
 
 #include <entt/entity/registry.hpp>
 #include <entt/meta/factory.hpp>
@@ -16,20 +16,12 @@ void missiletoad::core::PhysicsSystem::register_system(entt::meta_ctx &ctx)
     entt::meta<missiletoad::core::PhysicsSystem>(ctx)
         .type("missiletoad::core::PhysicsSystem"_hs)
         .base<missiletoad::core::BaseSystem>()
-        .ctor<>();
+        .ctor<missiletoad::core::Game *>();
 }
 
-missiletoad::core::PhysicsSystem::PhysicsSystem(missiletoad::core::Locator &locator)
-    : world_({0, 0}), locator_(&locator)
+missiletoad::core::PhysicsSystem::PhysicsSystem(missiletoad::core::Game *game)
+    : world_({0, 0}), registry_(&game->active_scene().get_registry())
 {
-    locator.emplace<PhysicsSystem *>(this);
-    auto registry_opt = locator.get<entt::registry *>();
-    if (!registry_opt.has_value())
-    {
-        throw std::runtime_error("PhysicsSystem requires an entt::registry to be in the locator.");
-    }
-    registry_ = registry_opt.value();
-
     transform_observer_.connect(*registry_,
                                 entt::collector
                                     .update<missiletoad::core::Rigidbody2dComponent>() //
@@ -43,8 +35,6 @@ missiletoad::core::PhysicsSystem::~PhysicsSystem()
 {
     registry_->on_construct<core::BoxCollider2dComponent>().disconnect<&PhysicsSystem::on_box_collider_created>(this);
     registry_->on_construct<core::Rigidbody2dComponent>().disconnect<&PhysicsSystem::on_rigidbody_created>(this);
-
-    locator_->erase<PhysicsSystem *>();
 }
 
 void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)

@@ -35,7 +35,7 @@ CheckOptions:
     readability-identifier-naming.GlobalConstantCase: UPPER_CASE
     readability-identifier-naming.GlobalVariableCase: UPPER_CASE
     readability-identifier-naming.ConstantCase: UPPER_CASE
-    readability-identifier-naming.EnumCase: UPPER_CASE
+    readability-identifier-naming.EnumCase: CamelCase
     readability-identifier-naming.EnumConstantCase: UPPER_CASE
     readability-identifier-naming.LocalConstantCase: lower_case
     readability-identifier-naming.LocalVariableCase: lower_case
@@ -79,6 +79,7 @@ CheckOptions:
     readability-identifier-naming.ProtectedVariableCase: lower_case
     readability-identifier-naming.PublicVariableCase: lower_case
     readability-identifier-naming.PrivateMemberSuffix: _
+    readability-identifier-naming.EnumPrefix: E
 
 
 WarningsAsErrors: >

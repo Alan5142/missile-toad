@@ -9,17 +9,16 @@
 
 namespace missiletoad::core
 {
-    class Locator;
+    class Game;
 
     class PhysicsSystem : public missiletoad::core::BaseSystem
     {
         b2World         world_;
         entt::observer  transform_observer_;
         entt::registry *registry_;
-        Locator        *locator_;
 
     public:
-        PhysicsSystem(Locator &locator);
+        PhysicsSystem(Game *game);
         PhysicsSystem(const PhysicsSystem &)        = delete;
         PhysicsSystem(PhysicsSystem &&rhs) noexcept = delete;
 
