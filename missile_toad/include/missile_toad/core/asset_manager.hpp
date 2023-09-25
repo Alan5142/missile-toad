@@ -1,5 +1,6 @@
 #pragma once
 #include "common.hpp"
+#include "music_loader.hpp"
 #include "texture_loader.hpp"
 
 #include <entt/core/hashed_string.hpp>
@@ -14,6 +15,7 @@ namespace missiletoad::core
     {
     private:
         entt::resource_cache<Texture, TextureLoader> texture_cache_;
+        entt::resource_cache<Music, MusicLoader>     music_cache_;
 
     public:
         AssetManager();
@@ -61,6 +63,18 @@ namespace missiletoad::core
         entt::resource<T> load(std::string_view name)
         {
             return texture_cache_.load(entt::hashed_string{name.data()}, name.data()).first->second;
+        }
+
+        /**
+         * Loads a music track.
+         * @tparam T Music
+         * @param name The name of the music in the filesystem.
+         * @return The music.
+         */
+        template <std::same_as<Music> T>
+        entt::resource<T> load(std::string_view name)
+        {
+            return music_cache_.load(entt::hashed_string{name.data()}, name.data()).first->second;
         }
     };
 } // namespace missiletoad::core

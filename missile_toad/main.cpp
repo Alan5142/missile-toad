@@ -59,16 +59,18 @@ int main(int argc, char *argv[]) noexcept(false)
 {
     SetTraceLogCallback(raylib_log_callback);
 
+    spdlog::set_level(spdlog::level::trace);
+
 #ifdef PLATFORM_NX
     romfsInit();
 #endif
-
+    InitAudioDevice();
     auto game = std::make_unique<missiletoad::Game>(argc, argv);
 
     game->run();
 
     spdlog::info("Game ended.");
-
+    CloseAudioDevice();
 #ifdef PLATFORM_NX
     romfsExit();
 #endif

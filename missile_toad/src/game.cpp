@@ -14,11 +14,14 @@
 extern void register_system(entt::meta_ctx &ctx);
 extern void register_components(entt::meta_ctx &ctx);
 
+static entt::resource<missiletoad::core::Music> music_to_play;
+static std::unique_ptr<raylib::Music>           rayMusic;
 missiletoad::Game::Game(int argc, char **argv)
     : nuklear_context_(nullptr, nullptr), argv_(argv), argc_(argc), debug_mode_(true)
 {
     // TODO: use argc and argv to select some game options, such as the debug mode. etc.
     auto game_json = std::ifstream("game.json");
+    rayMusic       = std::make_unique<raylib::Music>("assets/fnf.mp3");
     if (!game_json.is_open())
     {
         spdlog::error("Failed to open game.json.");
@@ -69,6 +72,10 @@ missiletoad::Game::Game(int argc, char **argv)
     spdlog::trace("Systems registered.");
 
     spdlog::trace("Game::Game() finished.");
+
+    music_to_play = asset_manager_->load<missiletoad::core::Music>("/assets/fnf.mp3");
+    music_to_play->get_music().Play();
+    // rayMusic->Play();
 }
 
 // TODO: Implement this.
@@ -89,6 +96,8 @@ void missiletoad::Game::update(float delta_time) noexcept
     {
         scene_->update(delta_time);
     }
+    music_to_play->get_music().SetVolume(0.05f);
+    music_to_play->get_music().Update();
 
     spdlog::trace("Game::update() finished.");
 

@@ -13,6 +13,8 @@ set(MISSILETOAD_CORE_SOURCES
         src/core/asset_manager.cpp
         src/core/texture.cpp
         src/core/texture_loader.cpp
+        src/core/music.cpp
+        src/core/music_loader.cpp
         src/core/common.cpp
         src/core/scene.cpp
         src/core/timer.cpp
