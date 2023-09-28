@@ -64,7 +64,9 @@ int main(int argc, char *argv[]) noexcept(false)
 #ifdef PLATFORM_NX
     romfsInit();
 #endif
+
     InitAudioDevice();
+
     auto game_json = std::ifstream("game.json");
     if (!game_json.is_open())
     {
@@ -101,7 +103,9 @@ int main(int argc, char *argv[]) noexcept(false)
     }
 
     spdlog::info("Game ended.");
+
     CloseAudioDevice();
+
 #ifdef PLATFORM_NX
     romfsExit();
 #endif
