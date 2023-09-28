@@ -31,6 +31,10 @@ namespace missiletoad::core
          */
         [[nodiscard]] const raylib::Texture &get_texture() const noexcept;
 
+        /**
+         * Get the underlying raylib texture.
+         * @return The underlying raylib texture.
+         */
         [[nodiscard]] raylib::Texture &get_texture() noexcept;
 
         /**

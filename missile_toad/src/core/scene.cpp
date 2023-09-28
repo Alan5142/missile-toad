@@ -2,6 +2,7 @@
 
 #include "missile_toad/core/scene.hpp"
 #include "missile_toad/core/game.hpp"
+#include "missile_toad/core/systems/audio.system.hpp"
 #include "missile_toad/core/systems/physics.system.hpp"
 #include "missile_toad/core/systems/renderer.system.hpp"
 #include "missile_toad/core/systems/sprite_animation.system.hpp"
@@ -73,6 +74,7 @@ missiletoad::core::Scene::Scene(missiletoad::core::Game &game)
     this->systems_.emplace_back(std::make_unique<PhysicsSystem>(&game));
     this->systems_.emplace_back(std::make_unique<RendererSystem>(&game));
     this->systems_.emplace_back(std::make_unique<SpriteAnimationSystem>(&game));
+    this->systems_.emplace_back(std::make_unique<AudioSystem>(&game));
 
     // Call the on_start() method of all the systems.
     on_start();
