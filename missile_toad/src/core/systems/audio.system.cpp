@@ -35,6 +35,4 @@ void missiletoad::core::AudioSystem::on_update(float delta_time)
     }
 }
 
-missiletoad::core::AudioSystem::~AudioSystem()
-{
-}
+missiletoad::core::AudioSystem::~AudioSystem() = default;
