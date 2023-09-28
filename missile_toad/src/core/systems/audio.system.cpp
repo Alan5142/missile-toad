@@ -8,6 +8,7 @@
 missiletoad::core::AudioSystem::AudioSystem(missiletoad::core::Game *game)
 {
     // TODO: Add your constructor code here
+    unused(game);
 }
 
 void missiletoad::core::AudioSystem::register_system(entt::meta_ctx &ctx)

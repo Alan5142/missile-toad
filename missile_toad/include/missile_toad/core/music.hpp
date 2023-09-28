@@ -31,8 +31,8 @@ namespace missiletoad::core
         [[nodiscard]] const raylib::Music &get_music() const noexcept;
 
         /**
-         * Get the underlying raylib music.
-         * @return The underlying raylib music.
+         * Get the non const underlying raylib music.
+         * @return The non const underlying raylib music.
          */
         [[nodiscard]] raylib::Music &get_music() noexcept;
 
