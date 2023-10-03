@@ -66,18 +66,18 @@ void missiletoad::core::Scene::on_render()
     spdlog::trace("Scene::on_render() finished.");
 }
 
-missiletoad::core::Scene::Scene(missiletoad::core::Game &game)
+missiletoad::core::Scene::Scene(missiletoad::core::Game *game) : game_(game)
 {
     spdlog::trace("Scene::Scene() called.");
 
-    // Load the systems.
-    this->systems_.emplace_back(std::make_unique<PhysicsSystem>(&game));
-    this->systems_.emplace_back(std::make_unique<RendererSystem>(&game));
-    this->systems_.emplace_back(std::make_unique<SpriteAnimationSystem>(&game));
-    this->systems_.emplace_back(std::make_unique<AudioSystem>(&game));
-
-    // Call the on_start() method of all the systems.
-    on_start();
-
     spdlog::trace("Scene::Scene() finished.");
+}
+
+void missiletoad::core::Scene::on_post_init()
+{
+    // Load the systems.
+    this->systems_.emplace_back(std::make_unique<PhysicsSystem>(game_));
+    this->systems_.emplace_back(std::make_unique<RendererSystem>(game_));
+    this->systems_.emplace_back(std::make_unique<SpriteAnimationSystem>(game_));
+    this->systems_.emplace_back(std::make_unique<AudioSystem>(game_));
 }

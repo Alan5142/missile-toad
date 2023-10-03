@@ -170,6 +170,8 @@ void missiletoad::core::Game::run() noexcept
 
         // Render
         this->render();
+
+        scene_manager_->on_post_update();
     }
 }
 void missiletoad::core::Game::close() noexcept

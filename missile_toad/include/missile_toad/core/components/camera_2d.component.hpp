@@ -30,7 +30,7 @@ namespace missiletoad::core
          */
         void set_zoom(float zoom)
         {
-            camera_.zoom = zoom;
+            camera_.zoom = zoom * 35.0F;
         }
 
         /**

@@ -24,8 +24,10 @@ namespace missiletoad::core
          */
         std::vector<std::unique_ptr<BaseSystem>> systems_;
 
+        Game *game_;
+
     public:
-        Scene(Game &game);
+        Scene(Game *game);
 
         ~Scene() = default;
 
@@ -57,6 +59,8 @@ namespace missiletoad::core
         {
             systems_.push_back(std::move(system));
         }
+
+        void on_post_init();
 
         /**
          * @brief Calls the on_start() method of all the systems in the scene.

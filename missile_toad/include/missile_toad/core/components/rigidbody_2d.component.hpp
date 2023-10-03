@@ -5,6 +5,8 @@
 #include <entt/meta/meta.hpp>
 #include <glm/vec2.hpp>
 
+class ContactListener;
+
 namespace missiletoad::core
 {
     class PhysicsSystem;

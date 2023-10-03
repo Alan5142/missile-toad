@@ -16,17 +16,17 @@ namespace missiletoad::core
         /**
          * @brief The position of the transform.
          */
-        glm::vec2 position;
+        glm::vec2 position = {0.0F, 0.0F};
 
         /**
          * @brief The scale of the transform.
          */
-        glm::vec2 scale;
+        glm::vec2 scale = {1.0F, 1.0F};
 
         /**
          * @brief The rotation of the transform.
          */
-        float rotation;
+        float rotation = 0.0F;
 
         /**
          * Registers the component with the meta context.
