@@ -87,8 +87,8 @@ jobs:
           -S ${{ github.workspace }}
 
       - name: Build
-        timeout-minutes: 10
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Debug
+        timeout-minutes: 15
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Debug -j 4
 
       - name: Test
         timeout-minutes: 5
