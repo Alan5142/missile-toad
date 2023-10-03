@@ -1,14 +1,72 @@
 
 #include "missile_toad/core/systems/physics.system.hpp"
 #include "missile_toad/core/components/box_collider_2d.component.hpp"
+#include "missile_toad/core/components/collision2d.component.hpp"
 #include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
 #include "missile_toad/core/game.hpp"
 
+#include <box2d/b2_contact.h>
 #include <entt/entity/registry.hpp>
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 #include <glm/trigonometric.hpp>
+
+class ContactListener : public b2ContactListener
+{
+    missiletoad::core::Game *game_{};
+
+public:
+    ContactListener(missiletoad::core::Game *game) : game_(game)
+    {
+    }
+
+    ~ContactListener() override = default;
+
+    ContactListener(const ContactListener &) = default;
+
+    ContactListener(ContactListener &&) noexcept = default;
+
+    ContactListener &operator=(const ContactListener &) = default;
+
+    ContactListener &operator=(ContactListener &&) noexcept = default;
+
+    void BeginContact(b2Contact *contact) override
+    {
+        handle_contact(contact, missiletoad::core::ECollisionStatus::ENTER);
+    }
+
+    void EndContact(b2Contact *contact) override
+    {
+        handle_contact(contact, missiletoad::core::ECollisionStatus::EXIT);
+    }
+
+private:
+    void handle_contact(b2Contact *contact, missiletoad::core::ECollisionStatus status)
+    {
+        auto *fixture_a = contact->GetFixtureA();
+        auto *fixture_b = contact->GetFixtureB();
+
+        // NOLINTNEXTLINE
+        auto entity_a = static_cast<entt::entity>(fixture_a->GetUserData().pointer);
+        // NOLINTNEXTLINE
+        auto entity_b = static_cast<entt::entity>(fixture_b->GetUserData().pointer);
+
+        auto &registry = game_->active_scene().get_registry();
+
+        auto *collision_a = registry.try_get<missiletoad::core::Collision2dComponent>(entity_a);
+        auto *collision_b = registry.try_get<missiletoad::core::Collision2dComponent>(entity_b);
+
+        if (collision_a != nullptr)
+        {
+            collision_a->callback(entity_a, entity_b, status);
+        }
+        if (collision_b != nullptr)
+        {
+            collision_b->callback(entity_b, entity_a, status);
+        }
+    }
+};
 
 void missiletoad::core::PhysicsSystem::register_system(entt::meta_ctx &ctx)
 {
@@ -22,6 +80,8 @@ void missiletoad::core::PhysicsSystem::register_system(entt::meta_ctx &ctx)
 missiletoad::core::PhysicsSystem::PhysicsSystem(missiletoad::core::Game *game)
     : world_({0, 0}), registry_(&game->active_scene().get_registry())
 {
+    static auto contact_listener = ContactListener{game};
+    world_.SetContactListener(&contact_listener);
     transform_observer_.connect(*registry_,
                                 entt::collector
                                     .update<missiletoad::core::Rigidbody2dComponent>() //
@@ -86,8 +146,8 @@ void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
 void missiletoad::core::PhysicsSystem::on_box_collider_created(entt::registry &registry, entt::entity entity)
 {
     // Only use box collider and rigidbody components.
-    auto &transform    = registry.get<core::TransformComponent>(entity);
-    auto &box_collider = registry.get<core::BoxCollider2dComponent>(entity);
+    auto &transform    = registry.get_or_emplace<core::TransformComponent>(entity);
+    auto &box_collider = registry.get_or_emplace<core::BoxCollider2dComponent>(entity);
     auto &rigidbody    = registry.get_or_emplace<core::Rigidbody2dComponent>(entity);
 
     auto fixture_def        = b2FixtureDef{};
@@ -109,7 +169,7 @@ void missiletoad::core::PhysicsSystem::on_rigidbody_created(entt::registry &regi
     auto &transform = registry.get_or_emplace<core::TransformComponent>(entity);
 
     // Create rigidbody
-    auto &rigidbody = registry.get<core::Rigidbody2dComponent>(entity);
+    auto &rigidbody = registry.get_or_emplace<core::Rigidbody2dComponent>(entity);
 
     auto body_def = b2BodyDef{};
     body_def.type = b2_staticBody;

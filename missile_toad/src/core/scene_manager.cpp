@@ -24,31 +24,32 @@ class MetaSystem : public missiletoad::core::BaseSystem
 public:
     MetaSystem(entt::meta_any &&underlying) : underlying_(std::move(underlying))
     {
+        (void)1;
     }
 
     void on_update(float delta_time) override
     {
-        underlying_.cast<missiletoad::core::BaseSystem *>()->on_update(delta_time);
+        underlying_.cast<missiletoad::core::BaseSystem &>().on_update(delta_time);
     }
 
     void on_render() override
     {
-        underlying_.cast<missiletoad::core::BaseSystem *>()->on_render();
+        underlying_.cast<missiletoad::core::BaseSystem &>().on_render();
     }
 
     void on_fixed_update(float delta_time) override
     {
-        underlying_.cast<missiletoad::core::BaseSystem *>()->on_fixed_update(delta_time);
+        underlying_.cast<missiletoad::core::BaseSystem &>().on_fixed_update(delta_time);
     }
 
     void on_destroy() override
     {
-        underlying_.cast<missiletoad::core::BaseSystem *>()->on_destroy();
+        underlying_.cast<missiletoad::core::BaseSystem &>().on_destroy();
     }
 
     void on_start() override
     {
-        underlying_.cast<missiletoad::core::BaseSystem *>()->on_start();
+        underlying_.cast<missiletoad::core::BaseSystem &>().on_start();
     }
 };
 
@@ -62,11 +63,15 @@ void missiletoad::core::SceneManager::on_post_update()
             spdlog::error("Failed to load scene descriptor for scene: {}", next_scene_.value());
             return;
         }
+        next_scene_ = std::nullopt;
 
         auto &descriptor = descriptor_opt.value();
-        active_scene_->on_destroy();
-        active_scene_.reset();
-        active_scene_ = std::make_unique<Scene>(game_);
+        if (active_scene_ != nullptr)
+        {
+            active_scene_->on_destroy();
+            active_scene_.reset();
+        }
+        active_scene_ = std::make_unique<Scene>(&game_);
 
         auto &systems_db = game_.systems_meta_ctx();
         for (auto &system : descriptor.systems)
@@ -86,7 +91,15 @@ void missiletoad::core::SceneManager::on_post_update()
                 continue;
             }
 
+            auto *base_system = instance.try_cast<missiletoad::core::BaseSystem>();
+            if (base_system == nullptr)
+            {
+                spdlog::warn("Failed to cast system type to BaseSystem: {}", system);
+                continue;
+            }
             active_scene_->add_system<MetaSystem>(std::move(instance));
         }
+        active_scene_->on_post_init();
+        active_scene_->on_start();
     }
 }

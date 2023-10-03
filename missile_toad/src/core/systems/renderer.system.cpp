@@ -74,23 +74,6 @@ void missiletoad::core::RendererSystem::on_render()
         EndMode2D();
     }
 
-    // Draw Rigidbody2dComponent
-    for (const auto &cam_entity : camera_view)
-    {
-        auto &cam = registry_->get<core::Camera2dComponent>(cam_entity);
-        BeginMode2D(cam.get_camera());
-        for (auto entity : registry_->view<core::Rigidbody2dComponent, core::TransformComponent>())
-        {
-            const auto &transform = view.get<core::TransformComponent>(entity);
-            const auto &position  = transform.position;
-            const auto  rec       = Rectangle{.x      = position.x,
-                                              .y      = position.y,
-                                              .width  = transform.scale.x * PIXELS_PER_UNIT,
-                                              .height = transform.scale.y * PIXELS_PER_UNIT};
-            DrawRectanglePro(rec, Vector2{rec.width / 2.0F, rec.height / 2.0F}, transform.rotation, {230, 41, 55, 50});
-        }
-    }
-
     // Draw Physics Objects
     for (auto cam_entity : camera_view)
     {
@@ -116,7 +99,7 @@ void missiletoad::core::RendererSystem::on_render()
                 auto rotated_vertex      = rotation_matrix * glm::vec4(vertex.x, vertex.y, 0, 1);
                 auto rotated_next_vertex = rotation_matrix * glm::vec4(next_vertex.x, next_vertex.y, 0, 1);
                 DrawLineEx(Vector2{position.x + rotated_vertex.x, position.y + rotated_vertex.y},
-                           Vector2{position.x + rotated_next_vertex.x, position.y + rotated_next_vertex.y}, 0.05F,
+                           Vector2{position.x + rotated_next_vertex.x, position.y + rotated_next_vertex.y}, 0.1F,
                            GREEN);
             }
         }

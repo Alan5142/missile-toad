@@ -3,6 +3,7 @@
 
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
+#include <rapidjson/stringbuffer.h>
 
 std::optional<missiletoad::core::SceneDescriptor> missiletoad::core::load_scene_descriptor(std::string_view path)
 {
@@ -22,6 +23,7 @@ std::optional<missiletoad::core::SceneDescriptor> missiletoad::core::load_scene_
     if (document.HasParseError())
     {
         spdlog::trace("Failed to parse scene descriptor: {}", path);
+        spdlog::trace("Error: {}", document.GetParseError());
         return std::nullopt;
     }
 

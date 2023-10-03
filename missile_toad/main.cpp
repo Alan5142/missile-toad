@@ -15,6 +15,12 @@
 #    include <switch.h>
 #endif
 
+#ifdef PLATFORM_NX
+constexpr std::string_view GAME_METADATA = "romfs:/game.json";
+#else
+constexpr std::string_view GAME_METADATA = "game.json";
+#endif
+
 /**
  * The callback function for raylib's logging system. It forwards the log to spdlog.
  * @param log_level log level
@@ -67,7 +73,7 @@ int main(int argc, char *argv[]) noexcept(false)
 
     InitAudioDevice();
 
-    auto game_json = std::ifstream("game.json");
+    auto game_json = std::ifstream(GAME_METADATA.data());
     if (!game_json.is_open())
     {
         spdlog::error("Failed to open game.json.");
