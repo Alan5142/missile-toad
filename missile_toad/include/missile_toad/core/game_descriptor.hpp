@@ -13,6 +13,7 @@ namespace missiletoad::core
     struct GameDescriptor
     {
         std::string             name;
+        std::string             default_scene;
         std::vector<PathFolder> assets_folders;
     };
 
