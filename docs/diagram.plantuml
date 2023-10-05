@@ -9,9 +9,9 @@ skinparam linetype ortho
 package missiletoad.core {
     class AssetManager {
         -texture_cache_: entt::resource_cache<Texture, TextureLoader>
-        -sound_cache_: entt::resource_cache<Sound, SoundLoader>
+        -music_cache_: entt::resource_cache<Music, MusicLoader>
 
-        +AssetManager()
+        +AssetManager(game: Game*)
         +~AssetManager()
         +push_asset_folder(path: std::string_view, mount_point: std::string_view)
         +pop_asset_folder(mount_point: std::string_view)
@@ -19,7 +19,10 @@ package missiletoad.core {
     }
 
     AssetManager --> TextureLoader
-    AssetManager --> SoundLoader
+    AssetManager --> MusicLoader
+    AssetManager ..> Texture
+    AssetManager ..> Music
+    AssetManager ..* missiletoad.Game
 
 
     abstract class BaseSystem {
@@ -38,66 +41,132 @@ package missiletoad.core {
 
     class GameDescriptor {
         +name: std::string
+        +default_scene: std::string
         +assets_folders: std::vector<PathFolder>
     }
 
     GameDescriptor *-- PathFolder
 
-    class Service {
-        name_hash: std::size_t
-        service: std::any
+    enum EKey {
+        ...
     }
 
-    class Locator {
-        -services_: std::unordered_map<entt::id_type, Service>
-
-        +Locator()
-
-        +emplace<T, Args...>(args: Args...): bool
-        +emplace_named<T, Args...>(name: std::string_view, args: Args...): bool
-        +get<T>(): std::optional<std::reference_wrapper<T>>
-        +get<T>(name: std::string_view): std::optional<std::reference_wrapper<T>>
-        +size(): std::size_t
-        +erase<T>(name: std::string_view)
-        +clear()
+    enum EGamepadButton {
+        ...
     }
 
-    Locator *-- Service
-
-    /'
-    TODO: Add Scene, SceneDescriptor, SceneManager
-    '/
-
-    class ComponentDescriptor {
-        +type: std::string
-        +params: std::vector<std::pair<std::string, std::string>>
+    enum EGamepadAxis {
+        ...
     }
 
-    class EntityDescriptor {
-        +name: std::string
-        +components: std::vector<ComponentDescriptor>
+    enum EActionState {
+        ...
     }
 
-    EntityDescriptor *-- ComponentDescriptor
+    enum EMouseButton {
+        ...
+    }
+
+    class GamepadAxisData {
+        +axis: EGamepadAxis
+        +gamepad: int
+    }
+
+    class GamepadButtonData {
+        +button: EGamepadButton
+        +gamepad: int
+    }
+
+    class AxisButton {
+        +positive: std::variant<std::monostate, EKey, EMouseButton, GamepadButtonData>
+        +negative: std::variant<std::monostate, EKey, EMouseButton, GamepadButtonData>
+    }
+
+    class Axis {
+        +axis: std::variant<AxisButton, GamepadAxisData>
+        +dead_zone: float
+        +weight: float
+    }
+
+    class ActionData {
+        +actions: std::vector<std::variant<std::monostate, EKey, EMouseButton, GamepadButtonData>>
+        +state: EActionState
+    }
+
+    class AxisData {
+        +axes: std::vector<Axis>
+        +value: float
+    }
+
+    class InputManager {
+        -actions_: std::unordered_map<std::string, ActionData>
+        -axes_: std::unordered_map<std::string, AxisData>
+
+        +update()
+        +is_key_down(key: EKey): bool
+        +is_key_up(key: EKey): bool
+        +is_key_pressed(key: EKey): bool
+        +is_key_released(key: EKey): bool
+        +is_mouse_button_down(button: EMouseButton): bool
+        +is_mouse_button_up(button: EMouseButton): bool
+        +is_mouse_button_pressed(button: EMouseButton): bool
+        +is_mouse_button_released(button: EMouseButton): bool
+        +is_gamepad_button_down(gamepad: int, button: EGamepadButton): bool
+        +is_gamepad_button_up(gamepad: int, button: EGamepadButton): bool
+        +is_gamepad_button_pressed(gamepad: int, button: EGamepadButton): bool
+        +is_gamepad_button_released(gamepad: int, button: EGamepadButton): bool
+        +get_gamepad_axis(gamepad: int, axis: EGamepadAxis): float
+        +add_action(name: std::string_view, action: std::variant<std::monostate, EKey, EMouseButton, GamepadButtonData>)
+        +clear_action(name: std::string_view)
+        +get_action(name: std::string_view): EActionState
+        +is_action_down(name: std::string_view): bool
+        +is_action_up(name: std::string_view): bool
+        +is_action_pressed(name: std::string_view): bool
+        +is_action_released(name: std::string_view): bool
+        +add_axis(name: std::string_view, axis: Axis)
+        +clear_axis(name: std::string_view)
+        +get_axis(name: std::string_view): float
+        -process_actions()
+        -process_axis()
+    }
+
+    missiletoad.Game *-- InputManager
+    InputManager *-- ActionData
+    InputManager *-- AxisData
+    InputManager ..> EKey
+    InputManager ..> EMouseButton
+    InputManager ..> EGamepadButton
+    InputManager ..> EGamepadAxis
+    InputManager ..> EActionState
+    InputManager ..> Axis
+    InputManager ..> AxisButton
+    InputManager ..> GamepadAxisData
+    InputManager ..> GamepadButtonData
+
+    AxisData *-- Axis
+    Axis *-- AxisButton
+    Axis *-- GamepadAxisData
+    AxisButton *-- GamepadButtonData
+    AxisButton *-- EKey
+    AxisButton *-- EMouseButton
+
+    GamepadButtonData *-- EGamepadButton
+    GamepadAxisData *-- EGamepadAxis
 
     class SceneDescriptor {
         +name: std::string
         +systems: std::vector<std::string>
-        +entities: std::vector<EntityDescriptor>
     }
 
-    SceneDescriptor *-- EntityDescriptor
-
     class Scene {
-        -registry_: entt::registry
+        -scene_entities_: entt::registry
         -systems_: std::vector<std::unique_ptr<BaseSystem>>
+        -game_: missiletoad.Game*
 
         +Scene()
         +~Scene()
         +add_system<T, Args...>(args: Args...)
         +add_system(system: std::unique_ptr<BaseSystem>)
-        +add_entity(): entt::entity
-        +add_entity(name: std::string_view): entt::entity
         +on_start()
         +on_destroy()
         +update(delta_time: float)
@@ -108,13 +177,14 @@ package missiletoad.core {
     }
 
     Scene *-- BaseSystem
+    Scene *.. missiletoad.Game
 
     class SceneManager {
-        -scenes_: std::unordered_map<uint64_t, SceneDescriptor>
-        -current_scene_: std::unique_ptr<Scene>
-        -locator_: Locator
+        -active_scene_: std::unique_ptr<Scene>
+        -next_scene_: std::optional<std::string>
+        -game_: missiletoad.Game*
 
-        +SceneManager(locator: Locator&)
+        +SceneManager(game: missiletoad.Game*)
         +~SceneManager()
         +load_scene(name: std::string_view)
         +add_descriptor(descriptor: SceneDescriptor&&)
@@ -123,6 +193,7 @@ package missiletoad.core {
 
     SceneManager *-- SceneDescriptor
     SceneManager *-- Scene
+    SceneManager ..> missiletoad.Game
 
     class Texture {
         -texture_: raylib::Texture
@@ -177,17 +248,19 @@ package missiletoad.core {
 
     TimerBuilder ..> Timer
 
-    class Sound {
-        /'
-        TODO: Add sound implementation
-        '/
+    class Music {
+        -music_: raylib::Music
+        -buffer_: std::unique_ptr<uint8_t[]>
+        +Music(music: raylib::Music&&, buffer: std::unique_ptr<uint8_t[]>&&)
+        +get_music(): raylib::Music&
+        +set_music(music: raylib::Music&&)
     }
 
-    class SoundLoader {
-        +operator()(name: std::string_view): std::shared_ptr<Sound>
+    class MusicLoader {
+        +operator()(name: std::string_view): std::shared_ptr<Music>
     }
 
-    SoundLoader ..> Sound
+    MusicLoader ..> Music
 
     /'
     Components
@@ -260,12 +333,11 @@ package missiletoad.core {
     }
 
     class AudioComponent {
-        -sound_: Sound
+        +sound_: entt::resource<Music>
         {static} +register_component(ctx: entt::meta_ctx&)
-        +sound: entt::resource<Sound>
     }
 
-    AudioComponent *.. Sound
+    AudioComponent *.. Music
 
     class SpriteAnimation {
         -frame_timer: Timer
@@ -297,15 +369,16 @@ package missiletoad.core {
         -world_: b2World
         -transform_observer_: entt::observer
         -registry_: entt::registry*
+        -game_: missiletoad.Game*
         {static} +register_system(ctx: entt::meta_ctx&)
-        +PhysicsSystem(locator: Locator&)
+        +PhysicsSystem(game: Game*)
         +~PhysicsSystem()
         +on_fixed_update(delta_time: float)
         -on_box_collider_created(entt::registry&, entt::entity)
         -on_rigidbody_created(entt::registry&, entt::entity)
     }
 
-    PhysicsSystem *.. Locator
+    PhysicsSystem *.. missiletoad.Game
     PhysicsSystem ..> BoxCollider2dComponent
     PhysicsSystem ..> Rigidbody2dComponent
     PhysicsSystem ..> TransformComponent
@@ -314,11 +387,11 @@ package missiletoad.core {
         -registry_: entt::registry*
 
         {static} +register_system(ctx: entt::meta_ctx&)
-        +RendererSystem(locator: Locator&)
+        +RendererSystem(game: missiletoad.Game*)
         +on_render()
     }
 
-    RendererSystem *.. Locator
+    RendererSystem *.. missiletoad.Game
     RendererSystem ..> SpriteComponent
     RendererSystem ..> TransformComponent
     RendererSystem ..> Camer2dComponent
@@ -329,40 +402,54 @@ package missiletoad.core {
         -registry: entt::registry*
 
         {static} +register_system(ctx: entt::meta_ctx&)
-        +SpriteAnimationSystem(locator: Locator&)
+        +SpriteAnimationSystem(game: missiletoad.Game*)
         +on_update(delta_time: float)
     }
 
-    SpriteAnimationSystem *.. Locator
+    SpriteAnimationSystem *.. missiletoad.Game
     SpriteAnimationSystem ..> SpriteAnimation
     SpriteAnimationSystem ..> SpriteComponent
+
+    class AudioSystem extends BaseSystem {
+        -registry: entt::registry*
+
+        {static} +register_system(ctx: entt::meta_ctx&)
+        +AudioSystem(game: missiletoad.Game*)
+        +on_update(delta_time: float)
+    }
+
+    AudioSystem *.. missiletoad.Game
+    AudioSystem ..> AudioComponent
 }
 
 package missiletoad {
     class Game {
-        -locator_: missiletoad.core.Locator
         -systems_meta_ctx_: entt::meta_ctx
         -components_meta_ctx_: entt::meta_ctx
         -systems_: std::vector<std::unique_ptr<missiletoad.core.BaseSystem>>
         -asset_manager_: missiletoad.core.AssetManager
-        -nuklear_context_: std::unique_ptr<nk_context, void(*)(nk_context*)>
         -scene_manager_: std::unique_ptr<missiletoad.core.SceneManager>
-        -argv: char**
-        -argc: int
+        -input_manager_: std::unique_ptr<missiletoad.core.InputManager>
+        -nuklear_context_: std::unique_ptr<nk_context, void(*)(nk_context*)>
         -window: raylib::Window
         -debug_mode_: bool
 
         +Game(argc: int, argv: char**)
         +~Game()
+        +{static} get_instance(): Game&
         +run(): int
         +close()
+        +asset_manager(): missiletoad.core.AssetManager&
+        +scene_manager(): missiletoad.core.SceneManager&
+        +input_manager(): missiletoad.core.InputManager&
+        +systems_meta_ctx(): entt::meta_ctx&
+        +components_meta_ctx(): entt::meta_ctx&
         -update(delta_time: float)
         -fixed_update(delta_time: float)
         -render()
         -debug_gui()
     }
 
-    Game *-- missiletoad.core.Locator
     Game *-- missiletoad.core.SceneManager
     Game *-- missiletoad.core.AssetManager
     Game *-- missiletoad.core.BaseSystem
