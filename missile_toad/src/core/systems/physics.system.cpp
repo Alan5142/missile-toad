@@ -100,7 +100,7 @@ missiletoad::core::PhysicsSystem::~PhysicsSystem()
 void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
 {
     // First, we need to update the physics bodies with the transform. This just in case the transform was updated
-    for (const auto entity : transform_observer_)
+    for (auto entity : registry_->view<core::Rigidbody2dComponent, core::TransformComponent>())
     {
         auto &physics   = registry_->get<missiletoad::core::Rigidbody2dComponent>(entity);
         auto &transform = registry_->get<missiletoad::core::TransformComponent>(entity);
@@ -113,7 +113,7 @@ void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
         if (auto *box_collider = registry_->try_get<missiletoad::core::BoxCollider2dComponent>(entity);
             box_collider != nullptr)
         {
-            box_collider->set_size(transform.scale);
+            box_collider->set_size(transform.scale * 0.5F);
         }
     }
 

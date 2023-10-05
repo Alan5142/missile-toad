@@ -4,6 +4,7 @@
 
 #include <entt/meta/meta.hpp>
 #include <entt/resource/resource.hpp>
+#include <glm/vec4.hpp>
 
 namespace missiletoad::core
 {
@@ -19,10 +20,14 @@ namespace missiletoad::core
          */
         entt::resource<Texture> texture;
 
+        std::optional<glm::vec4> scissors = std::nullopt;
+
         /**
          * @brief The z index of the sprite.
          */
         uint32_t z_index = 0;
+
+        glm::u8vec4 color = glm::vec4(255.0f);
 
         /**
          * Registers the component with the meta context.

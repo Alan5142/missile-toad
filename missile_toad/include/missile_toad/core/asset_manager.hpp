@@ -1,5 +1,6 @@
 #pragma once
 #include "common.hpp"
+#include "ldtk_loader.hpp"
 #include "music_loader.hpp"
 #include "texture_loader.hpp"
 
@@ -14,8 +15,9 @@ namespace missiletoad::core
     class AssetManager
     {
     private:
-        entt::resource_cache<Texture, TextureLoader> texture_cache_;
-        entt::resource_cache<Music, MusicLoader>     music_cache_;
+        entt::resource_cache<Texture, TextureLoader>    texture_cache_;
+        entt::resource_cache<Music, MusicLoader>        music_cache_;
+        entt::resource_cache<ldtk::Project, LdtkLoader> ldtk_cache_;
 
     public:
         AssetManager();
@@ -75,6 +77,18 @@ namespace missiletoad::core
         entt::resource<T> load(std::string_view name)
         {
             return music_cache_.load(entt::hashed_string{name.data()}, name.data()).first->second;
+        }
+
+        /**
+         * Loads an LDtk project.
+         * @tparam T LDtk project
+         * @param name The name of the LDtk project in the filesystem.
+         * @return The LDtk project.
+         */
+        template <std::same_as<ldtk::Project> T>
+        entt::resource<T> load(std::string_view name)
+        {
+            return ldtk_cache_.load(entt::hashed_string{name.data()}, name.data()).first->second;
         }
     };
 } // namespace missiletoad::core

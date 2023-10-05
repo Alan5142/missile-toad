@@ -12,7 +12,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-constexpr auto PIXELS_PER_UNIT = 3.0F;
+constexpr auto PIXELS_PER_UNIT = 64.0F;
 
 void missiletoad::core::RendererSystem::register_system(entt::meta_ctx &ctx)
 {
@@ -60,16 +60,27 @@ void missiletoad::core::RendererSystem::on_render()
                                            .width  = static_cast<float>(sprite_tex.width),
                                            .height = static_cast<float>(sprite_tex.height)};
 
-            auto rectangle_dest = Rectangle{.x      = transform.position.x,
-                                            .y      = transform.position.y,
+            if (sprite.scissors.has_value())
+            {
+                auto scissors        = sprite.scissors.value();
+                rectangle_src.x      = scissors.x;
+                rectangle_src.y      = scissors.y;
+                rectangle_src.width  = scissors.z;
+                rectangle_src.height = scissors.w;
+            }
+
+            auto rectangle_dest = Rectangle{.x      = PIXELS_PER_UNIT * transform.position.x,
+                                            .y      = PIXELS_PER_UNIT * transform.position.y,
                                             .width  = PIXELS_PER_UNIT * transform.scale.x,
                                             .height = PIXELS_PER_UNIT * transform.scale.y};
+
+            auto color = raylib::Color(sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a);
 
             DrawTexturePro(sprite_tex,
                            rectangle_src,                                                      //
                            rectangle_dest,                                                     //
                            Vector2{rectangle_dest.width / 2.0F, rectangle_dest.height / 2.0F}, //
-                           transform.rotation, WHITE);
+                           transform.rotation, color);
         }
         EndMode2D();
     }
@@ -98,9 +109,13 @@ void missiletoad::core::RendererSystem::on_render()
                     glm::rotate(glm::mat4(1.0F), glm::radians(transform.rotation), glm::vec3(0, 0, 1));
                 auto rotated_vertex      = rotation_matrix * glm::vec4(vertex.x, vertex.y, 0, 1);
                 auto rotated_next_vertex = rotation_matrix * glm::vec4(next_vertex.x, next_vertex.y, 0, 1);
-                DrawLineEx(Vector2{position.x + rotated_vertex.x, position.y + rotated_vertex.y},
-                           Vector2{position.x + rotated_next_vertex.x, position.y + rotated_next_vertex.y}, 0.1F,
-                           GREEN);
+
+                auto x = PIXELS_PER_UNIT * (position.x + rotated_vertex.x);
+                auto y = PIXELS_PER_UNIT * (position.y + rotated_vertex.y);
+                auto w = PIXELS_PER_UNIT * (position.x + rotated_next_vertex.x);
+                auto h = PIXELS_PER_UNIT * (position.y + rotated_next_vertex.y);
+
+                DrawLineEx(Vector2{x, y}, Vector2{w, h}, 1.0F, GREEN);
             }
         }
         EndMode2D();

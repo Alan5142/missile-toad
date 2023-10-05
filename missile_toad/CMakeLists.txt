@@ -23,6 +23,7 @@ set(MISSILETOAD_CORE_SOURCES
         src/core/scene_descriptor.cpp
         src/core/scene_manager.cpp
         src/core/input_manager.cpp
+        src/core/ldtk_loader.cpp
 )
 
 set(MISSILETOAD_CORE_LIBS

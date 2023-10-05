@@ -2,11 +2,19 @@
 #include "base_system.hpp"
 #include "common.hpp"
 
+#include <LDtkLoader/Project.hpp>
 #include <entt/entity/registry.hpp>
 
 namespace missiletoad::core
 {
     class Game;
+
+    struct LayerInfo
+    {
+        std::string name;
+        int         z_index;
+        bool        has_collision = false;
+    };
 
     /**
      * @brief The scene class contains all the entities and systems in the game.
@@ -115,5 +123,8 @@ namespace missiletoad::core
         {
             return systems_;
         }
+
+        void segment_loader(ldtk::Project &project, std::string_view ldtk_world, int level_id,
+                            const std::vector<LayerInfo> &layers);
     };
 } // namespace missiletoad::core
