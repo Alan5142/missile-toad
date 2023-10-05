@@ -64,6 +64,8 @@ missiletoad::core::Game::Game(std::vector<std::string_view> &&arguments, const G
 
     INSTANCE = this;
 
+    scene_manager_->load_scene(game_descriptor.default_scene);
+
     spdlog::trace("Game::Game() finished.");
 }
 

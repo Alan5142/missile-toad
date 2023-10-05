@@ -10,7 +10,8 @@ constexpr std::string_view GAME_DESCRIPTOR = R"({
         "path": "assets",
         "mount": "assets"
         }
-    ]
+    ],
+    "defaultScene": "scene1.json"
 })";
 
 constexpr std::string_view INVALID_GAME_DESCRIPTOR = R"({

@@ -81,11 +81,16 @@ namespace missiletoad::core::schemas
           }
         }
       }
+    },
+    "defaultScene": {
+      "description": "The default scene to load when the game starts.",
+      "type": "string"
     }
   },
   "required": [
     "assets",
-    "name"
+    "name",
+    "defaultScene"
   ]
 }
 )";

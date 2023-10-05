@@ -30,7 +30,8 @@ std::optional<missiletoad::core::GameDescriptor> missiletoad::core::load_game_de
     }
     auto game_descriptor = missiletoad::core::GameDescriptor();
 
-    game_descriptor.name = document["name"].GetString();
+    game_descriptor.name          = document["name"].GetString();
+    game_descriptor.default_scene = document["defaultScene"].GetString();
     game_descriptor.assets_folders.reserve(document["assets"].Size());
 
     for (const auto &folder : document["assets"].GetArray())
