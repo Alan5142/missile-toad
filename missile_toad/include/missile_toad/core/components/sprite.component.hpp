@@ -8,6 +8,7 @@
 
 namespace missiletoad::core
 {
+    constexpr auto WHITE_COLOR = glm::u8vec4(255, 255, 255, 255);
     /**
      * @brief Sprite component.
      * @note This component is used to render a sprite.
@@ -27,7 +28,7 @@ namespace missiletoad::core
          */
         uint32_t z_index = 0;
 
-        glm::u8vec4 color = glm::vec4(255.0f);
+        glm::u8vec4 color = WHITE_COLOR;
 
         /**
          * Registers the component with the meta context.

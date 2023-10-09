@@ -1,16 +1,16 @@
 
 #include "missile_toad/core/ldtk_loader.hpp"
 
-missiletoad::core::LdtkLoader::result_type missiletoad::core::LdtkLoader::operator()(std::string_view name) const
+missiletoad::core::LdtkLoader::result_type missiletoad::core::LdtkLoader::operator()(std::string_view path) const
 {
     // Load the data.
-    auto data_opt = load_file(name);
+    auto data_opt = load_file(path);
     if (!data_opt.has_value())
     {
         spdlog::error("Failed to load level");
         throw std::runtime_error("Failed to load level");
     }
-    spdlog::trace("Loaded level from {}", name);
+    spdlog::trace("Loaded level from {}", path);
 
     auto &[data, size] = data_opt.value();
 

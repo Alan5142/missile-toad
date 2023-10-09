@@ -43,6 +43,16 @@ namespace missiletoad::core
      */
     constexpr const float UPDATE_RATE = 1.0F / 60.0F;
 
+    /**
+     * The number of pixels per unit.
+     */
+    constexpr auto PIXELS_PER_UNIT = 64.0F;
+
+    /**
+     * The scale of the physics engine.
+     */
+    constexpr auto PHYSICS_SCALE = 0.5F;
+
     // NOLINTNEXTLINE(*-avoid-c-arrays)
     std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> load_file(std::string_view name);
 } // namespace missiletoad::core

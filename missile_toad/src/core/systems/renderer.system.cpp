@@ -2,7 +2,6 @@
 #include "missile_toad/core/systems/renderer.system.hpp"
 #include "missile_toad/core/components/box_collider_2d.component.hpp"
 #include "missile_toad/core/components/camera_2d.component.hpp"
-#include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/sprite.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
 #include "missile_toad/core/game.hpp"
@@ -12,7 +11,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-constexpr auto PIXELS_PER_UNIT = 64.0F;
+constexpr auto CENTER_RATIO = 2.0F;
 
 void missiletoad::core::RendererSystem::register_system(entt::meta_ctx &ctx)
 {
@@ -69,17 +68,25 @@ void missiletoad::core::RendererSystem::on_render()
                 rectangle_src.height = scissors.w;
             }
 
+            const auto scale_x = (rectangle_src.width / PIXELS_PER_UNIT) * transform.scale.x;
+            const auto scale_y = (rectangle_src.height / PIXELS_PER_UNIT) * transform.scale.y;
+
             auto rectangle_dest = Rectangle{.x      = PIXELS_PER_UNIT * transform.position.x,
                                             .y      = PIXELS_PER_UNIT * transform.position.y,
-                                            .width  = PIXELS_PER_UNIT * transform.scale.x,
-                                            .height = PIXELS_PER_UNIT * transform.scale.y};
+                                            .width  = PIXELS_PER_UNIT * scale_x,
+                                            .height = PIXELS_PER_UNIT * scale_y};
 
-            auto color = raylib::Color(sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a);
+            auto color = Color{
+                .r = sprite.color.r,
+                .g = sprite.color.g,
+                .b = sprite.color.b,
+                .a = sprite.color.a,
+            };
 
             DrawTexturePro(sprite_tex,
-                           rectangle_src,                                                      //
-                           rectangle_dest,                                                     //
-                           Vector2{rectangle_dest.width / 2.0F, rectangle_dest.height / 2.0F}, //
+                           rectangle_src,                                                                      //
+                           rectangle_dest,                                                                     //
+                           Vector2{rectangle_dest.width / CENTER_RATIO, rectangle_dest.height / CENTER_RATIO}, //
                            transform.rotation, color);
         }
         EndMode2D();

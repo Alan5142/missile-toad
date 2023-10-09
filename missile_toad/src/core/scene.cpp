@@ -27,7 +27,7 @@ void missiletoad::core::Scene::on_start()
         system->on_start();
     }
 
-    auto ldtk_project = game_->asset_manager().load<ldtk::Project>("/assets/testRoom.ldtk");
+    auto ldtk_project = game_->asset_manager().load<ldtk::Project>("/assets/levels/testRoom.ldtk");
     this->segment_loader(*ldtk_project, "", 0, {{"Room", 0, true}, {"Ground", 0, false}});
 
     auto  camera_entity    = scene_entities_.create();
@@ -41,10 +41,11 @@ void missiletoad::core::Scene::on_start()
     auto  player_entity       = scene_entities_.create();
     auto &player_transform    = scene_entities_.emplace<missiletoad::core::TransformComponent>(player_entity);
     player_transform.position = {3.0f, 3.0f};
-    auto  player_texture      = game_->asset_manager().load<missiletoad::core::Texture>("/assets/mt.png");
-    auto &sprite    = scene_entities_.emplace<missiletoad::core::SpriteComponent>(player_entity, player_texture);
-    sprite.z_index  = 50;
-    auto &rigidbody = scene_entities_.emplace<missiletoad::core::Rigidbody2dComponent>(player_entity);
+    scene_entities_.patch<core::TransformComponent>(player_entity);
+    auto  player_texture = game_->asset_manager().load<missiletoad::core::Texture>("/assets/mt.png");
+    auto &sprite         = scene_entities_.emplace<missiletoad::core::SpriteComponent>(player_entity, player_texture);
+    sprite.z_index       = 50;
+    auto &rigidbody      = scene_entities_.emplace<missiletoad::core::Rigidbody2dComponent>(player_entity);
     rigidbody.set_static(false);
     scene_entities_.emplace<missiletoad::core::BoxCollider2dComponent>(player_entity);
     scene_entities_.emplace<PlayerComponent>(player_entity);

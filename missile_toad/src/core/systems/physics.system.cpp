@@ -3,6 +3,7 @@
 #include "missile_toad/core/components/box_collider_2d.component.hpp"
 #include "missile_toad/core/components/collision2d.component.hpp"
 #include "missile_toad/core/components/rigidbody_2d.component.hpp"
+#include "missile_toad/core/components/sprite.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
 #include "missile_toad/core/game.hpp"
 
@@ -11,6 +12,13 @@
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 #include <glm/trigonometric.hpp>
+
+constexpr auto DEFAULT_DENSITY     = 1.0F;
+constexpr auto DEFAULT_FRICTION    = 0.3F;
+constexpr auto DEFAULT_RESTITUTION = 0.5F;
+
+constexpr auto VELOCITY_ITERATIONS = 6;
+constexpr auto POSITION_ITERATIONS = 2;
 
 class ContactListener : public b2ContactListener
 {
@@ -84,8 +92,8 @@ missiletoad::core::PhysicsSystem::PhysicsSystem(missiletoad::core::Game *game)
     world_.SetContactListener(&contact_listener);
     transform_observer_.connect(*registry_,
                                 entt::collector
-                                    .update<missiletoad::core::Rigidbody2dComponent>() //
-                                    .where<missiletoad::core::TransformComponent>());
+                                    .update<missiletoad::core::TransformComponent>() //
+                                    .where<missiletoad::core::BoxCollider2dComponent>());
 
     registry_->on_construct<core::BoxCollider2dComponent>().connect<&PhysicsSystem::on_box_collider_created>(this);
     registry_->on_construct<core::Rigidbody2dComponent>().connect<&PhysicsSystem::on_rigidbody_created>(this);
@@ -100,7 +108,7 @@ missiletoad::core::PhysicsSystem::~PhysicsSystem()
 void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
 {
     // First, we need to update the physics bodies with the transform. This just in case the transform was updated
-    for (auto entity : registry_->view<core::Rigidbody2dComponent, core::TransformComponent>())
+    for (auto entity : transform_observer_)
     {
         auto &physics   = registry_->get<missiletoad::core::Rigidbody2dComponent>(entity);
         auto &transform = registry_->get<missiletoad::core::TransformComponent>(entity);
@@ -110,15 +118,26 @@ void missiletoad::core::PhysicsSystem::on_fixed_update(float delta_time)
         body->SetTransform({transform.position.x, transform.position.y}, glm::radians(transform.rotation));
 
         // Also update the size of the box collider if it contains a box collider.
-        if (auto *box_collider = registry_->try_get<missiletoad::core::BoxCollider2dComponent>(entity);
-            box_collider != nullptr)
+        auto *sprite       = registry_->try_get<missiletoad::core::SpriteComponent>(entity);
+        auto *box_collider = registry_->try_get<missiletoad::core::BoxCollider2dComponent>(entity);
+        if (sprite != nullptr && box_collider != nullptr)
         {
-            box_collider->set_size(transform.scale * 0.5F);
+            const auto &texture = sprite->texture->get_texture();
+            if (sprite->scissors != std::nullopt)
+            {
+                box_collider->set_size(transform.scale * PHYSICS_SCALE);
+            }
+            else
+            {
+                const auto scale_x = (static_cast<float>(texture.width) / PIXELS_PER_UNIT) * transform.scale.x;
+                const auto scale_y = (static_cast<float>(texture.height) / PIXELS_PER_UNIT) * transform.scale.y;
+                box_collider->set_size({scale_x * PHYSICS_SCALE, scale_y * PHYSICS_SCALE});
+            }
         }
     }
 
     // Update the physics bodies
-    world_.Step(delta_time, 6, 2);
+    world_.Step(delta_time, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
     // After updating the physics bodies, we need to update the transforms with the physics bodies.
     for (auto entity : registry_->view<core::Rigidbody2dComponent, core::TransformComponent>())
@@ -151,12 +170,12 @@ void missiletoad::core::PhysicsSystem::on_box_collider_created(entt::registry &r
     auto &rigidbody    = registry.get_or_emplace<core::Rigidbody2dComponent>(entity);
 
     auto fixture_def        = b2FixtureDef{};
-    fixture_def.density     = 1.0F;
-    fixture_def.friction    = 0.3F;
-    fixture_def.restitution = 0.5F;
+    fixture_def.density     = DEFAULT_DENSITY;
+    fixture_def.friction    = DEFAULT_FRICTION;
+    fixture_def.restitution = DEFAULT_RESTITUTION;
     // Only box colliders for now.
     auto shape = b2PolygonShape{};
-    shape.SetAsBox(transform.scale.x, transform.scale.y);
+    shape.SetAsBox(transform.scale.x * PHYSICS_SCALE, transform.scale.y * PHYSICS_SCALE);
 
     fixture_def.shape            = &shape;
     fixture_def.userData.pointer = static_cast<uintptr_t>(entity);
