@@ -11,6 +11,13 @@ namespace missiletoad::core
 
 namespace missiletoad::game
 {
+    /**
+     * @brief System that encapsulates the Menu scene logic.
+     * @details It will manage the Menu scene and will redirect to:
+     * - The Hub scene if the player selects "Play New Game"
+     * - Settings scene if the player selects "Settings"
+     * - Exit the game if the player selects "Exit"
+     */
     class MenuSystem : public missiletoad::core::BaseSystem
     {
     public:

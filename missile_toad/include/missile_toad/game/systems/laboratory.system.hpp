@@ -11,6 +11,11 @@ namespace missiletoad::core
 
 namespace missiletoad::game
 {
+    /**
+     * @brief System that encapsulates the Laboratory scene logic.
+     * @details It will manage the Laboratory scene, which is the first playable level
+     *
+     */
     class LaboratorySystem : public missiletoad::core::BaseSystem
     {
     public:

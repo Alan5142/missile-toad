@@ -11,6 +11,11 @@ namespace missiletoad::core
 
 namespace missiletoad::game
 {
+    /**
+     * @brief System that encapsulates the Hub scene logic.
+     * @details It will manage the Hub scene, which is the scene that the player
+     * will be in when they are not in a level.
+     */
     class HubSystem : public missiletoad::core::BaseSystem
     {
     public:
