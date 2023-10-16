@@ -7,6 +7,7 @@ set(TEST_SOURCES src/core/timer.cpp
         src/core/locator.cpp
         src/core/game_descriptor.cpp
         src/core/meta_loader.cpp
+        src/core/input_manager.cpp
 )
 
 add_executable(tests ${TEST_SOURCES})

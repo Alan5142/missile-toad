@@ -7,3 +7,4 @@ include_component(missile_toad/core/components/box_collider_2d.component.hpp src
 include_component(missile_toad/core/components/sprite_animation.component.hpp src/core/components/sprite_animation.component.cpp missiletoad::core::SpriteAnimationComponent)
 include_component(missile_toad/core/components/audio.component.hpp src/core/components/audio.component.cpp missiletoad::core::AudioComponent)
 include_component(missile_toad/core/components/collision2d.component.hpp src/core/components/collision2d.component.cpp missiletoad::core::Collision2dComponent)
+include_component(missile_toad/game/components/player.component.hpp src/game/components/player.component.cpp missiletoad::game::PlayerComponent)

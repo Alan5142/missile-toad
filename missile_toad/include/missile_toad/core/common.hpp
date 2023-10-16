@@ -57,8 +57,28 @@ namespace missiletoad::core
     std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> load_file(std::string_view name);
 } // namespace missiletoad::core
 
-template <class T>
-inline void unused(const T &param) noexcept
+template <typename... Args>
+constexpr void unused(Args &&...) noexcept
 {
-    (void)param;
+    (void)(sizeof...(Args));
+}
+
+enum class FloatCompare
+{
+    LESS_THAN,
+    EQUAL,
+    GREATER_THAN,
+};
+
+constexpr FloatCompare compare_float(float a, float b, float epsilon = 0.001F)
+{
+    if (a + epsilon < b)
+    {
+        return FloatCompare::LESS_THAN;
+    }
+    if (a - epsilon > b)
+    {
+        return FloatCompare::GREATER_THAN;
+    }
+    return FloatCompare::EQUAL;
 }

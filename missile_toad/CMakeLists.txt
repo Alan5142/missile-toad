@@ -53,7 +53,7 @@ set(MISSILETOAD_SOURCES
 add_library(missiletoad ${MISSILETOAD_SOURCES})
 
 if (WIN32)
-    add_executable(missiletoad-game WIN32 main.cpp)
+    add_executable(missiletoad-game main.cpp)
 else ()
     add_executable(missiletoad-game main.cpp)
 endif ()
