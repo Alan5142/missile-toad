@@ -2,6 +2,7 @@
 #include "missile_toad/core/schema_includes.hpp"
 
 #include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
 #include <rapidjson/istreamwrapper.h>
 #include <rapidjson/stringbuffer.h>
 
@@ -18,12 +19,14 @@ std::optional<missiletoad::core::SceneDescriptor> missiletoad::core::load_scene_
     rapidjson::Document document;
     auto &[data, size] = scene_content.value();
     // NOLINTNEXTLINE(*-pro-type-reinterpret-cast)
-    document.Parse(reinterpret_cast<const char *>(data.get()));
+    document.Parse(reinterpret_cast<const char *>(data.get()), size);
 
     if (document.HasParseError())
     {
-        spdlog::trace("Failed to parse scene descriptor: {}", path);
-        spdlog::trace("Error: {}", document.GetParseError());
+        spdlog::warn("Failed to parse scene descriptor: {}", path);
+
+        spdlog::warn("Error: {} in offset: {}", rapidjson::GetParseError_En(document.GetParseError()),
+                     document.GetErrorOffset());
         return std::nullopt;
     }
 
