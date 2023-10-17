@@ -58,27 +58,26 @@ namespace missiletoad::core
 } // namespace missiletoad::core
 
 template <typename... Args>
-constexpr void unused(Args &&...) noexcept
+constexpr void unused([[maybe_unused]] Args &&...args) noexcept
 {
-    (void)(sizeof...(Args));
 }
 
-enum class FloatCompare
+enum class EFloatCompare
 {
     LESS_THAN,
     EQUAL,
     GREATER_THAN,
 };
 
-constexpr FloatCompare compare_float(float a, float b, float epsilon = 0.001F)
+constexpr EFloatCompare compare_float(float lhs, float rhs, float epsilon = 0.001F)
 {
-    if (a + epsilon < b)
+    if (lhs + epsilon < rhs)
     {
-        return FloatCompare::LESS_THAN;
+        return EFloatCompare::LESS_THAN;
     }
-    if (a - epsilon > b)
+    if (lhs - epsilon > rhs)
     {
-        return FloatCompare::GREATER_THAN;
+        return EFloatCompare::GREATER_THAN;
     }
-    return FloatCompare::EQUAL;
+    return EFloatCompare::EQUAL;
 }

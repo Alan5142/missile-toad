@@ -22,6 +22,7 @@ Checks:
     -readability-static-accessed-through-instance
     -cppcoreguidelines-avoid-c-arrays
     -modernize-avoid-c-arrays
+    -readability-uppercase-literal-suffix
 
 
 CheckOptions:

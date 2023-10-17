@@ -159,13 +159,13 @@ void missiletoad::core::InputManager::process_axis()
         // Use deadzone
         switch (compare_float(value, 0.0F))
         {
-        case FloatCompare::LESS_THAN:
+        case EFloatCompare::LESS_THAN:
             value = -1.0F;
             break;
-        case FloatCompare::EQUAL:
+        case EFloatCompare::EQUAL:
             value = 0.0F;
             break;
-        case FloatCompare::GREATER_THAN:
+        case EFloatCompare::GREATER_THAN:
             value = 1.0F;
             break;
         }
