@@ -39,7 +39,7 @@ jobs:
       - name: Run clang tidy
         id: clang-tidy
         uses: mathiasvr/command-output@v2.0.0
-        timeout-minutes: 10
+        timeout-minutes: 15
         with:
           run: cd build && cmake --build . --target tidy -j 4
       - name: Comment PR
