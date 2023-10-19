@@ -18,8 +18,6 @@ void missiletoad::core::Scene::on_start()
         system->on_start();
     }
 
-    SetTargetFPS(60);
-
     spdlog::trace("Scene::on_start() finished.");
 }
 void missiletoad::core::Scene::on_destroy()
