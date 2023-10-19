@@ -23,6 +23,7 @@ Checks:
     -cppcoreguidelines-avoid-c-arrays
     -modernize-avoid-c-arrays
     -readability-uppercase-literal-suffix
+    -readability-identifier-length
 
 
 CheckOptions:
