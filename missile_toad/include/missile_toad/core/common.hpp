@@ -58,6 +58,7 @@ namespace missiletoad::core
 } // namespace missiletoad::core
 
 template <typename... Args>
+// NOLINTNEXTLINE(cppcoreguidelines-missing-std-forward)
 constexpr void unused([[maybe_unused]] Args &&...args) noexcept
 {
 }
@@ -69,6 +70,7 @@ enum class EFloatCompare
     GREATER_THAN,
 };
 
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 constexpr EFloatCompare compare_float(float lhs, float rhs, float epsilon = 0.001F)
 {
     if (lhs + epsilon < rhs)

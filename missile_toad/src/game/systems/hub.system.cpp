@@ -47,12 +47,14 @@ void missiletoad::game::HubSystem::on_start()
     auto player_entity = scene_entities.create();
 
     auto &player_transform    = scene_entities.emplace<missiletoad::core::TransformComponent>(player_entity);
-    player_transform.position = {3.0f, 3.0f};
+    player_transform.position = {};
     scene_entities.patch<core::TransformComponent>(player_entity);
 
     auto  player_texture = game.asset_manager().load<missiletoad::core::Texture>("/assets/mt.png");
     auto &sprite         = scene_entities.emplace<missiletoad::core::SpriteComponent>(player_entity, player_texture);
-    sprite.z_index       = 50;
+
+    constexpr auto PLAYER_Z_INDEX = 100;
+    sprite.z_index                = PLAYER_Z_INDEX;
 
     auto &rigidbody = scene_entities.emplace<missiletoad::core::Rigidbody2dComponent>(player_entity);
     rigidbody.set_static(false);
