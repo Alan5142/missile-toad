@@ -21,5 +21,7 @@ namespace missiletoad::game
     public:
         HubSystem(missiletoad::core::Game *game);
         static void register_system(entt::meta_ctx &ctx);
+
+        void on_start() override;
     };
 } // namespace missiletoad::game

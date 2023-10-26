@@ -2,7 +2,6 @@
 #include "missile_toad/core/systems/renderer.system.hpp"
 #include "missile_toad/core/components/box_collider_2d.component.hpp"
 #include "missile_toad/core/components/camera_2d.component.hpp"
-#include "missile_toad/core/components/rigidbody_2d.component.hpp"
 #include "missile_toad/core/components/sprite.component.hpp"
 #include "missile_toad/core/components/transform.component.hpp"
 #include "missile_toad/core/game.hpp"
@@ -12,7 +11,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-constexpr auto PIXELS_PER_UNIT = 3.0F;
+constexpr auto CENTER_RATIO = 2.0F;
 
 void missiletoad::core::RendererSystem::register_system(entt::meta_ctx &ctx)
 {
@@ -60,16 +59,35 @@ void missiletoad::core::RendererSystem::on_render()
                                            .width  = static_cast<float>(sprite_tex.width),
                                            .height = static_cast<float>(sprite_tex.height)};
 
-            auto rectangle_dest = Rectangle{.x      = transform.position.x,
-                                            .y      = transform.position.y,
-                                            .width  = PIXELS_PER_UNIT * transform.scale.x,
-                                            .height = PIXELS_PER_UNIT * transform.scale.y};
+            if (sprite.scissors.has_value())
+            {
+                auto scissors        = sprite.scissors.value();
+                rectangle_src.x      = scissors.x;
+                rectangle_src.y      = scissors.y;
+                rectangle_src.width  = scissors.z;
+                rectangle_src.height = scissors.w;
+            }
+
+            const auto scale_x = (rectangle_src.width / PIXELS_PER_UNIT) * transform.scale.x;
+            const auto scale_y = (rectangle_src.height / PIXELS_PER_UNIT) * transform.scale.y;
+
+            auto rectangle_dest = Rectangle{.x      = PIXELS_PER_UNIT * transform.position.x,
+                                            .y      = PIXELS_PER_UNIT * transform.position.y,
+                                            .width  = PIXELS_PER_UNIT * scale_x,
+                                            .height = PIXELS_PER_UNIT * scale_y};
+
+            auto color = Color{
+                .r = sprite.color.r,
+                .g = sprite.color.g,
+                .b = sprite.color.b,
+                .a = sprite.color.a,
+            };
 
             DrawTexturePro(sprite_tex,
-                           rectangle_src,                                                      //
-                           rectangle_dest,                                                     //
-                           Vector2{rectangle_dest.width / 2.0F, rectangle_dest.height / 2.0F}, //
-                           transform.rotation, WHITE);
+                           rectangle_src,                                                                      //
+                           rectangle_dest,                                                                     //
+                           Vector2{rectangle_dest.width / CENTER_RATIO, rectangle_dest.height / CENTER_RATIO}, //
+                           transform.rotation, color);
         }
         EndMode2D();
     }
@@ -98,9 +116,13 @@ void missiletoad::core::RendererSystem::on_render()
                     glm::rotate(glm::mat4(1.0F), glm::radians(transform.rotation), glm::vec3(0, 0, 1));
                 auto rotated_vertex      = rotation_matrix * glm::vec4(vertex.x, vertex.y, 0, 1);
                 auto rotated_next_vertex = rotation_matrix * glm::vec4(next_vertex.x, next_vertex.y, 0, 1);
-                DrawLineEx(Vector2{position.x + rotated_vertex.x, position.y + rotated_vertex.y},
-                           Vector2{position.x + rotated_next_vertex.x, position.y + rotated_next_vertex.y}, 0.1F,
-                           GREEN);
+
+                auto x = PIXELS_PER_UNIT * (position.x + rotated_vertex.x);
+                auto y = PIXELS_PER_UNIT * (position.y + rotated_vertex.y);
+                auto w = PIXELS_PER_UNIT * (position.x + rotated_next_vertex.x);
+                auto h = PIXELS_PER_UNIT * (position.y + rotated_next_vertex.y);
+
+                DrawLineEx(Vector2{x, y}, Vector2{w, h}, 1.0F, GREEN);
             }
         }
         EndMode2D();

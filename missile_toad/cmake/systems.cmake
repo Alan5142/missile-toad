@@ -6,3 +6,4 @@ include_system(missile_toad/core/systems/audio.system.hpp src/core/systems/audio
 include_system(missile_toad/game/systems/hub.system.hpp src/game/systems/hub.system.cpp missiletoad::game::HubSystem)
 include_system(missile_toad/game/systems/laboratory.system.hpp src/game/systems/laboratory.system.cpp missiletoad::game::LaboratorySystem)
 include_system(missile_toad/game/systems/menu.system.hpp src/game/systems/menu.system.cpp missiletoad::game::MenuSystem)
+include_system(missile_toad/game/systems/player.system.hpp src/game/systems/player.system.cpp missiletoad::game::PlayerSystem)

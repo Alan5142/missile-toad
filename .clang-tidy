@@ -8,14 +8,12 @@ Checks:
     readability-identifier-naming,
     -modernize-use-trailing-return-type,
     -cppcoreguidelines-pro-bounds-pointer-arithmetic,
-    -cppcoreguidelines-avoid-magic-numbers,
     -misc-const-correctness,
     -misc-include-cleaner,
     -llvm-header-guard,
     -modernize-macro-to-enum,
     -bugprone-use-after-move,
     -hicpp-invalid-access-moved,
-    -readability-magic-numbers,
     -readability-convert-member-functions-to-static,
     -cppcoreguidelines-pro-type-union-access,
     -misc-confusable-identifiers,
@@ -24,6 +22,8 @@ Checks:
     -readability-static-accessed-through-instance
     -cppcoreguidelines-avoid-c-arrays
     -modernize-avoid-c-arrays
+    -readability-uppercase-literal-suffix
+    -readability-identifier-length
 
 
 CheckOptions:
@@ -91,5 +91,3 @@ WarningsAsErrors: >
     readability-*,
 
     readability-identifier-naming
-    -cppcoreguidelines-avoid-magic-numbers
-    -readability-magic-numbers

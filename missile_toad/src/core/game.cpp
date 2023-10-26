@@ -15,6 +15,11 @@
 extern void register_system(entt::meta_ctx &ctx);
 extern void register_components(entt::meta_ctx &ctx);
 
+constexpr auto WINDOW_WIDTH  = 1280;
+constexpr auto WINDOW_HEIGHT = 720;
+
+constexpr auto NUKLEAR_DEFAULT_FONT_SIZE = 12;
+
 // NOLINTNEXTLINE(*-avoid-non-const-global-variables)
 static missiletoad::core::Game *INSTANCE = nullptr;
 
@@ -34,12 +39,13 @@ missiletoad::core::Game::Game(std::vector<std::string_view> &&arguments, const G
     spdlog::info("Creating window.");
     if (args.size() != 1 || args[0] != "TEST_CASE")
     {
-        window_.Init(1280, 720, game_descriptor.name);
+        window_.Init(WINDOW_WIDTH, WINDOW_HEIGHT, game_descriptor.name);
     }
 
     spdlog::info("Window initialized.");
 
-    nuklear_context_ = std::unique_ptr<nk_context, void (*)(nk_context *)>(InitNuklear(12), UnloadNuklear);
+    nuklear_context_ =
+        std::unique_ptr<nk_context, void (*)(nk_context *)>(InitNuklear(NUKLEAR_DEFAULT_FONT_SIZE), UnloadNuklear);
     if (nuklear_context_ == nullptr)
     {
         spdlog::error("Failed to initialize nuklear.");
@@ -130,10 +136,18 @@ void missiletoad::core::Game::debug_gui() noexcept
     try
     {
         // Show FPS and frame time
-        const auto fps        = fmt::format("FPS: {}", GetFPS());
-        const auto frame_time = fmt::format("Frame time: {:.2f} ms", GetFrameTime() * 1000);
-        DrawText(fps.c_str(), 0, 0, 20, RED);
-        DrawText(frame_time.c_str(), 150, 0, 20, RED);
+        const auto     fps                  = fmt::format("FPS: {}", GetFPS());
+        const auto     frame_time           = fmt::format("Frame time: {:.2f} ms", GetFrameTime() * 1000);
+        constexpr auto debug_fps_position_x = 0;
+        constexpr auto debug_fps_position_y = 0;
+        constexpr auto debug_fps_font_size  = 20;
+        DrawText(fps.c_str(), debug_fps_position_x, debug_fps_position_y, debug_fps_font_size, RED);
+
+        constexpr auto debug_frame_time_position_x = 150;
+        constexpr auto debug_frame_time_position_y = 0;
+        constexpr auto debug_frame_time_font_size  = 20;
+        DrawText(frame_time.c_str(), debug_frame_time_position_x, debug_frame_time_position_y,
+                 debug_frame_time_font_size, RED);
     }
     catch (const std::exception &e)
     {

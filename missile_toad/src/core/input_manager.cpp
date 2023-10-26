@@ -97,16 +97,17 @@ float process_axis_button(missiletoad::core::InputManager &self, const missileto
 
     if (std::holds_alternative<mt::EKey>(axis))
     {
-        return self.is_key_pressed(std::get<mt::EKey>(axis)) ? 1.0F : 0.0F;
+        const auto pressed = self.is_key_down(std::get<mt::EKey>(axis));
+        return pressed ? 1.0F : 0.0F;
     }
     if (std::holds_alternative<mt::EMouseButton>(axis))
     {
-        return self.is_mouse_button_pressed(std::get<mt::EMouseButton>(axis)) ? 1.0F : 0.0F;
+        return self.is_mouse_button_down(std::get<mt::EMouseButton>(axis)) ? 1.0F : 0.0F;
     }
     if (std::holds_alternative<mt::GamepadButtonData>(axis))
     {
         auto gamepad_button = std::get<mt::GamepadButtonData>(axis);
-        return self.is_gamepad_button_pressed(gamepad_button.gamepad, gamepad_button.button) ? 1.0F : 0.0F;
+        return self.is_gamepad_button_down(gamepad_button.gamepad, gamepad_button.button) ? 1.0F : 0.0F;
     }
     return 0.0F;
 }
@@ -156,13 +157,17 @@ void missiletoad::core::InputManager::process_axis()
         }
 
         // Use deadzone
-        if (value > 0.0F)
+        switch (compare_float(value, 0.0F))
         {
-            value = std::clamp(value, axis_data.value, 1.0F);
-        }
-        else
-        {
-            value = std::clamp(value, -1.0F, axis_data.value);
+        case EFloatCompare::LESS_THAN:
+            value = -1.0F;
+            break;
+        case EFloatCompare::EQUAL:
+            value = 0.0F;
+            break;
+        case EFloatCompare::GREATER_THAN:
+            value = 1.0F;
+            break;
         }
 
         axis_data.value = value;

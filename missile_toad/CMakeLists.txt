@@ -23,6 +23,7 @@ set(MISSILETOAD_CORE_SOURCES
         src/core/scene_descriptor.cpp
         src/core/scene_manager.cpp
         src/core/input_manager.cpp
+        src/core/ldtk_loader.cpp
 )
 
 set(MISSILETOAD_CORE_LIBS
@@ -52,7 +53,7 @@ set(MISSILETOAD_SOURCES
 add_library(missiletoad ${MISSILETOAD_SOURCES})
 
 if (WIN32)
-    add_executable(missiletoad-game WIN32 main.cpp)
+    add_executable(missiletoad-game main.cpp)
 else ()
     add_executable(missiletoad-game main.cpp)
 endif ()

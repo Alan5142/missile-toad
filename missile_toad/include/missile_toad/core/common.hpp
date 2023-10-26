@@ -43,12 +43,43 @@ namespace missiletoad::core
      */
     constexpr const float UPDATE_RATE = 1.0F / 60.0F;
 
+    /**
+     * The number of pixels per unit.
+     */
+    constexpr auto PIXELS_PER_UNIT = 64.0F;
+
+    /**
+     * The scale of the physics engine.
+     */
+    constexpr auto PHYSICS_SCALE = 0.5F;
+
     // NOLINTNEXTLINE(*-avoid-c-arrays)
     std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> load_file(std::string_view name);
 } // namespace missiletoad::core
 
-template <class T>
-inline void unused(const T &param) noexcept
+template <typename... Args>
+// NOLINTNEXTLINE(cppcoreguidelines-missing-std-forward)
+constexpr void unused([[maybe_unused]] Args &&...args) noexcept
 {
-    (void)param;
+}
+
+enum class EFloatCompare
+{
+    LESS_THAN,
+    EQUAL,
+    GREATER_THAN,
+};
+
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
+constexpr EFloatCompare compare_float(float lhs, float rhs, float epsilon = 0.001F)
+{
+    if (lhs + epsilon < rhs)
+    {
+        return EFloatCompare::LESS_THAN;
+    }
+    if (lhs - epsilon > rhs)
+    {
+        return EFloatCompare::GREATER_THAN;
+    }
+    return EFloatCompare::EQUAL;
 }
