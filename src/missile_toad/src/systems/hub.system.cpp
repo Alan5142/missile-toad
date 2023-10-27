@@ -33,6 +33,8 @@ void missiletoad::HubSystem::on_start()
     auto &game           = missilengine::Game::get_instance();
     auto &scene_entities = game.active_scene().get_registry();
     auto  ldtk_project   = game.asset_manager().load<ldtk::Project>("/assets/testRoom.ldtk");
+
+    // TODO: To be removed in the future.
     game.active_scene().segment_loader(*ldtk_project, "", 0, {{"Room", 0, true}, {"Ground", 0, false}});
 
     // Create camera
@@ -40,8 +42,7 @@ void missiletoad::HubSystem::on_start()
     auto &camera           = scene_entities.emplace<missilengine::Camera2dComponent>(camera_entity);
     auto &camera_transform = scene_entities.emplace<missilengine::TransformComponent>(camera_entity);
 
-    camera_transform.position = {0.0f, 0.0f};
-    camera.set_zoom(1.0f);
+    camera_transform.position = {};
 
     // Create player
     auto player_entity = scene_entities.create();
