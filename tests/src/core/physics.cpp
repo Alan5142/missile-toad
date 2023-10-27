@@ -12,9 +12,9 @@ TEST_CASE("PhysicsSystem", "[core][systems]")
     SECTION("register_system")
     {
         entt::meta_ctx ctx;
-        missiletoad::core::PhysicsSystem::register_system(ctx);
-        auto type    = entt::resolve<missiletoad::core::PhysicsSystem>();
-        auto type_id = entt::type_id<missiletoad::core::PhysicsSystem>();
+        missileenginecore::PhysicsSystem::register_system(ctx);
+        auto type    = entt::resolve<missileenginecore::PhysicsSystem>();
+        auto type_id = entt::type_id<missileenginecore::PhysicsSystem>();
         REQUIRE(type.info() == type_id);
     }
 }
@@ -24,9 +24,9 @@ TEST_CASE("BoxCollider2dComponent", "[core][components]")
     SECTION("register_component")
     {
         entt::meta_ctx ctx;
-        missiletoad::core::BoxCollider2dComponent::register_component(ctx);
-        auto type    = entt::resolve<missiletoad::core::BoxCollider2dComponent>();
-        auto type_id = entt::type_id<missiletoad::core::BoxCollider2dComponent>();
+        missileenginecore::BoxCollider2dComponent::register_component(ctx);
+        auto type    = entt::resolve<missileenginecore::BoxCollider2dComponent>();
+        auto type_id = entt::type_id<missileenginecore::BoxCollider2dComponent>();
         REQUIRE(type.info() == type_id);
     }
 }
@@ -36,15 +36,15 @@ TEST_CASE("Rigidbody2dComponent", "[core][components]")
     SECTION("register_component")
     {
         entt::meta_ctx ctx;
-        missiletoad::core::Rigidbody2dComponent::register_component(ctx);
-        auto type    = entt::resolve<missiletoad::core::Rigidbody2dComponent>();
-        auto type_id = entt::type_id<missiletoad::core::Rigidbody2dComponent>();
+        missileenginecore::Rigidbody2dComponent::register_component(ctx);
+        auto type    = entt::resolve<missileenginecore::Rigidbody2dComponent>();
+        auto type_id = entt::type_id<missileenginecore::Rigidbody2dComponent>();
         REQUIRE(type.info() == type_id);
     }
 
     SECTION("Default ctor sets the body to nullptr")
     {
-        missiletoad::core::Rigidbody2dComponent rigidbody;
+        missileenginecore::Rigidbody2dComponent rigidbody;
         REQUIRE(rigidbody.get_body() == nullptr);
     }
 }

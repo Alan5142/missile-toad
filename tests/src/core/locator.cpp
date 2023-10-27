@@ -4,7 +4,7 @@
 
 TEST_CASE("Locator", "[core]")
 {
-    missiletoad::core::Locator locator;
+    missileenginecore::Locator locator;
     SECTION("Locator has an empty service map on construction")
     {
         REQUIRE(locator.size() == 0);

@@ -7,12 +7,12 @@
 #include <entt/meta/meta.hpp>
 #include <raylib.h>
 
-class TestSystem : public missiletoad::core::BaseSystem
+class TestSystem : public missileenginecore::BaseSystem
 {
 public:
     int value = 0;
 
-    TestSystem(missiletoad::core::Game *game)
+    TestSystem(missileenginecore::Game *game)
     {
         unused(game);
     }
@@ -27,8 +27,8 @@ TEST_CASE("BaseSystem", "[core]")
     entt::meta_ctx ctx;
     entt::meta<TestSystem>(ctx)
         .type("TestSystem"_hs)
-        .base<missiletoad::core::BaseSystem>()
-        .ctor<missiletoad::core::Game *>();
+        .base<missileenginecore::BaseSystem>()
+        .ctor<missileenginecore::Game *>();
 
     SECTION("Can load a type from the meta context")
     {
@@ -40,8 +40,8 @@ TEST_CASE("BaseSystem", "[core]")
 
     SECTION("Can construct the type")
     {
-        missiletoad::core::GameDescriptor descriptor;
-        missiletoad::core::Game           game({"TEST_CASE"}, descriptor);
+        missileenginecore::GameDescriptor descriptor;
+        missileenginecore::Game           game({"TEST_CASE"}, descriptor);
 
         auto type = entt::resolve(ctx, "TestSystem"_hs).construct(&game);
 
@@ -52,12 +52,12 @@ TEST_CASE("BaseSystem", "[core]")
 
     SECTION("Can cast the type to a base type")
     {
-        missiletoad::core::GameDescriptor descriptor;
-        missiletoad::core::Game           game({"TEST_CASE"}, descriptor);
+        missileenginecore::GameDescriptor descriptor;
+        missileenginecore::Game           game({"TEST_CASE"}, descriptor);
 
         auto system = entt::resolve(ctx, "TestSystem"_hs).construct(&game);
 
-        auto base_system = system.try_cast<missiletoad::core::BaseSystem>();
+        auto base_system = system.try_cast<missileenginecore::BaseSystem>();
 
         REQUIRE(base_system != nullptr);
     }

@@ -1,17 +1,14 @@
 # Missile toad tests
 
-## Running the tests
+# Running the tests
 
-set(TEST_SOURCES src/core/timer.cpp
-        src/core/physics.cpp
-        src/core/locator.cpp
-        src/core/game_descriptor.cpp
-        src/core/meta_loader.cpp
-        src/core/input_manager.cpp
-)
+set(TEST_SOURCES
+    src/core/timer.cpp src/core/physics.cpp src/core/locator.cpp
+    src/core/game_descriptor.cpp src/core/meta_loader.cpp
+    src/core/input_manager.cpp)
 
 add_executable(tests ${TEST_SOURCES})
-target_link_libraries(tests PRIVATE missiletoad Catch2::Catch2WithMain)
+target_link_libraries(tests PRIVATE missilengine Catch2::Catch2WithMain)
 target_include_directories(tests PRIVATE include)
 
 include(CTest)
