@@ -59,13 +59,25 @@ jobs:
             sudo unzip ninja-linux.zip -d /usr/bin && \
             sudo rm ninja-linux.zip
 
-      - name: Configure CMake on Linux
-        if: matrix.os == 'ubuntu-latest'
+      - name: Configure CMake on Linux for GCC
+        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'clang'
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
           -G Ninja
           -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+          -DCMAKE_BUILD_TYPE=Debug
+          -S ${{ github.workspace }}
+
+      - name: Configure CMake on Linux for Clang
+        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler == 'clang'
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }}
+          -G Ninja
+          -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+          -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+          -DCMAKE_CXX_FLAGS="-stdlib=libc++"
+          -DCMAKE_C_FLAGS="-stdlib=libc++"
           -DCMAKE_BUILD_TYPE=Debug
           -S ${{ github.workspace }}
       - name: Configure CMake on Windows

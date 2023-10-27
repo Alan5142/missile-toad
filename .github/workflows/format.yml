@@ -21,5 +21,5 @@ jobs:
           sudo ln -s /usr/bin/clang-format-17 /usr/bin/clang-format
       - name: Format
         run: |
-          find missile_toad -iname *.hpp -o -iname *.cpp | xargs clang-format -i -style=file --dry-run --Werror
+          find src -iname *.hpp -o -iname *.cpp | xargs clang-format -i -style=file --dry-run --Werror
           find tests -iname *.hpp -o -iname *.cpp | xargs clang-format -i -style=file --dry-run --Werror

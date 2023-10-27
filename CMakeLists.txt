@@ -10,7 +10,7 @@ include(cmake/compiler.cmake)
 include(cmake/options.cmake)
 include(cmake/CPM.cmake)
 
-CPMUsePackageLock(package-lock.cmake)
+cpmusepackagelock(package-lock.cmake)
 
 include(cmake/dependencies.cmake)
 
@@ -19,34 +19,31 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # Set library output directory
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-add_subdirectory(missile_toad)
-if (BUILD_TESTS)
-    add_subdirectory(tests)
-endif ()
+add_subdirectory(src)
+
+if(BUILD_TESTS)
+  add_subdirectory(tests)
+endif()
 
 add_subdirectory(third_party)
 
 add_compile_definitions(NX_USB_DEBUGGER=1)
 
 # Add format target
-file(GLOB_RECURSE ALL_SOURCE_FILES missile_toad/*.cpp missile_toad/*.hpp tests/*.cpp tests/*.hpp)
+file(GLOB_RECURSE ALL_SOURCE_FILES missile_toad/*.cpp missile_toad/*.hpp
+     tests/*.cpp tests/*.hpp)
 
-add_custom_target(format
-        COMMAND clang-format
-        -style=file
-        -i
-        ${ALL_SOURCE_FILES}
-        )
+add_custom_target(format COMMAND clang-format -style=file -i
+                                 ${ALL_SOURCE_FILES})
 
 # Add clang-tidy files
-file(GLOB_RECURSE ALL_SOURCE_FILES missile_toad/*.cpp missile_toad/*.hpp tests/*.cpp tests/*.hpp)
+file(GLOB_RECURSE ALL_SOURCE_FILES src/*.cpp src/*.hpp
+     tests/*.cpp tests/*.hpp)
 
 # Add clang-tidy target
-add_custom_target(tidy
-        COMMAND python ${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py
-        -p ${CMAKE_BINARY_DIR}
-        -config-file ${PROJECT_SOURCE_DIR}/.clang-tidy
-        ${PROJECT_SOURCE_DIR}/missile_toad
-        -quiet
-        -header-filter=.*
-        )
+add_custom_target(
+  tidy
+  COMMAND
+    python ${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py -p
+    ${CMAKE_BINARY_DIR} -config-file ${PROJECT_SOURCE_DIR}/.clang-tidy
+    ${PROJECT_SOURCE_DIR}/src -quiet -header-filter=.*)

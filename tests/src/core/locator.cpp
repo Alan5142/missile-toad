@@ -1,10 +1,10 @@
-#include "missile_toad/core/locator.hpp"
+#include "missile_engine/locator.hpp"
 
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("Locator", "[core]")
 {
-    missiletoad::core::Locator locator;
+    missilengine::Locator locator;
     SECTION("Locator has an empty service map on construction")
     {
         REQUIRE(locator.size() == 0);
