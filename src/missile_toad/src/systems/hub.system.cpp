@@ -38,8 +38,8 @@ void missiletoad::HubSystem::on_start()
     game.active_scene().segment_loader(*ldtk_project, "", 0, {{"Room", 0, true}, {"Ground", 0, false}});
 
     // Create camera
-    auto  camera_entity    = scene_entities.create();
-    auto &camera           = scene_entities.emplace<missilengine::Camera2dComponent>(camera_entity);
+    auto camera_entity = scene_entities.create();
+    scene_entities.emplace<missilengine::Camera2dComponent>(camera_entity);
     auto &camera_transform = scene_entities.emplace<missilengine::TransformComponent>(camera_entity);
 
     camera_transform.position = {};
