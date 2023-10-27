@@ -32,8 +32,8 @@ clean:
     rm -rf build
 
 # Generate a new project file (component, system) in the project
-gen type name:
-    python scripts/missiletoadcli.py {{type}} {{name}}
+gen type folder name:
+    python scripts/missiletoadcli.py {{type}} {{folder}} {{name}}
 
 gen-schemas:
     python scripts/missiletoadcli.py schemas
