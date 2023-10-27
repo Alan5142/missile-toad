@@ -1,4 +1,4 @@
-#include "missile_toad/core/timer.hpp"
+#include "missile_engine/timer.hpp"
 
 #include <catch2/catch_test_macros.hpp>
 #include <chrono>
@@ -6,7 +6,7 @@
 TEST_CASE("Timer", "[core][timer]")
 {
     using namespace std::chrono_literals;
-    using namespace missileenginecore;
+    using namespace missilengine;
 
     SECTION("Timer can have an interval")
     {

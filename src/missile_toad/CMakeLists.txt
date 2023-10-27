@@ -18,4 +18,10 @@ endif()
 
 target_include_directories(missiletoad PRIVATE include)
 
-target_link_libraries(missiletoad PRIVATE missileengine)
+target_link_libraries(missiletoad PRIVATE missiletoad::engine)
+
+if(MSVC)
+  target_compile_options(missiletoad PRIVATE /W4 /WX)
+else()
+  target_compile_options(missiletoad PRIVATE -Wall -Wextra -pedantic -Werror)
+endif()

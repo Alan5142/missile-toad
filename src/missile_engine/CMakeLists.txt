@@ -32,8 +32,7 @@ set(MISSILETOAD_CORE_SOURCES
     src/scene_descriptor.cpp
     src/scene_manager.cpp
     src/input_manager.cpp
-    src/ldtk_loader.cpp
-    main.cpp)
+    src/ldtk_loader.cpp)
 
 set(MISSILETOAD_CORE_LIBS
     raylib
@@ -55,8 +54,12 @@ set(MISSILEENGINE_SOURCES
     ${COMPONENTS_SOURCE_FILES})
 
 add_library(missileengine ${MISSILEENGINE_SOURCES})
+add_library(missiletoad::engine-lib ALIAS missileengine)
+add_library(missileengine-main STATIC main.cpp)
+add_library(missiletoad::engine ALIAS missileengine-main)
 
 target_link_libraries(missileengine PUBLIC ${MISSILETOAD_CORE_LIBS})
+target_link_libraries(missileengine-main PUBLIC missileengine)
 
 # Workaround for RapidJSON include path
 target_include_directories(missileengine PUBLIC include)
@@ -67,7 +70,7 @@ if(${PLATFORM} EQUAL "Nintendo Switch")
 endif()
 
 if(MSVC)
-  target_compile_options(missileengine PUBLIC /W4 /WX)
+  target_compile_options(missileengine PRIVATE /W4 /WX)
 else()
-  target_compile_options(missileengine PUBLIC -Wall -Wextra -pedantic -Werror)
+  target_compile_options(missileengine PRIVATE -Wall -Wextra -pedantic -Werror)
 endif()
