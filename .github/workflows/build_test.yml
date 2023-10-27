@@ -60,7 +60,7 @@ jobs:
             sudo rm ninja-linux.zip
 
       - name: Configure CMake on Linux for GCC
-        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'clang-15'
+        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler != 'clang'
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
           -G Ninja
@@ -70,7 +70,7 @@ jobs:
           -S ${{ github.workspace }}
 
       - name: Configure CMake on Linux for Clang
-        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler == 'clang-15'
+        if: matrix.os == 'ubuntu-latest' && matrix.c_compiler == 'clang'
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
           -G Ninja
