@@ -5,10 +5,11 @@ include(cmake/components.cmake)
 message(STATUS "Systems to include ${SYSTEMS}")
 message(STATUS "Components to include ${COMPONENTS}")
 
-generate_systems()
-generate_components()
+generate_systems(game)
+generate_components(game)
 
-set(MISSILETOAD_SOURCES ${SYSTEMS_SOURCE_FILES} ${COMPONENTS_SOURCE_FILES})
+set(MISSILETOAD_SOURCES ${SYSTEMS_SOURCE_FILES} ${COMPONENTS_SOURCE_FILES} ${CMAKE_CURRENT_BINARY_DIR}/systems.cpp
+        ${CMAKE_CURRENT_BINARY_DIR}/components.cpp)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Release" AND MSVC)
   add_executable(missiletoad WIN32 ${MISSILETOAD_SOURCES})

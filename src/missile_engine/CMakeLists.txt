@@ -15,8 +15,8 @@ include(cmake/components.cmake)
 message(STATUS "Systems to include ${SYSTEMS}")
 message(STATUS "Components to include ${COMPONENTS}")
 
-generate_systems()
-generate_components()
+generate_components(missileengine)
+generate_systems(missileengine)
 
 set(MISSILETOAD_CORE_SOURCES
     src/asset_manager.cpp

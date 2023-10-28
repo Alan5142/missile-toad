@@ -12,8 +12,20 @@
 #include <nuklear.h>
 #include <raylib-nuklear.h>
 
-extern void register_system(entt::meta_ctx &ctx);
-extern void register_components(entt::meta_ctx &ctx);
+extern void missileengine_register_components(entt::meta_ctx &ctx);
+extern void missileengine_register_system(entt::meta_ctx &ctx);
+void        game_register_components(entt::meta_ctx &ctx) WEAK_LINKAGE;
+void        game_register_system(entt::meta_ctx &ctx) WEAK_LINKAGE;
+
+void game_register_components(entt::meta_ctx &ctx)
+{
+    unused(ctx);
+}
+
+void game_register_system(entt::meta_ctx &ctx)
+{
+    unused(ctx);
+}
 
 constexpr auto WINDOW_WIDTH  = 1280;
 constexpr auto WINDOW_HEIGHT = 720;
@@ -64,8 +76,10 @@ missilengine::Game::Game(std::vector<std::string_view> &&arguments, const GameDe
     }
 
     // Register Systems meta types.
-    register_system(systems_meta_ctx_);
-    register_components(components_meta_ctx_);
+    missileengine_register_system(systems_meta_ctx_);
+    missileengine_register_components(components_meta_ctx_);
+    game_register_system(systems_meta_ctx_);
+    game_register_components(components_meta_ctx_);
     spdlog::trace("Systems registered.");
 
     INSTANCE = this;
