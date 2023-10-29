@@ -30,6 +30,7 @@ set(MISSILETOAD_CORE_SOURCES
     src/timer.cpp
     src/game_descriptor.cpp
     src/scene_descriptor.cpp
+    src/game_register.cpp
     src/scene_manager.cpp
     src/input_manager.cpp
     src/ldtk_loader.cpp)
