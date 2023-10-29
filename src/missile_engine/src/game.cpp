@@ -15,8 +15,18 @@
 extern void missileengine_register_components(entt::meta_ctx &ctx);
 extern void missileengine_register_system(entt::meta_ctx &ctx);
 
-WEAK_LINKAGE extern void game_register_components(entt::meta_ctx &ctx);
-WEAK_LINKAGE extern void game_register_system(entt::meta_ctx &ctx);
+void game_register_components(entt::meta_ctx &ctx) WEAK_LINKAGE;
+void game_register_system(entt::meta_ctx &ctx) WEAK_LINKAGE;
+
+void game_register_components(entt::meta_ctx &ctx)
+{
+    unused(ctx);
+}
+
+void game_register_system(entt::meta_ctx &ctx)
+{
+    unused(ctx);
+}
 
 constexpr auto WINDOW_WIDTH  = 1280;
 constexpr auto WINDOW_HEIGHT = 720;
