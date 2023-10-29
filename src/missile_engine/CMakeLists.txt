@@ -4,7 +4,7 @@
 # | |\/| | / __/ __| | |/ _ \ |  _| | '_ \ / _` | | '_ \ / _ \                 #
 # | |  | | \__ \__ \ | |  __/ | |___| | | | (_| | | | | |  __/                 #
 # |_|  |_|_|___/___/_|_|\___| |_____|_| |_|\__, |_|_| |_|\___|                 #
-# |___/                               #
+#                                          |___/                               #
 # ##############################################################################
 
 clean_systems_and_components()
@@ -32,6 +32,7 @@ set(MISSILETOAD_CORE_SOURCES
     src/scene_descriptor.cpp
     src/scene_manager.cpp
     src/input_manager.cpp
+    src/game_register.cpp
     src/ldtk_loader.cpp)
 
 set(MISSILETOAD_CORE_LIBS
