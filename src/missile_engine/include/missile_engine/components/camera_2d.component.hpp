@@ -15,7 +15,7 @@ namespace missilengine
         /**
          * @brief Raylib camera.
          */
-        raylib::Camera2D camera_{};
+        raylib::Camera2D camera_{raylib::Vector2{0.0F, 0.0F}, raylib::Vector2{0.0F, 0.0F}, 0.0F, 1.0F};
 
     public:
         /**

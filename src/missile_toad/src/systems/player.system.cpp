@@ -67,6 +67,9 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
     for (auto entity : view)
     {
         auto &rigidbody = scene_entities.get<missilengine::Rigidbody2dComponent>(entity);
+        auto &transform = scene_entities.get<missilengine::TransformComponent>(entity);
+
+        unused(transform);
 
         auto move_x = input_manager.get_axis("move_x");
         auto move_y = input_manager.get_axis("move_y");

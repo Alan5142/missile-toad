@@ -12,10 +12,7 @@ class TestSystem : public missilengine::BaseSystem
 public:
     int value = 0;
 
-    TestSystem(missilengine::Game *game)
-    {
-        unused(game);
-    }
+    virtual ~TestSystem() = default;
 };
 
 TEST_CASE("BaseSystem", "[core]")
@@ -25,7 +22,7 @@ TEST_CASE("BaseSystem", "[core]")
     SetTraceLogLevel(LOG_NONE);
 
     entt::meta_ctx ctx;
-    entt::meta<TestSystem>(ctx).type("TestSystem"_hs).base<missilengine::BaseSystem>().ctor<missilengine::Game *>();
+    entt::meta<TestSystem>(ctx).type("TestSystem"_hs).base<missilengine::BaseSystem>();
 
     SECTION("Can load a type from the meta context")
     {
@@ -37,10 +34,7 @@ TEST_CASE("BaseSystem", "[core]")
 
     SECTION("Can construct the type")
     {
-        missilengine::GameDescriptor descriptor;
-        missilengine::Game           game({"TEST_CASE"}, descriptor);
-
-        auto type = entt::resolve(ctx, "TestSystem"_hs).construct(&game);
+        auto type = entt::resolve(ctx, "TestSystem"_hs).construct();
 
         type.cast<TestSystem &>().value = 5;
 
@@ -49,10 +43,7 @@ TEST_CASE("BaseSystem", "[core]")
 
     SECTION("Can cast the type to a base type")
     {
-        missilengine::GameDescriptor descriptor;
-        missilengine::Game           game({"TEST_CASE"}, descriptor);
-
-        auto system = entt::resolve(ctx, "TestSystem"_hs).construct(&game);
+        auto system = entt::resolve(ctx, "TestSystem"_hs).construct();
 
         auto base_system = system.try_cast<missilengine::BaseSystem>();
 

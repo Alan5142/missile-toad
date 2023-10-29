@@ -4,7 +4,7 @@
 # | |\/| | / __/ __| | |/ _ \ |  _| | '_ \ / _` | | '_ \ / _ \                 #
 # | |  | | \__ \__ \ | |  __/ | |___| | | | (_| | | | | |  __/                 #
 # |_|  |_|_|___/___/_|_|\___| |_____|_| |_|\__, |_|_| |_|\___|                 #
-# |___/                               #
+#                                          |___/                               #
 # ##############################################################################
 
 clean_systems_and_components()
@@ -15,8 +15,8 @@ include(cmake/components.cmake)
 message(STATUS "Systems to include ${SYSTEMS}")
 message(STATUS "Components to include ${COMPONENTS}")
 
-generate_systems()
-generate_components()
+generate_components(missileengine)
+generate_systems(missileengine)
 
 set(MISSILETOAD_CORE_SOURCES
     src/asset_manager.cpp
@@ -30,6 +30,7 @@ set(MISSILETOAD_CORE_SOURCES
     src/timer.cpp
     src/game_descriptor.cpp
     src/scene_descriptor.cpp
+    src/game_register.cpp
     src/scene_manager.cpp
     src/input_manager.cpp
     src/ldtk_loader.cpp)

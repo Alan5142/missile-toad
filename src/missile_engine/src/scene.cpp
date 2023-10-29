@@ -126,3 +126,8 @@ void missilengine::Scene::segment_loader(ldtk::Project &project, std::string_vie
         }
     }
 }
+
+missilengine::EntityBuilder missilengine::Scene::create_entity()
+{
+    return {&scene_entities_};
+}

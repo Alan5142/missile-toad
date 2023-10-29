@@ -30,36 +30,38 @@ void missiletoad::HubSystem::register_system(entt::meta_ctx &ctx)
 void missiletoad::HubSystem::on_start()
 {
     spdlog::trace("game::HubSystem::on_start() called.");
-    auto &game           = missilengine::Game::get_instance();
-    auto &scene_entities = game.active_scene().get_registry();
-    auto  ldtk_project   = game.asset_manager().load<ldtk::Project>("/assets/testRoom.ldtk");
+    auto &game         = missilengine::Game::get_instance();
+    auto &scene        = game.active_scene();
+    auto  ldtk_project = game.asset_manager().load<ldtk::Project>("/assets/testRoom.ldtk");
 
     // TODO: To be removed in the future.
     game.active_scene().segment_loader(*ldtk_project, "", 0, {{"Room", 0, true}, {"Ground", 0, false}});
 
     // Create camera
-    auto camera_entity = scene_entities.create();
-    scene_entities.emplace<missilengine::Camera2dComponent>(camera_entity);
-    auto &camera_transform = scene_entities.emplace<missilengine::TransformComponent>(camera_entity);
-
-    camera_transform.position = {};
+    scene.create_entity()
+        .with_component<missilengine::Camera2dComponent>()
+        .with_component<missilengine::TransformComponent>()
+        .build();
 
     // Create player
-    auto player_entity = scene_entities.create();
-
-    auto &player_transform    = scene_entities.emplace<missilengine::TransformComponent>(player_entity);
-    player_transform.position = {};
-    scene_entities.patch<missilengine::TransformComponent>(player_entity);
-
-    auto  player_texture = game.asset_manager().load<missilengine::Texture>("/assets/mt.png");
-    auto &sprite         = scene_entities.emplace<missilengine::SpriteComponent>(player_entity, player_texture);
-
-    constexpr auto player_z_index = 100;
-    sprite.z_index                = player_z_index;
-
-    auto &rigidbody = scene_entities.emplace<missilengine::Rigidbody2dComponent>(player_entity);
-    rigidbody.set_static(false);
-    scene_entities.emplace<missilengine::BoxCollider2dComponent>(player_entity);
-
-    scene_entities.emplace<missiletoad::PlayerComponent>(player_entity);
+    auto player_texture = game.asset_manager().load<missilengine::Texture>("/assets/mt.png");
+    scene.create_entity()
+        .with_component_using_function<missilengine::TransformComponent>(
+            [&](auto &transform)
+            {
+                constexpr auto player_position = glm::vec2{10.0F, 10.0F};
+                transform.position             = player_position;
+            })
+        .with_component_using_function<missilengine::SpriteComponent>(
+            [&](auto &sprite)
+            {
+                constexpr uint32_t player_z_index = 100;
+                sprite.z_index                    = player_z_index;
+            },
+            std::move(player_texture))
+        .with_component_using_function<missilengine::Rigidbody2dComponent>([](auto &rigidbody)
+                                                                           { rigidbody.set_static(false); })
+        .with_component<missilengine::BoxCollider2dComponent>()
+        .with_component<missiletoad::PlayerComponent>()
+        .build();
 }

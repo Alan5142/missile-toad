@@ -19,7 +19,7 @@ function(include_system include source name)
       PARENT_SCOPE)
 endfunction()
 
-function(generate_systems)
+function(generate_systems prefix)
   set(SYSTEM_GENERATED_FILES
       "\
 #include <entt/meta/factory.hpp>\n\
@@ -31,7 +31,7 @@ function(generate_systems)
   endforeach()
 
   set(SYSTEM_GENERATED_FILES "${SYSTEM_GENERATED_FILES}\n\
-void register_system(entt::meta_ctx& ctx)\n{\n")
+void ${prefix}_register_system(entt::meta_ctx& ctx)\n{\n")
 
   # Generate the reflection code for the systems. It must generate a function
   # that calls the static function "register_system" of the system.
@@ -71,7 +71,7 @@ function(include_component include source name)
       PARENT_SCOPE)
 endfunction()
 
-function(generate_components)
+function(generate_components prefix)
   set(COMPONENTS_GENERATED_FILES
       "\
 #include <entt/meta/factory.hpp>\n\
@@ -84,7 +84,7 @@ function(generate_components)
   endforeach()
 
   set(COMPONENTS_GENERATED_FILES "${COMPONENTS_GENERATED_FILES}\n\
-void register_components(entt::meta_ctx& ctx)\n{\n")
+void ${prefix}_register_components(entt::meta_ctx& ctx)\n{\n")
 
   # Generate the reflection code for the systems. It must generate a function
   # that calls the static function "register_system" of the system.

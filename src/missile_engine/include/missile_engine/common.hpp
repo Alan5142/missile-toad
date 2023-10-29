@@ -23,8 +23,6 @@
 // Create a macro to use weak linkage for functions. Check for the compiler (GCC, MSVC, Clang)
 #if defined(__GNUC__) || defined(__clang__)
 #    define WEAK_LINKAGE __attribute__((weak))
-#elif defined(_MSC_VER)
-#    define WEAK_LINKAGE __declspec(selectany)
 #else
 #    define WEAK_LINKAGE
 #endif
