@@ -10,7 +10,7 @@
 
 #include <raylib-cpp.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     class AssetManager
     {
@@ -91,4 +91,4 @@ namespace missilengine
             return ldtk_cache_.load(entt::hashed_string{name.data()}, name.data()).first->second;
         }
     };
-} // namespace missilengine
+} // namespace missileengine

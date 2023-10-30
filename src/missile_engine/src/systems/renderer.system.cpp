@@ -13,20 +13,21 @@
 
 constexpr auto CENTER_RATIO = 2.0F;
 
-void missilengine::RendererSystem::register_system(entt::meta_ctx &ctx)
+void missileengine::RendererSystem::register_system(entt::meta_ctx &ctx)
 {
     using namespace entt::literals;
     entt::meta<RendererSystem>(ctx)
         .type("RendererSystem"_hs)
-        .base<missilengine::BaseSystem>()
-        .ctor<missilengine::Game *>();
+        .base<missileengine::BaseSystem>()
+        .ctor<missileengine::Game *>();
 }
 
-missilengine::RendererSystem::RendererSystem(missilengine::Game *game) : registry_(&game->active_scene().get_registry())
+missileengine::RendererSystem::RendererSystem(missileengine::Game *game)
+    : registry_(&game->active_scene().get_registry())
 {
 }
 
-void missilengine::RendererSystem::on_render()
+void missileengine::RendererSystem::on_render()
 {
     // Sort sprites by z-index
     registry_->sort<SpriteComponent>([](auto &lhs, auto &rhs) { return lhs.z_index < rhs.z_index; });
@@ -98,7 +99,7 @@ void missilengine::RendererSystem::on_render()
         BeginMode2D(cam.get_camera());
         for (auto entity : registry_->view<BoxCollider2dComponent, TransformComponent>())
         {
-            const auto &box_collider = registry_->get<missilengine::BoxCollider2dComponent>(entity);
+            const auto &box_collider = registry_->get<missileengine::BoxCollider2dComponent>(entity);
             const auto &transform    = view.get<TransformComponent>(entity);
             const auto &position     = transform.position;
 

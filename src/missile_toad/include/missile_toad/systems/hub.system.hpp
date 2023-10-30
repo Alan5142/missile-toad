@@ -4,7 +4,7 @@
 
 #include <entt/meta/meta.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     class Game;
 }
@@ -16,10 +16,10 @@ namespace missiletoad
      * @details It will manage the Hub scene, which is the scene that the player
      * will be in when they are not in a level.
      */
-    class HubSystem : public missilengine::BaseSystem
+    class HubSystem : public missileengine::BaseSystem
     {
     public:
-        HubSystem(missilengine::Game *game);
+        HubSystem(missileengine::Game *game);
         static void register_system(entt::meta_ctx &ctx);
 
         void on_start() override;

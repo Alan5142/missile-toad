@@ -8,23 +8,23 @@
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 
-missilengine::SpriteAnimationSystem::SpriteAnimationSystem(missilengine::Game *game)
+missileengine::SpriteAnimationSystem::SpriteAnimationSystem(missileengine::Game *game)
     : registry_(&game->active_scene().get_registry())
 {
     registry_->on_construct<SpriteAnimationComponent>().connect<&SpriteAnimationSystem::on_sprite_animation_created>(
         this);
 }
 
-void missilengine::SpriteAnimationSystem::register_system(entt::meta_ctx &ctx)
+void missileengine::SpriteAnimationSystem::register_system(entt::meta_ctx &ctx)
 {
     using namespace entt::literals;
-    entt::meta<missilengine::SpriteAnimationSystem>(ctx)
-        .type("missilengine::SpriteAnimationSystem"_hs)
-        .base<missilengine::BaseSystem>()
-        .ctor<missilengine::Game *>();
+    entt::meta<missileengine::SpriteAnimationSystem>(ctx)
+        .type("missileengine::SpriteAnimationSystem"_hs)
+        .base<missileengine::BaseSystem>()
+        .ctor<missileengine::Game *>();
 }
 
-void missilengine::SpriteAnimationSystem::on_update(float delta_time)
+void missileengine::SpriteAnimationSystem::on_update(float delta_time)
 {
     auto view = registry_->view<SpriteComponent, SpriteAnimationComponent>();
 
@@ -38,7 +38,7 @@ void missilengine::SpriteAnimationSystem::on_update(float delta_time)
     }
 }
 
-void missilengine::SpriteAnimationSystem::on_sprite_animation_created(entt::registry &registry, entt::entity entity)
+void missileengine::SpriteAnimationSystem::on_sprite_animation_created(entt::registry &registry, entt::entity entity)
 {
     auto &sprite = registry.get_or_emplace<SpriteComponent>(entity);
     unused(sprite);
@@ -47,7 +47,7 @@ void missilengine::SpriteAnimationSystem::on_sprite_animation_created(entt::regi
     animation.is_playing = false;
     animation.loop       = false;
 }
-missilengine::SpriteAnimationSystem::~SpriteAnimationSystem()
+missileengine::SpriteAnimationSystem::~SpriteAnimationSystem()
 {
     registry_->on_construct<SpriteAnimationComponent>().disconnect<&SpriteAnimationSystem::on_sprite_animation_created>(
         this);

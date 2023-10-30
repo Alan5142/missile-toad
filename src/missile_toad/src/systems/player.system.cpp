@@ -8,25 +8,25 @@
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 
-void configure_player_axis(missilengine::Game *game)
+void configure_player_axis(missileengine::Game *game)
 {
-    using missilengine::Action;
-    using missilengine::EKey;
-    const auto move_y_axis = missilengine::Axis{
-        missilengine::AxisButton{EKey::S, EKey::W},
+    using missileengine::Action;
+    using missileengine::EKey;
+    const auto move_y_axis = missileengine::Axis{
+        missileengine::AxisButton{EKey::S, EKey::W},
     };
 
-    const auto move_y_gamepad_axis = missilengine::Axis{missilengine::GamepadAxisData{
-        missilengine::EGamepadAxis::LEFT_Y,
+    const auto move_y_gamepad_axis = missileengine::Axis{missileengine::GamepadAxisData{
+        missileengine::EGamepadAxis::LEFT_Y,
         0,
     }};
 
-    const auto move_x_axis = missilengine::Axis{
-        missilengine::AxisButton{EKey::D, EKey::A},
+    const auto move_x_axis = missileengine::Axis{
+        missileengine::AxisButton{EKey::D, EKey::A},
     };
 
-    const auto move_x_gamepad_axis = missilengine::Axis{missilengine::GamepadAxisData{
-        missilengine::EGamepadAxis::LEFT_X,
+    const auto move_x_gamepad_axis = missileengine::Axis{missileengine::GamepadAxisData{
+        missileengine::EGamepadAxis::LEFT_X,
         0,
     }};
 
@@ -37,11 +37,11 @@ void configure_player_axis(missilengine::Game *game)
     game->input_manager().add_axis("move_x", move_x_gamepad_axis);
 }
 
-missiletoad::PlayerSystem::PlayerSystem(missilengine::Game *game)
+missiletoad::PlayerSystem::PlayerSystem(missileengine::Game *game)
 {
-    using missilengine::Action;
-    using missilengine::EKey;
-    using missilengine::GamepadAxisData;
+    using missileengine::Action;
+    using missileengine::EKey;
+    using missileengine::GamepadAxisData;
 
     configure_player_axis(game);
 }
@@ -51,23 +51,23 @@ void missiletoad::PlayerSystem::register_system(entt::meta_ctx &ctx)
     using namespace entt::literals;
     entt::meta<missiletoad::PlayerSystem>(ctx)
         .type("missiletoad::PlayerSystem"_hs)
-        .base<missilengine::BaseSystem>()
-        .ctor<missilengine::Game *>();
+        .base<missileengine::BaseSystem>()
+        .ctor<missileengine::Game *>();
     // TODO: Add your register code here
 }
 
 void missiletoad::PlayerSystem::on_update(float delta_time)
 {
     unused(delta_time);
-    auto &game           = missilengine::Game::get_instance();
+    auto &game           = missileengine::Game::get_instance();
     auto &scene_entities = game.active_scene().get_registry();
     auto &input_manager  = game.input_manager();
 
     auto view = scene_entities.view<missiletoad::PlayerComponent>();
     for (auto entity : view)
     {
-        auto &rigidbody = scene_entities.get<missilengine::Rigidbody2dComponent>(entity);
-        auto &transform = scene_entities.get<missilengine::TransformComponent>(entity);
+        auto &rigidbody = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
+        auto &transform = scene_entities.get<missileengine::TransformComponent>(entity);
 
         unused(transform);
 

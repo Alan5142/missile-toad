@@ -6,7 +6,7 @@
 #include <entt/resource/resource.hpp>
 #include <glm/vec4.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     constexpr auto WHITE_COLOR = glm::u8vec4(255, 255, 255, 255);
     /**
@@ -36,4 +36,4 @@ namespace missilengine
          */
         static void register_component(entt::meta_ctx &ctx);
     };
-} // namespace missilengine
+} // namespace missileengine

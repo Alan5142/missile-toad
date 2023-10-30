@@ -3,7 +3,7 @@
 
 #include <raylib-cpp.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * A wrapper around raylib::Music that uses std::unique_ptr.
@@ -42,4 +42,4 @@ namespace missilengine
          */
         void set_music(raylib::Music &&music) noexcept;
     };
-} // namespace missilengine
+} // namespace missileengine

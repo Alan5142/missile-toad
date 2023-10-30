@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <variant>
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * @brief The keys on a keyboard.
@@ -482,4 +482,4 @@ namespace missilengine
 
         void process_axis();
     };
-} // namespace missilengine
+} // namespace missileengine

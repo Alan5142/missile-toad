@@ -7,21 +7,21 @@
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 
-missilengine::AudioSystem::AudioSystem(missilengine::Game *game) : registry_(&game->active_scene().get_registry())
+missileengine::AudioSystem::AudioSystem(missileengine::Game *game) : registry_(&game->active_scene().get_registry())
 {
 }
 
-void missilengine::AudioSystem::register_system(entt::meta_ctx &ctx)
+void missileengine::AudioSystem::register_system(entt::meta_ctx &ctx)
 {
     using namespace entt::literals;
-    entt::meta<missilengine::AudioSystem>(ctx)
-        .type("missilengine::AudioSystem"_hs)
-        .base<missilengine::BaseSystem>()
-        .ctor<missilengine::Game *>();
+    entt::meta<missileengine::AudioSystem>(ctx)
+        .type("missileengine::AudioSystem"_hs)
+        .base<missileengine::BaseSystem>()
+        .ctor<missileengine::Game *>();
     // TODO: Add your register code here
 }
 
-void missilengine::AudioSystem::on_update(float delta_time)
+void missileengine::AudioSystem::on_update(float delta_time)
 {
     auto view = registry_->view<AudioComponent>();
 
@@ -34,4 +34,4 @@ void missilengine::AudioSystem::on_update(float delta_time)
     }
 }
 
-missilengine::AudioSystem::~AudioSystem() = default;
+missileengine::AudioSystem::~AudioSystem() = default;

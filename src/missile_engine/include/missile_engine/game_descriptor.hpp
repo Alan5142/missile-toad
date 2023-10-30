@@ -2,7 +2,7 @@
 
 #include "common.hpp"
 
-namespace missilengine
+namespace missileengine
 {
     struct PathFolder
     {
@@ -18,4 +18,4 @@ namespace missilengine
     };
 
     std::optional<GameDescriptor> load_game_descriptor(std::string_view descriptor);
-} // namespace missilengine
+} // namespace missileengine

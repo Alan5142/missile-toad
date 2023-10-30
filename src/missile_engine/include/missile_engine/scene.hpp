@@ -6,7 +6,7 @@
 #include <LDtkLoader/Project.hpp>
 #include <entt/entity/registry.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     class Game;
 
@@ -168,4 +168,4 @@ namespace missilengine
          */
         EntityBuilder create_entity();
     };
-} // namespace missilengine
+} // namespace missileengine

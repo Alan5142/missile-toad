@@ -3,8 +3,8 @@
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 
-void missilengine::AudioComponent::register_component(entt::meta_ctx &ctx)
+void missileengine::AudioComponent::register_component(entt::meta_ctx &ctx)
 {
     using namespace entt::literals;
-    entt::meta<missilengine::AudioComponent>(ctx).type("missilengine::AudioComponent"_hs).ctor<>();
+    entt::meta<missileengine::AudioComponent>(ctx).type("missileengine::AudioComponent"_hs).ctor<>();
 }

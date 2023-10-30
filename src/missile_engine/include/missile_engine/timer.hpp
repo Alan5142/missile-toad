@@ -4,7 +4,7 @@
 #include "locator.hpp"
 #include <chrono>
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * @brief A timer that calls a callback after a certain amount of time.
@@ -223,4 +223,4 @@ namespace missilengine
             return timer;
         }
     };
-} // namespace missilengine
+} // namespace missileengine

@@ -2,13 +2,13 @@
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 
-void missilengine::TransformComponent::register_component(entt::meta_ctx &ctx)
+void missileengine::TransformComponent::register_component(entt::meta_ctx &ctx)
 {
     using namespace entt::literals;
-    entt::meta<missilengine::TransformComponent>(ctx)
-        .type("missilengine::TransformComponent"_hs)
-        .data<&missilengine::TransformComponent::position>("position"_hs)
-        .data<&missilengine::TransformComponent::scale>("scale"_hs)
-        .data<&missilengine::TransformComponent::rotation>("rotation"_hs)
+    entt::meta<missileengine::TransformComponent>(ctx)
+        .type("missileengine::TransformComponent"_hs)
+        .data<&missileengine::TransformComponent::position>("position"_hs)
+        .data<&missileengine::TransformComponent::scale>("scale"_hs)
+        .data<&missileengine::TransformComponent::rotation>("rotation"_hs)
         .ctor<>();
 }

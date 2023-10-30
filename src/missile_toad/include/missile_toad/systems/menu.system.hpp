@@ -4,7 +4,7 @@
 
 #include <entt/meta/meta.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     class Game;
 }
@@ -18,10 +18,10 @@ namespace missiletoad
      * - Settings scene if the player selects "Settings"
      * - Exit the game if the player selects "Exit"
      */
-    class MenuSystem : public missilengine::BaseSystem
+    class MenuSystem : public missileengine::BaseSystem
     {
     public:
-        MenuSystem(missilengine::Game *game);
+        MenuSystem(missileengine::Game *game);
         static void register_system(entt::meta_ctx &ctx);
     };
 } // namespace missiletoad

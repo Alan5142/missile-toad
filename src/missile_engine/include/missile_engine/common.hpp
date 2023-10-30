@@ -40,7 +40,7 @@ using std::int8_t;
 using std::ptrdiff_t;
 using std::size_t;
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * The update rate of the game.
@@ -62,7 +62,7 @@ namespace missilengine
 
     // NOLINTNEXTLINE(*-avoid-c-arrays)
     std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> load_file(std::string_view name);
-} // namespace missilengine
+} // namespace missileengine
 
 template <typename... Args>
 // NOLINTNEXTLINE(cppcoreguidelines-missing-std-forward)

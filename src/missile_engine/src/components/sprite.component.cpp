@@ -6,19 +6,19 @@
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 
-void texture_setter(missilengine::SpriteComponent &self, const std::string &path)
+void texture_setter(missileengine::SpriteComponent &self, const std::string &path)
 {
-    auto &game = missilengine::Game::get_instance();
+    auto &game = missileengine::Game::get_instance();
 
-    self.texture = game.asset_manager().load<missilengine::Texture>(path);
+    self.texture = game.asset_manager().load<missileengine::Texture>(path);
 }
 
-void missilengine::SpriteComponent::register_component(entt::meta_ctx &ctx)
+void missileengine::SpriteComponent::register_component(entt::meta_ctx &ctx)
 {
     using namespace entt::literals;
-    entt::meta<missilengine::SpriteComponent>(ctx)
-        .type("missilengine::SpriteComponent"_hs)
-        .data<&texture_setter, &missilengine::SpriteComponent::texture>("texture"_hs)
-        .data<&missilengine::SpriteComponent::z_index>("z_index"_hs)
+    entt::meta<missileengine::SpriteComponent>(ctx)
+        .type("missileengine::SpriteComponent"_hs)
+        .data<&texture_setter, &missileengine::SpriteComponent::texture>("texture"_hs)
+        .data<&missileengine::SpriteComponent::z_index>("z_index"_hs)
         .ctor<>();
 }

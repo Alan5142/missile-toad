@@ -4,7 +4,7 @@
 #include <gsl/gsl>
 #include <physfs.h>
 
-missilengine::TextureLoader::result_type missilengine::TextureLoader::operator()(std::string_view name) const
+missileengine::TextureLoader::result_type missileengine::TextureLoader::operator()(std::string_view name) const
 {
     // Load the data.
     auto data_opt = load_file(name);

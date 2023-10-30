@@ -5,7 +5,7 @@
 #include <glm/vec2.hpp>
 #include <raylib-cpp.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * @brief 2D camera component.
@@ -127,4 +127,4 @@ namespace missilengine
             return camera_;
         }
     };
-} // namespace missilengine
+} // namespace missileengine

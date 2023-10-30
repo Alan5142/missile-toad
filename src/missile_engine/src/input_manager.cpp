@@ -1,12 +1,12 @@
 #include "missile_engine/input_manager.hpp"
 
-void missilengine::InputManager::update()
+void missileengine::InputManager::update()
 {
     process_actions();
     process_axis();
 }
 
-void missilengine::InputManager::add_action(std::string_view name, missilengine::Action action)
+void missileengine::InputManager::add_action(std::string_view name, missileengine::Action action)
 {
     auto action_it = actions_.find(name.data());
     if (action_it == actions_.end())
@@ -17,31 +17,31 @@ void missilengine::InputManager::add_action(std::string_view name, missilengine:
     action_it->second.actions.emplace_back(action);
 }
 
-missilengine::EActionState process_single_action(const missilengine::InputManager &self,
-                                                 const missilengine::Action       &action)
+missileengine::EActionState process_single_action(const missileengine::InputManager &self,
+                                                  const missileengine::Action       &action)
 {
-    if (std::holds_alternative<missilengine::EKey>(action))
+    if (std::holds_alternative<missileengine::EKey>(action))
     {
-        return self.is_key_pressed(std::get<missilengine::EKey>(action)) ? missilengine::EActionState::PRESSED
-                                                                         : missilengine::EActionState::RELEASED;
+        return self.is_key_pressed(std::get<missileengine::EKey>(action)) ? missileengine::EActionState::PRESSED
+                                                                          : missileengine::EActionState::RELEASED;
     }
-    if (std::holds_alternative<missilengine::EMouseButton>(action))
+    if (std::holds_alternative<missileengine::EMouseButton>(action))
     {
-        return self.is_mouse_button_pressed(std::get<missilengine::EMouseButton>(action))
-                   ? missilengine::EActionState::PRESSED
-                   : missilengine::EActionState::RELEASED;
+        return self.is_mouse_button_pressed(std::get<missileengine::EMouseButton>(action))
+                   ? missileengine::EActionState::PRESSED
+                   : missileengine::EActionState::RELEASED;
     }
-    if (std::holds_alternative<missilengine::GamepadButtonData>(action))
+    if (std::holds_alternative<missileengine::GamepadButtonData>(action))
     {
-        auto gamepad_button = std::get<missilengine::GamepadButtonData>(action);
+        auto gamepad_button = std::get<missileengine::GamepadButtonData>(action);
         return self.is_gamepad_button_pressed(gamepad_button.gamepad, gamepad_button.button)
-                   ? missilengine::EActionState::PRESSED
-                   : missilengine::EActionState::RELEASED;
+                   ? missileengine::EActionState::PRESSED
+                   : missileengine::EActionState::RELEASED;
     }
-    return missilengine::EActionState::RELEASED;
+    return missileengine::EActionState::RELEASED;
 }
 
-void missilengine::InputManager::process_actions()
+void missileengine::InputManager::process_actions()
 {
     for (auto &[name, action_data] : actions_)
     {
@@ -90,9 +90,9 @@ void missilengine::InputManager::process_actions()
     }
 }
 
-float process_axis_button(missilengine::InputManager &self, const missilengine::AxisButton::AxisType &axis)
+float process_axis_button(missileengine::InputManager &self, const missileengine::AxisButton::AxisType &axis)
 {
-    namespace mt = missilengine;
+    namespace mt = missileengine;
 
     if (std::holds_alternative<mt::EKey>(axis))
     {
@@ -111,9 +111,9 @@ float process_axis_button(missilengine::InputManager &self, const missilengine::
     return 0.0F;
 }
 
-float process_single_axis(missilengine::InputManager &self, const missilengine::Axis::AxisType &axis)
+float process_single_axis(missileengine::InputManager &self, const missileengine::Axis::AxisType &axis)
 {
-    namespace mt = missilengine;
+    namespace mt = missileengine;
 
     if (std::holds_alternative<mt::AxisButton>(axis))
     {
@@ -128,7 +128,7 @@ float process_single_axis(missilengine::InputManager &self, const missilengine::
     return 0.0F;
 }
 
-void missilengine::InputManager::process_axis()
+void missileengine::InputManager::process_axis()
 {
     for (auto &[name, axis_data] : axes_)
     {
@@ -172,11 +172,11 @@ void missilengine::InputManager::process_axis()
         axis_data.value = value;
     }
 }
-void missilengine::InputManager::clear_action(std::string_view name)
+void missileengine::InputManager::clear_action(std::string_view name)
 {
     actions_.erase(name.data());
 }
-missilengine::EActionState missilengine::InputManager::get_action(std::string_view name) const
+missileengine::EActionState missileengine::InputManager::get_action(std::string_view name) const
 {
     auto action_it = actions_.find(name.data());
     if (action_it == actions_.end())
@@ -186,7 +186,7 @@ missilengine::EActionState missilengine::InputManager::get_action(std::string_vi
     return action_it->second.state;
 }
 
-void missilengine::InputManager::add_axis(std::string_view name, missilengine::Axis axis)
+void missileengine::InputManager::add_axis(std::string_view name, missileengine::Axis axis)
 {
     auto axis_it = axes_.find(name.data());
     if (axis_it == axes_.end())
@@ -196,11 +196,11 @@ void missilengine::InputManager::add_axis(std::string_view name, missilengine::A
     axis_it->second.axes.emplace_back(axis);
 }
 
-void missilengine::InputManager::clear_axis(std::string_view name)
+void missileengine::InputManager::clear_axis(std::string_view name)
 {
     axes_.erase(name.data());
 }
-float missilengine::InputManager::get_axis(std::string_view name) const
+float missileengine::InputManager::get_axis(std::string_view name) const
 {
     auto axis_it = axes_.find(name.data());
     if (axis_it == axes_.end())

@@ -1,7 +1,7 @@
 
 #include "missile_engine/ldtk_loader.hpp"
 
-missilengine::LdtkLoader::result_type missilengine::LdtkLoader::operator()(std::string_view path) const
+missileengine::LdtkLoader::result_type missileengine::LdtkLoader::operator()(std::string_view path) const
 {
     // Load the data.
     auto data_opt = load_file(path);

@@ -3,7 +3,7 @@
 
 #include <raylib-cpp.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * A wrapper around raylib::Texture that uses std::unique_ptr.
@@ -43,4 +43,4 @@ namespace missilengine
          */
         void set_texture(raylib::Texture &&texture) noexcept;
     };
-} // namespace missilengine
+} // namespace missileengine

@@ -1,7 +1,7 @@
 #pragma once
 #include "missile_engine/common.hpp"
 
-namespace missilengine::schemas
+namespace missileengine::schemas
 {
     constexpr std::string_view COMPONENT = R"({
   "$id": "https://missile-toad.com/schemas/component.json",
@@ -140,4 +140,4 @@ namespace missilengine::schemas
   }
 }
 )";
-} // namespace missilengine::schemas
+} // namespace missileengine::schemas

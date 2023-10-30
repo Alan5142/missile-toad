@@ -3,7 +3,7 @@
 #include "common.hpp"
 #include "music.hpp"
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * @brief Loads a music from the VFS.
@@ -23,4 +23,4 @@ namespace missilengine
          */
         result_type operator()(std::string_view name) const;
     };
-} // namespace missilengine
+} // namespace missileengine

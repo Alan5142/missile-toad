@@ -6,7 +6,7 @@
 TEST_CASE("Timer", "[core][timer]")
 {
     using namespace std::chrono_literals;
-    using namespace missilengine;
+    using namespace missileengine;
 
     SECTION("Timer can have an interval")
     {

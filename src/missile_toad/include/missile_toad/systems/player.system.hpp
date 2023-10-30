@@ -4,17 +4,17 @@
 
 #include <entt/meta/meta.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     class Game;
 }
 
 namespace missiletoad
 {
-    class PlayerSystem : public missilengine::BaseSystem
+    class PlayerSystem : public missileengine::BaseSystem
     {
     public:
-        PlayerSystem(missilengine::Game *game);
+        PlayerSystem(missileengine::Game *game);
         static void register_system(entt::meta_ctx &ctx);
 
         void on_update(float delta_time) override;

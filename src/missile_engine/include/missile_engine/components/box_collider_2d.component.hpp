@@ -6,7 +6,7 @@
 #include <entt/meta/meta.hpp>
 #include <glm/vec2.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * A box collider component.
@@ -99,4 +99,4 @@ namespace missilengine
          */
         [[nodiscard]] float get_density() const;
     };
-} // namespace missilengine
+} // namespace missileengine
