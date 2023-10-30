@@ -4,7 +4,7 @@
 
 #include <LDtkLoader/Project.hpp>
 
-namespace missilengine
+namespace missileengine
 {
 
     class LdtkLoader final
@@ -24,4 +24,4 @@ namespace missilengine
          */
         result_type operator()(std::string_view path) const;
     };
-} // namespace missilengine
+} // namespace missileengine

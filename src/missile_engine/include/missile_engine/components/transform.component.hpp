@@ -4,7 +4,7 @@
 #include <entt/meta/meta.hpp>
 #include <glm/vec2.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * @brief Class that represents a transform.
@@ -34,4 +34,4 @@ namespace missilengine
          */
         static void register_component(entt::meta_ctx &ctx);
     };
-} // namespace missilengine
+} // namespace missileengine

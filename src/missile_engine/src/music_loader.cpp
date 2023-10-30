@@ -4,7 +4,7 @@
 #include <gsl/gsl>
 #include <physfs.h>
 
-missilengine::MusicLoader::result_type missilengine::MusicLoader::operator()(std::string_view name) const
+missileengine::MusicLoader::result_type missileengine::MusicLoader::operator()(std::string_view name) const
 {
     // Load the data.
     auto data_opt = load_file(name);

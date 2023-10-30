@@ -7,11 +7,11 @@
 #include <entt/entity/registry.hpp>
 #include <entt/meta/meta.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     class Game;
 
-    class PhysicsSystem : public missilengine::BaseSystem
+    class PhysicsSystem : public missileengine::BaseSystem
     {
         b2World         world_;
         entt::observer  transform_observer_;
@@ -46,4 +46,4 @@ namespace missilengine
          */
         void on_rigidbody_created(entt::registry &registry, entt::entity entity);
     };
-} // namespace missilengine
+} // namespace missileengine

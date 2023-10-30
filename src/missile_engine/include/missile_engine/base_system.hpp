@@ -1,7 +1,7 @@
 #pragma once
 #include "common.hpp"
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * A base class for all systems.
@@ -75,4 +75,4 @@ namespace missilengine
         {
         }
     };
-} // namespace missilengine
+} // namespace missileengine

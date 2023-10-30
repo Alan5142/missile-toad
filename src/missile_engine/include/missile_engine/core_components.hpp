@@ -7,4 +7,5 @@
 #include "components/rigidbody_2d.component.hpp"
 #include "components/sprite.component.hpp"
 #include "components/sprite_animation.component.hpp"
+#include "components/tag.component.hpp"
 #include "components/transform.component.hpp"

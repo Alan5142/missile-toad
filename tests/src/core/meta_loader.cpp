@@ -7,7 +7,7 @@
 #include <entt/meta/meta.hpp>
 #include <raylib.h>
 
-class TestSystem : public missilengine::BaseSystem
+class TestSystem : public missileengine::BaseSystem
 {
 public:
     int value = 0;
@@ -22,7 +22,7 @@ TEST_CASE("BaseSystem", "[core]")
     SetTraceLogLevel(LOG_NONE);
 
     entt::meta_ctx ctx;
-    entt::meta<TestSystem>(ctx).type("TestSystem"_hs).base<missilengine::BaseSystem>();
+    entt::meta<TestSystem>(ctx).type("TestSystem"_hs).base<missileengine::BaseSystem>();
 
     SECTION("Can load a type from the meta context")
     {
@@ -45,7 +45,7 @@ TEST_CASE("BaseSystem", "[core]")
     {
         auto system = entt::resolve(ctx, "TestSystem"_hs).construct();
 
-        auto base_system = system.try_cast<missilengine::BaseSystem>();
+        auto base_system = system.try_cast<missileengine::BaseSystem>();
 
         REQUIRE(base_system != nullptr);
     }

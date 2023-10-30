@@ -5,11 +5,11 @@
 #include <entt/entity/registry.hpp>
 #include <entt/meta/meta.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     class Game;
 
-    class AudioSystem : public missilengine::BaseSystem
+    class AudioSystem : public missileengine::BaseSystem
     {
         entt::registry *registry_;
 
@@ -26,5 +26,5 @@ namespace missilengine
         static void register_system(entt::meta_ctx &ctx);
 
         void on_update(float delta_time) override;
-    }; // namespace missilengine
-} // namespace missilengine
+    }; // namespace missileengine
+} // namespace missileengine

@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) noexcept(false)
 
     // Read all contents of the file into a string.
     std::string game_json_str((std::istreambuf_iterator<char>(game_json)), std::istreambuf_iterator<char>());
-    auto        game_descriptor_opt = missilengine::load_game_descriptor(game_json_str);
+    auto        game_descriptor_opt = missileengine::load_game_descriptor(game_json_str);
     if (!game_descriptor_opt.has_value())
     {
         spdlog::error("Failed to load game.json.");
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) noexcept(false)
 
     try
     {
-        auto game = std::make_unique<missilengine::Game>(std::move(arguments), game_descriptor_opt.value());
+        auto game = std::make_unique<missileengine::Game>(std::move(arguments), game_descriptor_opt.value());
         game->run();
     }
     catch (const std::exception &e)

@@ -7,7 +7,7 @@
 
 class ContactListener;
 
-namespace missilengine
+namespace missileengine
 {
     class PhysicsSystem;
 
@@ -127,4 +127,4 @@ namespace missilengine
          */
         [[nodiscard]] bool is_fixed_rotation() const;
     };
-} // namespace missilengine
+} // namespace missileengine

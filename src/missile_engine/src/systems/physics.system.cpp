@@ -22,10 +22,10 @@ constexpr auto POSITION_ITERATIONS = 2;
 
 class ContactListener : public b2ContactListener
 {
-    missilengine::Game *game_{};
+    missileengine::Game *game_{};
 
 public:
-    ContactListener(missilengine::Game *game) : game_(game)
+    ContactListener(missileengine::Game *game) : game_(game)
     {
     }
 
@@ -41,16 +41,16 @@ public:
 
     void BeginContact(b2Contact *contact) override
     {
-        handle_contact(contact, missilengine::ECollisionStatus::ENTER);
+        handle_contact(contact, missileengine::ECollisionStatus::ENTER);
     }
 
     void EndContact(b2Contact *contact) override
     {
-        handle_contact(contact, missilengine::ECollisionStatus::EXIT);
+        handle_contact(contact, missileengine::ECollisionStatus::EXIT);
     }
 
 private:
-    void handle_contact(b2Contact *contact, missilengine::ECollisionStatus status)
+    void handle_contact(b2Contact *contact, missileengine::ECollisionStatus status)
     {
         auto *fixture_a = contact->GetFixtureA();
         auto *fixture_b = contact->GetFixtureB();
@@ -62,8 +62,8 @@ private:
 
         auto &registry = game_->active_scene().get_registry();
 
-        auto *collision_a = registry.try_get<missilengine::Collision2dComponent>(entity_a);
-        auto *collision_b = registry.try_get<missilengine::Collision2dComponent>(entity_b);
+        auto *collision_a = registry.try_get<missileengine::Collision2dComponent>(entity_a);
+        auto *collision_b = registry.try_get<missileengine::Collision2dComponent>(entity_b);
 
         if (collision_a != nullptr)
         {
@@ -76,50 +76,50 @@ private:
     }
 };
 
-void missilengine::PhysicsSystem::register_system(entt::meta_ctx &ctx)
+void missileengine::PhysicsSystem::register_system(entt::meta_ctx &ctx)
 {
     using namespace entt::literals;
-    entt::meta<missilengine::PhysicsSystem>(ctx)
-        .type("missilengine::PhysicsSystem"_hs)
-        .base<missilengine::BaseSystem>()
-        .ctor<missilengine::Game *>();
+    entt::meta<missileengine::PhysicsSystem>(ctx)
+        .type("missileengine::PhysicsSystem"_hs)
+        .base<missileengine::BaseSystem>()
+        .ctor<missileengine::Game *>();
 }
 
-missilengine::PhysicsSystem::PhysicsSystem(missilengine::Game *game)
+missileengine::PhysicsSystem::PhysicsSystem(missileengine::Game *game)
     : world_({0, 0}), registry_(&game->active_scene().get_registry())
 {
     static auto contact_listener = ContactListener{game};
     world_.SetContactListener(&contact_listener);
     transform_observer_.connect(*registry_,
                                 entt::collector
-                                    .update<missilengine::TransformComponent>() //
-                                    .where<missilengine::BoxCollider2dComponent>());
+                                    .update<missileengine::TransformComponent>() //
+                                    .where<missileengine::BoxCollider2dComponent>());
 
     registry_->on_construct<BoxCollider2dComponent>().connect<&PhysicsSystem::on_box_collider_created>(this);
     registry_->on_construct<Rigidbody2dComponent>().connect<&PhysicsSystem::on_rigidbody_created>(this);
 }
 
-missilengine::PhysicsSystem::~PhysicsSystem()
+missileengine::PhysicsSystem::~PhysicsSystem()
 {
     registry_->on_construct<BoxCollider2dComponent>().disconnect<&PhysicsSystem::on_box_collider_created>(this);
     registry_->on_construct<Rigidbody2dComponent>().disconnect<&PhysicsSystem::on_rigidbody_created>(this);
 }
 
-void missilengine::PhysicsSystem::on_fixed_update(float delta_time)
+void missileengine::PhysicsSystem::on_fixed_update(float delta_time)
 {
     // First, we need to update the physics bodies with the transform. This just in case the transform was updated
     for (auto entity : transform_observer_)
     {
-        auto &physics   = registry_->get<missilengine::Rigidbody2dComponent>(entity);
-        auto &transform = registry_->get<missilengine::TransformComponent>(entity);
+        auto &physics   = registry_->get<missileengine::Rigidbody2dComponent>(entity);
+        auto &transform = registry_->get<missileengine::TransformComponent>(entity);
 
         auto *body = physics.get_body();
 
         body->SetTransform({transform.position.x, transform.position.y}, glm::radians(transform.rotation));
 
         // Also update the size of the box collider if it contains a box collider.
-        auto *sprite       = registry_->try_get<missilengine::SpriteComponent>(entity);
-        auto *box_collider = registry_->try_get<missilengine::BoxCollider2dComponent>(entity);
+        auto *sprite       = registry_->try_get<missileengine::SpriteComponent>(entity);
+        auto *box_collider = registry_->try_get<missileengine::BoxCollider2dComponent>(entity);
         if (sprite != nullptr && box_collider != nullptr)
         {
             const auto &texture = sprite->texture->get_texture();
@@ -142,8 +142,8 @@ void missilengine::PhysicsSystem::on_fixed_update(float delta_time)
     // After updating the physics bodies, we need to update the transforms with the physics bodies.
     for (auto entity : registry_->view<Rigidbody2dComponent, TransformComponent>())
     {
-        auto &rigidbody = registry_->get<missilengine::Rigidbody2dComponent>(entity);
-        auto &transform = registry_->get<missilengine::TransformComponent>(entity);
+        auto &rigidbody = registry_->get<missileengine::Rigidbody2dComponent>(entity);
+        auto &transform = registry_->get<missileengine::TransformComponent>(entity);
         auto *body      = rigidbody.get_body();
         auto  position  = body->GetPosition();
 
@@ -162,7 +162,7 @@ void missilengine::PhysicsSystem::on_fixed_update(float delta_time)
     }
 }
 
-void missilengine::PhysicsSystem::on_box_collider_created(entt::registry &registry, entt::entity entity)
+void missileengine::PhysicsSystem::on_box_collider_created(entt::registry &registry, entt::entity entity)
 {
     // Only use box collider and rigidbody components.
     auto &transform    = registry.get_or_emplace<TransformComponent>(entity);
@@ -182,7 +182,7 @@ void missilengine::PhysicsSystem::on_box_collider_created(entt::registry &regist
     box_collider.fixture_        = rigidbody.body_->CreateFixture(&fixture_def);
 }
 
-void missilengine::PhysicsSystem::on_rigidbody_created(entt::registry &registry, entt::entity entity)
+void missileengine::PhysicsSystem::on_rigidbody_created(entt::registry &registry, entt::entity entity)
 {
     // Get transform
     auto &transform = registry.get_or_emplace<TransformComponent>(entity);

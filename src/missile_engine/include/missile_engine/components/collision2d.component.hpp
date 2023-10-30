@@ -4,7 +4,7 @@
 #include <entt/entity/entity.hpp>
 #include <entt/meta/meta.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * @brief 2D collision status.
@@ -35,4 +35,4 @@ namespace missilengine
         std::function<void(entt::entity self, entt::entity other, ECollisionStatus status)> callback;
         static void register_component(entt::meta_ctx &ctx);
     };
-} // namespace missilengine
+} // namespace missileengine

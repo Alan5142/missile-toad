@@ -6,7 +6,7 @@
 #include <rapidjson/istreamwrapper.h>
 #include <rapidjson/stringbuffer.h>
 
-std::optional<missilengine::SceneDescriptor> missilengine::load_scene_descriptor(std::string_view path)
+std::optional<missileengine::SceneDescriptor> missileengine::load_scene_descriptor(std::string_view path)
 {
     auto scene_content = load_file(path);
 

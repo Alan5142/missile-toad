@@ -4,7 +4,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/schema.h"
 
-std::optional<missilengine::GameDescriptor> missilengine::load_game_descriptor(std::string_view descriptor)
+std::optional<missileengine::GameDescriptor> missileengine::load_game_descriptor(std::string_view descriptor)
 {
     // Use Schema
     rapidjson::Document schema_document;
@@ -28,7 +28,7 @@ std::optional<missilengine::GameDescriptor> missilengine::load_game_descriptor(s
         spdlog::trace("Invalid document: {}", buffer.GetString());
         return std::nullopt;
     }
-    auto game_descriptor = missilengine::GameDescriptor();
+    auto game_descriptor = missileengine::GameDescriptor();
 
     game_descriptor.name          = document["name"].GetString();
     game_descriptor.default_scene = document["defaultScene"].GetString();
@@ -36,7 +36,7 @@ std::optional<missilengine::GameDescriptor> missilengine::load_game_descriptor(s
 
     for (const auto &folder : document["assets"].GetArray())
     {
-        game_descriptor.assets_folders.push_back(missilengine::PathFolder{
+        game_descriptor.assets_folders.push_back(missileengine::PathFolder{
             .path        = folder["path"].GetString(),
             .mount_point = folder["mount"].GetString(),
         });

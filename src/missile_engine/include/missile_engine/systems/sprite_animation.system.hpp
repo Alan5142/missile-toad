@@ -5,16 +5,16 @@
 #include <entt/entity/registry.hpp>
 #include <entt/meta/meta.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     class Game;
 
-    class SpriteAnimationSystem : public missilengine::BaseSystem
+    class SpriteAnimationSystem : public missileengine::BaseSystem
     {
         entt::registry *registry_;
 
     public:
-        SpriteAnimationSystem(missilengine::Game *game);
+        SpriteAnimationSystem(missileengine::Game *game);
         SpriteAnimationSystem(const SpriteAnimationSystem &) = delete;
         SpriteAnimationSystem(SpriteAnimationSystem &&)      = delete;
 
@@ -34,4 +34,4 @@ namespace missilengine
          */
         void on_sprite_animation_created(entt::registry &registry, entt::entity entity);
     };
-} // namespace missilengine
+} // namespace missileengine

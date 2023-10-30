@@ -33,7 +33,7 @@ TEST_CASE("GameDescriptor", "[core]")
 {
     SECTION("Can load a game descriptor")
     {
-        auto descriptor = missilengine::load_game_descriptor(GAME_DESCRIPTOR).value();
+        auto descriptor = missileengine::load_game_descriptor(GAME_DESCRIPTOR).value();
 
         REQUIRE(descriptor.name == "Missile Toad");
         REQUIRE(descriptor.assets_folders.size() == 1);
@@ -43,7 +43,7 @@ TEST_CASE("GameDescriptor", "[core]")
 
     SECTION("Cannot load an invalid game descriptor")
     {
-        auto descriptor = missilengine::load_game_descriptor(INVALID_GAME_DESCRIPTOR);
+        auto descriptor = missileengine::load_game_descriptor(INVALID_GAME_DESCRIPTOR);
 
         REQUIRE(!descriptor.has_value());
     }

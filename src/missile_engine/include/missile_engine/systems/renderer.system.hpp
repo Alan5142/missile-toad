@@ -6,7 +6,7 @@
 #include <entt/meta/meta.hpp>
 #include <gsl/gsl>
 
-namespace missilengine
+namespace missileengine
 {
     class Game;
     /**
@@ -16,7 +16,7 @@ namespace missilengine
      *
      * It also provides a debug rendering mode for physics bodies.
      */
-    class RendererSystem : public missilengine::BaseSystem
+    class RendererSystem : public missileengine::BaseSystem
     {
         entt::registry *registry_;
 
@@ -39,4 +39,4 @@ namespace missilengine
          */
         void on_render() override;
     };
-} // namespace missilengine
+} // namespace missileengine

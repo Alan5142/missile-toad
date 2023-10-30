@@ -37,17 +37,17 @@ def generate_system(params: Namespace):
 
 #include <entt/meta/meta.hpp>
 
-namespace missilengine
+namespace missileengine
 {{
     class Game;
 }}
 
 namespace {namespace}
 {{
-    class {pascal_case_name}System : public missilengine::BaseSystem
+    class {pascal_case_name}System : public missileengine::BaseSystem
     {{
     public:
-        {pascal_case_name}System(missilengine::Game *game);
+        {pascal_case_name}System(missileengine::Game *game);
         static void register_system(entt::meta_ctx& ctx);
     }};
 }}
@@ -60,7 +60,7 @@ namespace {namespace}
 #include <entt/meta/meta.hpp>
 #include <entt/meta/factory.hpp>
 
-{namespace}::{pascal_case_name}System::{pascal_case_name}System(missilengine::Game *game)
+{namespace}::{pascal_case_name}System::{pascal_case_name}System(missileengine::Game *game)
 {{
     // TODO: Add your constructor code here
 }}
@@ -70,8 +70,8 @@ void {namespace}::{pascal_case_name}System::register_system(entt::meta_ctx &ctx)
     using namespace entt::literals;
     entt::meta<{namespace}::{pascal_case_name}System>(ctx)
             .type("{namespace}::{pascal_case_name}System"_hs)
-            .base<missilengine::BaseSystem>()
-            .ctor<missilengine::Game*>();
+            .base<missileengine::BaseSystem>()
+            .ctor<missileengine::Game*>();
     // TODO: Add your register code here
 }}'''
 
@@ -87,11 +87,11 @@ void {namespace}::{pascal_case_name}System::register_system(entt::meta_ctx &ctx)
 
     print(f'Generated system {name}')
 
-def generate_component(name_nms: Namespace, folder_nms: Namespace):
+def generate_component(args: Namespace):
     '''Generate a new component'''
 
-    name: str = name_nms.name
-    folder: str = os.path.join('src', folder_nms.folder)
+    name: str = args.name
+    folder: str = args.folder
     if not name:
         print('Component name is required')
         return

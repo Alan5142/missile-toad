@@ -1,9 +1,10 @@
 #pragma once
 #include "common.hpp"
+#include "components/tag.component.hpp"
 
 #include <entt/entity/registry.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * @brief Builder for entities
@@ -27,9 +28,14 @@ namespace missilengine
         bool has_been_built_ = false;
 
     public:
+        /**
+         * Creates a new entity builder
+         * @param registry registry to create the entity in.
+         */
         EntityBuilder(entt::registry *registry) : registry_(registry), entity_(registry->create())
         {
-            unused(entity_);
+            // Add tag component to entity
+            registry_->emplace<missileengine::TagComponent>(entity_, "Entity ");
         }
 
         EntityBuilder(const EntityBuilder &)            = delete;
@@ -79,6 +85,18 @@ namespace missilengine
         }
 
         /**
+         * Sets the tag to the entity
+         * @param tag tag to assign
+         * @return self
+         */
+        EntityBuilder &with_tag(std::string_view tag)
+        {
+            auto &tag_component = registry_->get<missileengine::TagComponent>(entity_);
+            tag_component.tag   = tag;
+            return *this;
+        }
+
+        /**
          * @brief Removes a component from the entity
          * @tparam T type of component
          * @return The created entity
@@ -89,4 +107,4 @@ namespace missilengine
             return entity_;
         }
     };
-} // namespace missilengine
+} // namespace missileengine

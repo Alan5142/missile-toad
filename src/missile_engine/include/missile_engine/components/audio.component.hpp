@@ -5,7 +5,7 @@
 #include <entt/meta/meta.hpp>
 #include <entt/resource/resource.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     class AudioComponent
     {
@@ -16,4 +16,4 @@ namespace missilengine
         entt::resource<Music> sound;
         static void           register_component(entt::meta_ctx &ctx);
     };
-} // namespace missilengine
+} // namespace missileengine

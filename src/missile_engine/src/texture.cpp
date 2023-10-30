@@ -2,21 +2,21 @@
 
 #include "missile_engine/texture.hpp"
 
-missilengine::Texture::Texture(raylib::Texture &&texture) noexcept : texture_(std::move(texture))
+missileengine::Texture::Texture(raylib::Texture &&texture) noexcept : texture_(std::move(texture))
 {
 }
 
-const raylib::Texture &missilengine::Texture::get_texture() const noexcept
-{
-    return texture_;
-}
-
-raylib::Texture &missilengine::Texture::get_texture() noexcept
+const raylib::Texture &missileengine::Texture::get_texture() const noexcept
 {
     return texture_;
 }
 
-void missilengine::Texture::set_texture(raylib::Texture &&texture) noexcept
+raylib::Texture &missileengine::Texture::get_texture() noexcept
+{
+    return texture_;
+}
+
+void missileengine::Texture::set_texture(raylib::Texture &&texture) noexcept
 {
     this->texture_ = std::move(texture);
 }

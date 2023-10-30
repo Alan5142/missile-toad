@@ -8,7 +8,7 @@
 #include <raylib-cpp.hpp>
 #include <vector>
 
-namespace missilengine
+namespace missileengine
 {
     class BaseSystem;
     class AssetManager;
@@ -76,13 +76,13 @@ namespace missilengine
          * Returns the asset manager of the game.
          * @return The asset manager of the game.
          */
-        [[nodiscard]] missilengine::AssetManager &asset_manager() noexcept;
+        [[nodiscard]] missileengine::AssetManager &asset_manager() noexcept;
 
-        [[nodiscard]] missilengine::SceneManager &scene_manager() noexcept;
+        [[nodiscard]] missileengine::SceneManager &scene_manager() noexcept;
 
-        [[nodiscard]] missilengine::InputManager &input_manager() noexcept;
+        [[nodiscard]] missileengine::InputManager &input_manager() noexcept;
 
-        [[nodiscard]] missilengine::Scene &active_scene() noexcept;
+        [[nodiscard]] missileengine::Scene &active_scene() noexcept;
 
         [[nodiscard]] entt::meta_ctx &systems_meta_ctx() noexcept
         {
@@ -120,4 +120,4 @@ namespace missilengine
          */
         void debug_gui() noexcept;
     };
-} // namespace missilengine
+} // namespace missileengine

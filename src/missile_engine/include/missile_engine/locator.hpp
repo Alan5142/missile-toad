@@ -6,7 +6,7 @@
 #include <optional>
 #include <unordered_map>
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * Locator is a class that allows for easy access to services and other objects. (DI container)
@@ -154,4 +154,4 @@ namespace missilengine
             services_.clear();
         }
     };
-} // namespace missilengine
+} // namespace missileengine

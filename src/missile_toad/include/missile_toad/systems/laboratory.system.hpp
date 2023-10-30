@@ -4,7 +4,7 @@
 
 #include <entt/meta/meta.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     class Game;
 }
@@ -16,10 +16,10 @@ namespace missiletoad
      * @details It will manage the Laboratory scene, which is the first playable level
      *
      */
-    class LaboratorySystem : public missilengine::BaseSystem
+    class LaboratorySystem : public missileengine::BaseSystem
     {
     public:
-        LaboratorySystem(missilengine::Game *game);
+        LaboratorySystem(missileengine::Game *game);
         static void register_system(entt::meta_ctx &ctx);
     };
 } // namespace missiletoad

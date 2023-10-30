@@ -24,9 +24,9 @@ constexpr auto WINDOW_HEIGHT = 720;
 constexpr auto NUKLEAR_DEFAULT_FONT_SIZE = 12;
 
 // NOLINTNEXTLINE(*-avoid-non-const-global-variables)
-static missilengine::Game *INSTANCE = nullptr;
+static missileengine::Game *INSTANCE = nullptr;
 
-missilengine::Game::Game(std::vector<std::string_view> &&arguments, const GameDescriptor &game_descriptor)
+missileengine::Game::Game(std::vector<std::string_view> &&arguments, const GameDescriptor &game_descriptor)
     : nuklear_context_(nullptr, nullptr), debug_mode_(true)
 {
     auto args = std::move(arguments);
@@ -81,12 +81,12 @@ missilengine::Game::Game(std::vector<std::string_view> &&arguments, const GameDe
 }
 
 // TODO: Implement this.
-missilengine::Game::~Game() noexcept
+missileengine::Game::~Game() noexcept
 {
     INSTANCE = nullptr;
 }
 
-void missilengine::Game::update(float delta_time) noexcept
+void missileengine::Game::update(float delta_time) noexcept
 {
     spdlog::trace("Game::update() called.");
 
@@ -107,7 +107,7 @@ void missilengine::Game::update(float delta_time) noexcept
     }
 }
 
-void missilengine::Game::fixed_update(float delta_time) noexcept
+void missileengine::Game::fixed_update(float delta_time) noexcept
 {
     spdlog::trace("Game::fixed_update() called.");
     if (scene_manager_->active_scene() != nullptr)
@@ -118,7 +118,7 @@ void missilengine::Game::fixed_update(float delta_time) noexcept
     spdlog::trace("Game::fixed_update() finished.");
 }
 
-void missilengine::Game::render() noexcept
+void missileengine::Game::render() noexcept
 {
     spdlog::trace("Game::render() called.");
     BeginDrawing();
@@ -136,7 +136,7 @@ void missilengine::Game::render() noexcept
     spdlog::trace("Game::render() finished.");
 }
 
-void missilengine::Game::debug_gui() noexcept
+void missileengine::Game::debug_gui() noexcept
 {
     try
     {
@@ -160,7 +160,7 @@ void missilengine::Game::debug_gui() noexcept
     }
 }
 
-void missilengine::Game::run() noexcept
+void missileengine::Game::run() noexcept
 {
     auto current_time = std::chrono::high_resolution_clock::now();
     auto accumulator  = std::chrono::duration<float>(0);
@@ -178,11 +178,11 @@ void missilengine::Game::run() noexcept
         // But if the game is running at 30 FPS, then the fixed update will be called every frame.
         // To achieve this, we accumulate the time between frames, and call the fixed update
         // as many times as needed.
-        while (accumulator >= std::chrono::duration<float>(missilengine::UPDATE_RATE))
+        while (accumulator >= std::chrono::duration<float>(missileengine::UPDATE_RATE))
         {
             // FixedTick
-            this->fixed_update(missilengine::UPDATE_RATE);
-            accumulator -= std::chrono::duration<float>(missilengine::UPDATE_RATE);
+            this->fixed_update(missileengine::UPDATE_RATE);
+            accumulator -= std::chrono::duration<float>(missileengine::UPDATE_RATE);
         }
 
         // Tick
@@ -195,35 +195,35 @@ void missilengine::Game::run() noexcept
         scene_manager_->on_post_update();
     }
 }
-void missilengine::Game::close() noexcept
+void missileengine::Game::close() noexcept
 {
     spdlog::trace("Game::close() called.");
     window_.Close();
     spdlog::trace("Game::close() finished.");
 }
 
-missilengine::Game &missilengine::Game::get_instance() noexcept
+missileengine::Game &missileengine::Game::get_instance() noexcept
 {
     assert(INSTANCE != nullptr);
     return *INSTANCE;
 }
 
-missilengine::AssetManager &missilengine::Game::asset_manager() noexcept
+missileengine::AssetManager &missileengine::Game::asset_manager() noexcept
 {
     return *asset_manager_;
 }
 
-missilengine::SceneManager &missilengine::Game::scene_manager() noexcept
+missileengine::SceneManager &missileengine::Game::scene_manager() noexcept
 {
     return *scene_manager_;
 }
 
-missilengine::InputManager &missilengine::Game::input_manager() noexcept
+missileengine::InputManager &missileengine::Game::input_manager() noexcept
 {
     return *input_manager_;
 }
 
-missilengine::Scene &missilengine::Game::active_scene() noexcept
+missileengine::Scene &missileengine::Game::active_scene() noexcept
 {
     return *scene_manager_->active_scene();
 }

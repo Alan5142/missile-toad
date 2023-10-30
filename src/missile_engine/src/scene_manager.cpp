@@ -3,21 +3,21 @@
 #include "missile_engine/scene.hpp"
 #include "missile_engine/scene_descriptor.hpp"
 
-missilengine::SceneManager::SceneManager(missilengine::Game &game) noexcept : game_(game)
+missileengine::SceneManager::SceneManager(missileengine::Game &game) noexcept : game_(game)
 {
 }
 
-missilengine::Scene *missilengine::SceneManager::active_scene()
+missileengine::Scene *missileengine::SceneManager::active_scene()
 {
     return active_scene_.get();
 }
 
-void missilengine::SceneManager::load_scene(std::string_view name)
+void missileengine::SceneManager::load_scene(std::string_view name)
 {
     next_scene_ = name;
 }
 
-class MetaSystem : public missilengine::BaseSystem
+class MetaSystem : public missileengine::BaseSystem
 {
     entt::meta_any underlying_;
 
@@ -29,31 +29,31 @@ public:
 
     void on_update(float delta_time) override
     {
-        underlying_.cast<missilengine::BaseSystem &>().on_update(delta_time);
+        underlying_.cast<missileengine::BaseSystem &>().on_update(delta_time);
     }
 
     void on_render() override
     {
-        underlying_.cast<missilengine::BaseSystem &>().on_render();
+        underlying_.cast<missileengine::BaseSystem &>().on_render();
     }
 
     void on_fixed_update(float delta_time) override
     {
-        underlying_.cast<missilengine::BaseSystem &>().on_fixed_update(delta_time);
+        underlying_.cast<missileengine::BaseSystem &>().on_fixed_update(delta_time);
     }
 
     void on_destroy() override
     {
-        underlying_.cast<missilengine::BaseSystem &>().on_destroy();
+        underlying_.cast<missileengine::BaseSystem &>().on_destroy();
     }
 
     void on_start() override
     {
-        underlying_.cast<missilengine::BaseSystem &>().on_start();
+        underlying_.cast<missileengine::BaseSystem &>().on_start();
     }
 };
 
-void missilengine::SceneManager::on_post_update()
+void missileengine::SceneManager::on_post_update()
 {
     if (next_scene_.has_value())
     {
@@ -91,7 +91,7 @@ void missilengine::SceneManager::on_post_update()
                 continue;
             }
 
-            auto *base_system = instance.try_cast<missilengine::BaseSystem>();
+            auto *base_system = instance.try_cast<missileengine::BaseSystem>();
             if (base_system == nullptr)
             {
                 spdlog::warn("Failed to cast system type to BaseSystem: {}", system);

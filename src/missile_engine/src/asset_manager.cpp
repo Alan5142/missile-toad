@@ -13,7 +13,7 @@ static constexpr std::string_view PREFERENCES_PATH = "preferences";
 
 static constexpr std::string_view PREFERENCES_PATH_MOUNT_POINT = "/preferences";
 
-missilengine::AssetManager::AssetManager()
+missileengine::AssetManager::AssetManager()
 {
     spdlog::trace("AssetManager::AssetManager() called.");
 
@@ -46,7 +46,7 @@ missilengine::AssetManager::AssetManager()
     spdlog::trace("AssetManager::AssetManager() finished.");
 }
 
-missilengine::AssetManager::~AssetManager()
+missileengine::AssetManager::~AssetManager()
 {
     spdlog::trace("AssetManager::~AssetManager() called.");
     PHYSFS_deinit();
@@ -54,7 +54,7 @@ missilengine::AssetManager::~AssetManager()
     spdlog::trace("AssetManager::~AssetManager() finished.");
 }
 
-void missilengine::AssetManager::push_asset_folder(std::string_view path, std::string_view mount_point)
+void missileengine::AssetManager::push_asset_folder(std::string_view path, std::string_view mount_point)
 {
     spdlog::trace("AssetManager::push_asset_folder() called.");
     if (PHYSFS_mount(path.data(), mount_point.data(), 0) == 0)
@@ -65,7 +65,7 @@ void missilengine::AssetManager::push_asset_folder(std::string_view path, std::s
     spdlog::trace("AssetManager::push_asset_folder() finished.");
 }
 
-void missilengine::AssetManager::pop_asset_folder(std::string_view mount_point)
+void missileengine::AssetManager::pop_asset_folder(std::string_view mount_point)
 {
     spdlog::trace("AssetManager::pop_asset_folder() called.");
     if (PHYSFS_unmount(mount_point.data()) == 0)

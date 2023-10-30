@@ -6,7 +6,7 @@
 #include <entt/meta/meta.hpp>
 #include <entt/resource/resource.hpp>
 
-namespace missilengine
+namespace missileengine
 {
     struct SpriteAnimationComponent
     {
@@ -75,4 +75,4 @@ namespace missilengine
          */
         [[nodiscard]] entt::resource<Texture> get_current_frame_texture();
     };
-} // namespace missilengine
+} // namespace missileengine

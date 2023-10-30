@@ -2,7 +2,7 @@
 
 #include "common.hpp"
 
-namespace missilengine
+namespace missileengine
 {
     /**
      * A descriptor for a scene.
@@ -25,4 +25,4 @@ namespace missilengine
      * @return The scene descriptor.
      */
     [[nodiscard]] std::optional<SceneDescriptor> load_scene_descriptor(std::string_view path);
-} // namespace missilengine
+} // namespace missileengine

@@ -2,7 +2,7 @@
 
 #include "common.hpp"
 
-namespace missilengine
+namespace missileengine
 {
     class Scene;
     class Game;
@@ -53,4 +53,4 @@ namespace missilengine
          */
         void load_scene(std::string_view name);
     };
-} // namespace missilengine
+} // namespace missileengine
