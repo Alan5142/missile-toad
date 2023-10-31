@@ -5,6 +5,7 @@
 #include "missile_engine/game.hpp"
 #include "missile_toad/components/better_camera.component.hpp"
 #include "missile_toad/components/player.component.hpp"
+#include "missile_toad/systems/camera.system.hpp"
 
 #include <cmath>
 #include <entt/meta/factory.hpp>
@@ -47,6 +48,7 @@ void missiletoad::HubSystem::on_start()
             {
                 constexpr auto player_position = glm::vec2{10.0F, 10.0F};
                 transform.position             = player_position;
+                transform.scale                = {0.5F, 0.5F};
             })
         .with_component_using_function<missileengine::SpriteComponent>(
             [&](auto &sprite)
@@ -68,44 +70,13 @@ void missiletoad::HubSystem::on_start()
             {
                 camera.set_zoom(1.4F);
                 camera.set_offset({GetScreenWidth() / 2.0F, GetScreenHeight() / 2.0F});
-            })
+                camera.set_is_main_camera(true);
+            },
+            glm::vec2{static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())})
         .with_component<missileengine::TransformComponent>()
         .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, 3.5F)
         .build();
-}
 
-void missiletoad::HubSystem::on_update(float delta_time)
-{
-    auto                              &game             = missileengine::Game::get_instance();
-    auto                              &scene            = game.active_scene();
-    missileengine::TransformComponent *player_transform = nullptr;
-
-    unused(delta_time);
-
-    auto player_view = scene.view<missiletoad::PlayerComponent, missileengine::TransformComponent>();
-    for (auto entity : player_view)
-    {
-        player_transform = &player_view.get<missileengine::TransformComponent>(entity);
-    }
-
-    auto view = scene.view<missileengine::Camera2dComponent, missiletoad::BetterCameraComponent,
-                           missileengine::TransformComponent>();
-    for (auto entity : view)
-    {
-        auto &transform_component     = view.get<missileengine::TransformComponent>(entity);
-        auto &better_camera_component = view.get<missiletoad::BetterCameraComponent>(entity);
-
-        float xTarget = player_transform->position.x + better_camera_component.x_offset;
-        float yTarget = player_transform->position.y + better_camera_component.y_offset;
-
-        float xNew =
-            std::lerp(transform_component.position.x, xTarget, delta_time * (better_camera_component.follow_speed));
-        float yNew =
-            std::lerp(transform_component.position.y, yTarget, delta_time * (better_camera_component.follow_speed));
-
-        spdlog::info("xNew: {}, yNew: {}, xTarget{}, yTarget{}", xNew, yNew, xTarget, yTarget);
-
-        transform_component.position.x = xNew;
-        transform_component.position.y = yNew;
-    }
+    // Add camera system
+    scene.add_system<missiletoad::CameraSystem>();
 }

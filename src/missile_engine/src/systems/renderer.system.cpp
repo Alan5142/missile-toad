@@ -47,7 +47,10 @@ void missileengine::RendererSystem::on_render()
         cam.set_target({cam_transform.position.x * PIXELS_PER_UNIT, cam_transform.position.y * PIXELS_PER_UNIT});
         cam.set_rotation(cam_transform.rotation);
 
+        BeginTextureMode(cam.get_render_texture());
+        ClearBackground(BLACK);
         BeginMode2D(cam.get_camera());
+
         for (auto entity : registry_->view<SpriteComponent>())
         {
             auto &transform  = view.get<TransformComponent>(entity);
@@ -90,12 +93,15 @@ void missileengine::RendererSystem::on_render()
                            transform.rotation, color);
         }
         EndMode2D();
+        EndTextureMode();
     }
 
     // Draw Physics Objects
     for (auto cam_entity : camera_view)
     {
         auto &cam = registry_->get<Camera2dComponent>(cam_entity);
+
+        BeginTextureMode(cam.get_render_texture());
         BeginMode2D(cam.get_camera());
         for (auto entity : registry_->view<BoxCollider2dComponent, TransformComponent>())
         {
@@ -126,5 +132,6 @@ void missileengine::RendererSystem::on_render()
             }
         }
         EndMode2D();
+        EndTextureMode();
     }
 }

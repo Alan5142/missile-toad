@@ -3,6 +3,7 @@
 #include "missile_engine/game.hpp"
 #include "missile_engine/asset_manager.hpp"
 #include "missile_engine/base_system.hpp"
+#include "missile_engine/components/camera_2d.component.hpp"
 #include "missile_engine/components/transform.component.hpp"
 #include "missile_engine/game_descriptor.hpp"
 #include "missile_engine/input_manager.hpp"
@@ -123,18 +124,33 @@ void missileengine::Game::fixed_update(float delta_time) noexcept
 void missileengine::Game::render() noexcept
 {
     spdlog::trace("Game::render() called.");
-    BeginDrawing();
+
+    if (scene_manager_->active_scene() != nullptr)
     {
-        ClearBackground(BLACK);
+        scene_manager_->active_scene()->on_render();
 
-        if (scene_manager_->active_scene() != nullptr)
+        auto view = scene_manager_->active_scene()->get_registry().view<missileengine::Camera2dComponent>();
+        for (auto entity : view)
         {
-            scene_manager_->active_scene()->on_render();
-        }
+            auto &camera = view.get<missileengine::Camera2dComponent>(entity);
+            if (!camera.is_main_camera())
+            {
+                continue;
+            }
 
-        DrawNuklear(nuklear_context_.get());
+            BeginDrawing();
+            ClearBackground(BLACK);
+            auto &texture = camera.get_render_texture().texture;
+            DrawTextureRec(texture, {0, 0, static_cast<float>(texture.width), -static_cast<float>(texture.height)},
+                           {0, 0}, WHITE);
+            DrawNuklear(nuklear_context_.get());
+
+            EndDrawing();
+        }
+        BeginDrawing();
+        ClearBackground(BLACK);
     }
-    EndDrawing();
+
     spdlog::trace("Game::render() finished.");
 }
 

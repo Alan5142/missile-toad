@@ -17,7 +17,23 @@ namespace missileengine
          */
         raylib::Camera2D camera_{raylib::Vector2{0.0F, 0.0F}, raylib::Vector2{0.0F, 0.0F}, 0.0F, 1.0F};
 
+        std::unique_ptr<raylib::RenderTexture2D> render_texture_;
+
+        bool main_camera_ = false;
+
     public:
+        /**
+         * @brief Construct a new Camera 2d Component object
+         * @param texture_size The size of the texture to render to.
+         * @param main_camera  Whether or not this is the main camera.
+         */
+        Camera2dComponent(glm::u32vec2 texture_size, bool main_camera = false);
+
+        Camera2dComponent(const Camera2dComponent &)            = delete;
+        Camera2dComponent(Camera2dComponent &&)                 = default;
+        Camera2dComponent &operator=(const Camera2dComponent &) = delete;
+        Camera2dComponent &operator=(Camera2dComponent &&)      = default;
+
         /**
          * Registers the component with the meta context.
          * @param ctx meta context
@@ -125,6 +141,25 @@ namespace missileengine
         [[nodiscard]] const Camera2D &get_camera() const
         {
             return camera_;
+        }
+
+        /**
+         * Gets the underlying raylib render texture.
+         * @return raylib render texture
+         */
+        [[nodiscard]] raylib::RenderTexture2D &get_render_texture()
+        {
+            return *render_texture_;
+        }
+
+        [[nodiscard]] bool is_main_camera() const
+        {
+            return main_camera_;
+        }
+
+        void set_is_main_camera(bool main_camera)
+        {
+            main_camera_ = main_camera;
         }
     };
 } // namespace missileengine

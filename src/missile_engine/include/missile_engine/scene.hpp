@@ -56,7 +56,7 @@ namespace missileengine
         template <typename T, typename... Args>
         void add_system(Args &&...args)
         {
-            systems_.push_back(std::make_unique<T>(std::forward<Args>(args)...));
+            systems_.push_back(std::make_unique<T>(game_, std::forward<Args>(args)...));
         }
 
         /**
