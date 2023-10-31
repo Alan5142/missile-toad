@@ -130,33 +130,16 @@ namespace missileengine
          * @tparam Args The types of the components.
          * @return A view of the entities with the specified components.
          */
-        template <typename... Args>
-        [[nodiscard]] auto get_entities_with_components() const noexcept
+        template <typename... C, typename... Args>
+        [[nodiscard]] decltype(auto) view(Args &&...args) const noexcept
         {
-            return scene_entities_.view<Args...>();
+            return scene_entities_.view<C...>(std::forward<Args>(args)...);
         }
 
-        /**
-         * @brief Gets the list of entities with the specified components.
-         * @tparam Args The types of the components.
-         * @return A view of the entities with the specified components.
-         */
-        template <typename... Args>
-        [[nodiscard]] auto get_entities_with_components() noexcept
+        template <typename... C, typename... Args>
+        [[nodiscard]] decltype(auto) view(Args &&...args) noexcept
         {
-            return scene_entities_.view<Args...>();
-        }
-
-        /**
-         * @brief Gets the list of entities with the specified components.
-         * @tparam Args The types of the components.
-         * @param args The components.
-         * @return A view of the entities with the specified components.
-         */
-        template <typename... Args>
-        [[nodiscard]] auto get_entities_with_components(Args &&...args) const noexcept
-        {
-            return scene_entities_.view<Args...>(std::forward<Args>(args)...);
+            return scene_entities_.view<C...>(std::forward<Args>(args)...);
         }
 
         void segment_loader(ldtk::Project &project, std::string_view ldtk_world, int level_id,

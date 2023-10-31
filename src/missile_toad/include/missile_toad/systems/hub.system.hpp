@@ -1,6 +1,8 @@
 #pragma once
 #include "missile_engine/base_system.hpp"
 #include "missile_engine/common.hpp"
+#include "missile_engine/core_components.hpp"
+#include "missile_toad/components/better_camera.component.hpp"
 
 #include <entt/meta/meta.hpp>
 
@@ -23,5 +25,7 @@ namespace missiletoad
         static void register_system(entt::meta_ctx &ctx);
 
         void on_start() override;
+
+        void on_update(float delta_time) override;
     };
 } // namespace missiletoad

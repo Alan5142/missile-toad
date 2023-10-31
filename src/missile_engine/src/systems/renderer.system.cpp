@@ -44,7 +44,7 @@ void missileengine::RendererSystem::on_render()
         auto &cam           = registry_->get<Camera2dComponent>(cam_entity);
         auto &cam_transform = registry_->get<TransformComponent>(cam_entity);
 
-        cam.set_target({cam_transform.position.x, cam_transform.position.y});
+        cam.set_target({cam_transform.position.x * PIXELS_PER_UNIT, cam_transform.position.y * PIXELS_PER_UNIT});
         cam.set_rotation(cam_transform.rotation);
 
         BeginMode2D(cam.get_camera());

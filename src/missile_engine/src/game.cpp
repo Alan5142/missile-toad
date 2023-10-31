@@ -39,6 +39,8 @@ missileengine::Game::Game(std::vector<std::string_view> &&arguments, const GameD
 
     spdlog::info("Initializing game {}.", game_descriptor.name);
 
+    SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
+
     spdlog::info("Creating window.");
     if (args.size() != 1 || args[0] != "TEST_CASE")
     {
