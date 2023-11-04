@@ -3,6 +3,7 @@
 #include "missile_engine/components/sprite.component.hpp"
 #include "missile_engine/components/sprite_animation.component.hpp"
 
+#include "missile_engine/components/disabled.component.hpp"
 #include "missile_engine/game.hpp"
 
 #include <entt/meta/factory.hpp>
@@ -26,7 +27,7 @@ void missileengine::SpriteAnimationSystem::register_system(entt::meta_ctx &ctx)
 
 void missileengine::SpriteAnimationSystem::on_update(float delta_time)
 {
-    auto view = registry_->view<SpriteComponent, SpriteAnimationComponent>();
+    auto view = registry_->view<SpriteComponent, SpriteAnimationComponent>(entt::exclude<DisabledComponent>);
 
     // Just update the animation
     for (auto entity : view)
@@ -47,6 +48,7 @@ void missileengine::SpriteAnimationSystem::on_sprite_animation_created(entt::reg
     animation.is_playing = false;
     animation.loop       = false;
 }
+
 missileengine::SpriteAnimationSystem::~SpriteAnimationSystem()
 {
     registry_->on_construct<SpriteAnimationComponent>().disconnect<&SpriteAnimationSystem::on_sprite_animation_created>(

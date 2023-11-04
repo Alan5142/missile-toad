@@ -11,6 +11,10 @@ namespace missileengine
 {
     class PhysicsSystem;
 
+    /**
+     * Rigidbody2dComponent is a component that represents a 2d rigidbody.
+     * @note a rigidbody is a body that is affected by physics.
+     */
     class Rigidbody2dComponent
     {
         b2Body *body_{};
