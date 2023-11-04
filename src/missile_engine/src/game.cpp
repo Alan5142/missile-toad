@@ -22,7 +22,7 @@ extern void game_register_system(entt::meta_ctx &ctx) WEAK_LINKAGE;
 constexpr auto WINDOW_WIDTH  = 1280;
 constexpr auto WINDOW_HEIGHT = 720;
 
-constexpr auto NUKLEAR_DEFAULT_FONT_SIZE = 12;
+constexpr auto NUKLEAR_DEFAULT_FONT_SIZE = 20;
 
 // NOLINTNEXTLINE(*-avoid-non-const-global-variables)
 static missileengine::Game *INSTANCE = nullptr;
@@ -40,7 +40,7 @@ missileengine::Game::Game(std::vector<std::string_view> &&arguments, const GameD
 
     spdlog::info("Initializing game {}.", game_descriptor.name);
 
-    SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT);
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
 
     spdlog::info("Creating window.");
     if (args.size() != 1 || args[0] != "TEST_CASE")
@@ -52,6 +52,7 @@ missileengine::Game::Game(std::vector<std::string_view> &&arguments, const GameD
 
     nuklear_context_ =
         std::unique_ptr<nk_context, void (*)(nk_context *)>(InitNuklear(NUKLEAR_DEFAULT_FONT_SIZE), UnloadNuklear);
+
     if (nuklear_context_ == nullptr)
     {
         spdlog::error("Failed to initialize nuklear.");
@@ -164,13 +165,27 @@ void missileengine::Game::debug_gui() noexcept
         constexpr auto debug_fps_position_x = 0;
         constexpr auto debug_fps_position_y = 0;
         constexpr auto debug_fps_font_size  = 20;
-        DrawText(fps.c_str(), debug_fps_position_x, debug_fps_position_y, debug_fps_font_size, RED);
+        constexpr auto debug_fps_width      = 400;
+        constexpr auto debug_fps_height     = debug_fps_font_size * 4.0F;
 
-        constexpr auto debug_frame_time_position_x = 150;
-        constexpr auto debug_frame_time_position_y = 0;
-        constexpr auto debug_frame_time_font_size  = 20;
-        DrawText(frame_time.c_str(), debug_frame_time_position_x, debug_frame_time_position_y,
-                 debug_frame_time_font_size, RED);
+        // Begin a transparent window
+        nuklear_context_->style.window.fixed_background = nk_style_item_color(nk_rgba(50, 50, 50, 50));
+        if (nk_begin(nuklear_context_.get(), "Debug",
+                     nk_rect(debug_fps_position_x, debug_fps_position_y, debug_fps_width, debug_fps_height), 0))
+        {
+            nk_layout_row_dynamic(nuklear_context_.get(), debug_fps_font_size, 1);
+            nk_label_colored(nuklear_context_.get(), fps.c_str(), NK_TEXT_LEFT, nk_rgb(255, 0, 0));
+            nk_label_colored(nuklear_context_.get(), frame_time.c_str(), NK_TEXT_LEFT, nk_rgb(255, 0, 0));
+        }
+
+        nk_end(nuklear_context_.get());
+        //        DrawText(fps.c_str(), debug_fps_position_x, debug_fps_position_y, debug_fps_font_size, RED);
+        //
+        //        constexpr auto debug_frame_time_position_x = 150;
+        //        constexpr auto debug_frame_time_position_y = 0;
+        //        constexpr auto debug_frame_time_font_size  = 20;
+        //        DrawText(frame_time.c_str(), debug_frame_time_position_x, debug_frame_time_position_y,
+        //                 debug_frame_time_font_size, RED);
     }
     catch (const std::exception &e)
     {
