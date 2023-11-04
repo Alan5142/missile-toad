@@ -2,6 +2,7 @@
 #include "missile_engine/systems/physics.system.hpp"
 #include "missile_engine/components/box_collider_2d.component.hpp"
 #include "missile_engine/components/collision2d.component.hpp"
+#include "missile_engine/components/disabled.component.hpp"
 #include "missile_engine/components/rigidbody_2d.component.hpp"
 #include "missile_engine/components/sprite.component.hpp"
 #include "missile_engine/components/transform.component.hpp"
@@ -97,6 +98,9 @@ missileengine::PhysicsSystem::PhysicsSystem(missileengine::Game *game)
 
     registry_->on_construct<BoxCollider2dComponent>().connect<&PhysicsSystem::on_box_collider_created>(this);
     registry_->on_construct<Rigidbody2dComponent>().connect<&PhysicsSystem::on_rigidbody_created>(this);
+
+    registry_->on_construct<DisabledComponent>().connect<&PhysicsSystem::on_entity_disabled>(this);
+    registry_->on_destroy<DisabledComponent>().connect<&PhysicsSystem::on_entity_enabled>(this);
 }
 
 missileengine::PhysicsSystem::~PhysicsSystem()
@@ -108,7 +112,8 @@ missileengine::PhysicsSystem::~PhysicsSystem()
 void missileengine::PhysicsSystem::on_fixed_update(float delta_time)
 {
     // First, we need to update the physics bodies with the transform. This just in case the transform was updated
-    for (auto entity : transform_observer_)
+    for (auto entity :
+         registry_->view<Rigidbody2dComponent, TransformComponent>(entt::exclude<missileengine::DisabledComponent>))
     {
         auto &physics   = registry_->get<missileengine::Rigidbody2dComponent>(entity);
         auto &transform = registry_->get<missileengine::TransformComponent>(entity);
@@ -140,7 +145,8 @@ void missileengine::PhysicsSystem::on_fixed_update(float delta_time)
     world_.Step(delta_time, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
     // After updating the physics bodies, we need to update the transforms with the physics bodies.
-    for (auto entity : registry_->view<Rigidbody2dComponent, TransformComponent>())
+    for (auto entity :
+         registry_->view<Rigidbody2dComponent, TransformComponent>(entt::exclude<missileengine::DisabledComponent>))
     {
         auto &rigidbody = registry_->get<missileengine::Rigidbody2dComponent>(entity);
         auto &transform = registry_->get<missileengine::TransformComponent>(entity);
@@ -197,4 +203,22 @@ void missileengine::PhysicsSystem::on_rigidbody_created(entt::registry &registry
     body_def.angle         = glm::radians(transform.rotation);
     body_def.enabled       = true;
     rigidbody.body_        = world_.CreateBody(&body_def);
+}
+
+void missileengine::PhysicsSystem::on_entity_disabled(entt::registry &registry, entt::entity entity)
+{
+    auto *rigidbody = registry.try_get<Rigidbody2dComponent>(entity);
+    if (rigidbody != nullptr)
+    {
+        rigidbody->body_->SetEnabled(false);
+    }
+}
+
+void missileengine::PhysicsSystem::on_entity_enabled(entt::registry &registry, entt::entity entity)
+{
+    auto *rigidbody = registry.try_get<Rigidbody2dComponent>(entity);
+    if (rigidbody != nullptr)
+    {
+        rigidbody->body_->SetEnabled(true);
+    }
 }

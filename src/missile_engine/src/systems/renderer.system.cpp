@@ -2,6 +2,7 @@
 #include "missile_engine/systems/renderer.system.hpp"
 #include "missile_engine/components/box_collider_2d.component.hpp"
 #include "missile_engine/components/camera_2d.component.hpp"
+#include "missile_engine/components/disabled.component.hpp"
 #include "missile_engine/components/sprite.component.hpp"
 #include "missile_engine/components/transform.component.hpp"
 #include "missile_engine/game.hpp"
@@ -34,10 +35,10 @@ void missileengine::RendererSystem::on_render()
     registry_->sort<TransformComponent, SpriteComponent>();
 
     // Render sprites
-    auto view = registry_->view<TransformComponent, SpriteComponent>();
+    auto view = registry_->view<TransformComponent, SpriteComponent>(entt::exclude<DisabledComponent>);
 
     // Camera iterator
-    auto camera_view = registry_->view<Camera2dComponent, TransformComponent>();
+    auto camera_view = registry_->view<Camera2dComponent, TransformComponent>(entt::exclude<DisabledComponent>);
 
     for (auto cam_entity : camera_view)
     {
