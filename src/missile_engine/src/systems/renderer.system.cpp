@@ -3,6 +3,7 @@
 #include "missile_engine/components/box_collider_2d.component.hpp"
 #include "missile_engine/components/camera_2d.component.hpp"
 #include "missile_engine/components/disabled.component.hpp"
+#include "missile_engine/components/line_renderer.component.hpp"
 #include "missile_engine/components/sprite.component.hpp"
 #include "missile_engine/components/transform.component.hpp"
 #include "missile_engine/game.hpp"
@@ -49,7 +50,7 @@ void missileengine::RendererSystem::on_render()
         cam.set_rotation(cam_transform.rotation);
 
         BeginMode2D(cam.get_camera());
-        for (auto entity : registry_->view<SpriteComponent>())
+        for (auto entity : view)
         {
             auto &transform  = view.get<TransformComponent>(entity);
             auto &sprite     = view.get<SpriteComponent>(entity);
@@ -90,6 +91,18 @@ void missileengine::RendererSystem::on_render()
                            Vector2{rectangle_dest.width / CENTER_RATIO, rectangle_dest.height / CENTER_RATIO}, //
                            transform.rotation, color);
         }
+
+        for (const auto entity : registry_->view<LineRendererComponent>())
+        {
+            const auto &line  = registry_->get<LineRendererComponent>(entity);
+            const auto  color = Color{
+                 .r = line.color.r,
+                 .g = line.color.g,
+                 .b = line.color.b,
+                 .a = line.color.a,
+            };
+            DrawLineEx(Vector2{line.start.x, line.start.y}, Vector2{line.end.x, line.end.y}, line.width, color);
+        }
         EndMode2D();
     }
 
@@ -98,7 +111,8 @@ void missileengine::RendererSystem::on_render()
     {
         auto &cam = registry_->get<Camera2dComponent>(cam_entity);
         BeginMode2D(cam.get_camera());
-        for (auto entity : registry_->view<BoxCollider2dComponent, TransformComponent>())
+        for (auto entity :
+             registry_->view<BoxCollider2dComponent, TransformComponent>(entt::exclude<DisabledComponent>))
         {
             const auto &box_collider = registry_->get<missileengine::BoxCollider2dComponent>(entity);
             const auto &transform    = view.get<TransformComponent>(entity);

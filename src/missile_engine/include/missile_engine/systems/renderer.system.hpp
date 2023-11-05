@@ -26,6 +26,8 @@ namespace missileengine
          */
         RendererSystem(Game *game);
 
+        virtual ~RendererSystem() override = default;
+
         /**
          * Register this system with the meta context.
          * @param ctx The meta context to register with.

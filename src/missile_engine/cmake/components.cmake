@@ -27,3 +27,4 @@ include_component(
   src/components/collision2d.component.cpp missileengine::Collision2dComponent)
 include_component(missile_engine/components/tag.component.hpp src/components/tag.component.cpp missileengine::TagComponent)
 include_component(missile_engine/components/disabled.component.hpp src/components/disabled.component.cpp missileengine::DisabledComponent)
+include_component(missile_engine/components/line_renderer.component.hpp src/components/line_renderer.component.cpp missileengine::LineRendererComponent)
