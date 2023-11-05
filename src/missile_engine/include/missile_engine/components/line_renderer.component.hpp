@@ -7,8 +7,13 @@
 
 namespace missileengine
 {
+    /**
+     * @brief A component that renders a line between two points.
+     */
     class LineRendererComponent
     {
+        static constexpr glm::u8vec4 DEFAULT_COLOR = {255, 255, 255, 255};
+
     public:
         static void register_component(entt::meta_ctx &ctx);
 
@@ -25,7 +30,7 @@ namespace missileengine
         /**
          * @brief The color of the line.
          */
-        glm::u8vec4 color{255, 255, 255, 255};
+        glm::u8vec4 color = DEFAULT_COLOR;
 
         /**
          * @brief The width of the line.

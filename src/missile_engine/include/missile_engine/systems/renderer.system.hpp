@@ -26,7 +26,12 @@ namespace missileengine
          */
         RendererSystem(Game *game);
 
-        virtual ~RendererSystem() override = default;
+        RendererSystem(const RendererSystem &)            = delete;
+        RendererSystem(RendererSystem &&)                 = delete;
+        RendererSystem &operator=(const RendererSystem &) = delete;
+        RendererSystem &operator=(RendererSystem &&)      = delete;
+
+        ~RendererSystem() override = default;
 
         /**
          * Register this system with the meta context.
