@@ -1,4 +1,5 @@
 #include "missile_engine/input_manager.hpp"
+#include <glm/vec2.hpp>
 
 void missileengine::InputManager::update()
 {
@@ -200,6 +201,7 @@ void missileengine::InputManager::clear_axis(std::string_view name)
 {
     axes_.erase(name.data());
 }
+
 float missileengine::InputManager::get_axis(std::string_view name) const
 {
     auto axis_it = axes_.find(name.data());
@@ -208,4 +210,10 @@ float missileengine::InputManager::get_axis(std::string_view name) const
         return 0.0F;
     }
     return axis_it->second.value;
+}
+
+glm::vec2 missileengine::InputManager::get_mouse_position() const
+{
+    auto mouse_position = GetMousePosition();
+    return {mouse_position.x, mouse_position.y};
 }
