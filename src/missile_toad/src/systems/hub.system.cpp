@@ -4,6 +4,7 @@
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_toad/components/player.component.hpp"
+#include "missile_engine/input_manager.hpp"
 
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
