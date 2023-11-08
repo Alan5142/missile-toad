@@ -12,8 +12,7 @@
 missileengine::SpriteAnimationSystem::SpriteAnimationSystem(missileengine::Game *game)
     : registry_(&game->active_scene().get_registry())
 {
-    registry_->on_construct<SpriteAnimationComponent>().connect<&SpriteAnimationSystem::on_sprite_animation_created>(
-        this);
+    registry_->on_construct<SpriteAnimationState>().connect<&SpriteAnimationSystem::on_sprite_animation_created>(this);
 }
 
 void missileengine::SpriteAnimationSystem::register_system(entt::meta_ctx &ctx)
@@ -27,13 +26,13 @@ void missileengine::SpriteAnimationSystem::register_system(entt::meta_ctx &ctx)
 
 void missileengine::SpriteAnimationSystem::on_update(float delta_time)
 {
-    auto view = registry_->view<SpriteComponent, SpriteAnimationComponent>(entt::exclude<DisabledComponent>);
+    auto view = registry_->view<SpriteComponent, SpriteAnimationState>(entt::exclude<DisabledComponent>);
 
     // Just update the animation
     for (auto entity : view)
     {
         auto &sprite    = view.get<SpriteComponent>(entity);
-        auto &animation = view.get<SpriteAnimationComponent>(entity);
+        auto &animation = view.get<SpriteAnimationState>(entity);
         animation.update(std::chrono::duration<float>(delta_time));
         sprite.texture = animation.get_current_frame_texture();
     }
@@ -43,14 +42,14 @@ void missileengine::SpriteAnimationSystem::on_sprite_animation_created(entt::reg
 {
     auto &sprite = registry.get_or_emplace<SpriteComponent>(entity);
     unused(sprite);
-    auto &animation = registry.get<SpriteAnimationComponent>(entity);
+    auto &animation = registry.get<SpriteAnimationState>(entity);
 
-    animation.is_playing = false;
-    animation.loop       = false;
+    animation.play(false);
+    animation.loop(false);
 }
 
 missileengine::SpriteAnimationSystem::~SpriteAnimationSystem()
 {
-    registry_->on_construct<SpriteAnimationComponent>().disconnect<&SpriteAnimationSystem::on_sprite_animation_created>(
+    registry_->on_construct<SpriteAnimationState>().disconnect<&SpriteAnimationSystem::on_sprite_animation_created>(
         this);
 }
