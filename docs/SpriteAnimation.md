@@ -41,10 +41,10 @@ scene.create_entity()
             idle_state.loop(true);
 
             auto run_to_idle_transition = missileengine::SpriteAnimationTransition::create_manual();
-            run_state.add_transition("run", run_to_idle_transition); // Must match the state name
+            run_state.add_transition("idle", run_to_idle_transition); // Must match the state name
 
             auto idle_to_run_transition = missileengine::SpriteAnimationTransition::create_manual();
-            idle_state.add_transition("idle", idle_to_run_transition); // Must match the state name
+            idle_state.add_transition("run", idle_to_run_transition); // Must match the state name
 
             sprite_animation.add_state(run_state);
             sprite_animation.add_state(idle_state);
