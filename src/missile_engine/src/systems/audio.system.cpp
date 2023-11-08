@@ -1,6 +1,7 @@
 
 #include "missile_engine/systems/audio.system.hpp"
 #include "missile_engine/components/audio.component.hpp"
+#include "missile_engine/components/disabled.component.hpp"
 #include "missile_engine/game.hpp"
 
 #include <entt/entity/registry.hpp>
@@ -23,7 +24,7 @@ void missileengine::AudioSystem::register_system(entt::meta_ctx &ctx)
 
 void missileengine::AudioSystem::on_update(float delta_time)
 {
-    auto view = registry_->view<AudioComponent>();
+    auto view = registry_->view<AudioComponent>(entt::exclude<missileengine::DisabledComponent>);
 
     unused(delta_time);
 

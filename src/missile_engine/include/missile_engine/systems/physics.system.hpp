@@ -45,5 +45,19 @@ namespace missileengine
          * @param entity entity
          */
         void on_rigidbody_created(entt::registry &registry, entt::entity entity);
+
+        /**
+         * Called when an entity is disabled.
+         * @param registry registry
+         * @param entity entity
+         */
+        void on_entity_disabled(entt::registry &registry, entt::entity entity);
+
+        /**
+         * Called when an entity is enabled.
+         * @param registry registry
+         * @param entity entity
+         */
+        void on_entity_enabled(entt::registry &registry, entt::entity entity);
     };
 } // namespace missileengine

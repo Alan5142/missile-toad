@@ -1,6 +1,7 @@
 #pragma once
 #include "common.hpp"
 
+#include <glm/vec2.hpp>
 #include <raylib.h>
 #include <unordered_map>
 #include <variant>
@@ -476,6 +477,12 @@ namespace missileengine
          * @return The value of the axis.
          */
         [[nodiscard]] float get_axis(std::string_view name) const;
+
+        /**
+         * @brief Gets the mouse position.
+         * @return The mouse position.
+         */
+        glm::vec2 get_mouse_position() const;
 
     private:
         void process_actions();

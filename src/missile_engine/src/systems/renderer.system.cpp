@@ -2,6 +2,8 @@
 #include "missile_engine/systems/renderer.system.hpp"
 #include "missile_engine/components/box_collider_2d.component.hpp"
 #include "missile_engine/components/camera_2d.component.hpp"
+#include "missile_engine/components/disabled.component.hpp"
+#include "missile_engine/components/line_renderer.component.hpp"
 #include "missile_engine/components/sprite.component.hpp"
 #include "missile_engine/components/transform.component.hpp"
 #include "missile_engine/game.hpp"
@@ -34,10 +36,10 @@ void missileengine::RendererSystem::on_render()
     registry_->sort<TransformComponent, SpriteComponent>();
 
     // Render sprites
-    auto view = registry_->view<TransformComponent, SpriteComponent>();
+    auto view = registry_->view<TransformComponent, SpriteComponent>(entt::exclude<DisabledComponent>);
 
     // Camera iterator
-    auto camera_view = registry_->view<Camera2dComponent, TransformComponent>();
+    auto camera_view = registry_->view<Camera2dComponent, TransformComponent>(entt::exclude<DisabledComponent>);
 
     for (auto cam_entity : camera_view)
     {
@@ -50,8 +52,7 @@ void missileengine::RendererSystem::on_render()
         BeginTextureMode(cam.get_render_texture());
         ClearBackground(BLACK);
         BeginMode2D(cam.get_camera());
-
-        for (auto entity : registry_->view<SpriteComponent>())
+        for (auto entity : view)
         {
             auto &transform  = view.get<TransformComponent>(entity);
             auto &sprite     = view.get<SpriteComponent>(entity);
@@ -92,6 +93,18 @@ void missileengine::RendererSystem::on_render()
                            Vector2{rectangle_dest.width / CENTER_RATIO, rectangle_dest.height / CENTER_RATIO}, //
                            transform.rotation, color);
         }
+
+        for (const auto entity : registry_->view<LineRendererComponent>())
+        {
+            const auto &line  = registry_->get<LineRendererComponent>(entity);
+            const auto  color = Color{
+                 .r = line.color.r,
+                 .g = line.color.g,
+                 .b = line.color.b,
+                 .a = line.color.a,
+            };
+            DrawLineEx(Vector2{line.start.x, line.start.y}, Vector2{line.end.x, line.end.y}, line.width, color);
+        }
         EndMode2D();
         EndTextureMode();
     }
@@ -103,7 +116,8 @@ void missileengine::RendererSystem::on_render()
 
         BeginTextureMode(cam.get_render_texture());
         BeginMode2D(cam.get_camera());
-        for (auto entity : registry_->view<BoxCollider2dComponent, TransformComponent>())
+        for (auto entity :
+             registry_->view<BoxCollider2dComponent, TransformComponent>(entt::exclude<DisabledComponent>))
         {
             const auto &box_collider = registry_->get<missileengine::BoxCollider2dComponent>(entity);
             const auto &transform    = view.get<TransformComponent>(entity);
