@@ -11,3 +11,4 @@ Welcome to the Missile Toad documentation. This documentation is a work in progr
     api/library_root
     Building
     uml
+    SpriteAnimation
