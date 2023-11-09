@@ -160,24 +160,33 @@ void missileengine::Game::debug_gui() noexcept
     try
     {
         // Show FPS and frame time
-        const auto     fps                  = fmt::format("FPS: {}", GetFPS());
-        const auto     frame_time           = fmt::format("Frame time: {:.2f} ms", GetFrameTime() * 1000);
-        constexpr auto debug_fps_position_x = 0;
-        constexpr auto debug_fps_position_y = 0;
-        constexpr auto debug_fps_font_size  = 20;
-        constexpr auto debug_fps_width      = 400;
-        constexpr auto debug_fps_height     = debug_fps_font_size * 4.0F;
-        constexpr auto debug_fps_red_value  = 255;
+        const auto     fps                           = fmt::format("FPS: {}", GetFPS());
+        const auto     frame_time                    = fmt::format("Frame time: {:.2f} ms", GetFrameTime() * 1000);
+        constexpr auto debug_fps_position_x          = 0;
+        constexpr auto debug_fps_position_y          = 0;
+        constexpr auto debug_fps_font_size           = 20;
+        constexpr auto debug_fps_width               = 400;
+        constexpr auto debug_fps_height              = debug_fps_font_size * 4.0F;
+        constexpr auto debug_fps_red_value           = 255;
+        constexpr auto debug_fps_green_value         = 0;
+        constexpr auto debug_fps_blue_value          = 0;
+        constexpr auto window_background_red_color   = 50;
+        constexpr auto window_background_green_color = 50;
+        constexpr auto window_background_blue_color  = 50;
+        constexpr auto window_background_alpha_color = 50;
 
         // Begin a transparent window
-        nuklear_context_->style.window.fixed_background = nk_style_item_color(nk_rgba(50, 50, 50, 50));
+        nuklear_context_->style.window.fixed_background =
+            nk_style_item_color(nk_rgba(window_background_red_color, window_background_green_color,
+                                        window_background_blue_color, window_background_alpha_color));
         if (nk_begin(nuklear_context_.get(), "Debug",
-                     nk_rect(debug_fps_position_x, debug_fps_position_y, debug_fps_width, debug_fps_height), 0))
+                     nk_rect(debug_fps_position_x, debug_fps_position_y, debug_fps_width, debug_fps_height), 0 == 1))
         {
             nk_layout_row_dynamic(nuklear_context_.get(), debug_fps_font_size, 1);
-            nk_label_colored(nuklear_context_.get(), fps.c_str(), NK_TEXT_LEFT, nk_rgb(debug_fps_red_value, 0, 0));
+            nk_label_colored(nuklear_context_.get(), fps.c_str(), NK_TEXT_LEFT,
+                             nk_rgb(debug_fps_red_value, debug_fps_green_value, debug_fps_blue_value));
             nk_label_colored(nuklear_context_.get(), frame_time.c_str(), NK_TEXT_LEFT,
-                             nk_rgb(debug_fps_red_value, 0, 0));
+                             nk_rgb(debug_fps_red_value, debug_fps_green_value, debug_fps_blue_value));
         }
 
         nk_end(nuklear_context_.get());
