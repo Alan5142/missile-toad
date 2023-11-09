@@ -33,6 +33,7 @@ namespace missileengine
         Camera2dComponent(Camera2dComponent &&)                 = default;
         Camera2dComponent &operator=(const Camera2dComponent &) = delete;
         Camera2dComponent &operator=(Camera2dComponent &&)      = default;
+        ~Camera2dComponent()                                    = default;
 
         /**
          * Registers the component with the meta context.
