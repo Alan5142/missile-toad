@@ -41,8 +41,8 @@ void missiletoad::HubSystem::on_start()
     game.active_scene().segment_loader(*ldtk_project, "", 0, {{"Room", 0, true}, {"Ground", 0, false}});
 
     // Create player
-    auto player_texture         = game.asset_manager().load<missileengine::Texture>("/assets/mt.png");
-    auto player_transform_scale = glm::vec2{0.5F, 0.5F};
+    auto       player_texture         = game.asset_manager().load<missileengine::Texture>("/assets/mt.png");
+    const auto player_transform_scale = glm::vec2{0.5F, 0.5F};
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
