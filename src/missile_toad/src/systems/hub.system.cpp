@@ -65,8 +65,8 @@ void missiletoad::HubSystem::on_start()
         .build();
 
     // Create camera
-    auto           camera_offset_x            = GetScreenWidth() / 2.0F;
-    auto           camera_offset_y            = GetScreenHeight() / 2.0F;
+    const auto     camera_offset_x            = GetScreenWidth() / 2.0F;
+    const auto     camera_offset_y            = GetScreenHeight() / 2.0F;
     constexpr auto better_camera_follow_speed = 3.5F;
 
     scene.create_entity()

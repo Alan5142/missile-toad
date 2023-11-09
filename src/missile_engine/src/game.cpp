@@ -180,7 +180,7 @@ void missileengine::Game::debug_gui() noexcept
             nk_style_item_color(nk_rgba(window_background_red_color, window_background_green_color,
                                         window_background_blue_color, window_background_alpha_color));
         if (nk_begin(nuklear_context_.get(), "Debug",
-                     nk_rect(debug_fps_position_x, debug_fps_position_y, debug_fps_width, debug_fps_height), 0 == 1))
+                     nk_rect(debug_fps_position_x, debug_fps_position_y, debug_fps_width, debug_fps_height), 0) == 1)
         {
             nk_layout_row_dynamic(nuklear_context_.get(), debug_fps_font_size, 1);
             nk_label_colored(nuklear_context_.get(), fps.c_str(), NK_TEXT_LEFT,
