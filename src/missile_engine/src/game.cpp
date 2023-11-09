@@ -167,6 +167,7 @@ void missileengine::Game::debug_gui() noexcept
         constexpr auto debug_fps_font_size  = 20;
         constexpr auto debug_fps_width      = 400;
         constexpr auto debug_fps_height     = debug_fps_font_size * 4.0F;
+        constexpr auto debug_fps_red_value  = 255;
 
         // Begin a transparent window
         nuklear_context_->style.window.fixed_background = nk_style_item_color(nk_rgba(50, 50, 50, 50));
@@ -174,8 +175,9 @@ void missileengine::Game::debug_gui() noexcept
                      nk_rect(debug_fps_position_x, debug_fps_position_y, debug_fps_width, debug_fps_height), 0))
         {
             nk_layout_row_dynamic(nuklear_context_.get(), debug_fps_font_size, 1);
-            nk_label_colored(nuklear_context_.get(), fps.c_str(), NK_TEXT_LEFT, nk_rgb(255, 0, 0));
-            nk_label_colored(nuklear_context_.get(), frame_time.c_str(), NK_TEXT_LEFT, nk_rgb(255, 0, 0));
+            nk_label_colored(nuklear_context_.get(), fps.c_str(), NK_TEXT_LEFT, nk_rgb(debug_fps_red_value, 0, 0));
+            nk_label_colored(nuklear_context_.get(), frame_time.c_str(), NK_TEXT_LEFT,
+                             nk_rgb(debug_fps_red_value, 0, 0));
         }
 
         nk_end(nuklear_context_.get());

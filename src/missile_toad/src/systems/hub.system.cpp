@@ -64,17 +64,21 @@ void missiletoad::HubSystem::on_start()
         .build();
 
     // Create camera
+    auto           cameraOffsetX           = GetScreenWidth() / 2.0F;
+    auto           cameraOffsetY           = GetScreenHeight() / 2.0F;
+    constexpr auto betterCameraFollowSpeed = 3.5F;
+
     scene.create_entity()
         .with_component_using_function<missileengine::Camera2dComponent>(
             [](auto &camera)
             {
                 camera.set_zoom(1.4F);
-                camera.set_offset({GetScreenWidth() / 2.0F, GetScreenHeight() / 2.0F});
+                camera.set_offset({cameraOffsetX, cameraOffsetY});
                 camera.set_is_main_camera(true);
             },
             glm::vec2{static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())})
         .with_component<missileengine::TransformComponent>()
-        .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, 3.5F)
+        .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, betterCameraFollowSpeed)
         .build();
 
     // Add camera system
