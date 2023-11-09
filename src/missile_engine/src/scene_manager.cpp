@@ -22,9 +22,9 @@ class MetaSystem : public missileengine::BaseSystem
     entt::meta_any underlying_;
 
 public:
-    MetaSystem(entt::meta_any &&underlying) : underlying_(std::move(underlying))
+    MetaSystem(missileengine::Game *game, entt::meta_any &&underlying) : underlying_(std::move(underlying))
     {
-        (void)1;
+        unused(game);
     }
 
     void on_update(float delta_time) override

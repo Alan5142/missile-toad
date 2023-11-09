@@ -21,9 +21,9 @@ namespace missileengine
          */
         BaseSystem()                              = default;
         BaseSystem(const BaseSystem &)            = delete;
-        BaseSystem(BaseSystem &&)                 = delete;
+        BaseSystem(BaseSystem &&)                 = default;
         BaseSystem &operator=(const BaseSystem &) = delete;
-        BaseSystem &operator=(BaseSystem &&)      = delete;
+        BaseSystem &operator=(BaseSystem &&)      = default;
 
         /**
          * Called when the system is started.

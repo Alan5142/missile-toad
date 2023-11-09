@@ -7,3 +7,4 @@ include_system(missile_toad/systems/menu.system.hpp src/systems/menu.system.cpp
                missiletoad::MenuSystem)
 include_system(missile_toad/systems/player.system.hpp
                src/systems/player.system.cpp missiletoad::PlayerSystem)
+include_system(missile_toad/systems/camera.system.hpp src/systems/camera.system.cpp missiletoad::CameraSystem)
