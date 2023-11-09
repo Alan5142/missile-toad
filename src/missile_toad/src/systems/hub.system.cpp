@@ -65,15 +65,16 @@ void missiletoad::HubSystem::on_start()
         .build();
 
     // Create camera
-    const auto     camera_offset_x            = GetScreenWidth() / 2.0F;
-    const auto     camera_offset_y            = GetScreenHeight() / 2.0F;
+    const auto     camera_offset_x            = static_cast<float>(GetScreenWidth()) / 2.0F;
+    const auto     camera_offset_y            = static_cast<float>(GetScreenWidth()) / 2.0F;
+    constexpr auto camera_zoom                = 1.4F;
     constexpr auto better_camera_follow_speed = 3.5F;
 
     scene.create_entity()
         .with_component_using_function<missileengine::Camera2dComponent>(
             [&](auto &camera)
             {
-                camera.set_zoom(1.4F);
+                camera.set_zoom(camera_zoom);
                 camera.set_offset({camera_offset_x, camera_offset_y});
                 camera.set_is_main_camera(true);
             },
