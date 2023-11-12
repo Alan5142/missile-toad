@@ -63,21 +63,25 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
     auto &game           = missileengine::Game::get_instance();
     auto &scene_entities = game.active_scene().get_registry();
     auto &input_manager  = game.input_manager();
-    auto mouse_position = input_manager.get_mouse_position();
+    auto  mouse_position = input_manager.get_mouse_position();
 
     auto view = scene_entities.view<missiletoad::PlayerComponent>();
     for (auto entity : view)
     {
-        auto &rigidbody = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
-        auto &player    = scene_entities.get<missiletoad::PlayerComponent>(entity);
+        auto &rigidbody     = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
+        auto &player        = scene_entities.get<missiletoad::PlayerComponent>(entity);
+        auto &line_renderer = scene_entities.get<missileengine::LineRendererComponent>(entity);
 
-        auto move_x = input_manager.get_axis("move_x");
-        auto move_y = input_manager.get_axis("move_y");
+        auto move_x  = input_manager.get_axis("move_x");
+        auto move_y  = input_manager.get_axis("move_y");
         auto mouse_x = mouse_position.x;
         auto mouse_y = mouse_position.y;
-        spdlog::info("frog: {} {} mouse: {} {}",50,50,mouse_x,mouse_y);
+        spdlog::info("frog: {} {} mouse: {} {}", 50, 50, mouse_x, mouse_y);
 
-        DrawLine(move_x,move_y, mouse_x,mouse_y, GREEN);
+        line_renderer.start = {50, 50};
+        line_renderer.end   = {mouse_x, mouse_y};
+
+        DrawLine(move_x, move_y, mouse_x, mouse_y, GREEN);
 
         rigidbody.set_linear_velocity({move_x * player.player_speed, move_y * player.player_speed});
     }

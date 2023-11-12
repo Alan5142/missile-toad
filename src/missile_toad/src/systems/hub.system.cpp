@@ -3,9 +3,9 @@
 #include "missile_engine/asset_manager.hpp"
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
+#include "missile_engine/input_manager.hpp"
 #include "missile_toad/components/better_camera.component.hpp"
 #include "missile_toad/components/player.component.hpp"
-#include "missile_engine/input_manager.hpp"
 #include "missile_toad/systems/camera.system.hpp"
 
 #include <cmath>
@@ -65,14 +65,15 @@ void missiletoad::HubSystem::on_start()
                                                                             { rigidbody.set_static(false); })
         .with_component<missileengine::BoxCollider2dComponent>()
         .with_component<missiletoad::PlayerComponent>()
+        .with_component<missileengine::LineRendererComponent>()
         .build();
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
             {
                 constexpr auto turrret_position = glm::vec2{10.0F, 10.0F};
-                transform.position             = turrret_position;
-                transform.scale                = {turret_transform_scale};
+                transform.position              = turrret_position;
+                transform.scale                 = {turret_transform_scale};
             })
         .with_component_using_function<missileengine::SpriteComponent>(
             [&](auto &sprite)
