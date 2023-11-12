@@ -8,8 +8,6 @@
 
 #include <algorithm>
 #include <entt/meta/factory.hpp>
-#include <entt/meta/meta.hpp>
-#include <execution>
 
 missileengine::SpriteAnimationSystem::SpriteAnimationSystem(missileengine::Game *game)
     : registry_(&game->active_scene().get_registry())
@@ -31,7 +29,7 @@ void missileengine::SpriteAnimationSystem::on_update(float delta_time)
     auto view = registry_->view<SpriteComponent, SpriteAnimationState>(entt::exclude<DisabledComponent>);
 
     // Just update the animation
-    std::for_each(std::execution::par_unseq, view.begin(), view.end(),
+    std::for_each(view.begin(), view.end(),
                   [&](auto entity)
                   {
                       auto &sprite    = view.get<SpriteComponent>(entity);

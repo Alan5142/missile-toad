@@ -12,7 +12,6 @@
 #include <box2d/b2_contact.h>
 #include <entt/entity/registry.hpp>
 #include <entt/meta/factory.hpp>
-#include <execution>
 #include <glm/trigonometric.hpp>
 
 constexpr auto DEFAULT_DENSITY     = 1.0F;
@@ -116,7 +115,7 @@ void missileengine::PhysicsSystem::on_fixed_update(float delta_time)
     auto rigidbody_view =
         registry_->view<Rigidbody2dComponent, TransformComponent>(entt::exclude<missileengine::DisabledComponent>);
     std::for_each(
-        std::execution::par_unseq, rigidbody_view.begin(), rigidbody_view.end(),
+        rigidbody_view.begin(), rigidbody_view.end(),
         [&](auto entity)
         {
             auto &physics   = registry_->get<missileengine::Rigidbody2dComponent>(entity);
@@ -149,7 +148,7 @@ void missileengine::PhysicsSystem::on_fixed_update(float delta_time)
     world_.Step(delta_time, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
     // After updating the physics bodies, we need to update the transforms with the physics bodies.
-    std::for_each(std::execution::par_unseq, rigidbody_view.begin(), rigidbody_view.end(),
+    std::for_each(rigidbody_view.begin(), rigidbody_view.end(),
                   [&](auto entity)
                   {
                       auto &rigidbody = registry_->get<missileengine::Rigidbody2dComponent>(entity);
