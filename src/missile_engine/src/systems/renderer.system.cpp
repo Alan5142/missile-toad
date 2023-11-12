@@ -172,7 +172,6 @@ void missileengine::RendererSystem::draw_movie(const entt::entity entity)
                       .y      = PIXELS_PER_UNIT * transform.position.y,
                       .width  = PIXELS_PER_UNIT * transform.scale.x,
                       .height = PIXELS_PER_UNIT * transform.scale.y},
-            Vector2(transform.scale.x * PIXELS_PER_UNIT, transform.scale.y * PIXELS_PER_UNIT), transform.rotation,
-            WHITE);
+            {transform.scale.x * PIXELS_PER_UNIT, transform.scale.y * PIXELS_PER_UNIT}, transform.rotation, WHITE);
     }
 }
