@@ -41,6 +41,29 @@ void missiletoad::HubSystem::on_start()
     // TODO: To be removed in the future.
     game.active_scene().segment_loader(*ldtk_project, "", 0, {{"Room", 0, true}, {"Ground", 0, false}});
 
+
+    // Create camera
+    const auto     camera_offset_x            = static_cast<float>(GetScreenWidth()) / 2.0F;
+    const auto     camera_offset_y            = static_cast<float>(GetScreenWidth()) / 2.0F;
+    constexpr auto camera_zoom                = 1.4F;
+    constexpr auto better_camera_follow_speed = 3.5F;
+
+    scene.create_entity()
+        .with_component_using_function<missileengine::Camera2dComponent>(
+            [&](auto &camera)
+            {
+                camera.set_zoom(camera_zoom);
+                camera.set_offset({camera_offset_x, camera_offset_y});
+                camera.set_is_main_camera(true);
+            },
+            glm::vec2{static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())})
+        .with_component<missileengine::TransformComponent>()
+        .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, better_camera_follow_speed)
+        .build();
+
+    // Add camera system
+    scene.add_system<missiletoad::CameraSystem>();
+
     // Create player
     auto       player_texture         = game.asset_manager().load<missileengine::Texture>("/assets/mt.png");
     auto       turret_texture         = game.asset_manager().load<missileengine::Texture>("/assets/turret.png");
@@ -64,9 +87,10 @@ void missiletoad::HubSystem::on_start()
         .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
                                                                             { rigidbody.set_static(false); })
         .with_component<missileengine::BoxCollider2dComponent>()
-        .with_component<missiletoad::PlayerComponent>()
         .with_component<missileengine::LineRendererComponent>()
+        .with_component<missiletoad::PlayerComponent>()
         .build();
+
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
@@ -84,29 +108,7 @@ void missiletoad::HubSystem::on_start()
             std::move(turret_texture))
         .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
                                                                             { rigidbody.set_static(false); })
-        .with_component<missileengine::BoxCollider2dComponent>()
-        .with_component<missiletoad::PlayerComponent>()
+        .with_component<missileengine::LineRendererComponent>()
         .build();
 
-    // Create camera
-    const auto     camera_offset_x            = static_cast<float>(GetScreenWidth()) / 2.0F;
-    const auto     camera_offset_y            = static_cast<float>(GetScreenWidth()) / 2.0F;
-    constexpr auto camera_zoom                = 1.4F;
-    constexpr auto better_camera_follow_speed = 3.5F;
-
-    scene.create_entity()
-        .with_component_using_function<missileengine::Camera2dComponent>(
-            [&](auto &camera)
-            {
-                camera.set_zoom(camera_zoom);
-                camera.set_offset({camera_offset_x, camera_offset_y});
-                camera.set_is_main_camera(true);
-            },
-            glm::vec2{static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())})
-        .with_component<missileengine::TransformComponent>()
-        .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, better_camera_follow_speed)
-        .build();
-
-    // Add camera system
-    scene.add_system<missiletoad::CameraSystem>();
 }
