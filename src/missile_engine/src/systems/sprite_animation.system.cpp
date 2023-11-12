@@ -6,8 +6,8 @@
 #include "missile_engine/components/disabled.component.hpp"
 #include "missile_engine/game.hpp"
 
+#include <algorithm>
 #include <entt/meta/factory.hpp>
-#include <entt/meta/meta.hpp>
 
 missileengine::SpriteAnimationSystem::SpriteAnimationSystem(missileengine::Game *game)
     : registry_(&game->active_scene().get_registry())
@@ -29,13 +29,14 @@ void missileengine::SpriteAnimationSystem::on_update(float delta_time)
     auto view = registry_->view<SpriteComponent, SpriteAnimationState>(entt::exclude<DisabledComponent>);
 
     // Just update the animation
-    for (auto entity : view)
-    {
-        auto &sprite    = view.get<SpriteComponent>(entity);
-        auto &animation = view.get<SpriteAnimationState>(entity);
-        animation.update(std::chrono::duration<float>(delta_time));
-        sprite.texture = animation.get_current_frame_texture();
-    }
+    std::for_each(view.begin(), view.end(),
+                  [&](auto entity)
+                  {
+                      auto &sprite    = view.get<SpriteComponent>(entity);
+                      auto &animation = view.get<SpriteAnimationState>(entity);
+                      animation.update(std::chrono::duration<float>(delta_time));
+                      sprite.texture = animation.get_current_frame_texture();
+                  });
 }
 
 void missileengine::SpriteAnimationSystem::on_sprite_animation_created(entt::registry &registry, entt::entity entity)

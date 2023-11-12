@@ -1,6 +1,8 @@
 #pragma once
 #include "common.hpp"
 #include "ldtk_loader.hpp"
+#include "movie.hpp"
+#include "movie_loader.hpp"
 #include "music_loader.hpp"
 #include "texture_loader.hpp"
 
@@ -18,6 +20,7 @@ namespace missileengine
         entt::resource_cache<Texture, TextureLoader>    texture_cache_;
         entt::resource_cache<Music, MusicLoader>        music_cache_;
         entt::resource_cache<ldtk::Project, LdtkLoader> ldtk_cache_;
+        entt::resource_cache<Movie, MovieLoader>        movie_cache_;
 
     public:
         AssetManager();
@@ -89,6 +92,12 @@ namespace missileengine
         entt::resource<T> load(std::string_view name)
         {
             return ldtk_cache_.load(entt::hashed_string{name.data()}, name.data()).first->second;
+        }
+
+        template <std::same_as<missileengine::Movie> T>
+        entt::resource<T> load(std::string_view name)
+        {
+            return movie_cache_.load(entt::hashed_string{name.data()}, name.data()).first->second;
         }
     };
 } // namespace missileengine

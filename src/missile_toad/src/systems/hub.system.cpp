@@ -41,15 +41,15 @@ void missiletoad::HubSystem::on_start()
     game.active_scene().segment_loader(*ldtk_project, "", 0, {{"Room", 0, true}, {"Ground", 0, false}});
 
     // Create player
-    auto       player_texture         = game.asset_manager().load<missileengine::Texture>("/assets/mt.png");
-    const auto player_transform_scale = glm::vec2{0.5F, 0.5F};
+    auto player_texture = game.asset_manager().load<missileengine::Texture>("/assets/mt.png");
+    //    const auto player_transform_scale = glm::vec2{0.5F, 0.5F};
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
             {
                 constexpr auto player_position = glm::vec2{10.0F, 10.0F};
                 transform.position             = player_position;
-                transform.scale                = {player_transform_scale};
+                //                transform.scale                = {player_transform_scale};
             })
         .with_component_using_function<missileengine::SpriteComponent>(
             [&](auto &sprite)
@@ -66,7 +66,7 @@ void missiletoad::HubSystem::on_start()
 
     // Create camera
     const auto     camera_offset_x            = static_cast<float>(GetScreenWidth()) / 2.0F;
-    const auto     camera_offset_y            = static_cast<float>(GetScreenWidth()) / 2.0F;
+    const auto     camera_offset_y            = static_cast<float>(GetScreenHeight()) / 2.0F;
     constexpr auto camera_zoom                = 1.4F;
     constexpr auto better_camera_follow_speed = 3.5F;
 
@@ -81,6 +81,25 @@ void missiletoad::HubSystem::on_start()
             glm::vec2{static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())})
         .with_component<missileengine::TransformComponent>()
         .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, better_camera_follow_speed)
+        .build();
+
+    auto movie = game.asset_manager().load<missileengine::Movie>("/assets/output.mpg");
+    scene.create_entity()
+        .with_component_using_function<missileengine::TransformComponent>(
+            [&](auto &transform)
+            {
+                constexpr auto movie_position        = glm::vec2{10.0F, 10.0F};
+                transform.position                   = movie_position;
+                constexpr auto movie_transform_scale = glm::vec2{5.0F, 5.0F};
+                transform.scale                      = movie_transform_scale;
+                //                transform.scale                = {player_transform_scale};
+            })
+        .with_component_using_function<missileengine::MoviePlayerComponent>(
+            [](auto &movie_component)
+            {
+                movie_component.movie->play(); //
+            },
+            movie)
         .build();
 
     // Add camera system

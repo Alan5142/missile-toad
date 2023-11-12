@@ -8,10 +8,10 @@
 #include "missile_engine/components/transform.component.hpp"
 #include "missile_engine/game.hpp"
 
+#include <algorithm>
 #include <box2d/b2_contact.h>
 #include <entt/entity/registry.hpp>
 #include <entt/meta/factory.hpp>
-#include <entt/meta/meta.hpp>
 #include <glm/trigonometric.hpp>
 
 constexpr auto DEFAULT_DENSITY     = 1.0F;
@@ -112,60 +112,63 @@ missileengine::PhysicsSystem::~PhysicsSystem()
 void missileengine::PhysicsSystem::on_fixed_update(float delta_time)
 {
     // First, we need to update the physics bodies with the transform. This just in case the transform was updated
-    for (auto entity :
-         registry_->view<Rigidbody2dComponent, TransformComponent>(entt::exclude<missileengine::DisabledComponent>))
-    {
-        auto &physics   = registry_->get<missileengine::Rigidbody2dComponent>(entity);
-        auto &transform = registry_->get<missileengine::TransformComponent>(entity);
-
-        auto *body = physics.get_body();
-
-        body->SetTransform({transform.position.x, transform.position.y}, glm::radians(transform.rotation));
-
-        // Also update the size of the box collider if it contains a box collider.
-        auto *sprite       = registry_->try_get<missileengine::SpriteComponent>(entity);
-        auto *box_collider = registry_->try_get<missileengine::BoxCollider2dComponent>(entity);
-        if (sprite != nullptr && box_collider != nullptr)
+    auto rigidbody_view =
+        registry_->view<Rigidbody2dComponent, TransformComponent>(entt::exclude<missileengine::DisabledComponent>);
+    std::for_each(
+        rigidbody_view.begin(), rigidbody_view.end(),
+        [&](auto entity)
         {
-            const auto &texture = sprite->texture->get_texture();
-            if (sprite->scissors != std::nullopt)
+            auto &physics   = registry_->get<missileengine::Rigidbody2dComponent>(entity);
+            auto &transform = registry_->get<missileengine::TransformComponent>(entity);
+
+            auto *body = physics.get_body();
+
+            body->SetTransform({transform.position.x, transform.position.y}, glm::radians(transform.rotation));
+
+            // Also update the size of the box collider if it contains a box collider.
+            auto *sprite       = registry_->try_get<missileengine::SpriteComponent>(entity);
+            auto *box_collider = registry_->try_get<missileengine::BoxCollider2dComponent>(entity);
+            if (sprite != nullptr && box_collider != nullptr)
             {
-                box_collider->set_size(transform.scale * PHYSICS_SCALE);
+                const auto &texture = sprite->texture->get_texture();
+                if (sprite->scissors != std::nullopt)
+                {
+                    box_collider->set_size(transform.scale * PHYSICS_SCALE);
+                }
+                else
+                {
+                    const auto scale_x = (static_cast<float>(texture.width) / PIXELS_PER_UNIT) * transform.scale.x;
+                    const auto scale_y = (static_cast<float>(texture.height) / PIXELS_PER_UNIT) * transform.scale.y;
+                    box_collider->set_size({scale_x * PHYSICS_SCALE, scale_y * PHYSICS_SCALE});
+                }
             }
-            else
-            {
-                const auto scale_x = (static_cast<float>(texture.width) / PIXELS_PER_UNIT) * transform.scale.x;
-                const auto scale_y = (static_cast<float>(texture.height) / PIXELS_PER_UNIT) * transform.scale.y;
-                box_collider->set_size({scale_x * PHYSICS_SCALE, scale_y * PHYSICS_SCALE});
-            }
-        }
-    }
+        });
 
     // Update the physics bodies
     world_.Step(delta_time, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
     // After updating the physics bodies, we need to update the transforms with the physics bodies.
-    for (auto entity :
-         registry_->view<Rigidbody2dComponent, TransformComponent>(entt::exclude<missileengine::DisabledComponent>))
-    {
-        auto &rigidbody = registry_->get<missileengine::Rigidbody2dComponent>(entity);
-        auto &transform = registry_->get<missileengine::TransformComponent>(entity);
-        auto *body      = rigidbody.get_body();
-        auto  position  = body->GetPosition();
+    std::for_each(rigidbody_view.begin(), rigidbody_view.end(),
+                  [&](auto entity)
+                  {
+                      auto &rigidbody = registry_->get<missileengine::Rigidbody2dComponent>(entity);
+                      auto &transform = registry_->get<missileengine::TransformComponent>(entity);
+                      auto *body      = rigidbody.get_body();
+                      auto  position  = body->GetPosition();
 
-        // Only update the transform if the physics body is not static and the transform has changed.
-        // Static bodies are not affected by physics, so we don't need to update the transform.
-        if (rigidbody.is_static() || transform.position == glm::vec2{position.x, position.y})
-        {
-            continue;
-        }
+                      // Only update the transform if the physics body is not static and the transform has changed.
+                      // Static bodies are not affected by physics, so we don't need to update the transform.
+                      if (rigidbody.is_static() || transform.position == glm::vec2{position.x, position.y})
+                      {
+                          return;
+                      }
 
-        transform.position.x = position.x;
-        transform.position.y = position.y;
-        transform.rotation   = glm::degrees(body->GetAngle());
+                      transform.position.x = position.x;
+                      transform.position.y = position.y;
+                      transform.rotation   = glm::degrees(body->GetAngle());
 
-        registry_->patch<TransformComponent>(entity);
-    }
+                      registry_->patch<TransformComponent>(entity);
+                  });
 }
 
 void missileengine::PhysicsSystem::on_box_collider_created(entt::registry &registry, entt::entity entity)
