@@ -5,6 +5,7 @@
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_engine/systems/audio.system.hpp"
+#include "missile_engine/systems/movie_player.system.hpp"
 #include "missile_engine/systems/physics.system.hpp"
 #include "missile_engine/systems/renderer.system.hpp"
 #include "missile_engine/systems/sprite_animation.system.hpp"
@@ -79,9 +80,10 @@ void missileengine::Scene::on_post_init()
 {
     // Load the systems.
     this->systems_.emplace_back(std::make_unique<PhysicsSystem>(game_));
-    this->systems_.emplace_back(std::make_unique<RendererSystem>(game_));
     this->systems_.emplace_back(std::make_unique<SpriteAnimationSystem>(game_));
     this->systems_.emplace_back(std::make_unique<AudioSystem>(game_));
+    this->systems_.emplace_back(std::make_unique<MoviePlayerSystem>(game_));
+    this->systems_.emplace_back(std::make_unique<RendererSystem>(game_));
 }
 
 void missileengine::Scene::segment_loader(ldtk::Project &project, std::string_view ldtk_world, int level_id,

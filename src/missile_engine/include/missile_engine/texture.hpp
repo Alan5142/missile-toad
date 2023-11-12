@@ -42,5 +42,11 @@ namespace missileengine
          * @param texture The new underlying raylib texture.
          */
         void set_texture(raylib::Texture &&texture) noexcept;
+
+        /**
+         * Update the texture with new pixel data.
+         * @param pixels The new pixel data.
+         */
+        void update_texture(const uint8_t *pixels) noexcept;
     };
 } // namespace missileengine

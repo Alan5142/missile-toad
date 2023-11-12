@@ -20,3 +20,8 @@ void missileengine::Texture::set_texture(raylib::Texture &&texture) noexcept
 {
     this->texture_ = std::move(texture);
 }
+
+void missileengine::Texture::update_texture(const uint8_t *pixels) noexcept
+{
+    UpdateTexture(texture_, pixels);
+}

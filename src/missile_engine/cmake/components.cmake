@@ -28,3 +28,4 @@ include_component(
 include_component(missile_engine/components/tag.component.hpp src/components/tag.component.cpp missileengine::TagComponent)
 include_component(missile_engine/components/disabled.component.hpp src/components/disabled.component.cpp missileengine::DisabledComponent)
 include_component(missile_engine/components/line_renderer.component.hpp src/components/line_renderer.component.cpp missileengine::LineRendererComponent)
+include_component(missile_engine/components/movie_player.component.hpp src/components/movie_player.component.cpp missileengine::MoviePlayerComponent)
