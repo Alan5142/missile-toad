@@ -59,7 +59,7 @@ missileengine::Movie::~Movie()
     }
 }
 
-missileengine::Movie::Movie(Movie &&other) noexcept : movie_(other.movie_), playing_(other.playing_), size_(other.size_)
+missileengine::Movie::Movie(Movie &&other) noexcept : movie_(other.movie_), size_(other.size_), playing_(other.playing_)
 {
     other.movie_ = nullptr;
 }
