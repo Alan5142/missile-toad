@@ -80,24 +80,20 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
             auto move_x  = input_manager.get_axis("move_x");
             auto move_y  = input_manager.get_axis("move_y");
             auto player_coordinates = transform.position;
-            auto position_x = player_coordinates.x*64;
-            auto position_y = player_coordinates.y*64;
             auto mouse_position = camera.get_screen_to_world(mouse_input);
 
             spdlog::info(
-                "frog1: {} {} frog2: {} {} mouse: {} {}",  
-                position_x, 
-                position_y, 
+                "frog: {} {} mouse1: {} {}",  
                 player_coordinates.x, 
                 player_coordinates.y, 
                 mouse_position.x, 
                 mouse_position.y
             );
 
-            line_renderer.start = {position_x, position_y};
-            line_renderer.end   = {mouse_position.x, mouse_position.y};
+            line_renderer.start = {player_coordinates.x, player_coordinates.y};
+            line_renderer.end   = {mouse_position.x , mouse_position.y};
 
-            DrawLine(mouse_position.x, mouse_position.y,position_x, position_y, GREEN);
+            DrawLine(mouse_position.x , mouse_position.y ,player_coordinates.x, player_coordinates.y, GREEN);
 
             rigidbody.set_linear_velocity({move_x * player.player_speed, move_y * player.player_speed});
         }
