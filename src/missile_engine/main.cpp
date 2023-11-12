@@ -97,6 +97,8 @@ int main(int argc, char *argv[]) noexcept(false)
         arguments.emplace_back(argv[i]);
     }
 
+    SetTargetFPS(60);
+
     try
     {
         auto game = std::make_unique<missileengine::Game>(std::move(arguments), game_descriptor_opt.value());

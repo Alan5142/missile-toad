@@ -8,3 +8,4 @@ include_system(
   src/systems/sprite_animation.system.cpp missileengine::SpriteAnimationSystem)
 include_system(missile_engine/systems/audio.system.hpp
                src/systems/audio.system.cpp missileengine::AudioSystem)
+include_system(missile_engine/systems/movie_player.system.hpp src/systems/movie_player.system.cpp missileengine::MoviePlayerSystem)

@@ -5,6 +5,7 @@
 
 #include <LDtkLoader/Project.hpp>
 #include <entt/entity/registry.hpp>
+#include <list>
 
 namespace missileengine
 {
@@ -31,7 +32,7 @@ namespace missileengine
         /**
          * @brief A vector of pairs of system priorities and systems.
          */
-        std::vector<std::unique_ptr<BaseSystem>> systems_;
+        std::list<std::unique_ptr<BaseSystem>> systems_;
 
         Game *game_;
 
@@ -120,7 +121,7 @@ namespace missileengine
          * @brief Gets the systems of the scene.
          * @return A reference to the systems of the scene.
          */
-        [[nodiscard]] const std::vector<std::unique_ptr<BaseSystem>> &get_systems() const noexcept
+        [[nodiscard]] const std::list<std::unique_ptr<BaseSystem>> &get_systems() const noexcept
         {
             return systems_;
         }

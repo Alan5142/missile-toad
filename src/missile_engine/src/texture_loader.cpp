@@ -34,6 +34,7 @@ missileengine::TextureLoader::result_type missileengine::TextureLoader::operator
 
     // Generate the texture
     auto texture_ptr = raylib::Texture(LoadTextureFromImage(texture));
+    texture_ptr.SetFilter(TEXTURE_FILTER_BILINEAR);
     spdlog::info("Loaded texture to GPU");
 
     // Unload the image
