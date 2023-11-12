@@ -42,14 +42,14 @@ void missiletoad::HubSystem::on_start()
 
     // Create player
     auto       player_texture         = game.asset_manager().load<missileengine::Texture>("/assets/mt.png");
-
+    const auto player_transform_scale = glm::vec2{1.0F, 1.0F};
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
             {
                 constexpr auto player_position = glm::vec2{10.0F, 10.0F};
                 transform.position             = player_position;
-                //                transform.scale                = {player_transform_scale};
+                transform.scale                = {player_transform_scale};
             })
         .with_component_using_function<missileengine::SpriteComponent>(
             [&](auto &sprite)
@@ -81,25 +81,6 @@ void missiletoad::HubSystem::on_start()
             glm::vec2{static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())})
         .with_component<missileengine::TransformComponent>()
         .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, better_camera_follow_speed)
-        .build();
-
-    auto movie = game.asset_manager().load<missileengine::Movie>("/assets/output.mpg");
-    scene.create_entity()
-        .with_component_using_function<missileengine::TransformComponent>(
-            [&](auto &transform)
-            {
-                constexpr auto movie_position        = glm::vec2{10.0F, 10.0F};
-                transform.position                   = movie_position;
-                constexpr auto movie_transform_scale = glm::vec2{5.0F, 5.0F};
-                transform.scale                      = movie_transform_scale;
-                //                transform.scale                = {player_transform_scale};
-            })
-        .with_component_using_function<missileengine::MoviePlayerComponent>(
-            [](auto &movie_component)
-            {
-                movie_component.movie->play(); //
-            },
-            movie)
         .build();
 
     // Add camera system

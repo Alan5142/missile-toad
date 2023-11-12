@@ -36,7 +36,7 @@ void missileengine::SpriteAnimationSystem::on_update(float delta_time)
                       auto &sprite    = view.get<SpriteComponent>(entity);
                       auto &animation = view.get<SpriteAnimationComponent>(entity);
                       animation.update(std::chrono::duration<float>(delta_time));
-                      sprite.texture = animation.get_current_frame_texture();
+                      sprite.texture = animation.get_state().get_current_frame_texture();
                   });
 }
 
