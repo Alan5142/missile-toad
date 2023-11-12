@@ -42,7 +42,7 @@ void missiletoad::HubSystem::on_start()
 
     // Create player
     auto       player_texture         = game.asset_manager().load<missileengine::Texture>("/assets/mt.png");
-    const auto player_transform_scale = glm::vec2{0.5F, 0.5F};
+    const auto player_transform_scale = glm::vec2{1.0F, 1.0F};
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
@@ -66,7 +66,7 @@ void missiletoad::HubSystem::on_start()
 
     // Create camera
     const auto     camera_offset_x            = static_cast<float>(GetScreenWidth()) / 2.0F;
-    const auto     camera_offset_y            = static_cast<float>(GetScreenWidth()) / 2.0F;
+    const auto     camera_offset_y            = static_cast<float>(GetScreenHeight()) / 2.0F;
     constexpr auto camera_zoom                = 1.4F;
     constexpr auto better_camera_follow_speed = 3.5F;
 
@@ -85,4 +85,51 @@ void missiletoad::HubSystem::on_start()
 
     // Add camera system
     scene.add_system<missiletoad::CameraSystem>();
+
+    // wrong way to add sprites
+    auto run_texture_1 = asset_manager.load<missileengine::Texture>("run_1.png");
+    auto run_texture_2 = asset_manager.load<missileengine::Texture>("run_2.png");
+    auto run_texture_3 = asset_manager.load<missileengine::Texture>("run_3.png");
+
+    auto idle_texture_1 = asset_manager.load<missileengine::Texture>("idle_1.png");
+    auto idle_texture_2 = asset_manager.load<missileengine::Texture>("idle_2.png");
+    auto idle_texture_3 = asset_manager.load<missileengine::Texture>("idle_3.png");
+
+    // better way using for loop
+    for (int i = 1; i <= 3; i++)
+    {
+        auto run_texture  = asset_manager.load<missileengine::Texture>("run_" + std::to_string(i) + ".png");
+        auto idle_texture = asset_manager.load<missileengine::Texture>("idle_" + std::to_string(i) + ".png");
+    }
+
+    scene.create_entity()
+        .with_component_using_function<missileengine::SpriteAnimationComponent>(
+            [&](auto &sprite_animation)
+            {
+                auto run_state = missileengine::SpriteAnimationState("run");
+                for (int i = 1; i <= 3; i++)
+                {
+                    auto run_texture =
+                        scene.asset_manager.load<missileengine::Texture>("run_" + std::to_string(i) + ".png");
+                    run_state.add_frame(run_texture);
+                }
+                run_state.play(true); // Play the animation
+                run_state.loop(true); // Loop the animation until a transition is triggered or the animation is stopped
+
+                auto idle_to_run_transition = missileengine::SpriteAnimationTransition::create_manual();
+                idle_state.add_transition("run", idle_to_run_transition); // Must match the state name
+
+                sprite_animation.add_state(run_state);
+            })
+        .build();
+
+    auto view = scene.view<missileengine::SpriteAnimationComponent>();
+
+    for (auto entity : view)
+    {
+        auto &sprite_animation = view.get<missileengine::SpriteAnimationComponent>();
+        sprite_animation.transition_to("run"); // Waits for the current animation to finish
+        sprite_animation.force_transition_to(
+            "run"); // Force the transition, the current animation is stopped and the new one is played
+    }
 }

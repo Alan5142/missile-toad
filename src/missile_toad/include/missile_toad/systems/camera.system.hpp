@@ -2,6 +2,7 @@
 #include "missile_engine/base_system.hpp"
 #include "missile_engine/common.hpp"
 
+#include <entt/entity/entity.hpp>
 #include <entt/meta/meta.hpp>
 
 namespace missileengine

@@ -4,6 +4,7 @@
 #include "entity_builder.hpp"
 
 #include <LDtkLoader/Project.hpp>
+#include <box2d/b2_world.h>
 #include <entt/entity/registry.hpp>
 
 namespace missileengine
@@ -31,7 +32,9 @@ namespace missileengine
         /**
          * @brief A vector of pairs of system priorities and systems.
          */
-        std::vector<std::unique_ptr<BaseSystem>> systems_;
+        std::list<std::unique_ptr<BaseSystem>> systems_;
+
+        b2World physics_world_{b2Vec2{0.0f, 0.0f}};
 
         Game *game_;
 
@@ -120,7 +123,7 @@ namespace missileengine
          * @brief Gets the systems of the scene.
          * @return A reference to the systems of the scene.
          */
-        [[nodiscard]] const std::vector<std::unique_ptr<BaseSystem>> &get_systems() const noexcept
+        [[nodiscard]] const std::list<std::unique_ptr<BaseSystem>> &get_systems() const noexcept
         {
             return systems_;
         }
@@ -142,13 +145,43 @@ namespace missileengine
             return scene_entities_.view<C...>(std::forward<Args>(args)...);
         }
 
+        template <typename T>
+        [[nodiscard]] decltype(auto) get_component(entt::entity entity) const noexcept
+        {
+            return scene_entities_.get<T>(entity);
+        }
+
+        template <typename T>
+        [[nodiscard]] decltype(auto) get_component(entt::entity entity) noexcept
+        {
+            return scene_entities_.get<T>(entity);
+        }
+
+        template <typename T>
+        [[nodiscard]] decltype(auto) try_get_component(entt::entity entity) const noexcept
+        {
+            return scene_entities_.try_get<T>(entity);
+        }
+
+        template <typename T>
+        [[nodiscard]] decltype(auto) try_get_component(entt::entity entity) noexcept
+        {
+            return scene_entities_.try_get<T>(entity);
+        }
+
         void segment_loader(ldtk::Project &project, std::string_view ldtk_world, int level_id,
                             const std::vector<LayerInfo> &layers);
+
+        entt::entity get_entity_with_tag(std::string_view tag);
 
         /**
          * @brief Creates an entity builder.
          * @return An entity builder.
          */
         EntityBuilder create_entity();
+
+    private:
+        friend class PhysicsSystem;
+        friend struct Physics;
     };
 } // namespace missileengine

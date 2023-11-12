@@ -33,6 +33,7 @@ set(MISSILETOAD_CORE_SOURCES
     src/game_register.cpp
     src/scene_manager.cpp
     src/input_manager.cpp
+    src/physics_utils.cpp
     src/ldtk_loader.cpp)
 
 set(MISSILETOAD_CORE_LIBS
