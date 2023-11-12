@@ -3,6 +3,7 @@
 #include "missile_engine/game.hpp"
 #include "missile_engine/asset_manager.hpp"
 #include "missile_engine/base_system.hpp"
+#include "missile_engine/components/camera_2d.component.hpp"
 #include "missile_engine/components/transform.component.hpp"
 #include "missile_engine/game_descriptor.hpp"
 #include "missile_engine/input_manager.hpp"
@@ -21,7 +22,7 @@ extern void game_register_system(entt::meta_ctx &ctx) WEAK_LINKAGE;
 constexpr auto WINDOW_WIDTH  = 1280;
 constexpr auto WINDOW_HEIGHT = 720;
 
-constexpr auto NUKLEAR_DEFAULT_FONT_SIZE = 12;
+constexpr auto NUKLEAR_DEFAULT_FONT_SIZE = 20;
 
 // NOLINTNEXTLINE(*-avoid-non-const-global-variables)
 static missileengine::Game *INSTANCE = nullptr;
@@ -39,6 +40,8 @@ missileengine::Game::Game(std::vector<std::string_view> &&arguments, const GameD
 
     spdlog::info("Initializing game {}.", game_descriptor.name);
 
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
+
     spdlog::info("Creating window.");
     if (args.size() != 1 || args[0] != "TEST_CASE")
     {
@@ -49,6 +52,7 @@ missileengine::Game::Game(std::vector<std::string_view> &&arguments, const GameD
 
     nuklear_context_ =
         std::unique_ptr<nk_context, void (*)(nk_context *)>(InitNuklear(NUKLEAR_DEFAULT_FONT_SIZE), UnloadNuklear);
+
     if (nuklear_context_ == nullptr)
     {
         spdlog::error("Failed to initialize nuklear.");
@@ -121,18 +125,33 @@ void missileengine::Game::fixed_update(float delta_time) noexcept
 void missileengine::Game::render() noexcept
 {
     spdlog::trace("Game::render() called.");
-    BeginDrawing();
+
+    if (scene_manager_->active_scene() != nullptr)
     {
-        ClearBackground(BLACK);
+        scene_manager_->active_scene()->on_render();
 
-        if (scene_manager_->active_scene() != nullptr)
+        auto view = scene_manager_->active_scene()->get_registry().view<missileengine::Camera2dComponent>();
+        for (auto entity : view)
         {
-            scene_manager_->active_scene()->on_render();
-        }
+            auto &camera = view.get<missileengine::Camera2dComponent>(entity);
+            if (!camera.is_main_camera())
+            {
+                continue;
+            }
 
-        DrawNuklear(nuklear_context_.get());
+            BeginDrawing();
+            ClearBackground(BLACK);
+            auto &texture = camera.get_render_texture().texture;
+            DrawTextureRec(texture, {0, 0, static_cast<float>(texture.width), -static_cast<float>(texture.height)},
+                           {0, 0}, WHITE);
+            DrawNuklear(nuklear_context_.get());
+
+            EndDrawing();
+        }
+        BeginDrawing();
+        ClearBackground(BLACK);
     }
-    EndDrawing();
+
     spdlog::trace("Game::render() finished.");
 }
 
@@ -141,18 +160,43 @@ void missileengine::Game::debug_gui() noexcept
     try
     {
         // Show FPS and frame time
-        const auto     fps                  = fmt::format("FPS: {}", GetFPS());
-        const auto     frame_time           = fmt::format("Frame time: {:.2f} ms", GetFrameTime() * 1000);
-        constexpr auto debug_fps_position_x = 0;
-        constexpr auto debug_fps_position_y = 0;
-        constexpr auto debug_fps_font_size  = 20;
-        DrawText(fps.c_str(), debug_fps_position_x, debug_fps_position_y, debug_fps_font_size, RED);
+        const auto     fps                           = fmt::format("FPS: {}", GetFPS());
+        const auto     frame_time                    = fmt::format("Frame time: {:.2f} ms", GetFrameTime() * 1000);
+        constexpr auto debug_fps_position_x          = 0;
+        constexpr auto debug_fps_position_y          = 0;
+        constexpr auto debug_fps_font_size           = 20;
+        constexpr auto debug_fps_width               = 400;
+        constexpr auto debug_fps_height              = debug_fps_font_size * 4.0F;
+        constexpr auto debug_fps_red_value           = 255;
+        constexpr auto debug_fps_green_value         = 0;
+        constexpr auto debug_fps_blue_value          = 0;
+        constexpr auto window_background_red_color   = 50;
+        constexpr auto window_background_green_color = 50;
+        constexpr auto window_background_blue_color  = 50;
+        constexpr auto window_background_alpha_color = 50;
 
-        constexpr auto debug_frame_time_position_x = 150;
-        constexpr auto debug_frame_time_position_y = 0;
-        constexpr auto debug_frame_time_font_size  = 20;
-        DrawText(frame_time.c_str(), debug_frame_time_position_x, debug_frame_time_position_y,
-                 debug_frame_time_font_size, RED);
+        // Begin a transparent window
+        nuklear_context_->style.window.fixed_background =
+            nk_style_item_color(nk_rgba(window_background_red_color, window_background_green_color,
+                                        window_background_blue_color, window_background_alpha_color));
+        if (nk_begin(nuklear_context_.get(), "Debug",
+                     nk_rect(debug_fps_position_x, debug_fps_position_y, debug_fps_width, debug_fps_height), 0) == 1)
+        {
+            nk_layout_row_dynamic(nuklear_context_.get(), debug_fps_font_size, 1);
+            nk_label_colored(nuklear_context_.get(), fps.c_str(), NK_TEXT_LEFT,
+                             nk_rgb(debug_fps_red_value, debug_fps_green_value, debug_fps_blue_value));
+            nk_label_colored(nuklear_context_.get(), frame_time.c_str(), NK_TEXT_LEFT,
+                             nk_rgb(debug_fps_red_value, debug_fps_green_value, debug_fps_blue_value));
+        }
+
+        nk_end(nuklear_context_.get());
+        //        DrawText(fps.c_str(), debug_fps_position_x, debug_fps_position_y, debug_fps_font_size, RED);
+        //
+        //        constexpr auto debug_frame_time_position_x = 150;
+        //        constexpr auto debug_frame_time_position_y = 0;
+        //        constexpr auto debug_frame_time_font_size  = 20;
+        //        DrawText(frame_time.c_str(), debug_frame_time_position_x, debug_frame_time_position_y,
+        //                 debug_frame_time_font_size, RED);
     }
     catch (const std::exception &e)
     {

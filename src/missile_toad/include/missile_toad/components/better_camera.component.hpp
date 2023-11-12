@@ -5,11 +5,13 @@
 
 namespace missiletoad
 {
-    class PlayerComponent
+    class BetterCameraComponent
     {
     public:
         static void register_component(entt::meta_ctx &ctx);
 
-        float player_speed = 4.4F;
+        float x_offset     = 0.0F;
+        float y_offset     = 0.0F;
+        float follow_speed = 0.0F;
     };
 } // namespace missiletoad
