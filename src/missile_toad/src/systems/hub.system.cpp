@@ -43,7 +43,9 @@ void missiletoad::HubSystem::on_start()
 
     // Create player
     auto       player_texture         = game.asset_manager().load<missileengine::Texture>("/assets/mt.png");
+    auto       turret_texture         = game.asset_manager().load<missileengine::Texture>("/assets/turret.png");
     const auto player_transform_scale = glm::vec2{0.5F, 0.5F};
+    const auto turret_transform_scale = glm::vec2{0.2F, 0.2F};
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
@@ -59,6 +61,26 @@ void missiletoad::HubSystem::on_start()
                 sprite.z_index                    = player_z_index;
             },
             std::move(player_texture))
+        .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
+                                                                            { rigidbody.set_static(false); })
+        .with_component<missileengine::BoxCollider2dComponent>()
+        .with_component<missiletoad::PlayerComponent>()
+        .build();
+    scene.create_entity()
+        .with_component_using_function<missileengine::TransformComponent>(
+            [&](auto &transform)
+            {
+                constexpr auto turrret_position = glm::vec2{10.0F, 10.0F};
+                transform.position             = turrret_position;
+                transform.scale                = {turret_transform_scale};
+            })
+        .with_component_using_function<missileengine::SpriteComponent>(
+            [&](auto &sprite)
+            {
+                constexpr uint32_t turret_z_index = 100;
+                sprite.z_index                    = turret_z_index;
+            },
+            std::move(turret_texture))
         .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
                                                                             { rigidbody.set_static(false); })
         .with_component<missileengine::BoxCollider2dComponent>()
