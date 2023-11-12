@@ -63,30 +63,44 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
     auto &game           = missileengine::Game::get_instance();
     auto &scene_entities = game.active_scene().get_registry();
     auto &input_manager  = game.input_manager();
-    auto  mouse_position = input_manager.get_mouse_position();
+    auto  mouse_input = input_manager.get_mouse_position();
 
     auto view = scene_entities.view<missiletoad::PlayerComponent>();
-    for (auto entity : view)
-    {
-        auto &rigidbody     = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
-        auto &player        = scene_entities.get<missiletoad::PlayerComponent>(entity);
-        auto &line_renderer = scene_entities.get<missileengine::LineRendererComponent>(entity);
-            
-        auto move_x  = input_manager.get_axis("move_x");
-        auto move_y  = input_manager.get_axis("move_y");
-        auto mouse_x = mouse_position.x;
-        auto mouse_y = mouse_position.y;
-        auto position = rigidbody.get_body()->GetPosition();
-        auto position_x = position.x * 64;
-        auto position_y = position.y * 64;
+    auto cameraView = scene_entities.view<missileengine::Camera2dComponent>();
 
-        spdlog::info("frog: {} {} mouse: {} {}", position_x, position_y, mouse_x, mouse_y);
+    for(auto cameraEntity: cameraView){
+        for (auto entity : view)
+        {
+            auto &rigidbody     = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
+            auto &transform     = scene_entities.get<missileengine::TransformComponent>(entity);
+            auto &player        = scene_entities.get<missiletoad::PlayerComponent>(entity);
+            auto &line_renderer = scene_entities.get<missileengine::LineRendererComponent>(entity);
+            auto &camera        = scene_entities.get<missileengine::Camera2dComponent>(cameraEntity);
+                
+            auto move_x  = input_manager.get_axis("move_x");
+            auto move_y  = input_manager.get_axis("move_y");
+            auto player_coordinates = transform.position;
+            auto position_x = player_coordinates.x*64;
+            auto position_y = player_coordinates.y*64;
+            auto mouse_position = camera.get_screen_to_world(mouse_input);
 
-        line_renderer.start = {position_x, position_y};
-        line_renderer.end   = {mouse_x, mouse_y};
+            spdlog::info(
+                "frog1: {} {} frog2: {} {} mouse: {} {}",  
+                position_x, 
+                position_y, 
+                player_coordinates.x, 
+                player_coordinates.y, 
+                mouse_position.x, 
+                mouse_position.y
+            );
 
-        DrawLine(position_x, position_y, mouse_x, mouse_y, GREEN);
+            line_renderer.start = {position_x, position_y};
+            line_renderer.end   = {mouse_position.x, mouse_position.y};
 
-        rigidbody.set_linear_velocity({move_x * player.player_speed, move_y * player.player_speed});
+            DrawLine(mouse_position.x, mouse_position.y,position_x, position_y, GREEN);
+
+            rigidbody.set_linear_velocity({move_x * player.player_speed, move_y * player.player_speed});
+        }
     }
+
 }
