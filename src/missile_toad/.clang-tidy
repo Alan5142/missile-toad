@@ -24,6 +24,7 @@ Checks:
     -modernize-avoid-c-arrays
     -readability-uppercase-literal-suffix
     -readability-identifier-length
+    -readability-magic-numbers
     -clang-analyzer-core.CallAndMessage
 
 

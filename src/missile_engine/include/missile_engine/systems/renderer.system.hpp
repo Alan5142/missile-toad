@@ -45,5 +45,12 @@ namespace missileengine
          * Also renders debug physics bodies if `debug_physics` is true.
          */
         void on_render() override;
+
+    private:
+        void draw_sprite(entt::entity entity);
+
+        void draw_line(entt::entity entity);
+        void debug_draw_physics(entt::entity entity);
+        void draw_movie(entt::entity entity);
     };
 } // namespace missileengine
