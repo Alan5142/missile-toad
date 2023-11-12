@@ -87,7 +87,7 @@ void missileengine::RendererSystem::draw_sprite(const entt::entity entity)
 
     if (sprite.scissors.has_value())
     {
-        auto scissors        = sprite.scissors.value();
+        const auto scissors  = sprite.scissors.value();
         rectangle_src.x      = scissors.x;
         rectangle_src.y      = scissors.y;
         rectangle_src.width  = scissors.z;
@@ -125,7 +125,8 @@ void missileengine::RendererSystem::draw_line(const entt::entity entity)
          .b = line.color.b,
          .a = line.color.a,
     };
-    DrawLineEx(Vector2{line.start.x, line.start.y}, Vector2{line.end.x, line.end.y}, line.width, color);
+    DrawLineEx(Vector2{PIXELS_PER_UNIT * line.start.x, PIXELS_PER_UNIT * line.start.y},
+               Vector2{PIXELS_PER_UNIT * line.end.x, PIXELS_PER_UNIT * line.end.y}, line.width, color);
 }
 
 void missileengine::RendererSystem::debug_draw_physics(const entt::entity entity)

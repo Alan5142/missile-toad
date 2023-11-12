@@ -25,8 +25,8 @@ namespace missileengine
         Movie(const Movie &)            = delete;
         Movie &operator=(const Movie &) = delete;
 
-        Movie(Movie &&) noexcept;
-        Movie &operator=(Movie &&) noexcept;
+        Movie(Movie &&other) noexcept;
+        Movie &operator=(Movie &&other) noexcept;
 
         void play();
 
@@ -57,7 +57,7 @@ namespace missileengine
 
         plm_t       *movie_;
         glm::u32vec2 size_;
-        bool         playing_;
+        bool         playing_{false};
 
         friend class MoviePlayerSystem;
     };

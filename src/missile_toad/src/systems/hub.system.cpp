@@ -88,9 +88,10 @@ void missiletoad::HubSystem::on_start()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
             {
-                constexpr auto player_position = glm::vec2{10.0F, 10.0F};
-                transform.position             = player_position;
-                transform.scale                = {5.0F, 5.0F};
+                constexpr auto movie_position        = glm::vec2{10.0F, 10.0F};
+                transform.position                   = movie_position;
+                constexpr auto movie_transform_scale = glm::vec2{5.0F, 5.0F};
+                transform.scale                      = movie_transform_scale;
                 //                transform.scale                = {player_transform_scale};
             })
         .with_component_using_function<missileengine::MoviePlayerComponent>(

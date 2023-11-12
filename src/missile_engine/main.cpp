@@ -97,7 +97,8 @@ int main(int argc, char *argv[]) noexcept(false)
         arguments.emplace_back(argv[i]);
     }
 
-    SetTargetFPS(60);
+    constexpr auto target_fps = 60;
+    SetTargetFPS(target_fps);
 
     try
     {

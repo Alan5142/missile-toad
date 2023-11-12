@@ -24,6 +24,8 @@ missileengine::TextureLoader::result_type missileengine::TextureLoader::operator
     // Load the texture from memory
     auto texture = LoadImageFromMemory(extension.data(), data.get(), static_cast<int>(size));
 
+    assert(texture.width != 0 && texture.height != 0);
+
     // Check if the texture was loaded correctly
     if (texture.data == nullptr)
     {

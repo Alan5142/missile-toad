@@ -11,10 +11,15 @@ namespace missileengine
 
 namespace missileengine
 {
-    class MoviePlayerSystem : public missileengine::BaseSystem
+    class MoviePlayerSystem final : public missileengine::BaseSystem
     {
     public:
-        MoviePlayerSystem(missileengine::Game *game);
+        explicit MoviePlayerSystem(Game *game);
+
+        MoviePlayerSystem(const MoviePlayerSystem &)            = delete;
+        MoviePlayerSystem(MoviePlayerSystem &&)                 = default;
+        MoviePlayerSystem &operator=(const MoviePlayerSystem &) = delete;
+        MoviePlayerSystem &operator=(MoviePlayerSystem &&)      = default;
 
         ~MoviePlayerSystem() override = default;
 

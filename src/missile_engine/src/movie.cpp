@@ -3,7 +3,7 @@
 #include "missile_engine/movie.hpp"
 
 missileengine::Movie::Movie(plm_t *movie, std::unique_ptr<uint8_t[]> &&video_buffer)
-    : video_buffer_(std::move(video_buffer)), movie_(movie), playing_(false)
+    : video_buffer_(std::move(video_buffer)), movie_(movie), size_()
 {
     size_ = {plm_get_width(movie_), plm_get_height(movie_)};
     plm_set_loop(movie_, 1);
@@ -24,8 +24,12 @@ missileengine::Movie::Movie(plm_t *movie, std::unique_ptr<uint8_t[]> &&video_buf
     // plm_set_audio_lead_time(movie_, PLM_AUDIO_SAMPLES_PER_FRAME / sample_rate);
     plm_set_audio_enabled(movie_, 0);
 
-    auto *image_buffer = malloc(size_.x * size_.y * 3 * sizeof(uint8_t));
-    image_             = raylib::Image(image_buffer, size_.x, size_.y, 1, PIXELFORMAT_UNCOMPRESSED_R8G8B8);
+    // NOLINTBEGIN(cppcoreguidelines-no-malloc, cppcoreguidelines-owning-memory)
+    auto *image_buffer = static_cast<uint8_t *>(malloc(static_cast<size_t>(size_.x * size_.y) * 3 * sizeof(uint8_t)));
+    image_             = raylib::Image(image_buffer, static_cast<int>(size_.x), static_cast<int>(size_.y), 1,
+                                       PIXELFORMAT_UNCOMPRESSED_R8G8B8);
+
+    // NOLINTEND(cppcoreguidelines-no-malloc, cppcoreguidelines-owning-memory)
 
     texture_ = raylib::Texture(image_);
 }
@@ -55,7 +59,7 @@ missileengine::Movie::~Movie()
     }
 }
 
-missileengine::Movie::Movie(Movie &&other) noexcept : movie_(other.movie_), playing_(other.playing_)
+missileengine::Movie::Movie(Movie &&other) noexcept : movie_(other.movie_), playing_(other.playing_), size_(other.size_)
 {
     other.movie_ = nullptr;
 }
