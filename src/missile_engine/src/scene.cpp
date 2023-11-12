@@ -101,7 +101,7 @@ void missileengine::Scene::segment_loader(ldtk::Project &project, std::string_vi
     {
         const auto &current_layer = level.getLayer(layer_name);
         auto        texture =
-            game_->asset_manager().load<missileengine::Texture>("/assets/" + current_layer.getTileset().path);
+            game_->asset_manager().load<missileengine::Texture>("/assets/sprites/map/" + current_layer.getTileset().path);
 
         // iterate on the tiles of the layer
         for (const auto &tile : current_layer.allTiles())

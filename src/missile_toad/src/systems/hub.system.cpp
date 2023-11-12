@@ -36,13 +36,13 @@ void missiletoad::HubSystem::on_start()
     spdlog::trace("game::HubSystem::on_start() called.");
     auto &game         = missileengine::Game::get_instance();
     auto &scene        = game.active_scene();
-    auto  ldtk_project = game.asset_manager().load<ldtk::Project>("/assets/testRoom.ldtk");
+    auto  ldtk_project = game.asset_manager().load<ldtk::Project>("/assets/levels/testRoom.ldtk");
 
     // TODO: To be removed in the future.
     game.active_scene().segment_loader(*ldtk_project, "", 0, {{"Room", 0, true}, {"Ground", 0, false}});
 
     // Create player
-    auto player_texture = game.asset_manager().load<missileengine::Texture>("/assets/mt.png");
+    auto player_texture = game.asset_manager().load<missileengine::Texture>("/assets/sprites/player/mt.png");
     //    const auto player_transform_scale = glm::vec2{0.5F, 0.5F};
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
@@ -63,6 +63,7 @@ void missiletoad::HubSystem::on_start()
                                                                             { rigidbody.set_static(false); })
         .with_component<missileengine::BoxCollider2dComponent>()
         .with_component<missiletoad::PlayerComponent>()
+        .with_component<missileengine::LineRendererComponent>()
         .build();
 
     // Create camera
@@ -84,55 +85,12 @@ void missiletoad::HubSystem::on_start()
         .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, better_camera_follow_speed)
         .build();
 
-    auto movie = game.asset_manager().load<missileengine::Movie>("/assets/output.mpg");
-    scene.create_entity()
-        .with_component_using_function<missileengine::TransformComponent>(
-            [&](auto &transform)
-            {
-                constexpr auto movie_position        = glm::vec2{10.0F, 10.0F};
-                transform.position                   = movie_position;
-                constexpr auto movie_transform_scale = glm::vec2{5.0F, 5.0F};
-                transform.scale                      = movie_transform_scale;
-                //                transform.scale                = {player_transform_scale};
-            })
-        .with_component_using_function<missileengine::MoviePlayerComponent>(
-            [](auto &movie_component)
-            {
-                movie_component.movie->play(); //
-            },
-            movie)
-        .build();
-
     // Add camera system
     scene.add_system<missiletoad::CameraSystem>();
 
-    // Create player
-    auto       player_texture         = game.asset_manager().load<missileengine::Texture>("/assets/mt.png");
-    auto       turret_texture         = game.asset_manager().load<missileengine::Texture>("/assets/turret.png");
-    const auto player_transform_scale = glm::vec2{0.5F, 0.5F};
+    //create turret
+    auto       turret_texture         = game.asset_manager().load<missileengine::Texture>("/assets/sprites/player/turret.png");
     const auto turret_transform_scale = glm::vec2{0.2F, 0.2F};
-    scene.create_entity()
-        .with_component_using_function<missileengine::TransformComponent>(
-            [&](auto &transform)
-            {
-                constexpr auto player_position = glm::vec2{10.0F, 10.0F};
-                transform.position             = player_position;
-                transform.scale                = {player_transform_scale};
-            })
-        .with_component_using_function<missileengine::SpriteComponent>(
-            [&](auto &sprite)
-            {
-                constexpr uint32_t player_z_index = 100;
-                sprite.z_index                    = player_z_index;
-            },
-            std::move(player_texture))
-        .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
-                                                                            { rigidbody.set_static(false); })
-        .with_component<missileengine::BoxCollider2dComponent>()
-        .with_component<missileengine::LineRendererComponent>()
-        .with_component<missiletoad::PlayerComponent>()
-        .build();
-
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
