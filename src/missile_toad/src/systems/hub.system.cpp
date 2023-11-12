@@ -86,50 +86,46 @@ void missiletoad::HubSystem::on_start()
     // Add camera system
     scene.add_system<missiletoad::CameraSystem>();
 
-    // wrong way to add sprites
-    auto run_texture_1 = asset_manager.load<missileengine::Texture>("run_1.png");
-    auto run_texture_2 = asset_manager.load<missileengine::Texture>("run_2.png");
-    auto run_texture_3 = asset_manager.load<missileengine::Texture>("run_3.png");
-
-    auto idle_texture_1 = asset_manager.load<missileengine::Texture>("idle_1.png");
-    auto idle_texture_2 = asset_manager.load<missileengine::Texture>("idle_2.png");
-    auto idle_texture_3 = asset_manager.load<missileengine::Texture>("idle_3.png");
-
-    // better way using for loop
-    for (int i = 1; i <= 3; i++)
-    {
-        auto run_texture  = asset_manager.load<missileengine::Texture>("run_" + std::to_string(i) + ".png");
-        auto idle_texture = asset_manager.load<missileengine::Texture>("idle_" + std::to_string(i) + ".png");
-    }
-
     scene.create_entity()
         .with_component_using_function<missileengine::SpriteAnimationComponent>(
             [&](auto &sprite_animation)
             {
+                using namespace std::chrono_literals;
                 auto run_state = missileengine::SpriteAnimationState("run");
-                for (int i = 1; i <= 3; i++)
+
+                for (int i = 1; i <= 8; i++)
                 {
-                    auto run_texture =
-                        scene.asset_manager.load<missileengine::Texture>("run_" + std::to_string(i) + ".png");
+                    auto run_texture = game.asset_manager().load<missileengine::Texture>(
+                        "/assets/characters/ExpM/Run/experimento m" + std::to_string(i) + ".png");
                     run_state.add_frame(run_texture);
                 }
+                run_state.set_timer(missileengine::TimerBuilder().with_interval(67ms).with_loop(true).build());
                 run_state.play(true); // Play the animation
                 run_state.loop(true); // Loop the animation until a transition is triggered or the animation is stopped
 
-                auto idle_to_run_transition = missileengine::SpriteAnimationTransition::create_manual();
-                idle_state.add_transition("run", idle_to_run_transition); // Must match the state name
-
-                sprite_animation.add_state(run_state);
+                sprite_animation.add_state("run", run_state);
             })
+        .with_component_using_function<missileengine::TransformComponent>(
+            [&](auto &transform)
+            {
+                constexpr auto player_position = glm::vec2{10.0F, 10.0F};
+                transform.position             = player_position;
+                transform.scale                = {player_transform_scale};
+            })
+        .with_component_using_function<missileengine::SpriteComponent>(
+            [&](auto &sprite)
+            {
+                constexpr uint32_t player_z_index = 100;
+                sprite.z_index                    = player_z_index;
+            },
+            game.asset_manager().load<missileengine::Texture>("/assets/characters/ExpM/Run/experimento m1.png"))
         .build();
 
     auto view = scene.view<missileengine::SpriteAnimationComponent>();
 
     for (auto entity : view)
     {
-        auto &sprite_animation = view.get<missileengine::SpriteAnimationComponent>();
-        sprite_animation.transition_to("run"); // Waits for the current animation to finish
-        sprite_animation.force_transition_to(
-            "run"); // Force the transition, the current animation is stopped and the new one is played
+        auto &sprite_animation = view.get<missileengine::SpriteAnimationComponent>(entity);
+        sprite_animation.force_transition_to("run"); // Waits for the current animation to finish
     }
 }

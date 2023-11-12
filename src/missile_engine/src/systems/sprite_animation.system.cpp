@@ -26,15 +26,15 @@ void missileengine::SpriteAnimationSystem::register_system(entt::meta_ctx &ctx)
 
 void missileengine::SpriteAnimationSystem::on_update(float delta_time)
 {
-    auto view = registry_->view<SpriteComponent, SpriteAnimationState>(entt::exclude<DisabledComponent>);
+    auto view = registry_->view<SpriteComponent, SpriteAnimationComponent>(entt::exclude<DisabledComponent>);
 
     // Just update the animation
     for (auto entity : view)
     {
         auto &sprite    = view.get<SpriteComponent>(entity);
-        auto &animation = view.get<SpriteAnimationState>(entity);
+        auto &animation = view.get<SpriteAnimationComponent>(entity);
         animation.update(std::chrono::duration<float>(delta_time));
-        sprite.texture = animation.get_current_frame_texture();
+        sprite.texture = animation.get_state().get_current_frame_texture();
     }
 }
 
