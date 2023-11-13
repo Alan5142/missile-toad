@@ -86,10 +86,10 @@ void missileengine::PhysicsSystem::register_system(entt::meta_ctx &ctx)
         .ctor<missileengine::Game *>();
 }
 
-missileengine::PhysicsSystem::PhysicsSystem(missileengine::Game *game) : registry_(&game->active_scene().get_registry())
+missileengine::PhysicsSystem::PhysicsSystem(missileengine::Game *game)
+    : registry_(&game->active_scene().get_registry()), world_(&game->active_scene().physics_world_)
 {
     static auto contact_listener = ContactListener{game};
-    world_                       = &game->active_scene().physics_world_;
     world_->SetContactListener(&contact_listener);
     transform_observer_.connect(*registry_,
                                 entt::collector

@@ -35,7 +35,6 @@ namespace missileengine
          */
         std::list<std::unique_ptr<BaseSystem>> systems_;
 
-
         b2World physics_world_{b2Vec2{0.0f, 0.0f}};
 
         Game *game_;

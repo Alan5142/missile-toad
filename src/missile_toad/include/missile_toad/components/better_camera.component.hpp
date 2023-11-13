@@ -10,10 +10,10 @@ namespace missiletoad
     public:
         static void register_component(entt::meta_ctx &ctx);
 
-        float   x_offset     = 0.0F;
-        float   y_offset     = 0.0F;
-        float   follow_speed = 0.0F;
-        uint8_t is_x_locked  = 0;
-        uint8_t is_y_locked  = 0;
+        float x_offset     = 0.0F;
+        float y_offset     = 0.0F;
+        float follow_speed = 0.0F;
+        bool  is_x_locked  = false;
+        bool  is_y_locked  = false;
     };
 } // namespace missiletoad
