@@ -11,7 +11,7 @@
 
 missiletoad::TurretSystem::TurretSystem(missileengine::Game *game)
 {
- 
+    unused(game);
 }
 
 

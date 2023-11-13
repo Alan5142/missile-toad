@@ -44,7 +44,7 @@ void missiletoad::HubSystem::on_start()
 
     // Create player
     auto player_texture = game.asset_manager().load<missileengine::Texture>("/assets/sprites/player/mt.png");
-    //    const auto player_transform_scale = glm::vec2{0.5F, 0.5F};
+    
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
@@ -64,7 +64,6 @@ void missiletoad::HubSystem::on_start()
                                                                             { rigidbody.set_static(false); })
         .with_component<missileengine::BoxCollider2dComponent>()
         .with_component<missiletoad::PlayerComponent>()
-        .with_component<missileengine::LineRendererComponent>()
         .build();
 
     // Create camera

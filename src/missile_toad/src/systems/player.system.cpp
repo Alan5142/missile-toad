@@ -70,11 +70,9 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
         auto &rigidbody     = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
         auto &transform     = scene_entities.get<missileengine::TransformComponent>(entity);
         auto &player        = scene_entities.get<missiletoad::PlayerComponent>(entity);
-        auto &line_renderer = scene_entities.get<missileengine::LineRendererComponent>(entity);
             
         auto move_x  = input_manager.get_axis("move_x");
         auto move_y  = input_manager.get_axis("move_y");
-        auto player_coordinates = transform.position;
 
         rigidbody.set_linear_velocity({move_x * player.player_speed, move_y * player.player_speed});
     }
