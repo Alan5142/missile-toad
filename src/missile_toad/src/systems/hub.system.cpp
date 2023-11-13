@@ -85,7 +85,7 @@ void missiletoad::HubSystem::on_start()
 
     // Add camera system
     scene.add_system<missiletoad::CameraSystem>();
-
+    constexpr auto enemy_sprite_length = 8;
     scene.create_entity()
         .with_component_using_function<missileengine::SpriteAnimationComponent>(
             [&](auto &sprite_animation)
@@ -93,7 +93,7 @@ void missiletoad::HubSystem::on_start()
                 using namespace std::chrono_literals;
                 auto run_state = missileengine::SpriteAnimationState("run");
 
-                for (int i = 1; i <= 8; i++)
+                for (int i = 1; i <= enemy_sprite_length; i++)
                 {
                     auto run_texture = game.asset_manager().load<missileengine::Texture>(
                         "/assets/characters/ExpM/Run/experimento m" + std::to_string(i) + ".png");
