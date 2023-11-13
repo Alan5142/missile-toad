@@ -6,6 +6,7 @@
 #include "missile_engine/input_manager.hpp"
 #include "missile_toad/components/better_camera.component.hpp"
 #include "missile_toad/components/player.component.hpp"
+#include "missile_toad/components/turret.component.hpp"
 #include "missile_toad/systems/camera.system.hpp"
 
 #include <cmath>
@@ -102,13 +103,14 @@ void missiletoad::HubSystem::on_start()
         .with_component_using_function<missileengine::SpriteComponent>(
             [&](auto &sprite)
             {
-                constexpr uint32_t turret_z_index = 100;
+                constexpr uint32_t turret_z_index = 101;
                 sprite.z_index                    = turret_z_index;
             },
             std::move(turret_texture))
         .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
                                                                             { rigidbody.set_static(false); })
         .with_component<missileengine::LineRendererComponent>()
+        .with_component<missiletoad::TurretComponent>()
         .build();
 
 }
