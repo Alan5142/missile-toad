@@ -87,7 +87,7 @@ void missileengine::PhysicsSystem::register_system(entt::meta_ctx &ctx)
 }
 
 missileengine::PhysicsSystem::PhysicsSystem(missileengine::Game *game)
-    : registry_(&game->active_scene().get_registry()), world_(&game->active_scene().physics_world_)
+    : world_(&game->active_scene().physics_world_), registry_(&game->active_scene().get_registry())
 {
     static auto contact_listener = ContactListener{game};
     world_->SetContactListener(&contact_listener);
