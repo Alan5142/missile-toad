@@ -47,3 +47,10 @@ add_custom_target(
     python ${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py -p
     ${CMAKE_BINARY_DIR} -config-file ${PROJECT_SOURCE_DIR}/.clang-tidy
     ${PROJECT_SOURCE_DIR}/src -quiet -header-filter=.*)
+
+add_custom_target(
+  tidy-fix
+  COMMAND
+    python ${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py -p
+    ${CMAKE_BINARY_DIR} -config-file ${PROJECT_SOURCE_DIR}/.clang-tidy -fix
+    ${PROJECT_SOURCE_DIR}/src -quiet -header-filter=.*)

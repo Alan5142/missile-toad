@@ -13,5 +13,7 @@ namespace missiletoad
         float x_offset     = 0.0F;
         float y_offset     = 0.0F;
         float follow_speed = 0.0F;
+        bool  is_x_locked  = false;
+        bool  is_y_locked  = false;
     };
 } // namespace missiletoad

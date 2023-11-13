@@ -126,8 +126,25 @@ void missileengine::Scene::segment_loader(ldtk::Project &project, std::string_vi
             {
                 registry.emplace<missileengine::BoxCollider2dComponent>(entity);
             }
+
+            registry.emplace<missileengine::TagComponent>(entity, layer_name);
         }
     }
+}
+
+entt::entity missileengine::Scene::get_entity_with_tag(std::string_view tag)
+{
+    auto view = scene_entities_.view<TagComponent>();
+    for (auto entity : view)
+    {
+        auto &tag_component = view.get<TagComponent>(entity);
+        if (tag_component.tag == tag)
+        {
+            return entity;
+        }
+    }
+
+    return entt::null;
 }
 
 missileengine::EntityBuilder missileengine::Scene::create_entity()
