@@ -31,7 +31,7 @@ bool hit_raycast(const glm::vec2 &start, const glm::vec2 &end, float distance)
         if (auto *tag =
                 missileengine::Game::get_instance().active_scene().try_get_component<missileengine::TagComponent>(
                     result.entity);
-            tag && tag->tag == "Room")
+            tag != nullptr && tag->tag == "Room")
         {
             return true;
         }

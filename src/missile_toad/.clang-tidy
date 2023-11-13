@@ -25,6 +25,7 @@ Checks:
     -readability-uppercase-literal-suffix
     -readability-identifier-length
     -readability-magic-numbers
+    -cppcoreguidelines-avoid-magic-numbers
     -clang-analyzer-core.CallAndMessage
 
 
