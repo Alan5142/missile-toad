@@ -1,4 +1,5 @@
 #include "missile_toad/systems/player.system.hpp"
+#include "missile_engine/asset_manager.hpp"
 #include "missile_toad/systems/turret.system.hpp"
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
@@ -24,6 +25,40 @@ void missiletoad::TurretSystem::register_system(entt::meta_ctx &ctx)
             .ctor<missileengine::Game*>();
     // TODO: Add your register code here
 }
+
+void missiletoad::TurretSystem::on_start(){
+
+    spdlog::trace("missiletoad::TurretSystem::on_start() called.");
+    auto &game         = missileengine::Game::get_instance();
+    auto &scene        = game.active_scene();
+    
+
+    //create turret
+    auto       turret_texture         = game.asset_manager().load<missileengine::Texture>("/assets/sprites/player/turret.png");
+    const auto turret_transform_scale = glm::vec2{0.2F, 0.2F};
+    scene.create_entity()
+        .with_component_using_function<missileengine::TransformComponent>(
+            [&](auto &transform)
+            {
+                constexpr auto turrret_position = glm::vec2{10.0F, 10.0F};
+                transform.position              = turrret_position;
+                transform.scale                 = {turret_transform_scale};
+            })
+        .with_component_using_function<missileengine::SpriteComponent>(
+            [&](auto &sprite)
+            {
+                constexpr uint32_t turret_z_index = 101;
+                sprite.z_index                    = turret_z_index;
+            },
+            std::move(turret_texture))
+        .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
+                                                                            { rigidbody.set_static(false); })
+        .with_component<missileengine::LineRendererComponent>()
+        .with_component<missiletoad::TurretComponent>()
+        .build();
+    
+}
+
 
 void missiletoad::TurretSystem::on_update(float delta_time){
     unused(delta_time);
@@ -64,7 +99,13 @@ void missiletoad::TurretSystem::on_update(float delta_time){
                 line_renderer.start = {turret_coordinates.x, turret_coordinates.y};
                 line_renderer.end   = {mouse_position.x , mouse_position.y};
 
-                DrawLine(mouse_position.x , mouse_position.y ,turret_coordinates.x, turret_coordinates.y, GREEN);
+                DrawLine(
+                    mouse_position.x , 
+                    mouse_position.y ,
+                    turret_coordinates.x, 
+                    turret_coordinates.y, 
+                    RED
+                );
 
             }
         }

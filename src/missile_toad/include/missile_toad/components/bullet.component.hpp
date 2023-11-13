@@ -5,12 +5,12 @@
 
 namespace missiletoad
 {
-    class TurretComponent
+    class BulletComponent
     {
     public:
-        int TURRET_MAX_SHOTS = 200;
+        int MAX_SHOTS = 200;
 
+        
         static void register_component(entt::meta_ctx& ctx);
-
     };
 }

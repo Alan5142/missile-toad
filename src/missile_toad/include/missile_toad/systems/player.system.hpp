@@ -17,6 +17,7 @@ namespace missiletoad
         PlayerSystem(missileengine::Game *game);
         static void register_system(entt::meta_ctx &ctx);
 
+        void on_start() override;
         void on_update(float delta_time) override;
     };
 } // namespace missiletoad
