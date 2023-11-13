@@ -30,7 +30,7 @@ add_subdirectory(third_party)
 add_compile_definitions(NX_USB_DEBUGGER=1)
 
 # Add format target
-file(GLOB_RECURSE ALL_SOURCE_FILES missile_toad/*.cpp missile_toad/*.hpp
+file(GLOB_RECURSE ALL_SOURCE_FILES src/*.cpp src/*.hpp
      tests/*.cpp tests/*.hpp)
 
 add_custom_target(format COMMAND clang-format -style=file -i
