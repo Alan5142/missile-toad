@@ -2,13 +2,30 @@
 #include "missile_toad/systems/bullet.system.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_engine/asset_manager.hpp"
+#include "missile_engine/input_manager.hpp"
+#include "missile_toad/components/bullet.component.hpp"
 
 #include <entt/meta/meta.hpp>
 #include <entt/meta/factory.hpp>
 
+void configure_shooting_keys(missileengine::Game *game)
+{
+    using missileengine::Action;
+    using missileengine::EMouseButton;
+    
+    const auto shoot = missileengine::Axis{
+        missileengine::AxisButton{EMouseButton::LEFT},
+    };
+
+    game->input_manager().add_axis("shoot", shoot);
+}
+
 missiletoad::BulletSystem::BulletSystem(missileengine::Game *game)
 {
-    unused(game);
+    using missileengine::Action;
+    using missileengine::EMouseButton;
+    
+    configure_shooting_keys(game);
 }
 
 void missiletoad::BulletSystem::register_system(entt::meta_ctx &ctx)
@@ -36,5 +53,19 @@ void missiletoad::BulletSystem::on_start(){
 
 void missiletoad::BulletSystem::on_update(float delta_time){
     unused(delta_time);
+    spdlog::trace("missiletoad::BulletSystem::on_update() called.");
+    auto &game           = missileengine::Game::get_instance();
+    auto &scene_entities = game.active_scene().get_registry();
+    auto &input_manager  = game.input_manager();
+
+    auto view = scene_entities.view<missiletoad::BulletComponent>();
+
+    for (auto entity : view){
+        auto is_shooting = input_manager.get_axis("shoot");
+
+        spdlog::trace("Is shooting {}",is_shooting);
+    }
+
+   
 }
 
