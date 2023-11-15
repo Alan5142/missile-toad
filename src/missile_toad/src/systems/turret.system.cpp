@@ -71,20 +71,20 @@ void missiletoad::TurretSystem::on_update(float delta_time)
     auto &input_manager  = game.input_manager();
     auto  mouse_input    = input_manager.get_mouse_position();
 
-    auto view       = scene_entities.view<missiletoad::TurretComponent>();
-    auto playerView = scene_entities.view<missiletoad::PlayerComponent>();
-    auto cameraView = scene_entities.view<missileengine::Camera2dComponent>();
+    auto view        = scene_entities.view<missiletoad::TurretComponent>();
+    auto player_view = scene_entities.view<missiletoad::PlayerComponent>();
+    auto camera_view = scene_entities.view<missileengine::Camera2dComponent>();
 
-    for (auto playerEntity : playerView)
+    for (auto player_entity : player_view)
     {
-        for (auto cameraEntity : cameraView)
+        for (auto camera_entity : camera_view)
         {
             for (auto entity : view)
             {
                 auto &turret_transform = scene_entities.get<missileengine::TransformComponent>(entity);
                 auto &line_renderer    = scene_entities.get<missileengine::LineRendererComponent>(entity);
-                auto &camera           = scene_entities.get<missileengine::Camera2dComponent>(cameraEntity);
-                auto &player_transform = scene_entities.get<missileengine::TransformComponent>(playerEntity);
+                auto &camera           = scene_entities.get<missileengine::Camera2dComponent>(camera_entity);
+                auto &player_transform = scene_entities.get<missileengine::TransformComponent>(player_entity);
 
                 auto mouse_position     = camera.get_screen_to_world(mouse_input);
                 auto player_coordinates = player_transform.position;
@@ -97,10 +97,10 @@ void missiletoad::TurretSystem::on_update(float delta_time)
                 // Calculate the angle between the turret and the mouse
                 float angleRadians =
                     atan2(mouse_position.y - turret_coordinates.y, mouse_position.x - turret_coordinates.x);
-                float angleDegrees = angleRadians * 180.0 / M_PI;
+                float angle_degrees = angleRadians * 180.0 / M_PI;
 
                 // Set the rotation of the turret based on the angle
-                turret_transform.rotation = angleDegrees;
+                turret_transform.rotation = angle_degrees;
 
                 line_renderer.start = {turret_coordinates.x, turret_coordinates.y};
                 line_renderer.end   = {mouse_position.x, mouse_position.y};
