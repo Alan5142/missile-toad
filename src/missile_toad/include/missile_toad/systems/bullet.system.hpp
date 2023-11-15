@@ -15,12 +15,12 @@ namespace missiletoad
     {
     public:
         BulletSystem(missileengine::Game *game);
-        static void register_system(entt::meta_ctx& ctx);
+        static void register_system(entt::meta_ctx &ctx);
 
         const int MAX_BULLETS = 200;
         // std::vector<>
-        
+
         void on_start() override;
         void on_update(float delta_time) override;
     };
-}
+} // namespace missiletoad

@@ -73,6 +73,8 @@ void missileengine::SceneManager::on_post_update()
         }
         active_scene_ = std::make_unique<Scene>(&game_);
 
+        active_scene_->on_post_init();
+
         auto &systems_db = game_.systems_meta_ctx();
         for (auto &system : descriptor.systems)
         {
@@ -99,7 +101,6 @@ void missileengine::SceneManager::on_post_update()
             }
             active_scene_->add_system<MetaSystem>(std::move(instance));
         }
-        active_scene_->on_post_init();
         active_scene_->on_start();
     }
 }

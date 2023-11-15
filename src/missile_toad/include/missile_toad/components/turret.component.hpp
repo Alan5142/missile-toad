@@ -10,7 +10,6 @@ namespace missiletoad
     public:
         int TURRET_MAX_SHOTS = 200;
 
-        static void register_component(entt::meta_ctx& ctx);
-
+        static void register_component(entt::meta_ctx &ctx);
     };
-}
+} // namespace missiletoad

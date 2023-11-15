@@ -30,7 +30,7 @@ add_subdirectory(third_party)
 add_compile_definitions(NX_USB_DEBUGGER=1)
 
 # Add format target
-file(GLOB_RECURSE ALL_SOURCE_FILES missile_toad/*.cpp missile_toad/*.hpp
+file(GLOB_RECURSE ALL_SOURCE_FILES src/*.cpp src/*.hpp
      tests/*.cpp tests/*.hpp)
 
 add_custom_target(format COMMAND clang-format -style=file -i
@@ -46,4 +46,11 @@ add_custom_target(
   COMMAND
     python ${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py -p
     ${CMAKE_BINARY_DIR} -config-file ${PROJECT_SOURCE_DIR}/.clang-tidy
+    ${PROJECT_SOURCE_DIR}/src -quiet -header-filter=.*)
+
+add_custom_target(
+  tidy-fix
+  COMMAND
+    python ${PROJECT_SOURCE_DIR}/scripts/run-clang-tidy.py -p
+    ${CMAKE_BINARY_DIR} -config-file ${PROJECT_SOURCE_DIR}/.clang-tidy -fix
     ${PROJECT_SOURCE_DIR}/src -quiet -header-filter=.*)

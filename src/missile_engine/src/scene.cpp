@@ -100,8 +100,8 @@ void missileengine::Scene::segment_loader(ldtk::Project &project, std::string_vi
     for (const auto &[layer_name, z_index, has_collider] : layers)
     {
         const auto &current_layer = level.getLayer(layer_name);
-        auto        texture =
-            game_->asset_manager().load<missileengine::Texture>("/assets/sprites/map/" + current_layer.getTileset().path);
+        auto        texture       = game_->asset_manager().load<missileengine::Texture>("/assets/sprites/map/" +
+                                                                           current_layer.getTileset().path);
 
         // iterate on the tiles of the layer
         for (const auto &tile : current_layer.allTiles())
@@ -126,8 +126,25 @@ void missileengine::Scene::segment_loader(ldtk::Project &project, std::string_vi
             {
                 registry.emplace<missileengine::BoxCollider2dComponent>(entity);
             }
+
+            registry.emplace<missileengine::TagComponent>(entity, layer_name);
         }
     }
+}
+
+entt::entity missileengine::Scene::get_entity_with_tag(std::string_view tag)
+{
+    auto view = scene_entities_.view<TagComponent>();
+    for (auto entity : view)
+    {
+        auto &tag_component = view.get<TagComponent>(entity);
+        if (tag_component.tag == tag)
+        {
+            return entity;
+        }
+    }
+
+    return entt::null;
 }
 
 missileengine::EntityBuilder missileengine::Scene::create_entity()

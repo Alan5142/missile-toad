@@ -1,5 +1,6 @@
-
 #include "missile_engine/components/rigidbody_2d.component.hpp"
+
+#include <box2d/b2_world.h>
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 
