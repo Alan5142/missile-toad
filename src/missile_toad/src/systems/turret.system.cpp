@@ -5,14 +5,18 @@
 #include "missile_engine/input_manager.hpp"
 #include "missile_toad/components/player.component.hpp"
 #include "missile_toad/components/turret.component.hpp"
+#include "missile_toad/components/bullet.component.hpp"
 #include "missile_toad/systems/player.system.hpp"
 
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
+#include <glm/glm.hpp>
 
 missiletoad::TurretSystem::TurretSystem(missileengine::Game *game)
 {
-    unused(game);
+    using missileengine::EMouseButton;
+
+    game->input_manager().add_action("shoot", EMouseButton::LEFT);
 }
 
 void missiletoad::TurretSystem::register_system(entt::meta_ctx &ctx)
@@ -62,6 +66,7 @@ void missiletoad::TurretSystem::on_update(float delta_time)
     unused(delta_time);
 
     auto &game           = missileengine::Game::get_instance();
+    auto &scene = game.active_scene();
     auto &scene_entities = game.active_scene().get_registry();
     auto &input_manager  = game.input_manager();
     auto  mouse_input    = input_manager.get_mouse_position();
@@ -101,6 +106,38 @@ void missiletoad::TurretSystem::on_update(float delta_time)
                 line_renderer.end   = {mouse_position.x, mouse_position.y};
 
                 DrawLine(mouse_position.x, mouse_position.y, turret_coordinates.x, turret_coordinates.y, RED);
+
+                auto is_shooting = input_manager.get_action("shoot");
+
+                if(is_shooting == missileengine::EActionState::PRESSED){
+                    spdlog::info("Is shooting {}", is_shooting);
+
+                    // Create bullet
+                    auto bullet_texture = game.asset_manager().load<missileengine::Texture>("/assets/sprites/bullets/bala.png");
+                    const auto bullet_transform_scale = glm::vec2{1.0F, 1.0F};
+                    const auto normalized_vector = glm::normalize(mouse_position - turret_transform.position);
+
+                    scene.create_entity()
+                        .with_component_using_function<missileengine::TransformComponent>(
+                            [&](auto &transform)
+                            {
+                                transform.position             = normalized_vector + turret_transform.position;
+                                transform.scale                = {bullet_transform_scale};
+                            })
+                        .with_component_using_function<missileengine::SpriteComponent>(
+                            [&](auto &sprite)
+                            {
+                                constexpr uint32_t bullet_z_index = 101;
+                                sprite.z_index                    = bullet_z_index;
+                            },
+                            std::move(bullet_texture))
+                        .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
+                                                                                            { rigidbody.set_static(false);
+                                                                                              rigidbody.set_is_bullet(true); })
+                        .with_component<missileengine::BoxCollider2dComponent>()
+                        .with_component<missiletoad::BulletComponent>(5.0f,normalized_vector)
+                        .build();
+                }
             }
         }
     }

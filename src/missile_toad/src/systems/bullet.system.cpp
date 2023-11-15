@@ -4,28 +4,14 @@
 #include "missile_engine/game.hpp"
 #include "missile_engine/input_manager.hpp"
 #include "missile_toad/components/bullet.component.hpp"
+#include "missile_engine/core_components.hpp"
 
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
 
-void configure_shooting_keys(missileengine::Game *game)
-{
-    using missileengine::Action;
-    using missileengine::EMouseButton;
-
-    const auto shoot = missileengine::Axis{
-        missileengine::AxisButton{EMouseButton::LEFT},
-    };
-
-    game->input_manager().add_axis("shoot", shoot);
-}
-
 missiletoad::BulletSystem::BulletSystem(missileengine::Game *game)
 {
-    using missileengine::Action;
-    using missileengine::EMouseButton;
-
-    configure_shooting_keys(game);
+    unused(game);
 }
 
 void missiletoad::BulletSystem::register_system(entt::meta_ctx &ctx)
@@ -44,8 +30,35 @@ void missiletoad::BulletSystem::on_start()
     // auto &game         = missileengine::Game::get_instance();
     // auto &scene        = game.active_scene();
 
+
+    // // Create bullet
     // auto bullet_texture = game.asset_manager().load<missileengine::Texture>("/assets/sprites/bullets/bala.png");
     // const auto bullet_transform_scale = glm::vec2{0.2F, 0.2F};
+
+    // scene.create_entity()
+    //     .with_component_using_function<missileengine::TransformComponent>(
+    //         [&](auto &transform)
+    //         {
+    //             constexpr auto bullet_position = glm::vec2{10.0F, 10.0F};
+    //             transform.position             = bullet_position;
+    //             transform.scale                = {bullet_transform_scale};
+    //         })
+    //     .with_component_using_function<missileengine::SpriteComponent>(
+    //         [&](auto &sprite)
+    //         {
+    //             constexpr uint32_t bullet_z_index = 101;
+    //             sprite.z_index                    = bullet_z_index;
+    //         },
+    //         std::move(bullet_texture))
+    //     .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
+    //                                                                         { rigidbody.set_static(false); })
+    //     .with_component<missileengine::BoxCollider2dComponent>()
+    //     .with_component<missiletoad::BulletComponent>()
+    //     .build();
+}
+
+void move_bullet(){
+
 }
 
 void missiletoad::BulletSystem::on_update(float delta_time)
@@ -54,14 +67,16 @@ void missiletoad::BulletSystem::on_update(float delta_time)
     spdlog::trace("missiletoad::BulletSystem::on_update() called.");
     auto &game           = missileengine::Game::get_instance();
     auto &scene_entities = game.active_scene().get_registry();
-    auto &input_manager  = game.input_manager();
 
     auto view = scene_entities.view<missiletoad::BulletComponent>();
 
     for (auto entity : view)
     {
-        auto is_shooting = input_manager.get_axis("shoot");
+        auto &rigidbody = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
+        auto &transform = scene_entities.get<missileengine::TransformComponent>(entity);
+        auto &bullet = scene_entities.get<missiletoad::BulletComponent>(entity);
 
-        spdlog::trace("Is shooting {}", is_shooting);
+        rigidbody.set_linear_velocity(bullet.direction * bullet.velocity);
+
     }
 }

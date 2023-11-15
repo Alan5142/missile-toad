@@ -13,6 +13,7 @@ void configure_player_axis(missileengine::Game *game)
 {
     using missileengine::Action;
     using missileengine::EKey;
+
     const auto move_y_axis = missileengine::Axis{
         missileengine::AxisButton{EKey::S, EKey::W},
     };
@@ -94,6 +95,7 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
     auto &game           = missileengine::Game::get_instance();
     auto &scene_entities = game.active_scene().get_registry();
     auto &input_manager  = game.input_manager();
+    auto is_shooting = input_manager.get_action("shoot");
 
     auto view = scene_entities.view<missiletoad::PlayerComponent>();
 
