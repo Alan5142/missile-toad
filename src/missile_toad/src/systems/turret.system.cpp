@@ -105,7 +105,7 @@ void missiletoad::TurretSystem::on_update(float delta_time)
                 line_renderer.start = {turret_coordinates.x, turret_coordinates.y};
                 line_renderer.end   = {mouse_position.x, mouse_position.y};
 
-                DrawLine(mouse_position.x, mouse_position.y, turret_coordinates.x, turret_coordinates.y, RED);
+                // DrawLine(mouse_position.x, mouse_position.y, turret_coordinates.x, turret_coordinates.y, RED);
 
                 auto is_shooting = input_manager.get_action("shoot");
 
