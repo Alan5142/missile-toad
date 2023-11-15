@@ -72,8 +72,8 @@ void missiletoad::BulletSystem::on_update(float delta_time)
     for (auto entity : view)
     {
         auto &rigidbody = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
-        auto &transform = scene_entities.get<missileengine::TransformComponent>(entity);
-        auto &bullet    = scene_entities.get<missiletoad::BulletComponent>(entity);
+        // auto &transform = scene_entities.get<missileengine::TransformComponent>(entity);
+        auto &bullet = scene_entities.get<missiletoad::BulletComponent>(entity);
 
         rigidbody.set_linear_velocity(bullet.direction * bullet.velocity);
     }
