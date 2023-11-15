@@ -95,9 +95,9 @@ void missiletoad::TurretSystem::on_update(float delta_time)
                 auto turret_coordinates = turret_transform.position;
 
                 // Calculate the angle between the turret and the mouse
-                float angleRadians =
+                float angle_radians =
                     atan2(mouse_position.y - turret_coordinates.y, mouse_position.x - turret_coordinates.x);
-                float angle_degrees = angleRadians * 180.0 / M_PI;
+                float angle_degrees = angle_radians * 180.0 / M_PI;
 
                 // Set the rotation of the turret based on the angle
                 turret_transform.rotation = angle_degrees;
