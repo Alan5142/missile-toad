@@ -23,6 +23,33 @@ void missiletoad::CameraSystem::register_system(entt::meta_ctx &ctx)
         .ctor<missileengine::Game *>();
 }
 
+void missiletoad::CameraSystem::on_start()
+{
+
+    spdlog::trace("game::CameraSystem::on_start() called.");
+    auto &game  = missileengine::Game::get_instance();
+    auto &scene = game.active_scene();
+
+    // Create camera
+    const auto     camera_offset_x            = static_cast<float>(GetScreenWidth()) / 2.0F;
+    const auto     camera_offset_y            = static_cast<float>(GetScreenHeight()) / 2.0F;
+    constexpr auto camera_zoom                = 1.4F;
+    constexpr auto better_camera_follow_speed = 3.5F;
+
+    scene.create_entity()
+        .with_component_using_function<missileengine::Camera2dComponent>(
+            [&](auto &camera)
+            {
+                camera.set_zoom(camera_zoom);
+                camera.set_offset({camera_offset_x, camera_offset_y});
+                camera.set_is_main_camera(true);
+            },
+            glm::vec2{static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())})
+        .with_component<missileengine::TransformComponent>()
+        .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, better_camera_follow_speed)
+        .build();
+}
+
 bool hit_raycast(const glm::vec2 &start, const glm::vec2 &end, float distance)
 {
     if (auto raycast = missileengine::Physics::raycast(start, end, distance); raycast.has_value())

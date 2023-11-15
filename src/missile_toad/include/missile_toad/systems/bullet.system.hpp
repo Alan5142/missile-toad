@@ -11,11 +11,14 @@ namespace missileengine
 
 namespace missiletoad
 {
-    class PlayerSystem : public missileengine::BaseSystem
+    class BulletSystem : public missileengine::BaseSystem
     {
     public:
-        PlayerSystem(missileengine::Game *game);
+        BulletSystem(missileengine::Game *game);
         static void register_system(entt::meta_ctx &ctx);
+
+        const int max_bullets = 200;
+        // std::vector<>
 
         void on_start() override;
         void on_update(float delta_time) override;
