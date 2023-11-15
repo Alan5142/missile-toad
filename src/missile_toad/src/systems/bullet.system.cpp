@@ -1,10 +1,10 @@
 
 #include "missile_toad/systems/bullet.system.hpp"
 #include "missile_engine/asset_manager.hpp"
+#include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_engine/input_manager.hpp"
 #include "missile_toad/components/bullet.component.hpp"
-#include "missile_engine/core_components.hpp"
 
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
@@ -29,7 +29,6 @@ void missiletoad::BulletSystem::on_start()
     spdlog::trace("missiletoad::BulletSystem::on_start() called.");
     // auto &game         = missileengine::Game::get_instance();
     // auto &scene        = game.active_scene();
-
 
     // // Create bullet
     // auto bullet_texture = game.asset_manager().load<missileengine::Texture>("/assets/sprites/bullets/bala.png");
@@ -57,8 +56,8 @@ void missiletoad::BulletSystem::on_start()
     //     .build();
 }
 
-void move_bullet(){
-
+void move_bullet()
+{
 }
 
 void missiletoad::BulletSystem::on_update(float delta_time)
@@ -74,9 +73,8 @@ void missiletoad::BulletSystem::on_update(float delta_time)
     {
         auto &rigidbody = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
         auto &transform = scene_entities.get<missileengine::TransformComponent>(entity);
-        auto &bullet = scene_entities.get<missiletoad::BulletComponent>(entity);
+        auto &bullet    = scene_entities.get<missiletoad::BulletComponent>(entity);
 
         rigidbody.set_linear_velocity(bullet.direction * bullet.velocity);
-
     }
 }

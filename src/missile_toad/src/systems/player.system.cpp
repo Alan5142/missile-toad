@@ -95,7 +95,7 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
     auto &game           = missileengine::Game::get_instance();
     auto &scene_entities = game.active_scene().get_registry();
     auto &input_manager  = game.input_manager();
-    auto is_shooting = input_manager.get_action("shoot");
+    auto  is_shooting    = input_manager.get_action("shoot");
 
     auto view = scene_entities.view<missiletoad::PlayerComponent>();
 
