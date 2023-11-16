@@ -29,3 +29,4 @@ include_component(missile_engine/components/tag.component.hpp src/components/tag
 include_component(missile_engine/components/disabled.component.hpp src/components/disabled.component.cpp missileengine::DisabledComponent)
 include_component(missile_engine/components/line_renderer.component.hpp src/components/line_renderer.component.cpp missileengine::LineRendererComponent)
 include_component(missile_engine/components/movie_player.component.hpp src/components/movie_player.component.cpp missileengine::MoviePlayerComponent)
+include_component(missile_engine/components/circle_collider_2d.component.hpp src/components/circle_collider_2d.component.cpp missileengine::CircleCollider2dComponent)

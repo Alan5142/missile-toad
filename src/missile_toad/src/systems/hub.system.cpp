@@ -1,6 +1,7 @@
 
 #include "missile_toad/systems/hub.system.hpp"
 #include "missile_engine/asset_manager.hpp"
+#include "missile_engine/components/circle_collider_2d.component.hpp"
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_engine/input_manager.hpp"

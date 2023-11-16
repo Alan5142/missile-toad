@@ -51,6 +51,7 @@ namespace missileengine
 
         void draw_line(entt::entity entity);
         void debug_draw_physics(entt::entity entity);
+        void debug_draw_circle_physics(entt::entity entity);
         void draw_movie(entt::entity entity);
     };
 } // namespace missileengine

@@ -1,6 +1,7 @@
 
 #include "missile_engine/systems/physics.system.hpp"
 #include "missile_engine/components/box_collider_2d.component.hpp"
+#include "missile_engine/components/circle_collider_2d.component.hpp"
 #include "missile_engine/components/collision2d.component.hpp"
 #include "missile_engine/components/disabled.component.hpp"
 #include "missile_engine/components/rigidbody_2d.component.hpp"
@@ -9,6 +10,7 @@
 #include "missile_engine/game.hpp"
 
 #include <algorithm>
+#include <box2d/b2_circle_shape.h>
 #include <box2d/b2_contact.h>
 #include <entt/entity/registry.hpp>
 #include <entt/meta/factory.hpp>
@@ -101,6 +103,8 @@ missileengine::PhysicsSystem::PhysicsSystem(missileengine::Game *game)
 
     registry_->on_construct<DisabledComponent>().connect<&PhysicsSystem::on_entity_disabled>(this);
     registry_->on_destroy<DisabledComponent>().connect<&PhysicsSystem::on_entity_enabled>(this);
+
+    registry_->on_construct<CircleCollider2dComponent>().connect<&PhysicsSystem::on_circle_collider_created>(this);
 }
 
 missileengine::PhysicsSystem::~PhysicsSystem()
@@ -141,6 +145,12 @@ void missileengine::PhysicsSystem::on_fixed_update(float delta_time)
                     const auto scale_y = (static_cast<float>(texture.height) / PIXELS_PER_UNIT) * transform.scale.y;
                     box_collider->set_size({scale_x * PHYSICS_SCALE, scale_y * PHYSICS_SCALE});
                 }
+            }
+
+            auto *circle_collider = registry_->try_get<missileengine::CircleCollider2dComponent>(entity);
+            if (circle_collider != nullptr)
+            {
+                circle_collider->set_size(transform.scale.x);
             }
         });
 
@@ -189,6 +199,25 @@ void missileengine::PhysicsSystem::on_box_collider_created(entt::registry &regis
     fixture_def.shape            = &shape;
     fixture_def.userData.pointer = static_cast<uintptr_t>(entity);
     box_collider.fixture_        = rigidbody.body_->CreateFixture(&fixture_def);
+}
+
+void missileengine::PhysicsSystem::on_circle_collider_created(entt::registry &registry, entt::entity entity)
+{
+    auto &transform       = registry.get_or_emplace<TransformComponent>(entity);
+    auto &circle_collider = registry.get_or_emplace<CircleCollider2dComponent>(entity);
+    auto &rigidbody       = registry.get_or_emplace<Rigidbody2dComponent>(entity);
+
+    auto fixture_def        = b2FixtureDef{};
+    fixture_def.density     = DEFAULT_DENSITY;
+    fixture_def.friction    = DEFAULT_FRICTION;
+    fixture_def.restitution = DEFAULT_RESTITUTION;
+
+    auto shape     = b2CircleShape{};
+    shape.m_radius = transform.scale.x * PHYSICS_SCALE;
+
+    fixture_def.shape            = &shape;
+    fixture_def.userData.pointer = static_cast<uintptr_t>(entity);
+    circle_collider.fixture_     = rigidbody.body_->CreateFixture(&fixture_def);
 }
 
 void missileengine::PhysicsSystem::on_rigidbody_created(entt::registry &registry, entt::entity entity)

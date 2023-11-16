@@ -28,7 +28,7 @@ constexpr auto NUKLEAR_DEFAULT_FONT_SIZE = 20;
 static missileengine::Game *INSTANCE = nullptr;
 
 missileengine::Game::Game(std::vector<std::string_view> &&arguments, const GameDescriptor &game_descriptor)
-    : nuklear_context_(nullptr, nullptr), debug_mode_(true)
+    : nuklear_context_(nullptr, nullptr)
 {
     auto args = std::move(arguments);
     if (INSTANCE != nullptr)
