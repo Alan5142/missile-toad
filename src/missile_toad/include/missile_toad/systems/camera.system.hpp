@@ -2,6 +2,7 @@
 #include "missile_engine/base_system.hpp"
 #include "missile_engine/common.hpp"
 
+#include <entt/entity/entity.hpp>
 #include <entt/meta/meta.hpp>
 
 namespace missileengine
@@ -23,6 +24,7 @@ namespace missiletoad
 
         ~CameraSystem() override = default;
 
+        void on_start() override;
         void on_update(float delta_time) override;
 
         static void register_system(entt::meta_ctx &ctx);

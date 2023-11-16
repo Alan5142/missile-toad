@@ -112,7 +112,7 @@ namespace missileengine
         [[nodiscard]] glm::vec2 get_screen_to_world(glm::vec2 screen_pos) const
         {
             auto world_pos = ::GetScreenToWorld2D({screen_pos.x, screen_pos.y}, camera_);
-            return {world_pos.x, world_pos.y};
+            return {world_pos.x / missileengine::PIXELS_PER_UNIT, world_pos.y / missileengine::PIXELS_PER_UNIT};
         }
 
         /**

@@ -13,7 +13,7 @@ namespace missileengine
 
     class PhysicsSystem : public missileengine::BaseSystem
     {
-        b2World         world_;
+        b2World        *world_;
         entt::observer  transform_observer_;
         entt::registry *registry_;
 

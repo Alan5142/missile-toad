@@ -19,6 +19,7 @@ generate_components(missileengine)
 generate_systems(missileengine)
 
 set(MISSILETOAD_CORE_SOURCES
+
         src/asset_manager.cpp
         src/texture.cpp
         src/texture_loader.cpp
@@ -33,6 +34,7 @@ set(MISSILETOAD_CORE_SOURCES
         src/game_register.cpp
         src/scene_manager.cpp
         src/input_manager.cpp
+        src/physics_utils.cpp
         src/movie.cpp
         src/movie_loader.cpp
         src/ldtk_loader.cpp)

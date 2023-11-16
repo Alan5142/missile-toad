@@ -89,10 +89,10 @@ void missileengine::PhysicsSystem::register_system(entt::meta_ctx &ctx)
 }
 
 missileengine::PhysicsSystem::PhysicsSystem(missileengine::Game *game)
-    : world_({0, 0}), registry_(&game->active_scene().get_registry())
+    : world_(&game->active_scene().physics_world_), registry_(&game->active_scene().get_registry())
 {
     static auto contact_listener = ContactListener{game};
-    world_.SetContactListener(&contact_listener);
+    world_->SetContactListener(&contact_listener);
     transform_observer_.connect(*registry_,
                                 entt::collector
                                     .update<missileengine::TransformComponent>() //
@@ -155,7 +155,7 @@ void missileengine::PhysicsSystem::on_fixed_update(float delta_time)
         });
 
     // Update the physics bodies
-    world_.Step(delta_time, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    world_->Step(delta_time, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
     // After updating the physics bodies, we need to update the transforms with the physics bodies.
     std::for_each(rigidbody_view.begin(), rigidbody_view.end(),
@@ -234,7 +234,7 @@ void missileengine::PhysicsSystem::on_rigidbody_created(entt::registry &registry
     body_def.fixedRotation = true;
     body_def.angle         = glm::radians(transform.rotation);
     body_def.enabled       = true;
-    rigidbody.body_        = world_.CreateBody(&body_def);
+    rigidbody.body_        = world_->CreateBody(&body_def);
 }
 
 void missileengine::PhysicsSystem::on_entity_disabled(entt::registry &registry, entt::entity entity)
