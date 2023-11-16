@@ -18,8 +18,8 @@ constexpr auto DEFAULT_DENSITY     = 1.0F;
 constexpr auto DEFAULT_FRICTION    = 0.3F;
 constexpr auto DEFAULT_RESTITUTION = 0.5F;
 
-constexpr auto VELOCITY_ITERATIONS = 6;
-constexpr auto POSITION_ITERATIONS = 2;
+constexpr auto VELOCITY_ITERATIONS = 8;
+constexpr auto POSITION_ITERATIONS = 3;
 
 class ContactListener : public b2ContactListener
 {
