@@ -6,9 +6,8 @@
 
 namespace missiletoad
 {
-    struct DamageEvent
+    struct DeathEvent
     {
-        bool is_dead = false;
     };
 
     struct MechaMoscaState
@@ -16,12 +15,7 @@ namespace missiletoad
         auto operator()() const
         {
             using namespace boost::sml;
-            constexpr auto is_dead = [](const auto &event)
-            {
-                return event.is_dead;
-            };
-            return make_transition_table(*"initial"_s                             = "follow"_s,
-                                         "follow"_s + event<DamageEvent>[is_dead] = "dead"_s);
+            return make_transition_table(*"initial"_s = "follow"_s, "follow"_s + event<DeathEvent> = "death"_s);
         }
     };
 
@@ -30,7 +24,7 @@ namespace missiletoad
     public:
         static void register_component(entt::meta_ctx &ctx);
 
-        float enemy_speed = 2.4F;
+        float enemy_speed = 1.2F;
 
         boost::sml::sm<MechaMoscaState> state_machine;
     };

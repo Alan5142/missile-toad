@@ -13,9 +13,10 @@ namespace missileengine
 
     class PhysicsSystem : public missileengine::BaseSystem
     {
-        b2World        *world_;
-        entt::observer  transform_observer_;
-        entt::registry *registry_;
+        b2World              *world_;
+        entt::observer        transform_observer_;
+        entt::registry       *registry_;
+        std::vector<b2Body *> rigidbodies_to_destroy_;
 
     public:
         PhysicsSystem(Game *game);
@@ -66,5 +67,7 @@ namespace missileengine
          * @param entity entity
          */
         void on_entity_enabled(entt::registry &registry, entt::entity entity);
+
+        void on_rigidbody_destroyed(entt::registry &registry, entt::entity entity);
     };
 } // namespace missileengine

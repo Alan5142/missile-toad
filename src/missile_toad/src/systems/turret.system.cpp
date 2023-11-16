@@ -5,6 +5,7 @@
 #include "missile_engine/game.hpp"
 #include "missile_engine/input_manager.hpp"
 #include "missile_toad/components/bullet.component.hpp"
+#include "missile_toad/components/health.component.hpp"
 #include "missile_toad/components/player.component.hpp"
 #include "missile_toad/components/turret.component.hpp"
 #include "missile_toad/systems/player.system.hpp"
@@ -91,7 +92,7 @@ void missiletoad::TurretSystem::on_fixed_update(float delta_time)
                 auto player_coordinates = player_transform.position;
 
                 turret_transform.position.x = player_coordinates.x - 0.1f;
-                turret_transform.position.y = player_coordinates.y - 0.25f;
+                turret_transform.position.y = player_coordinates.y - 0.45f;
 
                 auto turret_coordinates = turret_transform.position;
 
@@ -112,8 +113,6 @@ void missiletoad::TurretSystem::on_fixed_update(float delta_time)
 
                 if (is_shooting == missileengine::EActionState::PRESSED)
                 {
-                    spdlog::info("Is shooting {}", is_shooting);
-
                     // Create bullet
 
                     auto bullet_texture =
@@ -149,11 +148,17 @@ void missiletoad::TurretSystem::on_fixed_update(float delta_time)
                                 auto &game         = missileengine::Game::get_instance();
                                 auto &scene        = game.active_scene();
                                 bool  is_colliding = status == missileengine::ECollisionStatus::ENTER;
+                                if (!scene.get_registry().valid(other))
+                                {
 
+                                    scene.get_registry().destroy(self);
+                                    return;
+                                }
                                 auto other_tag = scene.try_get_component<missileengine::TagComponent>(other);
 
                                 if (other_tag == nullptr)
                                 {
+                                    spdlog::info("No tag found");
                                     return;
                                 }
 
@@ -161,12 +166,15 @@ void missiletoad::TurretSystem::on_fixed_update(float delta_time)
 
                                 if (is_colliding && other_tag->tag == "Room")
                                 {
+
                                     spdlog::info("Collission happening with Room");
                                     scene.get_registry().destroy(self);
                                 }
                                 else if (is_colliding && other_tag->tag == "Enemy")
                                 {
                                     spdlog::info("Collission happening with Enemy");
+                                    auto &health = scene.get_registry().get<missiletoad::HealthComponent>(other);
+                                    health.take_damage(10.0F);
                                     scene.get_registry().destroy(self);
                                 }
                                 else if (scene.try_get_component<missiletoad::BulletComponent>(other) != nullptr)
