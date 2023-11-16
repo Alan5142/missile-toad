@@ -94,6 +94,21 @@ namespace missileengine
             return components_meta_ctx_;
         }
 
+        [[nodiscard]] const nk_context *nuklear_context() const noexcept
+        {
+            return nuklear_context_.get();
+        }
+
+        [[nodiscard]] nk_context *nuklear_context() noexcept
+        {
+            return nuklear_context_.get();
+        }
+
+        [[nodiscard]] bool debug_mode() const noexcept
+        {
+            return debug_mode_;
+        }
+
     private:
         /**
          * The main loop of the game. It updates all of the systems and managers in the game.
