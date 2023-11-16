@@ -40,6 +40,13 @@ namespace missileengine
         void on_box_collider_created(entt::registry &registry, entt::entity entity);
 
         /**
+         * @brief Called when a circle collider is created.
+         * @param registry registry
+         * @param entity entity
+         */
+        void on_circle_collider_created(entt::registry &registry, entt::entity entity);
+
+        /**
          * Called when a rigidbody is created.
          * @param registry registry
          * @param entity entity
