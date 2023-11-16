@@ -158,7 +158,7 @@ void missileengine::PhysicsSystem::on_fixed_update(float delta_time)
             auto *circle_collider = registry_->try_get<missileengine::CircleCollider2dComponent>(entity);
             if (circle_collider != nullptr)
             {
-                circle_collider->set_size(transform.scale.x);
+                circle_collider->set_size(transform.scale.x / 2.0F);
             }
         });
 

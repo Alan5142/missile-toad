@@ -8,6 +8,7 @@
 
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
+#include <missile_engine/components/circle_collider_2d.component.hpp>
 
 void configure_player_axis(missileengine::Game *game)
 {
@@ -84,7 +85,7 @@ void missiletoad::PlayerSystem::on_start()
             std::move(player_texture))
         .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
                                                                             { rigidbody.set_static(false); })
-        .with_component<missileengine::BoxCollider2dComponent>()
+        .with_component<missileengine::CircleCollider2dComponent>()
         .with_component<missiletoad::PlayerComponent>()
         .with_component_using_function<missileengine::SpriteAnimationComponent>(
             [&](auto &sprite_animation)
