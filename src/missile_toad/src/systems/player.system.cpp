@@ -68,9 +68,19 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
     {
         auto &rigidbody = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
         auto &player    = scene_entities.get<missiletoad::PlayerComponent>(entity);
+        auto &sprite    = scene_entities.get<missileengine::SpriteComponent>(entity);
 
         auto move_x = input_manager.get_axis("move_x");
         auto move_y = input_manager.get_axis("move_y");
+
+        if (move_x < 0)
+        {
+            sprite.flip_x = true;
+        }
+        else if (move_x > 0)
+        {
+            sprite.flip_x = false;
+        }
 
         rigidbody.set_linear_velocity({move_x * player.player_speed, move_y * player.player_speed});
     }

@@ -28,6 +28,9 @@ CPMAddPackage("https://github.com/gabime/spdlog.git@1.12.0")
 # LDtk
 CPMAddPackage("https://github.com/Madour/LDtkLoader.git#1.2.2")
 
+# Boost SML
+CPMAddPackage("https://github.com/boost-ext/sml.git@1.1.9")
+
 
 
 # Box2D options
