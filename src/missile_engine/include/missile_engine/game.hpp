@@ -109,6 +109,11 @@ namespace missileengine
             return debug_mode_;
         }
 
+        void set_debug_mode(bool debug_mode) noexcept
+        {
+            debug_mode_ = debug_mode;
+        }
+
     private:
         /**
          * The main loop of the game. It updates all of the systems and managers in the game.

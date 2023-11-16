@@ -71,7 +71,7 @@ void missiletoad::PlayerSystem::on_start()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
             {
-                constexpr auto player_position = glm::vec2{10.0F, 10.0F};
+                constexpr auto player_position = glm::vec2{10.0F, 5.0F};
                 transform.position             = player_position;
                 transform.scale                = {player_transform_scale};
             })
@@ -131,6 +131,11 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
     auto &input_manager  = game.input_manager();
 
     auto view = scene_entities.view<missiletoad::PlayerComponent>();
+
+    if (game.input_manager().is_key_pressed(missileengine::EKey::H))
+    {
+        game.set_debug_mode(!game.debug_mode());
+    }
 
     for (auto entity : view)
     {

@@ -45,7 +45,7 @@ void missiletoad::CameraSystem::on_start()
                 camera.set_is_main_camera(true);
             },
             glm::vec2{static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())})
-        .with_component<missileengine::TransformComponent>()
+        .with_component<missileengine::TransformComponent>(glm::vec2{10.0F, 10.0F})
         .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, better_camera_follow_speed)
         .build();
 }

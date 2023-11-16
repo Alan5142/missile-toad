@@ -72,7 +72,7 @@ void missiletoad::HubSystem::on_start()
 
     auto music = game.asset_manager().load<missileengine::Music>("/assets/sounds/song1.mp3");
     music->get_music().Play();
-    music->get_music().SetVolume(0.1F);
+    music->get_music().SetVolume(0.8F);
 
     scene.create_entity().with_component<missileengine::AudioComponent>(music).build();
 }
