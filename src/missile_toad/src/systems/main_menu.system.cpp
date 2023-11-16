@@ -61,7 +61,7 @@ void missiletoad::MainMenuSystem::on_update(float delta_time)
     {
         // Create a column for the buttons
         nk_layout_row_dynamic(nuklear_context, 50, 1);
-        if (nk_button_label(nuklear_context, "Play"))
+        if (nk_button_label(nuklear_context, "Play") == 1)
         {
             game.scene_manager().load_scene("/assets/levels/scene.json");
         }

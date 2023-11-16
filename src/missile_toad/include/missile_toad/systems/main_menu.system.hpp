@@ -15,6 +15,11 @@ namespace missiletoad
     {
     public:
         MainMenuSystem(missileengine::Game *game);
+        MainMenuSystem(const MainMenuSystem &) = delete;
+        MainMenuSystem(MainMenuSystem &&)      = default;
+
+        MainMenuSystem &operator=(const MainMenuSystem &) = delete;
+        MainMenuSystem &operator=(MainMenuSystem &&)      = default;
 
         ~MainMenuSystem() override = default;
 
