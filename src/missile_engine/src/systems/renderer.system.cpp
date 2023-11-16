@@ -1,7 +1,10 @@
 
 #include "missile_engine/systems/renderer.system.hpp"
+
+#include "box2d/b2_circle_shape.h"
 #include "missile_engine/components/box_collider_2d.component.hpp"
 #include "missile_engine/components/camera_2d.component.hpp"
+#include "missile_engine/components/circle_collider_2d.component.hpp"
 #include "missile_engine/components/disabled.component.hpp"
 #include "missile_engine/components/line_renderer.component.hpp"
 #include "missile_engine/components/movie_player.component.hpp"
@@ -39,6 +42,8 @@ void missileengine::RendererSystem::on_render()
     // Camera iterator
     auto camera_view = registry_->view<Camera2dComponent, TransformComponent>(entt::exclude<DisabledComponent>);
 
+    const auto has_debug_mode = Game::get_instance().debug_mode();
+
     for (auto cam_entity : camera_view)
     {
         auto &cam           = registry_->get<Camera2dComponent>(cam_entity);
@@ -66,10 +71,20 @@ void missileengine::RendererSystem::on_render()
             draw_movie(entity);
         }
 
-        for (const auto entity :
-             registry_->view<BoxCollider2dComponent, TransformComponent>(entt::exclude<DisabledComponent>))
+        if (has_debug_mode)
         {
-            debug_draw_physics(entity);
+
+            for (const auto entity :
+                 registry_->view<BoxCollider2dComponent, TransformComponent>(entt::exclude<DisabledComponent>))
+            {
+                debug_draw_physics(entity);
+            }
+
+            for (const auto entity :
+                 registry_->view<CircleCollider2dComponent, TransformComponent>(entt::exclude<DisabledComponent>))
+            {
+                debug_draw_circle_physics(entity);
+            }
         }
     }
     EndMode2D();
@@ -161,6 +176,20 @@ void missileengine::RendererSystem::debug_draw_physics(const entt::entity entity
         DrawLineEx(Vector2{x, y}, Vector2{w, h}, 1.0F, GREEN);
     }
 }
+
+void missileengine::RendererSystem::debug_draw_circle_physics(entt::entity entity)
+{
+    const auto &box_collider = registry_->get<missileengine::CircleCollider2dComponent>(entity);
+    const auto &transform    = registry_->get<missileengine::TransformComponent>(entity);
+    const auto &position     = transform.position;
+
+    auto *circle = dynamic_cast<b2CircleShape *>(box_collider.get_fixture()->GetShape());
+
+    const auto x = static_cast<int>(PIXELS_PER_UNIT * position.x);
+    const auto y = static_cast<int>(PIXELS_PER_UNIT * position.y);
+    DrawCircleLines(x, y, circle->m_radius * PIXELS_PER_UNIT, GREEN);
+}
+
 void missileengine::RendererSystem::draw_movie(const entt::entity entity)
 {
     auto &movie_player_component = registry_->get<MoviePlayerComponent>(entity);

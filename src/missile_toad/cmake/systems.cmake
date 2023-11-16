@@ -10,3 +10,6 @@ include_system(missile_toad/systems/player.system.hpp
 include_system(missile_toad/systems/camera.system.hpp src/systems/camera.system.cpp missiletoad::CameraSystem)
 include_system(missile_toad/systems/enemy.system.hpp src/systems/enemy.system.cpp missiletoad::EnemySystem)
 include_system(missile_toad/systems/health.system.hpp src/systems/health.system.cpp missiletoad::HealthSystem)
+include_system(missile_toad/systems/turret.system.hpp src/systems/turret.system.cpp missiletoad::TurretSystem)
+include_system(missile_toad/systems/bullet.system.hpp src/systems/bullet.system.cpp missiletoad::BulletSystem)
+include_system(missile_toad/systems/main_menu.system.hpp src/systems/main_menu.system.cpp missiletoad::MainMenuSystem)

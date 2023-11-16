@@ -176,6 +176,8 @@ namespace missileengine
 
         entt::entity get_entity_with_tag(std::string_view tag);
 
+        entt::entity get_entity_with_tag(std::string_view tag);
+
         /**
          * @brief Creates an entity builder.
          * @return An entity builder.

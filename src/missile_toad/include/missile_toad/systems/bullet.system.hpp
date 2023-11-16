@@ -11,10 +11,10 @@ namespace missileengine
 
 namespace missiletoad
 {
-    class PlayerSystem : public missileengine::BaseSystem
+    class BulletSystem : public missileengine::BaseSystem
     {
     public:
-        PlayerSystem(missileengine::Game *game);
+        BulletSystem(missileengine::Game *game);
         static void register_system(entt::meta_ctx &ctx);
 
         void on_start() override;

@@ -11,13 +11,13 @@ namespace missileengine
 
 namespace missiletoad
 {
-    class PlayerSystem : public missileengine::BaseSystem
+    class TurretSystem : public missileengine::BaseSystem
     {
     public:
-        PlayerSystem(missileengine::Game *game);
+        TurretSystem(missileengine::Game *game);
         static void register_system(entt::meta_ctx &ctx);
 
+        void on_fixed_update(float delta_time) override;
         void on_start() override;
-        void on_update(float delta_time) override;
     };
 } // namespace missiletoad
