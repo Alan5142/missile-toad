@@ -17,7 +17,7 @@ namespace missiletoad
         TurretSystem(missileengine::Game *game);
         static void register_system(entt::meta_ctx &ctx);
 
-        void on_update(float delta_time) override;
+        void on_fixed_update(float delta_time) override;
         void on_start() override;
     };
 } // namespace missiletoad

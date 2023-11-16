@@ -1,5 +1,6 @@
 #include "missile_toad/systems/turret.system.hpp"
 #include "missile_engine/asset_manager.hpp"
+#include "missile_engine/components/tag.component.hpp"
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_engine/input_manager.hpp"
@@ -61,7 +62,7 @@ void missiletoad::TurretSystem::on_start()
         .build();
 }
 
-void missiletoad::TurretSystem::on_update(float delta_time)
+void missiletoad::TurretSystem::on_fixed_update(float delta_time)
 {
     unused(delta_time);
 
@@ -114,6 +115,7 @@ void missiletoad::TurretSystem::on_update(float delta_time)
                     spdlog::info("Is shooting {}", is_shooting);
 
                     // Create bullet
+
                     auto bullet_texture =
                         game.asset_manager().load<missileengine::Texture>("/assets/sprites/bullets/bala.png");
                     const auto bullet_transform_scale = glm::vec2{1.0F, 1.0F};
@@ -123,7 +125,7 @@ void missiletoad::TurretSystem::on_update(float delta_time)
                         .with_component_using_function<missileengine::TransformComponent>(
                             [&](auto &transform)
                             {
-                                transform.position = normalized_vector + turret_transform.position;
+                                transform.position = normalized_vector * 1.2F + turret_transform.position;
                                 transform.scale    = {bullet_transform_scale};
                             })
                         .with_component_using_function<missileengine::SpriteComponent>(
@@ -141,6 +143,41 @@ void missiletoad::TurretSystem::on_update(float delta_time)
                             })
                         .with_component<missileengine::BoxCollider2dComponent>()
                         .with_component<missiletoad::BulletComponent>(5.0f, normalized_vector)
+                        .with_component<missileengine::Collision2dComponent>(
+                            [](auto self, auto other, auto status)
+                            {
+                                auto &game         = missileengine::Game::get_instance();
+                                auto &scene        = game.active_scene();
+                                bool  is_colliding = status == missileengine::ECollisionStatus::ENTER;
+
+                                auto other_tag = scene.try_get_component<missileengine::TagComponent>(other);
+
+                                if (other_tag == nullptr)
+                                {
+                                    return;
+                                }
+
+                                spdlog::info("Other tag: {}", other_tag->tag);
+
+                                if (is_colliding && other_tag->tag == "Room")
+                                {
+                                    spdlog::info("Collission happening with Room");
+                                    scene.get_registry().destroy(self);
+                                }
+                                else if (is_colliding && other_tag->tag == "Enemy")
+                                {
+                                    spdlog::info("Collission happening with Enemy");
+                                    scene.get_registry().destroy(self);
+                                }
+                                else if (scene.try_get_component<missiletoad::BulletComponent>(other) != nullptr)
+                                {
+                                    scene.get_registry().destroy(self);
+                                }
+                                else
+                                {
+                                    spdlog::info("Collission happening with unknown object");
+                                }
+                            })
                         .build();
                 }
             }
