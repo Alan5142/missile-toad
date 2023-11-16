@@ -42,6 +42,8 @@ void missileengine::RendererSystem::on_render()
     // Camera iterator
     auto camera_view = registry_->view<Camera2dComponent, TransformComponent>(entt::exclude<DisabledComponent>);
 
+    const auto has_debug_mode = Game::get_instance().debug_mode();
+
     for (auto cam_entity : camera_view)
     {
         auto &cam           = registry_->get<Camera2dComponent>(cam_entity);
@@ -69,16 +71,20 @@ void missileengine::RendererSystem::on_render()
             draw_movie(entity);
         }
 
-        for (const auto entity :
-             registry_->view<BoxCollider2dComponent, TransformComponent>(entt::exclude<DisabledComponent>))
+        if (has_debug_mode)
         {
-            debug_draw_physics(entity);
-        }
 
-        for (const auto entity :
-             registry_->view<CircleCollider2dComponent, TransformComponent>(entt::exclude<DisabledComponent>))
-        {
-            debug_draw_circle_physics(entity);
+            for (const auto entity :
+                 registry_->view<BoxCollider2dComponent, TransformComponent>(entt::exclude<DisabledComponent>))
+            {
+                debug_draw_physics(entity);
+            }
+
+            for (const auto entity :
+                 registry_->view<CircleCollider2dComponent, TransformComponent>(entt::exclude<DisabledComponent>))
+            {
+                debug_draw_circle_physics(entity);
+            }
         }
     }
     EndMode2D();

@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) noexcept(false)
     romfsInit();
 #endif
 
-    // InitAudioDevice();
+    InitAudioDevice();
 
     auto game_json = std::ifstream(GAME_METADATA.data());
     if (!game_json.is_open())
