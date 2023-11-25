@@ -107,7 +107,7 @@ void missiletoad::PlayerSystem::on_start()
 
                 auto run_state = missileengine::SpriteAnimationState("run");
 
-                for (int i = 1; i <= 13; i++)
+                for (int i = 1; i <= 13; i += 2)
                 {
                     auto run_texture = game.asset_manager().load<missileengine::Texture>(
                         "/assets/sprites/player/move/Toad move" + std::to_string(i) + ".png");

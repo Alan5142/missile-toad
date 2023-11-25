@@ -40,6 +40,11 @@ void on_create_entity(const ldtk::Entity &entity)
 {
     if (entity.getName() == "MechaMosca")
     {
+        missiletoad::createMechaMosquito(static_cast<float>(entity.getPosition().x) / missileengine::PIXELS_PER_UNIT,
+                                         static_cast<float>(entity.getPosition().y) / missileengine::PIXELS_PER_UNIT);
+    }
+    else if (entity.getName() == "Experimento_M")
+    {
         missiletoad::createExpM(static_cast<float>(entity.getPosition().x) / missileengine::PIXELS_PER_UNIT,
                                 static_cast<float>(entity.getPosition().y) / missileengine::PIXELS_PER_UNIT);
     }
@@ -53,9 +58,15 @@ void missiletoad::HubSystem::on_start()
 
     auto ldtk_project = game.asset_manager().load<ldtk::Project>("/assets/levels/testRoom.ldtk");
 
+    // get a world
+    auto &world = ldtk_project->getWorld("");
+
     // TODO: To be removed in the future.
-    game.active_scene().segment_loader(
-        *ldtk_project, "", 0, {{"Room", 0, true}, {"Ground", 0, false}, {"Enemies", 0, false}}, on_create_entity);
+    for (const auto &level : world.allLevels())
+    {
+        game.active_scene().segment_loader(
+            world, level.name, {{"Room", 0, true}, {"Ground", 0, false}, {"Enemies", 0, false}}, on_create_entity);
+    }
 
     // Add camera system
     scene.add_system<missiletoad::CameraSystem>();

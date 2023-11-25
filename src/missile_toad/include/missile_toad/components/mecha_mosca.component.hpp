@@ -6,7 +6,7 @@
 
 namespace missiletoad
 {
-    struct DeathEvent
+    struct MechaMoscaDeathEvent
     {
     };
 
@@ -15,7 +15,8 @@ namespace missiletoad
         auto operator()() const
         {
             using namespace boost::sml;
-            return make_transition_table(*"initial"_s = "follow"_s, "follow"_s + event<DeathEvent> = "death"_s);
+            return make_transition_table(*"initial"_s                             = "follow"_s,
+                                         "follow"_s + event<MechaMoscaDeathEvent> = "death"_s);
         }
     };
 

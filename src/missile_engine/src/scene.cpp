@@ -86,18 +86,16 @@ void missileengine::Scene::on_post_init()
     this->systems_.emplace_back(std::make_unique<RendererSystem>(game_));
 }
 
-void missileengine::Scene::segment_loader(ldtk::Project &project, std::string_view ldtk_world, int level_id,
+void missileengine::Scene::segment_loader(const ldtk::World &ldtk_world, std::string_view level_name,
                                           const std::vector<LayerInfo>             &layers,
                                           std::function<void(const ldtk::Entity &)> on_entity_create)
 {
-    // get a world
-    const auto &world = project.getWorld(ldtk_world.data());
-
     // get a level
-    const auto &level = world.getLevel(level_id);
+    const auto &level = ldtk_world.getLevel(level_name.data());
+
+    const auto level_position = glm::vec2{level.position.x, level.position.y} / missileengine::PIXELS_PER_UNIT;
 
     // get a layer
-
     for (const auto &[layer_name, z_index, has_collider] : layers)
     {
         const auto &current_layer = level.getLayer(layer_name);
@@ -116,7 +114,7 @@ void missileengine::Scene::segment_loader(ldtk::Project &project, std::string_vi
                 auto  entity   = registry.create();
 
                 auto &transform    = registry.emplace<missileengine::TransformComponent>(entity);
-                transform.position = {position.x, position.y};
+                transform.position = glm::vec2{position.x, position.y} + level_position;
                 transform.rotation = 0.0f;
                 transform.scale    = {1.0f, 1.0f};
 
