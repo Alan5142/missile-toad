@@ -15,6 +15,8 @@ void missiletoad::createBullet(glm::vec2 start_position, glm::vec2 objetive_posi
     auto       bullet_texture = game.asset_manager().load<missileengine::Texture>("/assets/sprites/bullets/bala.png");
     const auto bullet_transform_scale = glm::vec2{1.0F, 1.0F};
     const auto normalized_vector      = glm::normalize(objetive_position - start_position);
+    spdlog::info("Velocity {}", velocity);
+    spdlog::info("Damage {}", damage);
 
     scene.create_entity()
         .with_component_using_function<missileengine::TransformComponent>(
@@ -37,9 +39,9 @@ void missiletoad::createBullet(glm::vec2 start_position, glm::vec2 objetive_posi
                 rigidbody.set_is_bullet(true);
             })
         .with_component<missileengine::BoxCollider2dComponent>()
-        .with_component<missiletoad::BulletComponent>(5.0f, normalized_vector)
+        .with_component<missiletoad::BulletComponent>(velocity, normalized_vector)
         .with_component<missileengine::Collision2dComponent>(
-            [](auto self, auto other, auto status)
+            [&](auto self, auto other, auto status)
             {
                 auto &game         = missileengine::Game::get_instance();
                 auto &scene        = game.active_scene();
@@ -70,7 +72,10 @@ void missiletoad::createBullet(glm::vec2 start_position, glm::vec2 objetive_posi
                 {
                     spdlog::info("Collission happening with Enemy");
                     auto &health = scene.get_registry().get<missiletoad::HealthComponent>(other);
-                    health.take_damage(10.0F);
+                    spdlog::info("Velocity {}", velocity);
+                    spdlog::info("Damage {}", damage);
+
+                    health.take_damage(damage);
                     scene.get_registry().destroy(self);
                 }
                 else if (scene.try_get_component<missiletoad::BulletComponent>(other) != nullptr)
