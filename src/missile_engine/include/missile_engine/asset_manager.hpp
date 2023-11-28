@@ -14,13 +14,32 @@
 
 namespace missileengine
 {
+    /**
+     * @brief A class that manages assets.
+     * An asset is a resource that can be loaded by the engine.
+     */
     class AssetManager
     {
     private:
-        entt::resource_cache<Texture, TextureLoader>    texture_cache_;
-        entt::resource_cache<Music, MusicLoader>        music_cache_;
+        /**
+         * @brief A cache of textures
+         */
+        entt::resource_cache<Texture, TextureLoader> texture_cache_;
+
+        /**
+         * @brief A cache of music tracks
+         */
+        entt::resource_cache<Music, MusicLoader> music_cache_;
+
+        /**
+         * @brief A cache of LDtk projects
+         */
         entt::resource_cache<ldtk::Project, LdtkLoader> ldtk_cache_;
-        entt::resource_cache<Movie, MovieLoader>        movie_cache_;
+
+        /**
+         * @brief A cache of movies
+         */
+        entt::resource_cache<Movie, MovieLoader> movie_cache_;
 
     public:
         AssetManager();
@@ -94,6 +113,12 @@ namespace missileengine
             return ldtk_cache_.load(entt::hashed_string{name.data()}, name.data()).first->second;
         }
 
+        /**
+         * @brief Loads a movie.
+         * @tparam T Movie
+         * @param name The name of the movie in the filesystem.
+         * @return The movie.
+         */
         template <std::same_as<missileengine::Movie> T>
         entt::resource<T> load(std::string_view name)
         {

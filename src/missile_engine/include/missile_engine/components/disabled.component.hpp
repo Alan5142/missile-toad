@@ -14,6 +14,9 @@ namespace missileengine
     public:
         static void register_component(entt::meta_ctx &ctx);
 
+        /**
+         * @brief unused, just to make the component non-empty
+         */
         bool dummy = false;
     };
 } // namespace missileengine

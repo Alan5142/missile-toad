@@ -17,6 +17,9 @@ namespace missileengine
      */
     class Rigidbody2dComponent
     {
+        /**
+         * @brief The body of the rigidbody.
+         */
         b2Body *body_{};
 
         friend class PhysicsSystem;

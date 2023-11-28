@@ -70,13 +70,35 @@ constexpr void unused([[maybe_unused]] Args &&...args) noexcept
 {
 }
 
+/**
+ * \brief result of comparing two floats
+ * It exists because of the floating point comparison problem.
+ */
 enum class EFloatCompare
 {
+    /**
+     * \brief The first float is less than the second
+     */
     LESS_THAN,
+
+    /**
+     * \brief The first float is equal to the second
+     */
     EQUAL,
+
+    /**
+     * \brief The first float is greater than the second
+     */
     GREATER_THAN,
 };
 
+/**
+ * \brief Compare two floats
+ * \param lhs The first float
+ * \param rhs The second float
+ * \param epsilon The epsilon to use for the comparison
+ * \return The result of the comparison
+ */
 // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, readability-magic-numbers)
 constexpr EFloatCompare compare_float(float lhs, float rhs, float epsilon = 0.001F)
 {
