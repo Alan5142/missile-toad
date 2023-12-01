@@ -5,6 +5,7 @@
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_engine/input_manager.hpp"
+#include "missile_toad/bullet_utils.hpp"
 #include "missile_toad/components/better_camera.component.hpp"
 #include "missile_toad/components/mecha_mosca.component.hpp"
 #include "missile_toad/components/player.component.hpp"

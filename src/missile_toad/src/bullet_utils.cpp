@@ -7,7 +7,8 @@
 
 #include <glm/glm.hpp>
 
-void missiletoad::createBullet(glm::vec2 start_position, glm::vec2 objetive_position, float velocity, float damage)
+void missiletoad::createBullet(glm::vec2 start_position, glm::vec2 objetive_position, float velocity, float damage,
+                               bool is_enemy_bullet)
 {
     auto &game  = missileengine::Game::get_instance();
     auto &scene = game.active_scene();
@@ -41,11 +42,14 @@ void missiletoad::createBullet(glm::vec2 start_position, glm::vec2 objetive_posi
         .with_component<missileengine::BoxCollider2dComponent>()
         .with_component<missiletoad::BulletComponent>(velocity, normalized_vector)
         .with_component<missileengine::Collision2dComponent>(
-            [&](auto self, auto other, auto status)
+            [&, damage, velocity, is_enemy_bullet](auto self, auto other, auto status)
             {
                 auto &game         = missileengine::Game::get_instance();
                 auto &scene        = game.active_scene();
                 bool  is_colliding = status == missileengine::ECollisionStatus::ENTER;
+
+                spdlog::info("Velocity {}", velocity);
+                spdlog::info("Damage {}", damage);
                 if (!scene.get_registry().valid(other))
                 {
 
@@ -72,11 +76,30 @@ void missiletoad::createBullet(glm::vec2 start_position, glm::vec2 objetive_posi
                 {
                     spdlog::info("Collission happening with Enemy");
                     auto &health = scene.get_registry().get<missiletoad::HealthComponent>(other);
-                    spdlog::info("Velocity {}", velocity);
-                    spdlog::info("Damage {}", damage);
 
-                    health.take_damage(damage);
-                    scene.get_registry().destroy(self);
+                    if (!is_enemy_bullet)
+                    {
+                        health.take_damage(damage);
+                        scene.get_registry().destroy(self);
+                    }
+                    else
+                    {
+                        scene.get_registry().destroy(self);
+                    }
+                }
+                else if (is_colliding && other_tag->tag == "Player")
+                {
+                    auto &health = scene.get_registry().get<missiletoad::HealthComponent>(other);
+
+                    if (is_enemy_bullet)
+                    {
+                        health.take_damage(damage);
+                        scene.get_registry().destroy(self);
+                    }
+                    else
+                    {
+                        scene.get_registry().destroy(self);
+                    }
                 }
                 else if (scene.try_get_component<missiletoad::BulletComponent>(other) != nullptr)
                 {

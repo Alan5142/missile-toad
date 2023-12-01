@@ -2,6 +2,7 @@
 #include "missile_toad/systems/enemy.system.hpp"
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
+#include "missile_toad/bullet_utils.hpp"
 #include "missile_toad/components/caracool.component.hpp"
 #include "missile_toad/components/experimento_m.component.hpp"
 #include "missile_toad/components/health.component.hpp"
@@ -134,9 +135,12 @@ void missiletoad::EnemySystem::on_update(float delta_time)
             {
                 sprite.flip_x = false;
             }
+
             rigidbody.set_linear_velocity({0.0F, 0.0F});
+
             if (!sprite_animation.is_playing())
             {
+                createBullet(transform.position, player_transform.position, 5.0F, 10.0F, true);
                 enemy.state_machine.process_event(missiletoad::ExperimentoMIdleEvent());
                 animation.get_state().play(true);
                 animation.force_transition_to("idle");
