@@ -1,13 +1,16 @@
 
 #include "missile_toad/systems/bullet.system.hpp"
 #include "missile_engine/asset_manager.hpp"
+#include "missile_engine/components/tag.component.hpp"
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_engine/input_manager.hpp"
 #include "missile_toad/components/bullet.component.hpp"
+#include "missile_toad/components/health.component.hpp"
 
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
+#include <glm/glm.hpp>
 
 missiletoad::BulletSystem::BulletSystem(missileengine::Game *game)
 {
@@ -27,10 +30,6 @@ void missiletoad::BulletSystem::register_system(entt::meta_ctx &ctx)
 void missiletoad::BulletSystem::on_start()
 {
     spdlog::trace("missiletoad::BulletSystem::on_start() called.");
-}
-
-void move_bullet()
-{
 }
 
 void missiletoad::BulletSystem::on_update(float delta_time)

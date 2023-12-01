@@ -15,12 +15,15 @@ namespace missiletoad
 
         void take_damage(float damage)
         {
+            spdlog::info("Enemy has {} hp and takes {} dp", health, damage);
             if (health - damage < 0.0F)
             {
                 health = 0.0F;
+                spdlog::info("Enemy has {} health points.", health);
                 return;
             }
             health -= damage;
+            spdlog::info("Enemy has {} health points left.", health);
         }
         bool is_dead() const
         {

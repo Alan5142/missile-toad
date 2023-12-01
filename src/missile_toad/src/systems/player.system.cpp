@@ -4,10 +4,13 @@
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_engine/input_manager.hpp"
+#include "missile_toad/components/health.component.hpp"
 #include "missile_toad/components/player.component.hpp"
 
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
+#include <glm/glm.hpp>
+#include <glm/vec2.hpp>
 #include <missile_engine/components/circle_collider_2d.component.hpp>
 
 void configure_player_axis(missileengine::Game *game)
@@ -121,6 +124,8 @@ void missiletoad::PlayerSystem::on_start()
 
                 sprite_animation.force_transition_to("idle");
             })
+        .with_component<missiletoad::HealthComponent>()
+        .with_tag("Player")
         .build();
 }
 
@@ -144,6 +149,7 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
         auto &player    = scene_entities.get<missiletoad::PlayerComponent>(entity);
         auto &sprite    = scene_entities.get<missileengine::SpriteComponent>(entity);
         auto &animation = scene_entities.get<missileengine::SpriteAnimationComponent>(entity);
+        auto &health    = scene_entities.get<missiletoad::HealthComponent>(entity);
 
         auto move_x = input_manager.get_axis("move_x");
         auto move_y = input_manager.get_axis("move_y");
@@ -167,5 +173,15 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
         }
 
         rigidbody.set_linear_velocity({move_x * player.player_speed, move_y * player.player_speed});
+
+        sprite.color = glm::mix(glm::u8vec4{255, 255, 255, 255}, glm::u8vec4{255, 0, 0, 255},
+                                1.0F - health.get_health_percentage());
+        if (health.is_dead())
+        {
+            sprite.color = glm::u8vec4{255, 255, 255, 255};
+            rigidbody.set_linear_velocity({0.0F, 0.0F});
+            // enemy.state_machine.process_event(missiletoad::ExperimentoMDeathEvent());
+            // animation.force_transition_to("death");
+        }
     }
 }
