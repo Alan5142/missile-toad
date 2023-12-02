@@ -72,14 +72,7 @@ void missiletoad::EnemySystem::on_update(float delta_time)
             sprite.color = glm::mix(glm::u8vec4{255, 255, 255, 255}, glm::u8vec4{255, 0, 0, 255},
                                     1.0F - health.get_health_percentage());
 
-            if (direction.x < 0.0F)
-            {
-                sprite.flip_x = false;
-            }
-            else
-            {
-                sprite.flip_x = true;
-            }
+            sprite.flip_x = direction.x >= 0.0F;
 
             if (health.is_dead())
             {
@@ -127,14 +120,8 @@ void missiletoad::EnemySystem::on_update(float delta_time)
         {
             auto  direction        = player_transform.position - transform.position;
             auto &sprite_animation = scene.get_component<missileengine::SpriteAnimationComponent>(entity);
-            if (direction.x < 0.0F)
-            {
-                sprite.flip_x = true;
-            }
-            else
-            {
-                sprite.flip_x = false;
-            }
+
+            sprite.flip_x = direction.x >= 0.0F;
 
             rigidbody.set_linear_velocity({0.0F, 0.0F});
 

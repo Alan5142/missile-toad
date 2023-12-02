@@ -60,7 +60,7 @@ void missiletoad::HubSystem::on_start()
     auto ldtk_project = game.asset_manager().load<ldtk::Project>("/assets/levels/testRoom.ldtk");
 
     // get a world
-    auto &world = ldtk_project->getWorld("");
+    const auto &world = ldtk_project->getWorld("");
 
     // TODO: To be removed in the future.
     for (const auto &level : world.allLevels())
