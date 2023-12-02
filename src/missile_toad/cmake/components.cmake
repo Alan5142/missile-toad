@@ -10,4 +10,3 @@ include_component(missile_toad/components/bullet.component.hpp src/components/bu
 include_component(missile_toad/components/experimento_m.component.hpp src/components/experimento_m.component.cpp missiletoad::ExperimentoMComponent)
 include_component(missile_toad/components/caracool.component.hpp src/components/caracool.component.cpp missiletoad::CaracoolComponent)
 include_component(missile_toad/components/king_mecha_rat.component.hpp src/components/king_mecha_rat.component.cpp missiletoad::KingMechaRatComponent)
-include_component(missile_toad/components/dialog.component.hpp src/components/dialog.component.cpp missiletoad::DialogComponent)
