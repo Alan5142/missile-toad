@@ -135,6 +135,11 @@ namespace missileengine
          */
         void set_timer(Timer timer);
 
+        [[nodiscard]] bool is_playing() const
+        {
+            return is_playing_;
+        }
+
         /**
          * Adds a frame to the animation.
          * @param frame frame
@@ -235,7 +240,7 @@ namespace missileengine
          * Gets the hash of the name of the state.
          * @return
          */
-        std::size_t name_hash() const
+        [[nodiscard]] std::size_t name_hash() const
         {
             return name_hash_;
         }
@@ -308,6 +313,16 @@ namespace missileengine
          * @param delta_time delta time
          */
         void update(std::chrono::duration<float> delta_time) noexcept;
+
+        [[nodiscard]] bool is_finished() const
+        {
+            return this->get_state().get_frame() == this->get_state().get_frame_count() - 1;
+        }
+
+        [[nodiscard]] bool is_playing() const
+        {
+            return this->get_state().is_playing();
+        }
 
     private:
         /**

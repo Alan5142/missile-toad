@@ -4,10 +4,14 @@
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_engine/input_manager.hpp"
+#include "missile_toad/components/health.component.hpp"
 #include "missile_toad/components/player.component.hpp"
 
 #include <entt/meta/factory.hpp>
 #include <entt/meta/meta.hpp>
+#include <glm/glm.hpp>
+#include <glm/vec2.hpp>
+#include <missile_engine/components/circle_collider_2d.component.hpp>
 
 void configure_player_axis(missileengine::Game *game)
 {
@@ -71,7 +75,7 @@ void missiletoad::PlayerSystem::on_start()
         .with_component_using_function<missileengine::TransformComponent>(
             [&](auto &transform)
             {
-                constexpr auto player_position = glm::vec2{10.0F, 10.0F};
+                constexpr auto player_position = glm::vec2{10.0F, 5.0F};
                 transform.position             = player_position;
                 transform.scale                = {player_transform_scale};
             })
@@ -84,8 +88,44 @@ void missiletoad::PlayerSystem::on_start()
             std::move(player_texture))
         .with_component_using_function<missileengine::Rigidbody2dComponent>([](auto &rigidbody)
                                                                             { rigidbody.set_static(false); })
-        .with_component<missileengine::BoxCollider2dComponent>()
+        .with_component<missileengine::CircleCollider2dComponent>()
         .with_component<missiletoad::PlayerComponent>()
+        .with_component_using_function<missileengine::SpriteAnimationComponent>(
+            [&](auto &sprite_animation)
+            {
+                using namespace std::chrono_literals;
+                auto idle_state = missileengine::SpriteAnimationState("idle");
+
+                for (int i = 1; i <= 18; i++)
+                {
+                    auto idle_texture = game.asset_manager().load<missileengine::Texture>(
+                        "/assets/sprites/player/idle/Toad" + std::to_string(i) + ".png");
+                    idle_state.add_frame(idle_texture);
+                }
+                idle_state.set_timer(missileengine::TimerBuilder().with_interval(67ms).with_loop(true).build());
+                idle_state.play(true); // Play the animation
+                idle_state.loop(true); // Loop the animation until a transition is triggered or the animation is stopped
+
+                sprite_animation.add_state("idle", idle_state);
+
+                auto run_state = missileengine::SpriteAnimationState("run");
+
+                for (int i = 1; i <= 13; i += 2)
+                {
+                    auto run_texture = game.asset_manager().load<missileengine::Texture>(
+                        "/assets/sprites/player/move/Toad move" + std::to_string(i) + ".png");
+                    run_state.add_frame(run_texture);
+                }
+                run_state.set_timer(missileengine::TimerBuilder().with_interval(20ms).with_loop(true).build());
+                run_state.play(true); // Play the animation
+                run_state.loop(true); // Loop the animation until a transition is triggered or the animation is stopped
+
+                sprite_animation.add_state("run", run_state);
+
+                sprite_animation.force_transition_to("idle");
+            })
+        .with_component<missiletoad::HealthComponent>()
+        .with_tag("Player")
         .build();
 }
 
@@ -98,14 +138,50 @@ void missiletoad::PlayerSystem::on_update(float delta_time)
 
     auto view = scene_entities.view<missiletoad::PlayerComponent>();
 
+    if (game.input_manager().is_key_pressed(missileengine::EKey::H))
+    {
+        game.set_debug_mode(!game.debug_mode());
+    }
+
     for (auto entity : view)
     {
         auto &rigidbody = scene_entities.get<missileengine::Rigidbody2dComponent>(entity);
         auto &player    = scene_entities.get<missiletoad::PlayerComponent>(entity);
+        auto &sprite    = scene_entities.get<missileengine::SpriteComponent>(entity);
+        auto &animation = scene_entities.get<missileengine::SpriteAnimationComponent>(entity);
+        auto &health    = scene_entities.get<missiletoad::HealthComponent>(entity);
 
         auto move_x = input_manager.get_axis("move_x");
         auto move_y = input_manager.get_axis("move_y");
 
+        if (move_x < 0)
+        {
+            sprite.flip_x = false;
+        }
+        else if (move_x > 0)
+        {
+            sprite.flip_x = true;
+        }
+
+        if (move_x != 0 || move_y != 0)
+        {
+            animation.force_transition_to("run");
+        }
+        else
+        {
+            animation.force_transition_to("idle");
+        }
+
         rigidbody.set_linear_velocity({move_x * player.player_speed, move_y * player.player_speed});
+
+        sprite.color = glm::mix(glm::u8vec4{255, 255, 255, 255}, glm::u8vec4{255, 0, 0, 255},
+                                1.0F - health.get_health_percentage());
+        if (health.is_dead())
+        {
+            sprite.color = glm::u8vec4{255, 255, 255, 255};
+            rigidbody.set_linear_velocity({0.0F, 0.0F});
+            // enemy.state_machine.process_event(missiletoad::ExperimentoMDeathEvent());
+            // animation.force_transition_to("death");
+        }
     }
 }

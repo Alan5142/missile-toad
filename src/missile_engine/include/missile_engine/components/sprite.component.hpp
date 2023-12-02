@@ -28,6 +28,8 @@ namespace missileengine
          */
         uint32_t z_index = 0;
 
+        bool flip_x = false;
+
         glm::u8vec4 color = WHITE_COLOR;
 
         /**

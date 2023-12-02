@@ -4,7 +4,9 @@
 #include "missile_engine/core_components.hpp"
 #include "missile_engine/game.hpp"
 #include "missile_engine/input_manager.hpp"
+#include "missile_toad/bullet_utils.hpp"
 #include "missile_toad/components/bullet.component.hpp"
+#include "missile_toad/components/health.component.hpp"
 #include "missile_toad/components/player.component.hpp"
 #include "missile_toad/components/turret.component.hpp"
 #include "missile_toad/systems/player.system.hpp"
@@ -67,7 +69,6 @@ void missiletoad::TurretSystem::on_fixed_update(float delta_time)
     unused(delta_time);
 
     auto &game           = missileengine::Game::get_instance();
-    auto &scene          = game.active_scene();
     auto &scene_entities = game.active_scene().get_registry();
     auto &input_manager  = game.input_manager();
     auto  mouse_input    = input_manager.get_mouse_position();
@@ -87,11 +88,12 @@ void missiletoad::TurretSystem::on_fixed_update(float delta_time)
                 auto &camera           = scene_entities.get<missileengine::Camera2dComponent>(camera_entity);
                 auto &player_transform = scene_entities.get<missileengine::TransformComponent>(player_entity);
 
-                auto mouse_position     = camera.get_screen_to_world(mouse_input);
+                auto mouse_position = camera.get_screen_to_world(mouse_input);
+                // the frog is only required to move the turret to the belt of the frog
                 auto player_coordinates = player_transform.position;
 
                 turret_transform.position.x = player_coordinates.x - 0.1f;
-                turret_transform.position.y = player_coordinates.y - 0.25f;
+                turret_transform.position.y = player_coordinates.y - 0.45f;
 
                 auto turret_coordinates = turret_transform.position;
 
@@ -112,73 +114,7 @@ void missiletoad::TurretSystem::on_fixed_update(float delta_time)
 
                 if (is_shooting == missileengine::EActionState::PRESSED)
                 {
-                    spdlog::info("Is shooting {}", is_shooting);
-
-                    // Create bullet
-
-                    auto bullet_texture =
-                        game.asset_manager().load<missileengine::Texture>("/assets/sprites/bullets/bala.png");
-                    const auto bullet_transform_scale = glm::vec2{1.0F, 1.0F};
-                    const auto normalized_vector      = glm::normalize(mouse_position - turret_transform.position);
-
-                    scene.create_entity()
-                        .with_component_using_function<missileengine::TransformComponent>(
-                            [&](auto &transform)
-                            {
-                                transform.position = normalized_vector * 1.2F + turret_transform.position;
-                                transform.scale    = {bullet_transform_scale};
-                            })
-                        .with_component_using_function<missileengine::SpriteComponent>(
-                            [&](auto &sprite)
-                            {
-                                constexpr uint32_t bullet_z_index = 101;
-                                sprite.z_index                    = bullet_z_index;
-                            },
-                            std::move(bullet_texture))
-                        .with_component_using_function<missileengine::Rigidbody2dComponent>(
-                            [](auto &rigidbody)
-                            {
-                                rigidbody.set_static(false);
-                                rigidbody.set_is_bullet(true);
-                            })
-                        .with_component<missileengine::BoxCollider2dComponent>()
-                        .with_component<missiletoad::BulletComponent>(5.0f, normalized_vector)
-                        .with_component<missileengine::Collision2dComponent>(
-                            [](auto self, auto other, auto status)
-                            {
-                                auto &game         = missileengine::Game::get_instance();
-                                auto &scene        = game.active_scene();
-                                bool  is_colliding = status == missileengine::ECollisionStatus::ENTER;
-
-                                auto other_tag = scene.try_get_component<missileengine::TagComponent>(other);
-
-                                if (other_tag == nullptr)
-                                {
-                                    return;
-                                }
-
-                                spdlog::info("Other tag: {}", other_tag->tag);
-
-                                if (is_colliding && other_tag->tag == "Room")
-                                {
-                                    spdlog::info("Collission happening with Room");
-                                    scene.get_registry().destroy(self);
-                                }
-                                else if (is_colliding && other_tag->tag == "Enemy")
-                                {
-                                    spdlog::info("Collission happening with Enemy");
-                                    scene.get_registry().destroy(self);
-                                }
-                                else if (scene.try_get_component<missiletoad::BulletComponent>(other) != nullptr)
-                                {
-                                    scene.get_registry().destroy(self);
-                                }
-                                else
-                                {
-                                    spdlog::info("Collission happening with unknown object");
-                                }
-                            })
-                        .build();
+                    create_bullet(turret_transform.position, mouse_position, 5.0F, 10.0F, false);
                 }
             }
         }

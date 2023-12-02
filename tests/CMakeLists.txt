@@ -3,7 +3,7 @@
 # Running the tests
 
 set(TEST_SOURCES
-        src/core/timer.cpp src/core/physics.cpp src/core/locator.cpp
+        src/core/timer.cpp src/core/physics.cpp
         src/core/game_descriptor.cpp
         src/core/meta_loader.cpp
         src/core/sprite_animation_component.cpp

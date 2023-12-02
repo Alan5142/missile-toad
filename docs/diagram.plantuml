@@ -1,4 +1,4 @@
-@startuml
+@startuml missiletoad
 skinparam classAttributeIconSize 0
 skinparam monochrome true
 skinparam backgroundColor FloralWhite
@@ -6,7 +6,7 @@ hide circle
 skinparam linetype ortho
 
 
-package missiletoad.core {
+package missileengine {
     class AssetManager {
         -texture_cache_: entt::resource_cache<Texture, TextureLoader>
         -music_cache_: entt::resource_cache<Music, MusicLoader>
@@ -22,7 +22,7 @@ package missiletoad.core {
     AssetManager --> MusicLoader
     AssetManager ..> Texture
     AssetManager ..> Music
-    AssetManager ..* missiletoad.Game
+    AssetManager ..* missileengine.Game
 
 
     abstract class BaseSystem {
@@ -130,7 +130,7 @@ package missiletoad.core {
         -process_axis()
     }
 
-    missiletoad.Game *-- InputManager
+    Game *-- InputManager
     InputManager *-- ActionData
     InputManager *-- AxisData
     InputManager ..> EKey
@@ -161,7 +161,7 @@ package missiletoad.core {
     class Scene {
         -scene_entities_: entt::registry
         -systems_: std::vector<std::unique_ptr<BaseSystem>>
-        -game_: missiletoad.Game*
+        -game_: missileengine.Game*
 
         +Scene()
         +~Scene()
@@ -177,14 +177,14 @@ package missiletoad.core {
     }
 
     Scene *-- BaseSystem
-    Scene *.. missiletoad.Game
+    Scene *.. missileengine.Game
 
     class SceneManager {
         -active_scene_: std::unique_ptr<Scene>
         -next_scene_: std::optional<std::string>
-        -game_: missiletoad.Game*
+        -game_: missileengine.Game*
 
-        +SceneManager(game: missiletoad.Game*)
+        +SceneManager(game: missileengine.Game*)
         +~SceneManager()
         +load_scene(name: std::string_view)
         +add_descriptor(descriptor: SceneDescriptor&&)
@@ -193,7 +193,7 @@ package missiletoad.core {
 
     SceneManager *-- SceneDescriptor
     SceneManager *-- Scene
-    SceneManager ..> missiletoad.Game
+    SceneManager ..> missileengine.Game
 
     class Texture {
         -texture_: raylib::Texture
@@ -280,6 +280,37 @@ package missiletoad.core {
         +get_friction(): float
         +get_restitution(): float
         +get_density(): float
+    }
+
+    class CircleCollider2dComponent {
+        -fixture: b2Fixture*
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +CircleCollider2dComponent()
+        +set_sensor(sensor: bool)
+        +set_friction(friction: float)
+        +set_restitution(restitution: float)
+        +set_density(density: float)
+        +set_radius(radius: float)
+        +get_fixture(): b2Fixture*
+        +is_sensor(): bool
+        +get_friction(): float
+        +get_restitution(): float
+        +get_density(): float
+    }
+
+    class Collision2dComponent {
+        +callback: std::function<void(entt::entity self, entt::entity other, ECollisionStatus status)>
+    }
+
+    class DisabledComponent {
+        {static} +register_component(ctx: entt::meta_ctx&)
+    }
+
+    class LineRendererComponent {
+        +start: glm::vec2
+        +end: glm::vec2
+        +color: glm::u8vec4
+        +width: float
     }
 
     class Camer2dComponent {
@@ -369,7 +400,7 @@ package missiletoad.core {
         -world_: b2World
         -transform_observer_: entt::observer
         -registry_: entt::registry*
-        -game_: missiletoad.Game*
+        -game_: Game*
         {static} +register_system(ctx: entt::meta_ctx&)
         +PhysicsSystem(game: Game*)
         +~PhysicsSystem()
@@ -378,58 +409,66 @@ package missiletoad.core {
         -on_rigidbody_created(entt::registry&, entt::entity)
     }
 
-    PhysicsSystem *.. missiletoad.Game
+    PhysicsSystem *.. Game
     PhysicsSystem ..> BoxCollider2dComponent
     PhysicsSystem ..> Rigidbody2dComponent
     PhysicsSystem ..> TransformComponent
+    PhysicsSystem ..> Camer2dComponent
+    PhysicsSystem ..> CircleCollider2dComponent
+    PhysicsSystem ..> Collision2dComponent
+    PhysicsSystem ..> DisabledComponent
 
     class RendererSystem extends BaseSystem {
         -registry_: entt::registry*
 
         {static} +register_system(ctx: entt::meta_ctx&)
-        +RendererSystem(game: missiletoad.Game*)
+        +RendererSystem(game: Game*)
         +on_render()
     }
 
-    RendererSystem *.. missiletoad.Game
+    RendererSystem *.. Game
     RendererSystem ..> SpriteComponent
     RendererSystem ..> TransformComponent
     RendererSystem ..> Camer2dComponent
     RendererSystem ..> BoxCollider2dComponent
     RendererSystem ..> Rigidbody2dComponent
+    RendererSystem ..> CircleCollider2dComponent
+    RendererSystem ..> LineRendererComponent
+    RendererSystem ..> SpriteAnimation
+    RendererSystem ..> DisabledComponent
 
     class SpriteAnimationSystem extends BaseSystem {
         -registry: entt::registry*
 
         {static} +register_system(ctx: entt::meta_ctx&)
-        +SpriteAnimationSystem(game: missiletoad.Game*)
+        +SpriteAnimationSystem(game: missileengine.Game*)
         +on_update(delta_time: float)
     }
 
-    SpriteAnimationSystem *.. missiletoad.Game
+    SpriteAnimationSystem *.. missileengine.Game
     SpriteAnimationSystem ..> SpriteAnimation
     SpriteAnimationSystem ..> SpriteComponent
+    SpriteAnimationSystem ..> DisabledComponent
 
     class AudioSystem extends BaseSystem {
         -registry: entt::registry*
 
         {static} +register_system(ctx: entt::meta_ctx&)
-        +AudioSystem(game: missiletoad.Game*)
+        +AudioSystem(game: missileengine.Game*)
         +on_update(delta_time: float)
     }
 
-    AudioSystem *.. missiletoad.Game
+    AudioSystem *.. missileengine.Game
     AudioSystem ..> AudioComponent
-}
+    AudioSystem ..> DisabledComponent
 
-package missiletoad {
     class Game {
         -systems_meta_ctx_: entt::meta_ctx
         -components_meta_ctx_: entt::meta_ctx
-        -systems_: std::vector<std::unique_ptr<missiletoad.core.BaseSystem>>
-        -asset_manager_: missiletoad.core.AssetManager
-        -scene_manager_: std::unique_ptr<missiletoad.core.SceneManager>
-        -input_manager_: std::unique_ptr<missiletoad.core.InputManager>
+        -systems_: std::vector<std::unique_ptr<missileengine.BaseSystem>>
+        -asset_manager_: missileengine.AssetManager
+        -scene_manager_: std::unique_ptr<missileengine.SceneManager>
+        -input_manager_: std::unique_ptr<missileengine.InputManager>
         -nuklear_context_: std::unique_ptr<nk_context, void(*)(nk_context*)>
         -window: raylib::Window
         -debug_mode_: bool
@@ -439,9 +478,9 @@ package missiletoad {
         +{static} get_instance(): Game&
         +run(): int
         +close()
-        +asset_manager(): missiletoad.core.AssetManager&
-        +scene_manager(): missiletoad.core.SceneManager&
-        +input_manager(): missiletoad.core.InputManager&
+        +asset_manager(): missileengine.AssetManager&
+        +scene_manager(): missileengine.SceneManager&
+        +input_manager(): missileengine.InputManager&
         +systems_meta_ctx(): entt::meta_ctx&
         +components_meta_ctx(): entt::meta_ctx&
         -update(delta_time: float)
@@ -450,10 +489,10 @@ package missiletoad {
         -debug_gui()
     }
 
-    Game *-- missiletoad.core.SceneManager
-    Game *-- missiletoad.core.AssetManager
-    Game *-- missiletoad.core.BaseSystem
-    Game ..> missiletoad.core.GameDescriptor
+    Game *-- SceneManager
+    Game *-- AssetManager
+    Game *-- BaseSystem
+    Game ..> GameDescriptor
 }
 
 @enduml

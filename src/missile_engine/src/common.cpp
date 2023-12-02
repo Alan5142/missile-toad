@@ -21,7 +21,7 @@ std::optional<std::pair<std::unique_ptr<uint8_t[]>, size_t>> missileengine::load
     PHYSFS_sint64 size = PHYSFS_fileLength(file);
 
     // Allocate memory for the file
-    auto data = std::make_unique<uint8_t[]>(size); // NOLINT(*-avoid-c-arrays)
+    auto data = std::make_unique<uint8_t[]>(static_cast<size_t>(size)); // NOLINT(*-avoid-c-arrays)
 
     // Read the file into memory
     if (PHYSFS_readBytes(file, data.get(), size) == -1)

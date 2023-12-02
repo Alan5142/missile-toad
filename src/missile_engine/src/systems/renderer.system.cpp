@@ -112,6 +112,11 @@ void missileengine::RendererSystem::draw_sprite(const entt::entity entity)
     const auto scale_x = (rectangle_src.width / PIXELS_PER_UNIT) * transform.scale.x;
     const auto scale_y = (rectangle_src.height / PIXELS_PER_UNIT) * transform.scale.y;
 
+    if (sprite.flip_x)
+    {
+        rectangle_src.x += rectangle_src.width;
+        rectangle_src.width *= -1;
+    }
     auto rectangle_dest = Rectangle{.x      = PIXELS_PER_UNIT * transform.position.x,
                                     .y      = PIXELS_PER_UNIT * transform.position.y,
                                     .width  = PIXELS_PER_UNIT * scale_x,

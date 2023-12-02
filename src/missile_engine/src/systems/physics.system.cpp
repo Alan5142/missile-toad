@@ -65,16 +65,22 @@ private:
 
         auto &registry = game_->active_scene().get_registry();
 
-        auto *collision_a = registry.try_get<missileengine::Collision2dComponent>(entity_a);
-        auto *collision_b = registry.try_get<missileengine::Collision2dComponent>(entity_b);
-
-        if (collision_a != nullptr)
+        if (registry.valid(entity_a))
         {
-            collision_a->callback(entity_a, entity_b, status);
+            auto *collision_a = registry.try_get<missileengine::Collision2dComponent>(entity_a);
+            if (collision_a != nullptr)
+            {
+                collision_a->callback(entity_a, entity_b, status);
+            }
         }
-        if (collision_b != nullptr)
+
+        if (registry.valid(entity_b))
         {
-            collision_b->callback(entity_b, entity_a, status);
+            auto *collision_b = registry.try_get<missileengine::Collision2dComponent>(entity_b);
+            if (collision_b != nullptr)
+            {
+                collision_b->callback(entity_b, entity_a, status);
+            }
         }
     }
 };
@@ -103,6 +109,8 @@ missileengine::PhysicsSystem::PhysicsSystem(missileengine::Game *game)
 
     registry_->on_construct<DisabledComponent>().connect<&PhysicsSystem::on_entity_disabled>(this);
     registry_->on_destroy<DisabledComponent>().connect<&PhysicsSystem::on_entity_enabled>(this);
+
+    registry_->on_destroy<Rigidbody2dComponent>().connect<&PhysicsSystem::on_rigidbody_destroyed>(this);
 
     registry_->on_construct<CircleCollider2dComponent>().connect<&PhysicsSystem::on_circle_collider_created>(this);
 }
@@ -150,12 +158,17 @@ void missileengine::PhysicsSystem::on_fixed_update(float delta_time)
             auto *circle_collider = registry_->try_get<missileengine::CircleCollider2dComponent>(entity);
             if (circle_collider != nullptr)
             {
-                circle_collider->set_size(transform.scale.x);
+                circle_collider->set_size(transform.scale.x / 2.0F);
             }
         });
 
     // Update the physics bodies
     world_->Step(delta_time, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+    for (auto *body : rigidbodies_to_destroy_)
+    {
+        world_->DestroyBody(body);
+    }
+    rigidbodies_to_destroy_.clear();
 
     // After updating the physics bodies, we need to update the transforms with the physics bodies.
     std::for_each(rigidbody_view.begin(), rigidbody_view.end(),
@@ -252,5 +265,14 @@ void missileengine::PhysicsSystem::on_entity_enabled(entt::registry &registry, e
     if (rigidbody != nullptr)
     {
         rigidbody->body_->SetEnabled(true);
+    }
+}
+
+void missileengine::PhysicsSystem::on_rigidbody_destroyed(entt::registry &registry, entt::entity entity)
+{
+    auto *rigidbody = registry.try_get<Rigidbody2dComponent>(entity);
+    if (rigidbody != nullptr)
+    {
+        rigidbodies_to_destroy_.push_back(rigidbody->body_);
     }
 }

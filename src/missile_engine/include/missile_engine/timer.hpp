@@ -1,7 +1,6 @@
 #pragma once
 
 #include "common.hpp"
-#include "locator.hpp"
 #include <chrono>
 
 namespace missileengine

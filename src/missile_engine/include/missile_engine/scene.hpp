@@ -170,8 +170,9 @@ namespace missileengine
             return scene_entities_.try_get<T>(entity);
         }
 
-        void segment_loader(ldtk::Project &project, std::string_view ldtk_world, int level_id,
-                            const std::vector<LayerInfo> &layers);
+        void segment_loader(const ldtk::World &ldtk_world, std::string_view level_name,
+                            const std::vector<LayerInfo>             &layers,
+                            std::function<void(const ldtk::Entity &)> on_entity_create = {});
 
         entt::entity get_entity_with_tag(std::string_view tag);
 

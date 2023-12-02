@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="2337px" preserveAspectRatio="none" style="width:5425px;height:2337px;background:#FAFAFA;" version="1.1" viewBox="0 0 5425 2337" width="5425px" zoomAndPan="magnify"><defs><filter height="300%" id="f1ir1lg6khav7" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[2ce214e9e5b5ee944c062cb0d493eb51]
+cluster missileengine--><polygon fill="#FAFAFA" filter="url(#f1ir1lg6khav7)" points="22,24,136,24,143,46.2969,5403,46.2969,5403,2325,22,2325,22,24" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="22" x2="143" y1="46.2969" y2="46.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="108" x="26" y="38.9951">missileengine</text><!--MD5=[150e47210c0e7cb94589d06a27babd47]
+class AssetManager--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="129.6016" id="AssetManager" style="stroke: #383838; stroke-width: 1.5;" width="433" x="1231.5" y="1537"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="90" x="1403" y="1553.1387">AssetManager</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1232.5" x2="1663.5" y1="1560.9688" y2="1560.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="368" x="1237.5" y="1575.1792">-texture_cache_: entt::resource_cache&lt;Texture, TextureLoader&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="340" x="1237.5" y="1587.9839">-music_cache_: entt::resource_cache&lt;Music, MusicLoader&gt;</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1232.5" x2="1663.5" y1="1594.5781" y2="1594.5781"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="178" x="1237.5" y="1608.7886">+AssetManager(game: Game*)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="107" x="1237.5" y="1621.5933">+~AssetManager()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="421" x="1237.5" y="1634.3979">+push_asset_folder(path: std::string_view, mount_point: std::string_view)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="283" x="1237.5" y="1647.2026">+pop_asset_folder(mount_point: std::string_view)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="303" x="1237.5" y="1660.0073">+load&lt;T&gt;(path: std::string_view): entt::resource&lt;T&gt;</text><!--MD5=[ef17a2c56507b18975f382afa06bdcc4]
+class TextureLoader--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="52.7734" id="TextureLoader" style="stroke: #383838; stroke-width: 1.5;" width="373" x="1044.5" y="1848.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="90" x="1186" y="1864.6387">TextureLoader</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1045.5" x2="1416.5" y1="1872.4688" y2="1872.4688"/><line style="stroke: #383838; stroke-width: 1.5;" x1="1045.5" x2="1416.5" y1="1880.4688" y2="1880.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="361" x="1050.5" y="1894.6792">+operator()(name: std::string_view): std::shared_ptr&lt;Texture&gt;</text><!--MD5=[ca9d0b8d59b06d991b2609fcec44c744]
+class MusicLoader--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="52.7734" id="MusicLoader" style="stroke: #383838; stroke-width: 1.5;" width="362" x="647" y="1848.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="78" x="789" y="1864.6387">MusicLoader</text><line style="stroke: #383838; stroke-width: 1.5;" x1="648" x2="1008" y1="1872.4688" y2="1872.4688"/><line style="stroke: #383838; stroke-width: 1.5;" x1="648" x2="1008" y1="1880.4688" y2="1880.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="350" x="653" y="1894.6792">+operator()(name: std::string_view): std::shared_ptr&lt;Music&gt;</text><!--MD5=[0d6a1e50063dbdab83456c09ed84e66c]
+class Texture--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="155.2109" id="Texture" style="stroke: #383838; stroke-width: 1.5;" width="298" x="1716" y="2109"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="47" x="1841.5" y="2125.1387">Texture</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1717" x2="2013" y1="2132.9688" y2="2132.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="140" x="1722" y="2147.1792">-texture_: raylib::Texture</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1717" x2="2013" y1="2153.7734" y2="2153.7734"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="60" x="1722" y="2167.9839">+Texture()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="210" x="1722" y="2180.7886">+Texture(texture: raylib::Texture&amp;&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="171" x="1722" y="2193.5933">+Texture(texture: Texture&amp;&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="69" x="1722" y="2206.3979">+~Texture()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="247" x="1722" y="2219.2026">+operator=(texture: Texture&amp;&amp;): Texture&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="286" x="1722" y="2232.0073">+operator=(texture: raylib::Texture&amp;&amp;): Texture&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="181" x="1722" y="2244.812">+get_texture(): raylib::Texture&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="231" x="1722" y="2257.6167">+set_texture(texture: raylib::Texture&amp;&amp;)</text><!--MD5=[f1ec3f79efb0fc13b8283411293f9a6c]
+class Music--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="103.9922" id="Music" style="stroke: #383838; stroke-width: 1.5;" width="414" x="621" y="2134.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="35" x="810.5" y="2150.6387">Music</text><line style="stroke: #383838; stroke-width: 1.5;" x1="622" x2="1034" y1="2158.4688" y2="2158.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="123" x="627" y="2172.6792">-music_: raylib::Music</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="202" x="627" y="2185.4839">-buffer_: std::unique_ptr&lt;uint8_t[]&gt;</text><line style="stroke: #383838; stroke-width: 1.5;" x1="622" x2="1034" y1="2192.0781" y2="2192.0781"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="402" x="627" y="2206.2886">+Music(music: raylib::Music&amp;&amp;, buffer: std::unique_ptr&lt;uint8_t[]&gt;&amp;&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="164" x="627" y="2219.0933">+get_music(): raylib::Music&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="208" x="627" y="2231.8979">+set_music(music: raylib::Music&amp;&amp;)</text><!--MD5=[608a63b43c5cb1a79025bb1f6da89709]
+class missileengine.Game--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="39.9688" id="missileengine.Game" style="stroke: #383838; stroke-width: 1.5;" width="42" x="1490" y="1855"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="36" x="1493" y="1871.1387">Game</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1491" x2="1531" y1="1878.9688" y2="1878.9688"/><line style="stroke: #383838; stroke-width: 1.5;" x1="1491" x2="1531" y1="1886.9688" y2="1886.9688"/><!--MD5=[f7b52a8868d2f50bf08b10db99fef024]
+class BaseSystem--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="116.7969" id="BaseSystem" style="stroke: #383838; stroke-width: 1.5;" width="213" x="2106.5" y="1341"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="75" x="2175.5" y="1357.1387">BaseSystem</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2107.5" x2="2318.5" y1="1364.9688" y2="1364.9688"/><line style="stroke: #383838; stroke-width: 1.5;" x1="2107.5" x2="2318.5" y1="1372.9688" y2="1372.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="98" x="2112.5" y="1387.1792">+~BaseSystem()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="64" x="2112.5" y="1399.9839">+on_start()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="168" x="2112.5" y="1412.7886">+on_update(delta_time: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="201" x="2112.5" y="1425.5933">+on_fixed_update(delta_time: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="80" x="2112.5" y="1438.3979">+on_destroy()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="75" x="2112.5" y="1451.2026">+on_render()</text><!--MD5=[bb9048415facd5e1e8c7a8db0fe6f25e]
+class PathFolder--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="65.5781" id="PathFolder" style="stroke: #383838; stroke-width: 1.5;" width="158" x="2265" y="1138.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="68" x="2310" y="1154.6387">PathFolder</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2266" x2="2422" y1="1162.4688" y2="1162.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="101" x="2271" y="1176.6792">+path: std::string</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="146" x="2271" y="1189.4839">+mount_point: std::string</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2266" x2="2422" y1="1196.0781" y2="1196.0781"/><!--MD5=[6a8ab968cb86dde6cd31af0111c5ae0b]
+class GameDescriptor--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="78.3828" id="GameDescriptor" style="stroke: #383838; stroke-width: 1.5;" width="253" x="2217.5" y="764"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="101" x="2293.5" y="780.1387">GameDescriptor</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2218.5" x2="2469.5" y1="787.9688" y2="787.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="108" x="2223.5" y="802.1792">+name: std::string</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="155" x="2223.5" y="814.9839">+default_scene: std::string</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="241" x="2223.5" y="827.7886">+assets_folders: std::vector&lt;PathFolder&gt;</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2218.5" x2="2469.5" y1="834.3828" y2="834.3828"/><!--MD5=[d16d1d8abfe2fe7ce8952235e284bb8f]
+class EKey--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="52.7734" id="EKey" style="stroke: #383838; stroke-width: 1.5;" width="35" x="539.5" y="1848.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="29" x="542.5" y="1864.6387">EKey</text><line style="stroke: #383838; stroke-width: 1.5;" x1="540.5" x2="573.5" y1="1872.4688" y2="1872.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="12" x="545.5" y="1886.6792">...</text><line style="stroke: #383838; stroke-width: 1.5;" x1="540.5" x2="573.5" y1="1893.2734" y2="1893.2734"/><!--MD5=[ca5e232cc3e63231b81af31e750f68c3]
+class EGamepadButton--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="52.7734" id="EGamepadButton" style="stroke: #383838; stroke-width: 1.5;" width="116" x="135" y="2160"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="110" x="138" y="2176.1387">EGamepadButton</text><line style="stroke: #383838; stroke-width: 1.5;" x1="136" x2="250" y1="2183.9688" y2="2183.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="12" x="141" y="2198.1792">...</text><line style="stroke: #383838; stroke-width: 1.5;" x1="136" x2="250" y1="2204.7734" y2="2204.7734"/><!--MD5=[a240ffa2fe5eb14496ea97773e6e92ce]
+class EGamepadAxis--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="52.7734" id="EGamepadAxis" style="stroke: #383838; stroke-width: 1.5;" width="98" x="75" y="1848.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="92" x="78" y="1864.6387">EGamepadAxis</text><line style="stroke: #383838; stroke-width: 1.5;" x1="76" x2="172" y1="1872.4688" y2="1872.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="12" x="81" y="1886.6792">...</text><line style="stroke: #383838; stroke-width: 1.5;" x1="76" x2="172" y1="1893.2734" y2="1893.2734"/><!--MD5=[226be99cf56d0b82277fb0f9407abeda]
+class EActionState--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="52.7734" id="EActionState" style="stroke: #383838; stroke-width: 1.5;" width="87" x="1243.5" y="1145"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="81" x="1246.5" y="1161.1387">EActionState</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1244.5" x2="1329.5" y1="1168.9688" y2="1168.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="12" x="1249.5" y="1183.1792">...</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1244.5" x2="1329.5" y1="1189.7734" y2="1189.7734"/><!--MD5=[44ae35f038821f2b6175caa4b29ac994]
+class EMouseButton--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="52.7734" id="EMouseButton" style="stroke: #383838; stroke-width: 1.5;" width="97" x="407.5" y="1848.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="91" x="410.5" y="1864.6387">EMouseButton</text><line style="stroke: #383838; stroke-width: 1.5;" x1="408.5" x2="503.5" y1="1872.4688" y2="1872.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="12" x="413.5" y="1886.6792">...</text><line style="stroke: #383838; stroke-width: 1.5;" x1="408.5" x2="503.5" y1="1893.2734" y2="1893.2734"/><!--MD5=[49452cc14cf65cc18af94c7f6bc1c4dd]
+class GamepadAxisData--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="65.5781" id="GamepadAxisData" style="stroke: #383838; stroke-width: 1.5;" width="137" x="112.5" y="1569"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="114" x="124" y="1585.1387">GamepadAxisData</text><line style="stroke: #383838; stroke-width: 1.5;" x1="113.5" x2="248.5" y1="1592.9688" y2="1592.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="125" x="118.5" y="1607.1792">+axis: EGamepadAxis</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="84" x="118.5" y="1619.9839">+gamepad: int</text><line style="stroke: #383838; stroke-width: 1.5;" x1="113.5" x2="248.5" y1="1626.5781" y2="1626.5781"/><!--MD5=[a6156225656301888e161ce7474828f9]
+class GamepadButtonData--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="65.5781" id="GamepadButtonData" style="stroke: #383838; stroke-width: 1.5;" width="164" x="208" y="1842"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="132" x="224" y="1858.1387">GamepadButtonData</text><line style="stroke: #383838; stroke-width: 1.5;" x1="209" x2="371" y1="1865.9688" y2="1865.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="152" x="214" y="1880.1792">+button: EGamepadButton</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="84" x="214" y="1892.9839">+gamepad: int</text><line style="stroke: #383838; stroke-width: 1.5;" x1="209" x2="371" y1="1899.5781" y2="1899.5781"/><!--MD5=[b25c2810b23861bdb4f180fc717cde05]
+class AxisButton--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="65.5781" id="AxisButton" style="stroke: #383838; stroke-width: 1.5;" width="497" x="322.5" y="1569"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="66" x="538" y="1585.1387">AxisButton</text><line style="stroke: #383838; stroke-width: 1.5;" x1="323.5" x2="818.5" y1="1592.9688" y2="1592.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="481" x="328.5" y="1607.1792">+positive: std::variant&lt;std::monostate, EKey, EMouseButton, GamepadButtonData&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="485" x="328.5" y="1619.9839">+negative: std::variant&lt;std::monostate, EKey, EMouseButton, GamepadButtonData&gt;</text><line style="stroke: #383838; stroke-width: 1.5;" x1="323.5" x2="818.5" y1="1626.5781" y2="1626.5781"/><!--MD5=[813541db3c8afd20b39a54988f51aa2b]
+class Axis--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="78.3828" id="Axis" style="stroke: #383838; stroke-width: 1.5;" width="307" x="148.5" y="1360.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="24" x="290" y="1376.6387">Axis</text><line style="stroke: #383838; stroke-width: 1.5;" x1="149.5" x2="454.5" y1="1384.4688" y2="1384.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="295" x="154.5" y="1398.6792">+axis: std::variant&lt;AxisButton, GamepadAxisData&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="102" x="154.5" y="1411.4839">+dead_zone: float</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="79" x="154.5" y="1424.2886">+weight: float</text><line style="stroke: #383838; stroke-width: 1.5;" x1="149.5" x2="454.5" y1="1430.8828" y2="1430.8828"/><!--MD5=[487831d284ddf509869976dfba09593d]
+class ActionData--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="65.5781" id="ActionData" style="stroke: #383838; stroke-width: 1.5;" width="569" x="601.5" y="1138.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="69" x="851.5" y="1154.6387">ActionData</text><line style="stroke: #383838; stroke-width: 1.5;" x1="602.5" x2="1169.5" y1="1162.4688" y2="1162.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="557" x="607.5" y="1176.6792">+actions: std::vector&lt;std::variant&lt;std::monostate, EKey, EMouseButton, GamepadButtonData&gt;&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="117" x="607.5" y="1189.4839">+state: EActionState</text><line style="stroke: #383838; stroke-width: 1.5;" x1="602.5" x2="1169.5" y1="1196.0781" y2="1196.0781"/><!--MD5=[1543d35596da7cd652032452bcc641ec]
+class AxisData--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="65.5781" id="AxisData" style="stroke: #383838; stroke-width: 1.5;" width="158" x="232" y="1138.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="54" x="284" y="1154.6387">AxisData</text><line style="stroke: #383838; stroke-width: 1.5;" x1="233" x2="389" y1="1162.4688" y2="1162.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="146" x="238" y="1176.6792">+axes: std::vector&lt;Axis&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="72" x="238" y="1189.4839">+value: float</text><line style="stroke: #383838; stroke-width: 1.5;" x1="233" x2="389" y1="1196.0781" y2="1196.0781"/><!--MD5=[313835e2384f4c5003f55ee5fc6febf5]
+class InputManager--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="398.5" id="InputManager" style="stroke: #383838; stroke-width: 1.5;" width="690" x="165" y="604"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="87" x="466.5" y="620.1387">InputManager</text><line style="stroke: #383838; stroke-width: 1.5;" x1="166" x2="854" y1="627.9688" y2="627.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="320" x="171" y="642.1792">-actions_: std::unordered_map&lt;std::string, ActionData&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="295" x="171" y="654.9839">-axes_: std::unordered_map&lt;std::string, AxisData&gt;</text><line style="stroke: #383838; stroke-width: 1.5;" x1="166" x2="854" y1="661.5781" y2="661.5781"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="56" x="171" y="675.7886">+update()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="174" x="171" y="688.5933">+is_key_down(key: EKey): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="158" x="171" y="701.3979">+is_key_up(key: EKey): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="191" x="171" y="714.2026">+is_key_pressed(key: EKey): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="194" x="171" y="727.0073">+is_key_released(key: EKey): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="307" x="171" y="739.812">+is_mouse_button_down(button: EMouseButton): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="291" x="171" y="752.6167">+is_mouse_button_up(button: EMouseButton): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="324" x="171" y="765.4214">+is_mouse_button_pressed(button: EMouseButton): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="327" x="171" y="778.2261">+is_mouse_button_released(button: EMouseButton): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="422" x="171" y="791.0308">+is_gamepad_button_down(gamepad: int, button: EGamepadButton): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="406" x="171" y="803.8354">+is_gamepad_button_up(gamepad: int, button: EGamepadButton): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="439" x="171" y="816.6401">+is_gamepad_button_pressed(gamepad: int, button: EGamepadButton): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="442" x="171" y="829.4448">+is_gamepad_button_released(gamepad: int, button: EGamepadButton): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="355" x="171" y="842.2495">+get_gamepad_axis(gamepad: int, axis: EGamepadAxis): float</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="678" x="171" y="855.0542">+add_action(name: std::string_view, action: std::variant&lt;std::monostate, EKey, EMouseButton, GamepadButtonData&gt;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="215" x="171" y="867.8589">+clear_action(name: std::string_view)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="284" x="171" y="880.6636">+get_action(name: std::string_view): EActionState</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="265" x="171" y="893.4683">+is_action_down(name: std::string_view): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="249" x="171" y="906.2729">+is_action_up(name: std::string_view): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="282" x="171" y="919.0776">+is_action_pressed(name: std::string_view): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="285" x="171" y="931.8823">+is_action_released(name: std::string_view): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="259" x="171" y="944.687">+add_axis(name: std::string_view, axis: Axis)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="204" x="171" y="957.4917">+clear_axis(name: std::string_view)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="227" x="171" y="970.2964">+get_axis(name: std::string_view): float</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="105" x="171" y="983.1011">-process_actions()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="87" x="171" y="995.9058">-process_axis()</text><!--MD5=[b6dcce5e5ef3c84b0b048d11301373dd]
+class Game--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="334.4766" id="Game" style="stroke: #383838; stroke-width: 1.5;" width="417" x="1935.5" y="210"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="36" x="2126" y="226.1387">Game</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1936.5" x2="2351.5" y1="233.9688" y2="233.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="205" x="1941.5" y="248.1792">-systems_meta_ctx_: entt::meta_ctx</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="226" x="1941.5" y="260.9839">-components_meta_ctx_: entt::meta_ctx</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="405" x="1941.5" y="273.7886">-systems_: std::vector&lt;std::unique_ptr&lt;missileengine.BaseSystem&gt;&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="271" x="1941.5" y="286.5933">-asset_manager_: missileengine.AssetManager</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="380" x="1941.5" y="299.3979">-scene_manager_: std::unique_ptr&lt;missileengine.SceneManager&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="367" x="1941.5" y="312.2026">-input_manager_: std::unique_ptr&lt;missileengine.InputManager&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="135" x="1941.5" y="325.0073">-window: raylib::Window</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="115" x="1941.5" y="337.812">-debug_mode_: bool</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1936.5" x2="2351.5" y1="344.4063" y2="344.4063"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="390" x="1941.5" y="358.6167">-nuklear_context_: std::unique_ptr&lt;nk_context, void(*)(nk_context*)&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="176" x="1941.5" y="371.4214">+Game(argc: int, argv: char**)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="60" x="1941.5" y="384.2261">+~Game()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="141" x="1941.5" y="397.0308">+get_instance(): Game&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="58" x="1941.5" y="409.8354">+run(): int</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="47" x="1941.5" y="422.6401">+close()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="288" x="1941.5" y="435.4448">+asset_manager(): missileengine.AssetManager&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="293" x="1941.5" y="448.2495">+scene_manager(): missileengine.SceneManager&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="280" x="1941.5" y="461.0542">+input_manager(): missileengine.InputManager&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="222" x="1941.5" y="473.8589">+systems_meta_ctx(): entt::meta_ctx&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="243" x="1941.5" y="486.6636">+components_meta_ctx(): entt::meta_ctx&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="143" x="1941.5" y="499.4683">-update(delta_time: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="176" x="1941.5" y="512.2729">-fixed_update(delta_time: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="50" x="1941.5" y="525.0776">-render()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="70" x="1941.5" y="537.8823">-debug_gui()</text><!--MD5=[d210312587eec7e369ed87052e1a1c76]
+class SceneDescriptor--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="65.5781" id="SceneDescriptor" style="stroke: #383838; stroke-width: 1.5;" width="216" x="1448" y="1138.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="104" x="1504" y="1154.6387">SceneDescriptor</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1449" x2="1663" y1="1162.4688" y2="1162.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="108" x="1454" y="1176.6792">+name: std::string</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="204" x="1454" y="1189.4839">+systems: std::vector&lt;std::string&gt;</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1449" x2="1663" y1="1196.0781" y2="1196.0781"/><!--MD5=[e4faacc5b8aef66b11ab0c816bbbc7f8]
+class Scene--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="219.2344" id="Scene" style="stroke: #383838; stroke-width: 1.5;" width="375" x="1736.5" y="1062"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="39" x="1904.5" y="1078.1387">Scene</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1737.5" x2="2110.5" y1="1085.9688" y2="1085.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="174" x="1742.5" y="1100.1792">-scene_entities_: entt::registry</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="322" x="1742.5" y="1112.9839">-systems_: std::vector&lt;std::unique_ptr&lt;BaseSystem&gt;&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="173" x="1742.5" y="1125.7886">-game_: missileengine.Game*</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1737.5" x2="2110.5" y1="1132.3828" y2="1132.3828"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="52" x="1742.5" y="1146.5933">+Scene()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="61" x="1742.5" y="1159.3979">+~Scene()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="229" x="1742.5" y="1172.2026">+add_system&lt;T, Args...&gt;(args: Args...)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="312" x="1742.5" y="1185.0073">+add_system(system: std::unique_ptr&lt;BaseSystem&gt;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="64" x="1742.5" y="1197.812">+on_start()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="80" x="1742.5" y="1210.6167">+on_destroy()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="148" x="1742.5" y="1223.4214">+update(delta_time: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="181" x="1742.5" y="1236.2261">+fixed_update(delta_time: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="55" x="1742.5" y="1249.0308">+render()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="177" x="1742.5" y="1261.8354">+get_registry(): entt::registry&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="363" x="1742.5" y="1274.6401">+get_systems(): std::vector&lt;std::unique_ptr&lt;BaseSystem&gt;&gt;&amp;</text><!--MD5=[18450c6ab1192520e36bc796a166f73b]
+class SceneManager--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="142.4063" id="SceneManager" style="stroke: #383838; stroke-width: 1.5;" width="294" x="1665" y="732"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="94" x="1765" y="748.1387">SceneManager</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1666" x2="1958" y1="755.9688" y2="755.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="230" x="1671" y="770.1792">-active_scene_: std::unique_ptr&lt;Scene&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="230" x="1671" y="782.9839">-next_scene_: std::optional&lt;std::string&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="173" x="1671" y="795.7886">-game_: missileengine.Game*</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1666" x2="1958" y1="802.3828" y2="802.3828"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="264" x="1671" y="816.5933">+SceneManager(game: missileengine.Game*)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="110" x="1671" y="829.3979">+~SceneManager()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="211" x="1671" y="842.2026">+load_scene(name: std::string_view)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="282" x="1671" y="855.0073">+add_descriptor(descriptor: SceneDescriptor&amp;&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="175" x="1671" y="867.812">+get_current_scene(): Scene&amp;</text><!--MD5=[1b844c90688aafb95cd8c95626c3b83a]
+class Timer--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="244.8438" id="Timer" style="stroke: #383838; stroke-width: 1.5;" width="308" x="3090" y="2064"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="34" x="3227" y="2080.1387">Timer</text><line style="stroke: #383838; stroke-width: 1.5;" x1="3091" x2="3397" y1="2087.9688" y2="2087.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="223" x="3096" y="2102.1792">-interval_: std::chrono::duration&lt;float&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="230" x="3096" y="2114.9839">-time_left_: std::chrono::duration&lt;float&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="101" x="3096" y="2127.7886">-is_running_: bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="66" x="3096" y="2140.5933">-loop_: bool</text><line style="stroke: #383838; stroke-width: 1.5;" x1="3091" x2="3397" y1="2147.1875" y2="2147.1875"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="183" x="3096" y="2161.3979">-callback_: std::function&lt;void()&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="223" x="3096" y="2174.2026">+Timer(callback: std::function&lt;void()&gt;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="266" x="3096" y="2187.0073">+tick(delta_time: std::chrono::duration&lt;float&gt;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="44" x="3096" y="2199.812">+start()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="42" x="3096" y="2212.6167">+stop()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="47" x="3096" y="2225.4214">+reset()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="296" x="3096" y="2238.2261">+set_interval(interval: std::chrono::duration&lt;float&gt;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="121" x="3096" y="2251.0308">+set_loop(loop: bool)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="108" x="3096" y="2263.8354">+is_running(): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="106" x="3096" y="2276.6401">+is_looping(): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="254" x="3096" y="2289.4448">+get_interval(): std::chrono::duration&lt;float&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="261" x="3096" y="2302.2495">+get_time_left(): std::chrono::duration&lt;float&gt;</text><!--MD5=[a15bffb45d3f6237ad10fbfd3ba41514]
+class TimerBuilder--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="155.2109" id="TimerBuilder" style="stroke: #383838; stroke-width: 1.5;" width="404" x="3671" y="1797.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="77" x="3834.5" y="1813.6387">TimerBuilder</text><line style="stroke: #383838; stroke-width: 1.5;" x1="3672" x2="4074" y1="1821.4688" y2="1821.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="223" x="3677" y="1835.6792">-interval_: std::chrono::duration&lt;float&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="66" x="3677" y="1848.4839">-loop_: bool</text><line style="stroke: #383838; stroke-width: 1.5;" x1="3672" x2="4074" y1="1855.0781" y2="1855.0781"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="183" x="3677" y="1869.2886">-callback_: std::function&lt;void()&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="225" x="3677" y="1882.0933">-TimerBuilder(builder: TimerBuilder&amp;&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="90" x="3677" y="1894.8979">+TimerBuilder()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="355" x="3677" y="1907.7026">+with_callback(callback: std::function&lt;void()&gt;): TimerBuilder&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="392" x="3677" y="1920.5073">+with_interval(interval: std::chrono::duration&lt;float&gt;): TimerBuilder&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="217" x="3677" y="1933.312">+with_loop(loop: bool): TimerBuilder&amp;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="85" x="3677" y="1946.1167">+build(): Timer</text><!--MD5=[457b6542dfa0baf629245411020d08ff]
+class BoxCollider2dComponent--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="206.4297" id="BoxCollider2dComponent" style="stroke: #383838; stroke-width: 1.5;" width="258" x="2819" y="1772"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="156" x="2870" y="1788.1387">BoxCollider2dComponent</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2820" x2="3076" y1="1795.9688" y2="1795.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="106" x="2825" y="1810.1792">-fixture: b2Fixture*</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2820" x2="3076" y1="1816.7734" y2="1816.7734"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="246" x="2825" y="1830.9839">+register_component(ctx: entt::meta_ctx&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="160" x="2825" y="1843.7886">+BoxCollider2dComponent()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="153" x="2825" y="1856.5933">+set_sensor(sensor: bool)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="152" x="2825" y="1869.3979">+set_friction(friction: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="190" x="2825" y="1882.2026">+set_restitution(restitution: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="156" x="2825" y="1895.0073">+set_density(density: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="148" x="2825" y="1907.812">+set_size(size: glm::vec2)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="143" x="2825" y="1920.6167">+get_fixture(): b2Fixture*</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="105" x="2825" y="1933.4214">+is_sensor(): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="113" x="2825" y="1946.2261">+get_friction(): float</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="132" x="2825" y="1959.0308">+get_restitution(): float</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="115" x="2825" y="1971.8354">+get_density(): float</text><!--MD5=[f39aec57941761570e5195f19a12b624]
+class CircleCollider2dComponent--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="206.4297" id="CircleCollider2dComponent" style="stroke: #383838; stroke-width: 1.5;" width="258" x="4110" y="1772"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="168" x="4155" y="1788.1387">CircleCollider2dComponent</text><line style="stroke: #383838; stroke-width: 1.5;" x1="4111" x2="4367" y1="1795.9688" y2="1795.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="106" x="4116" y="1810.1792">-fixture: b2Fixture*</text><line style="stroke: #383838; stroke-width: 1.5;" x1="4111" x2="4367" y1="1816.7734" y2="1816.7734"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="246" x="4116" y="1830.9839">+register_component(ctx: entt::meta_ctx&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="171" x="4116" y="1843.7886">+CircleCollider2dComponent()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="153" x="4116" y="1856.5933">+set_sensor(sensor: bool)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="152" x="4116" y="1869.3979">+set_friction(friction: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="190" x="4116" y="1882.2026">+set_restitution(restitution: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="156" x="4116" y="1895.0073">+set_density(density: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="146" x="4116" y="1907.812">+set_radius(radius: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="143" x="4116" y="1920.6167">+get_fixture(): b2Fixture*</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="105" x="4116" y="1933.4214">+is_sensor(): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="113" x="4116" y="1946.2261">+get_friction(): float</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="132" x="4116" y="1959.0308">+get_restitution(): float</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="115" x="4116" y="1971.8354">+get_density(): float</text><!--MD5=[ee6934b41880197efd12aa28fef0b1cd]
+class Collision2dComponent--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="52.7734" id="Collision2dComponent" style="stroke: #383838; stroke-width: 1.5;" width="523" x="3112.5" y="1848.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="139" x="3304.5" y="1864.6387">Collision2dComponent</text><line style="stroke: #383838; stroke-width: 1.5;" x1="3113.5" x2="3634.5" y1="1872.4688" y2="1872.4688"/><line style="stroke: #383838; stroke-width: 1.5;" x1="3113.5" x2="3634.5" y1="1880.4688" y2="1880.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="511" x="3118.5" y="1894.6792">+callback: std::function&lt;void(entt::entity self, entt::entity other, ECollisionStatus status)&gt;</text><!--MD5=[8a874e85a085d98578c73c012eb125cb]
+class DisabledComponent--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="52.7734" id="DisabledComponent" style="stroke: #383838; stroke-width: 1.5;" width="258" x="1860" y="1848.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="126" x="1926" y="1864.6387">DisabledComponent</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1861" x2="2117" y1="1872.4688" y2="1872.4688"/><line style="stroke: #383838; stroke-width: 1.5;" x1="1861" x2="2117" y1="1880.4688" y2="1880.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="246" x="1866" y="1894.6792">+register_component(ctx: entt::meta_ctx&amp;)</text><!--MD5=[5304bfc8f42a17f59d0e22f2729cbee6]
+class LineRendererComponent--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="91.1875" id="LineRendererComponent" style="stroke: #383838; stroke-width: 1.5;" width="161" x="2703.5" y="331.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="155" x="2706.5" y="347.6387">LineRendererComponent</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2704.5" x2="2863.5" y1="355.4688" y2="355.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="99" x="2709.5" y="369.6792">+start: glm::vec2</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="93" x="2709.5" y="382.4839">+end: glm::vec2</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="114" x="2709.5" y="395.2886">+color: glm::u8vec4</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="72" x="2709.5" y="408.0933">+width: float</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2704.5" x2="2863.5" y1="414.6875" y2="414.6875"/><!--MD5=[d54f8d2705590c18d781efad631b4e2f]
+class Camer2dComponent--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="180.8203" id="Camer2dComponent" style="stroke: #383838; stroke-width: 1.5;" width="300" x="4403" y="1784.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="128" x="4489" y="1800.6387">Camer2dComponent</text><line style="stroke: #383838; stroke-width: 1.5;" x1="4404" x2="4702" y1="1808.4688" y2="1808.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="160" x="4409" y="1822.6792">-camera_: raylib::Camera2D</text><line style="stroke: #383838; stroke-width: 1.5;" x1="4404" x2="4702" y1="1829.2734" y2="1829.2734"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="246" x="4409" y="1843.4839">+register_component(ctx: entt::meta_ctx&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="134" x="4409" y="1856.2886">+set_zoom(zoom: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="172" x="4409" y="1869.0933">+set_target(target: glm::vec2)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="170" x="4409" y="1881.8979">+set_offset(offset: glm::vec2)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="104" x="4409" y="1894.7026">+get_zoom(): float</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="138" x="4409" y="1907.5073">+get_target(): glm::vec2</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="137" x="4409" y="1920.312">+get_offset(): glm::vec2</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="288" x="4409" y="1933.1167">+get_screen_to_world(point: glm::vec2): glm::vec2</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="288" x="4409" y="1945.9214">+get_world_to_screen(point: glm::vec2): glm::vec2</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="201" x="4409" y="1958.7261">+get_camera(): raylib::Camera2D&amp;</text><!--MD5=[0b5cea74b42df41b880d6bd97a66fa29]
+class Rigidbody2dComponent--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="257.6484" id="Rigidbody2dComponent" style="stroke: #383838; stroke-width: 1.5;" width="355" x="4738.5" y="1746"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="148" x="4842" y="1762.1387">Rigidbody2dComponent</text><line style="stroke: #383838; stroke-width: 1.5;" x1="4739.5" x2="5092.5" y1="1769.9688" y2="1769.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="93" x="4744.5" y="1784.1792">-body_: b2Body*</text><line style="stroke: #383838; stroke-width: 1.5;" x1="4739.5" x2="5092.5" y1="1790.7734" y2="1790.7734"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="246" x="4744.5" y="1804.9839">+register_component(ctx: entt::meta_ctx&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="151" x="4744.5" y="1817.7886">+set_static(is_static: bool)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="226" x="4744.5" y="1830.5933">+set_linear_velocity(velocity: glm::vec2)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="273" x="4744.5" y="1843.3979">+apply_force(force: glm::vec2, point: glm::vec2)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="233" x="4744.5" y="1856.2026">+apply_force_to_center(force: glm::vec2)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="160" x="4744.5" y="1869.0073">+apply_torque(torque: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="343" x="4744.5" y="1881.812">+apply_linear_impulse(impulse: glm::vec2, point: glm::vec2)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="303" x="4744.5" y="1894.6167">+apply_linear_impulse_to_center(impulse: glm::vec2)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="167" x="4744.5" y="1907.4214">+set_is_bullet(is_bullet: bool)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="124" x="4744.5" y="1920.2261">+get_body(): b2Body*</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="96" x="4744.5" y="1933.0308">+is_static(): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="112" x="4744.5" y="1945.8354">+is_dynamic(): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="184" x="4744.5" y="1958.6401">+get_linear_velocity(): glm::vec2</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="165" x="4744.5" y="1971.4448">+get_angular_velocity(): float</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="96" x="4744.5" y="1984.2495">+is_bullet(): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="142" x="4744.5" y="1997.0542">+is_fixed_rotation(): bool</text><!--MD5=[3d89f4842d0bee4025428b4aa71b6203]
+class SpriteComponent--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="78.3828" id="SpriteComponent" style="stroke: #383838; stroke-width: 1.5;" width="258" x="2153" y="1836"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="109" x="2227.5" y="1852.1387">SpriteComponent</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2154" x2="2410" y1="1859.9688" y2="1859.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="199" x="2159" y="1874.1792">+texture: entt::resource&lt;Texture&gt;</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="103" x="2159" y="1886.9839">+z_index: uint32_t</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2154" x2="2410" y1="1893.5781" y2="1893.5781"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="246" x="2159" y="1907.7886">+register_component(ctx: entt::meta_ctx&amp;)</text><!--MD5=[24cac736e76815941e5516f05d90e918]
+class TransformComponent--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="91.1875" id="TransformComponent" style="stroke: #383838; stroke-width: 1.5;" width="258" x="5129" y="1829.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="135" x="5190.5" y="1845.6387">TransformComponent</text><line style="stroke: #383838; stroke-width: 1.5;" x1="5130" x2="5386" y1="1853.4688" y2="1853.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="117" x="5135" y="1867.6792">+position: glm::vec2</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="102" x="5135" y="1880.4839">+scale: glm::vec2</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="86" x="5135" y="1893.2886">+rotation: float</text><line style="stroke: #383838; stroke-width: 1.5;" x1="5130" x2="5386" y1="1899.8828" y2="1899.8828"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="246" x="5135" y="1914.0933">+register_component(ctx: entt::meta_ctx&amp;)</text><!--MD5=[a187f55a710015c4da85db0794286a31]
+class AudioComponent--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="65.5781" id="AudioComponent" style="stroke: #383838; stroke-width: 1.5;" width="258" x="1567" y="1842"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="107" x="1642.5" y="1858.1387">AudioComponent</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1568" x2="1824" y1="1865.9688" y2="1865.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="189" x="1573" y="1880.1792">+sound_: entt::resource&lt;Music&gt;</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1568" x2="1824" y1="1886.7734" y2="1886.7734"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="246" x="1573" y="1900.9839">+register_component(ctx: entt::meta_ctx&amp;)</text><!--MD5=[9fa0f49e9e17e04c8a755c2a9c194640]
+class SpriteAnimation--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="232.0391" id="SpriteAnimation" style="stroke: #383838; stroke-width: 1.5;" width="337" x="2446.5" y="1759"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="99" x="2565.5" y="1775.1387">SpriteAnimation</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2447.5" x2="2782.5" y1="1782.9688" y2="1782.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="115" x="2452.5" y="1797.1792">-frame_timer: Timer</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="138" x="2452.5" y="1809.9839">-current_frame: uint32_t</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="92" x="2452.5" y="1822.7886">-is_playing: bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="60" x="2452.5" y="1835.5933">-loop: bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="0" x="2456.5" y="1848.3979"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="325" x="2452.5" y="1861.2026">+texture_frames: std::vector&lt;entt::resource&lt;Texture&gt;&gt;</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2447.5" x2="2782.5" y1="1867.7969" y2="1867.7969"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="246" x="2452.5" y="1882.0073">+register_component(ctx: entt::meta_ctx&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="40" x="2452.5" y="1894.812">+play()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="42" x="2452.5" y="1907.6167">+stop()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="56" x="2452.5" y="1920.4214">+update()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="47" x="2452.5" y="1933.2261">+reset()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="121" x="2452.5" y="1946.0308">+set_loop(loop: bool)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="105" x="2452.5" y="1958.8354">+is_playing(): bool</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="175" x="2452.5" y="1971.6401">+get_current_frame(): uint32_t</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="162" x="2452.5" y="1984.4448">+get_frame_timer(): Timer&amp;</text><!--MD5=[7db7eca177120b3e55d3054c9b0b4bd4]
+class PhysicsSystem--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="168.0156" id="PhysicsSystem" style="stroke: #383838; stroke-width: 1.5;" width="313" x="3217.5" y="1518"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="91" x="3328.5" y="1534.1387">PhysicsSystem</text><line style="stroke: #383838; stroke-width: 1.5;" x1="3218.5" x2="3529.5" y1="1541.9688" y2="1541.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="94" x="3223.5" y="1556.1792">-world_: b2World</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="213" x="3223.5" y="1568.9839">-transform_observer_: entt::observer</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="142" x="3223.5" y="1581.7886">-registry_: entt::registry*</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="90" x="3223.5" y="1594.5933">-game_: Game*</text><line style="stroke: #383838; stroke-width: 1.5;" x1="3218.5" x2="3529.5" y1="1601.1875" y2="1601.1875"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="225" x="3223.5" y="1615.3979">+register_system(ctx: entt::meta_ctx&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="183" x="3223.5" y="1628.2026">+PhysicsSystem(game: Game*)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="112" x="3223.5" y="1641.0073">+~PhysicsSystem()</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="201" x="3223.5" y="1653.812">+on_fixed_update(delta_time: float)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="301" x="3223.5" y="1666.6167">-on_box_collider_created(entt::registry&amp;, entt::entity)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="286" x="3223.5" y="1679.4214">-on_rigidbody_created(entt::registry&amp;, entt::entity)</text><!--MD5=[836008fc8beb770838c1626d2353a5d8]
+class RendererSystem--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="91.1875" id="RendererSystem" style="stroke: #383838; stroke-width: 1.5;" width="237" x="2665.5" y="59"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="103" x="2732.5" y="75.1387">RendererSystem</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2666.5" x2="2901.5" y1="82.9688" y2="82.9688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="142" x="2671.5" y="97.1792">-registry_: entt::registry*</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2666.5" x2="2901.5" y1="103.7734" y2="103.7734"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="225" x="2671.5" y="117.9839">+register_system(ctx: entt::meta_ctx&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="192" x="2671.5" y="130.7886">+RendererSystem(game: Game*)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="75" x="2671.5" y="143.5933">+on_render()</text><!--MD5=[37f1e656e1b627058f29c98ce31872bb]
+class SpriteAnimationSystem--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="91.1875" id="SpriteAnimationSystem" style="stroke: #383838; stroke-width: 1.5;" width="325" x="2157.5" y="1556.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="144" x="2248" y="1572.6387">SpriteAnimationSystem</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2158.5" x2="2481.5" y1="1580.4688" y2="1580.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="136" x="2163.5" y="1594.6792">-registry: entt::registry*</text><line style="stroke: #383838; stroke-width: 1.5;" x1="2158.5" x2="2481.5" y1="1601.2734" y2="1601.2734"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="225" x="2163.5" y="1615.4839">+register_system(ctx: entt::meta_ctx&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="313" x="2163.5" y="1628.2886">+SpriteAnimationSystem(game: missileengine.Game*)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="168" x="2163.5" y="1641.0933">+on_update(delta_time: float)</text><!--MD5=[380c3738cf0dd5a135b948a1ccccd385]
+class AudioSystem--><rect fill="#F8F8F8" filter="url(#f1ir1lg6khav7)" height="91.1875" id="AudioSystem" style="stroke: #383838; stroke-width: 1.5;" width="266" x="1818" y="1556.5"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="80" x="1911" y="1572.6387">AudioSystem</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1819" x2="2083" y1="1580.4688" y2="1580.4688"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="136" x="1824" y="1594.6792">-registry: entt::registry*</text><line style="stroke: #383838; stroke-width: 1.5;" x1="1819" x2="2083" y1="1601.2734" y2="1601.2734"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="225" x="1824" y="1615.4839">+register_system(ctx: entt::meta_ctx&amp;)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="254" x="1824" y="1628.2886">+AudioSystem(game: missileengine.Game*)</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="168" x="1824" y="1641.0933">+on_update(delta_time: float)</text><!--MD5=[d8ad0f436af4f4f351eba3419a7b3edb]
+link AssetManager to TextureLoader--><path d="M1324.5,1667.04 C1324.5,1667.04 1324.5,1843.34 1324.5,1843.34 " fill="none" id="AssetManager-&gt;TextureLoader" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="1324.5,1848.34,1328.5,1839.34,1324.5,1843.34,1320.5,1839.34,1324.5,1848.34" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[8a482e8915a21eeb559f76bf734e154d]
+link AssetManager to MusicLoader--><path d="M1231.29,1655 C1083.43,1655 914.25,1655 914.25,1655 C914.25,1655 914.25,1843.46 914.25,1843.46 " fill="none" id="AssetManager-&gt;MusicLoader" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="914.25,1848.46,918.25,1839.46,914.25,1843.46,910.25,1839.46,914.25,1848.46" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[54d6bef2074bd5ba017c8891855ee84d]
+link AssetManager to Texture--><path d="M1549.5,1667.09 C1549.5,1805.81 1549.5,2118 1549.5,2118 C1549.5,2118 1710.57,2118 1710.57,2118 " fill="none" id="AssetManager-&gt;Texture" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1715.57,2118,1706.57,2114,1710.57,2118,1706.57,2122,1715.57,2118" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[5c3626f931ac27da1e017f0c970f77cb]
+link AssetManager to Music--><path d="M1231.26,1661 C1126.02,1661 1022,1661 1022,1661 C1022,1661 1022,2129.19 1022,2129.19 " fill="none" id="AssetManager-&gt;Music" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1022,2134.19,1026,2125.19,1022,2129.19,1018,2125.19,1022,2134.19" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[a90fdeb321314f7c3da3529f2b62ccfc]
+link AssetManager to missileengine.Game--><path d="M1497,1667.04 C1497,1667.04 1497,1841.78 1497,1841.78 " fill="none" id="AssetManager-&gt;missileengine.Game" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1497,1854.78,1501,1848.78,1497,1842.78,1493,1848.78,1497,1854.78" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[84f5656f18a0ce307b67237abc9db619]
+reverse link GameDescriptor to PathFolder--><path d="M2344,855.09 C2344,855.09 2344,1138.44 2344,1138.44 " fill="none" id="GameDescriptor&lt;-PathFolder" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="2344,842.09,2340,848.09,2344,854.09,2348,848.09,2344,842.09" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[d49a55d8b07ce78cc6082af1275896bb]
+reverse link Game to InputManager--><path d="M1943.33,557.17 C1943.33,557.17 1943.33,668 1943.33,668 C1943.33,668 1279.26,668 855.14,668 " fill="none" id="Game&lt;-InputManager" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="1943.33,544.17,1939.33,550.17,1943.33,556.17,1947.33,550.17,1943.33,544.17" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[1c19bf8c75d5f17eca97282690dfa6d3]
+reverse link InputManager to ActionData--><path d="M728.25,1015.08 C728.25,1015.08 728.25,1138.39 728.25,1138.39 " fill="none" id="InputManager&lt;-ActionData" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="728.25,1002.08,724.25,1008.08,728.25,1014.08,732.25,1008.08,728.25,1002.08" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[08ccf0af6e3b82772abd6c30a6b0ea9b]
+reverse link InputManager to AxisData--><path d="M311,1015.08 C311,1015.08 311,1138.39 311,1138.39 " fill="none" id="InputManager&lt;-AxisData" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="311,1002.08,307,1008.08,311,1014.08,315,1008.08,311,1002.08" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[ed25daaa85fb830e3e08fa2143369bf1]
+link InputManager to EKey--><path d="M164.92,870 C127.77,870 103.12,870 103.12,870 C103.12,870 103.12,1642 103.12,1642 C103.12,1642 551.17,1642 551.17,1642 C551.17,1642 551.17,1843.27 551.17,1843.27 " fill="none" id="InputManager-&gt;EKey" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="551.17,1848.27,555.17,1839.27,551.17,1843.27,547.17,1839.27,551.17,1848.27" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[e48b5bac22ba5c2b3e54d742e1c81527]
+link InputManager to EMouseButton--><path d="M164.83,803 C122.47,803 93.75,803 93.75,803 C93.75,803 93.75,1648 93.75,1648 C93.75,1648 439.83,1648 439.83,1648 C439.83,1648 439.83,1843.07 439.83,1843.07 " fill="none" id="InputManager-&gt;EMouseButton" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="439.83,1848.07,443.83,1839.07,439.83,1843.07,435.83,1839.07,439.83,1848.07" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[cd942be0414b31fffc4f186dd546906d]
+link InputManager to EGamepadButton--><path d="M164.93,671 C102.63,671 57,671 57,671 C57,671 57,2187 57,2187 C57,2187 129.93,2187 129.93,2187 " fill="none" id="InputManager-&gt;EGamepadButton" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="134.93,2187,125.93,2183,129.93,2187,125.93,2191,134.93,2187" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[4ea9f12393c7c34221d0b1c4b33a7a2a]
+link InputManager to EGamepadAxis--><path d="M164.93,737 C117.34,737 84.38,737 84.38,737 C84.38,737 84.38,1843.27 84.38,1843.27 " fill="none" id="InputManager-&gt;EGamepadAxis" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="84.38,1848.27,88.38,1839.27,84.38,1843.27,80.38,1839.27,84.38,1848.27" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[f240efe77fbf57abace53a6be874dd46]
+link InputManager to EActionState--><path d="M855.05,938 C1062.64,938 1287,938 1287,938 C1287,938 1287,1139.71 1287,1139.71 " fill="none" id="InputManager-&gt;EActionState" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1287,1144.71,1291,1135.71,1287,1139.71,1283,1135.71,1287,1144.71" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[2112581c3d34a16db606b3f92c6e5808]
+link InputManager to Axis--><path d="M198.5,1002.04 C198.5,1002.04 198.5,1355.39 198.5,1355.39 " fill="none" id="InputManager-&gt;Axis" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="198.5,1360.39,202.5,1351.39,198.5,1355.39,194.5,1351.39,198.5,1360.39" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[721d7a9874fb0f73c2e2812e4728a2ef]
+link InputManager to AxisButton--><path d="M552.83,1002.05 C552.83,1002.05 552.83,1563.98 552.83,1563.98 " fill="none" id="InputManager-&gt;AxisButton" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="552.83,1568.98,556.83,1559.98,552.83,1563.98,548.83,1559.98,552.83,1568.98" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[a25ed394c2d534a778041b5abe629326]
+link InputManager to GamepadAxisData--><path d="M164.85,936 C143.57,936 130.5,936 130.5,936 C130.5,936 130.5,1563.97 130.5,1563.97 " fill="none" id="InputManager-&gt;GamepadAxisData" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="130.5,1568.97,134.5,1559.97,130.5,1563.97,126.5,1559.97,130.5,1568.97" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[5645629fdb0e8b8f4ca945eb1743aae3]
+link InputManager to GamepadButtonData--><path d="M504.17,1002.09 C504.17,1191.9 504.17,1449 504.17,1449 C504.17,1449 286,1449 286,1449 C286,1449 286,1836.93 286,1836.93 " fill="none" id="InputManager-&gt;GamepadButtonData" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="286,1841.93,290,1832.93,286,1836.93,282,1832.93,286,1841.93" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[c15a12326a12dbd1c9bb49ca4f8b95a0]
+reverse link AxisData to Axis--><path d="M311,1217.65 C311,1217.65 311,1360.18 311,1360.18 " fill="none" id="AxisData&lt;-Axis" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="311,1204.65,307,1210.65,311,1216.65,315,1210.65,311,1204.65" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[e78d90276093436342246cda966d62b8]
+reverse link Axis to AxisButton--><path d="M389,1451.54 C389,1451.54 389,1568.77 389,1568.77 " fill="none" id="Axis&lt;-AxisButton" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="389,1438.54,385,1444.54,389,1450.54,393,1444.54,389,1438.54" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[38356d8e0290191b9a5bd6402d3e09fa]
+reverse link Axis to GamepadAxisData--><path d="M199,1451.54 C199,1451.54 199,1568.77 199,1568.77 " fill="none" id="Axis&lt;-GamepadAxisData" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="199,1438.54,195,1444.54,199,1450.54,203,1444.54,199,1438.54" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[9e1e1628f4b4d0297b82dad1b13a59ac]
+reverse link AxisButton to GamepadButtonData--><path d="M347.25,1648.2 C347.25,1648.2 347.25,1841.6 347.25,1841.6 " fill="none" id="AxisButton&lt;-GamepadButtonData" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="347.25,1635.2,343.25,1641.2,347.25,1647.2,351.25,1641.2,347.25,1635.2" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[7d5be7dc0e1206fd27356df5127d4808]
+reverse link AxisButton to EKey--><path d="M562.83,1648.2 C562.83,1648.2 562.83,1848.16 562.83,1848.16 " fill="none" id="AxisButton&lt;-EKey" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="562.83,1635.2,558.83,1641.2,562.83,1647.2,566.83,1641.2,562.83,1635.2" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[5e53248437a2f3b62091ccf5bd05a6fb]
+reverse link AxisButton to EMouseButton--><path d="M472.17,1648.2 C472.17,1648.2 472.17,1848.16 472.17,1848.16 " fill="none" id="AxisButton&lt;-EMouseButton" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="472.17,1635.2,468.17,1641.2,472.17,1647.2,476.17,1641.2,472.17,1635.2" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[dcfaac05d1a6fe6920aa87b2f757609e]
+reverse link GamepadButtonData to EGamepadButton--><path d="M229.5,1921.04 C229.5,1921.04 229.5,2159.64 229.5,2159.64 " fill="none" id="GamepadButtonData&lt;-EGamepadButton" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="229.5,1908.04,225.5,1914.04,229.5,1920.04,233.5,1914.04,229.5,1908.04" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[15c1eec829846dc81b0aa191e0e95f9b]
+reverse link GamepadAxisData to EGamepadAxis--><path d="M142.75,1648.2 C142.75,1648.2 142.75,1848.16 142.75,1848.16 " fill="none" id="GamepadAxisData&lt;-EGamepadAxis" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="142.75,1635.2,138.75,1641.2,142.75,1647.2,146.75,1641.2,142.75,1635.2" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[aade1b9402627b0c9e350974f49bbd47]
+reverse link Scene to BaseSystem--><path d="M2095.25,1294.09 C2095.25,1294.09 2095.25,1351 2095.25,1351 C2095.25,1351 2099.39,1351 2106.12,1351 " fill="none" id="Scene&lt;-BaseSystem" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="2095.25,1281.09,2091.25,1287.09,2095.25,1293.09,2099.25,1287.09,2095.25,1281.09" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[2d8cb2ef03e159f733c8fa41789c108f]
+reverse link Scene to missileengine.Game--><path d="M1777.25,1294.25 C1777.25,1294.25 1777.25,1673 1777.25,1673 C1777.25,1673 1511,1673 1511,1673 C1511,1673 1511,1803.8 1511,1854.89 " fill="none" id="Scene&lt;-missileengine.Game" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1777.25,1281.25,1773.25,1287.25,1777.25,1293.25,1781.25,1287.25,1777.25,1281.25" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[a3038a43bd389a3ab7d6b0526f422fef]
+reverse link SceneManager to SceneDescriptor--><path d="M1688.83,887.15 C1688.83,887.15 1688.83,1172 1688.83,1172 C1688.83,1172 1678.76,1172 1664.16,1172 " fill="none" id="SceneManager&lt;-SceneDescriptor" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="1688.83,874.15,1684.83,880.15,1688.83,886.15,1692.83,880.15,1688.83,874.15" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[a0c95b1c1c433f83a74d2eba1066c82c]
+reverse link SceneManager to Scene--><path d="M1847.75,887.05 C1847.75,887.05 1847.75,1061.86 1847.75,1061.86 " fill="none" id="SceneManager&lt;-Scene" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="1847.75,874.05,1843.75,880.05,1847.75,886.05,1851.75,880.05,1847.75,874.05" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[5cc9d02503de2c877a7f7f1045599136]
+link SceneManager to missileengine.Game--><path d="M1712.67,874.32 C1712.67,1081.71 1712.67,1670 1712.67,1670 C1712.67,1670 1504,1670 1504,1670 C1504,1670 1504,1849.97 1504,1849.97 " fill="none" id="SceneManager-&gt;missileengine.Game" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1504,1854.97,1508,1845.97,1504,1849.97,1500,1845.97,1504,1854.97" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[530251ab122b37fff6afa1b8d2a6ef86]
+link TextureLoader to Texture--><path d="M1231,1901.86 C1231,1966.61 1231,2126 1231,2126 C1231,2126 1710.95,2126 1710.95,2126 " fill="none" id="TextureLoader-&gt;Texture" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1715.95,2126,1706.95,2122,1710.95,2126,1706.95,2130,1715.95,2126" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[d4f3b7a893110abab1ed6ed7492dff5b]
+link TimerBuilder to Timer--><path d="M3670.73,1927 C3490.56,1927 3255.25,1927 3255.25,1927 C3255.25,1927 3255.25,2058.97 3255.25,2058.97 " fill="none" id="TimerBuilder-&gt;Timer" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="3255.25,2063.97,3259.25,2054.97,3255.25,2058.97,3251.25,2054.97,3255.25,2063.97" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[1fb0191b681e681abb4dff4e37a17123]
+link MusicLoader to Music--><path d="M828,1901.56 C828,1901.56 828,2129.44 828,2129.44 " fill="none" id="MusicLoader-&gt;Music" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="828,2134.44,832,2125.44,828,2129.44,824,2125.44,828,2134.44" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[885f611f2f097946645e19b52ca10617]
+reverse link SpriteComponent to Texture--><path d="M2282,1927.2 C2282,1927.2 2282,2187 2282,2187 C2282,2187 2133.78,2187 2014.07,2187 " fill="none" id="SpriteComponent&lt;-Texture" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2282,1914.2,2278,1920.2,2282,1926.2,2286,1920.2,2282,1914.2" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[53322f2ff715c3131b92b50156a1f1d3]
+reverse link AudioComponent to Music--><path d="M1641.5,1921.09 C1641.5,1921.09 1641.5,2187 1641.5,2187 C1641.5,2187 1276.14,2187 1035.12,2187 " fill="none" id="AudioComponent&lt;-Music" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1641.5,1908.09,1637.5,1914.09,1641.5,1920.09,1645.5,1914.09,1641.5,1908.09" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[82126a21567d8696cd7ff8e0e6260975]
+reverse link SpriteAnimation to Texture--><path d="M2433.1,1953 C2433.1,1953 1937,1953 1937,1953 C1937,1953 1937,2040.82 1937,2108.75 " fill="none" id="SpriteAnimation&lt;-Texture" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2446.1,1953,2440.1,1949,2434.1,1953,2440.1,1957,2446.1,1953" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[ddae23f9b5a73a01368b6aabbe176a41]
+reverse link SpriteAnimation to Timer--><path d="M2796.7,1985 C2796.7,1985 3101.25,1985 3101.25,1985 C3101.25,1985 3101.25,2021.7 3101.25,2063.77 " fill="none" id="SpriteAnimation&lt;-Timer" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="2783.7,1985,2789.7,1989,2795.7,1985,2789.7,1981,2783.7,1985" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[6290849309770d9f7f027641f9404894]
+reverse link BaseSystem to PhysicsSystem--><path d="M2265.5,1478.11 C2265.5,1478.11 2265.5,1528 2265.5,1528 C2265.5,1528 2911.56,1528 3217.24,1528 " fill="none" id="BaseSystem&lt;-PhysicsSystem" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="none" points="2258.5,1478.11,2265.5,1458.11,2272.5,1478.11,2258.5,1478.11" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[9024a453337a94a16db92f03696ed602]
+reverse link PhysicsSystem to Game--><path d="M3374,1504.97 C3374,1504.97 3374,484 3374,484 C3374,484 2703.58,484 2352.65,484 " fill="none" id="PhysicsSystem&lt;-Game" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="3374,1517.97,3378,1511.97,3374,1505.97,3370,1511.97,3374,1517.97" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[b5bc9c560bebe4e4464b0c755cbb849e]
+link PhysicsSystem to BoxCollider2dComponent--><path d="M3217.43,1684 C3111.12,1684 2989.75,1684 2989.75,1684 C2989.75,1684 2989.75,1766.95 2989.75,1766.95 " fill="none" id="PhysicsSystem-&gt;BoxCollider2dComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2989.75,1771.95,2993.75,1762.95,2989.75,1766.95,2985.75,1762.95,2989.75,1771.95" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[97c3855012ec12f6baa96d1244ca8648]
+link PhysicsSystem to Rigidbody2dComponent--><path d="M3452.25,1686.08 C3452.25,1719.88 3452.25,1751 3452.25,1751 C3452.25,1751 4733.34,1751 4733.34,1751 " fill="none" id="PhysicsSystem-&gt;Rigidbody2dComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="4738.34,1751,4729.34,1747,4733.34,1751,4729.34,1755,4738.34,1751" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[fd98da0ff299986650c0b3121ea16e0e]
+link PhysicsSystem to TransformComponent--><path d="M3530.57,1574 C3975.43,1574 5215,1574 5215,1574 C5215,1574 5215,1824.28 5215,1824.28 " fill="none" id="PhysicsSystem-&gt;TransformComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="5215,1829.28,5219,1820.28,5215,1824.28,5211,1820.28,5215,1829.28" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[b3a159c0983bccc77ea10417278f4bbd]
+link PhysicsSystem to Camer2dComponent--><path d="M3530.69,1630 C3840.78,1630 4503,1630 4503,1630 C4503,1630 4503,1779.47 4503,1779.47 " fill="none" id="PhysicsSystem-&gt;Camer2dComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="4503,1784.47,4507,1775.47,4503,1779.47,4499,1775.47,4503,1784.47" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[bb5c2f1a69d9087aec66d88e92ce0b52]
+link PhysicsSystem to CircleCollider2dComponent--><path d="M3374,1686 C3374,1734.11 3374,1785 3374,1785 C3374,1785 4104.97,1785 4104.97,1785 " fill="none" id="PhysicsSystem-&gt;CircleCollider2dComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="4109.97,1785,4100.97,1781,4104.97,1785,4100.97,1789,4109.97,1785" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[2879a97a131efbf8906256700f305285]
+link PhysicsSystem to Collision2dComponent--><path d="M3295.75,1686.14 C3295.75,1686.14 3295.75,1843.3 3295.75,1843.3 " fill="none" id="PhysicsSystem-&gt;Collision2dComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="3295.75,1848.3,3299.75,1839.3,3295.75,1843.3,3291.75,1839.3,3295.75,1848.3" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[cff7ed98a8fe1aef1fd367a892dc5e98]
+link PhysicsSystem to DisabledComponent--><path d="M3217.5,1681 C2880.35,1681 2115.7,1681 2115.7,1681 C2115.7,1681 2115.7,1843.43 2115.7,1843.43 " fill="none" id="PhysicsSystem-&gt;DisabledComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2115.7,1848.43,2119.7,1839.43,2115.7,1843.43,2111.7,1839.43,2115.7,1848.43" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[ff441623c25fbd7841c2704ca624f765]
+reverse link BaseSystem to RendererSystem--><path d="M2339.72,1400 C2339.72,1400 2678.17,1400 2678.17,1400 C2678.17,1400 2678.17,380.26 2678.17,150.23 " fill="none" id="BaseSystem&lt;-RendererSystem" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="none" points="2339.72,1407,2319.72,1400,2339.72,1393,2339.72,1407" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[597c054fbd72b3a13844ac26b06a05f2]
+reverse link RendererSystem to Game--><path d="M2671.83,163.44 C2671.83,163.44 2671.83,271 2671.83,271 C2671.83,271 2500.15,271 2352.61,271 " fill="none" id="RendererSystem&lt;-Game" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2671.83,150.44,2667.83,156.44,2671.83,162.44,2675.83,156.44,2671.83,150.44" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[d43745f6d1cfc49df5cbf2b4c6ce5285]
+link RendererSystem to SpriteComponent--><path d="M2690.83,150.15 C2690.83,406.75 2690.83,1658 2690.83,1658 C2690.83,1658 2347.62,1658 2347.62,1658 C2347.62,1658 2347.62,1830.95 2347.62,1830.95 " fill="none" id="RendererSystem-&gt;SpriteComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2347.62,1835.95,2351.62,1826.95,2347.62,1830.95,2343.62,1826.95,2347.62,1835.95" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[f80479171fab02c8803653be054c8f43]
+link RendererSystem to TransformComponent--><path d="M2902.86,82 C3401.78,82 5301,82 5301,82 C5301,82 5301,1824.33 5301,1824.33 " fill="none" id="RendererSystem-&gt;TransformComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="5301,1829.33,5305,1820.33,5301,1824.33,5297,1820.33,5301,1829.33" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[c2e2cdd84f352d01411db57675472b8b]
+link RendererSystem to Camer2dComponent--><path d="M2902.65,105 C3306.53,105 4603,105 4603,105 C4603,105 4603,1779.49 4603,1779.49 " fill="none" id="RendererSystem-&gt;Camer2dComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="4603,1784.49,4607,1775.49,4603,1779.49,4599,1775.49,4603,1784.49" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[bd8e556719a07e2b03ecf6053af53a9f]
+link RendererSystem to BoxCollider2dComponent--><path d="M2877.17,150.04 C2877.17,150.04 2877.17,1766.72 2877.17,1766.72 " fill="none" id="RendererSystem-&gt;BoxCollider2dComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2877.17,1771.72,2881.17,1762.72,2877.17,1766.72,2873.17,1762.72,2877.17,1771.72" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[16c4acd02ea4a57b4ecbb59ba7b4ce97]
+link RendererSystem to Rigidbody2dComponent--><path d="M2889.83,150.37 C2889.83,416.93 2889.83,1755 2889.83,1755 C2889.83,1755 4733.41,1755 4733.41,1755 " fill="none" id="RendererSystem-&gt;Rigidbody2dComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="4738.41,1755,4729.41,1751,4733.41,1755,4729.41,1759,4738.41,1755" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[b2d946abfbd9e2225f2ec578b36a0f53]
+link RendererSystem to CircleCollider2dComponent--><path d="M2902.76,128 C3249.98,128 4239,128 4239,128 C4239,128 4239,1766.92 4239,1766.92 " fill="none" id="RendererSystem-&gt;CircleCollider2dComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="4239,1771.92,4243,1762.92,4239,1766.92,4235,1762.92,4239,1771.92" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[20426b6a344e3bff4c2b34f824d28df9]
+link RendererSystem to LineRendererComponent--><path d="M2784,150.11 C2784,150.11 2784,326.24 2784,326.24 " fill="none" id="RendererSystem-&gt;LineRendererComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2784,331.24,2788,322.24,2784,326.24,2780,322.24,2784,331.24" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[03cd3db6b076536ed4d369934bcdc508]
+link RendererSystem to SpriteAnimation--><path d="M2697.17,150.04 C2697.17,150.04 2697.17,1753.75 2697.17,1753.75 " fill="none" id="RendererSystem-&gt;SpriteAnimation" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2697.17,1758.75,2701.17,1749.75,2697.17,1753.75,2693.17,1749.75,2697.17,1758.75" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[1d017b5b5fdc80083610e6b020bfa5de]
+link RendererSystem to DisabledComponent--><path d="M2684.5,150.14 C2684.5,389.39 2684.5,1488 2684.5,1488 C2684.5,1488 2111.1,1488 2111.1,1488 C2111.1,1488 2111.1,1843.4 2111.1,1843.4 " fill="none" id="RendererSystem-&gt;DisabledComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2111.1,1848.4,2115.1,1839.4,2111.1,1843.4,2107.1,1839.4,2111.1,1848.4" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[b29b82e12b573f694b458ae8beedf23a]
+reverse link BaseSystem to SpriteAnimationSystem--><path d="M2211.5,1478.07 C2211.5,1478.07 2211.5,1556.42 2211.5,1556.42 " fill="none" id="BaseSystem&lt;-SpriteAnimationSystem" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="none" points="2204.5,1478.07,2211.5,1458.07,2218.5,1478.07,2204.5,1478.07" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[dd38c999be213954ccb91d6f356e5460]
+reverse link SpriteAnimationSystem to missileengine.Game--><path d="M2220.88,1660.53 C2220.88,1660.53 2220.88,1678 2220.88,1678 C2220.88,1678 1525,1678 1525,1678 C1525,1678 1525,1804.33 1525,1854.66 " fill="none" id="SpriteAnimationSystem&lt;-missileengine.Game" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2220.88,1647.53,2216.88,1653.53,2220.88,1659.53,2224.88,1653.53,2220.88,1647.53" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[1d011cc01b3a8e186b6803ef1e8b1cb3]
+link SpriteAnimationSystem to SpriteAnimation--><path d="M2464.5,1647.69 C2464.5,1647.69 2464.5,1753.76 2464.5,1753.76 " fill="none" id="SpriteAnimationSystem-&gt;SpriteAnimation" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2464.5,1758.76,2468.5,1749.76,2464.5,1753.76,2460.5,1749.76,2464.5,1758.76" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[9adc8262a3afd74eb1077217963f8725]
+link SpriteAnimationSystem to SpriteComponent--><path d="M2284.25,1647.69 C2284.25,1647.69 2284.25,1830.81 2284.25,1830.81 " fill="none" id="SpriteAnimationSystem-&gt;SpriteComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2284.25,1835.81,2288.25,1826.81,2284.25,1830.81,2280.25,1826.81,2284.25,1835.81" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[724ece2a5ab806b7be4e016ea8dbb791]
+link SpriteAnimationSystem to DisabledComponent--><path d="M2157.47,1618 C2131.73,1618 2113.4,1618 2113.4,1618 C2113.4,1618 2113.4,1843.46 2113.4,1843.46 " fill="none" id="SpriteAnimationSystem-&gt;DisabledComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2113.4,1848.46,2117.4,1839.46,2113.4,1843.46,2109.4,1839.46,2113.4,1848.46" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[e25c503fef20e5f76bd45674bd05c684]
+reverse link BaseSystem to AudioSystem--><path d="M2108.8,1478.05 C2108.8,1478.05 2108.8,1587 2108.8,1587 C2108.8,1587 2098.94,1587 2084.14,1587 " fill="none" id="BaseSystem&lt;-AudioSystem" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="none" points="2101.8,1478.05,2108.8,1458.05,2115.8,1478.05,2101.8,1478.05" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[83d2aa631794cfabce54c42dd52f198a]
+reverse link AudioSystem to missileengine.Game--><path d="M1820.33,1660.6 C1820.33,1660.6 1820.33,1676 1820.33,1676 C1820.33,1676 1518,1676 1518,1676 C1518,1676 1518,1804.23 1518,1854.82 " fill="none" id="AudioSystem&lt;-missileengine.Game" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1820.33,1647.6,1816.33,1653.6,1820.33,1659.6,1824.33,1653.6,1820.33,1647.6" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[2694fa2bb30cd480ae585fc251244a4d]
+link AudioSystem to AudioComponent--><path d="M1822.67,1647.69 C1822.67,1647.69 1822.67,1836.65 1822.67,1836.65 " fill="none" id="AudioSystem-&gt;AudioComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1822.67,1841.65,1826.67,1832.65,1822.67,1836.65,1818.67,1832.65,1822.67,1841.65" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[e48e2c50e295798f0b6cc24d10d84d2c]
+link AudioSystem to DisabledComponent--><path d="M1972,1647.69 C1972,1647.69 1972,1843.23 1972,1843.23 " fill="none" id="AudioSystem-&gt;DisabledComponent" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="1972,1848.23,1976,1839.23,1972,1843.23,1968,1839.23,1972,1848.23" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[9deda41b6904c9500811fda5ef971bcb]
+reverse link Game to SceneManager--><path d="M1951.17,557.14 C1951.17,557.14 1951.17,731.92 1951.17,731.92 " fill="none" id="Game&lt;-SceneManager" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="1951.17,544.14,1947.17,550.14,1951.17,556.14,1955.17,550.14,1951.17,544.14" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[0ea012e5938f8d6910c67c394ed19692]
+reverse link Game to AssetManager--><path d="M1922.26,377 C1922.26,377 1389.25,377 1389.25,377 C1389.25,377 1389.25,1282.72 1389.25,1536.57 " fill="none" id="Game&lt;-AssetManager" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="1935.26,377,1929.26,373,1923.26,377,1929.26,381,1935.26,377" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[edd666e1c12617822380055cb9687027]
+reverse link Game to BaseSystem--><path d="M2164.5,557.13 C2164.5,557.13 2164.5,1340.78 2164.5,1340.78 " fill="none" id="Game&lt;-BaseSystem" style="stroke: #383838; stroke-width: 1.0;"/><polygon fill="#383838" points="2164.5,544.13,2160.5,550.13,2164.5,556.13,2168.5,550.13,2164.5,544.13" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[857059ce483f5789c015e513b82f1907]
+link Game to GameDescriptor--><path d="M2285,544.14 C2285,544.14 2285,758.58 2285,758.58 " fill="none" id="Game-&gt;GameDescriptor" style="stroke: #383838; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;"/><polygon fill="#383838" points="2285,763.58,2289,754.58,2285,758.58,2281,754.58,2285,763.58" style="stroke: #383838; stroke-width: 1.0;"/><!--MD5=[9fec7b10902187c025bffb106345af29]
+@startuml missiletoad
+skinparam classAttributeIconSize 0
+skinparam monochrome true
+skinparam backgroundColor FloralWhite
+hide circle
+skinparam linetype ortho
+
+
+package missileengine {
+    class AssetManager {
+        -texture_cache_: entt::resource_cache<Texture, TextureLoader>
+        -music_cache_: entt::resource_cache<Music, MusicLoader>
+
+        +AssetManager(game: Game*)
+        +~AssetManager()
+        +push_asset_folder(path: std::string_view, mount_point: std::string_view)
+        +pop_asset_folder(mount_point: std::string_view)
+        +load<T>(path: std::string_view): entt::resource<T>
+    }
+
+    AssetManager - -> TextureLoader
+    AssetManager - -> MusicLoader
+    AssetManager ..> Texture
+    AssetManager ..> Music
+    AssetManager ..* missileengine.Game
+
+
+    abstract class BaseSystem {
+        +~BaseSystem()
+        +on_start()
+        +on_update(delta_time: float)
+        +on_fixed_update(delta_time: float)
+        +on_destroy()
+        +on_render()
+    }
+
+    class PathFolder {
+        +path: std::string
+        +mount_point: std::string
+    }
+
+    class GameDescriptor {
+        +name: std::string
+        +default_scene: std::string
+        +assets_folders: std::vector<PathFolder>
+    }
+
+    GameDescriptor *- - PathFolder
+
+    enum EKey {
+        ...
+    }
+
+    enum EGamepadButton {
+        ...
+    }
+
+    enum EGamepadAxis {
+        ...
+    }
+
+    enum EActionState {
+        ...
+    }
+
+    enum EMouseButton {
+        ...
+    }
+
+    class GamepadAxisData {
+        +axis: EGamepadAxis
+        +gamepad: int
+    }
+
+    class GamepadButtonData {
+        +button: EGamepadButton
+        +gamepad: int
+    }
+
+    class AxisButton {
+        +positive: std::variant<std::monostate, EKey, EMouseButton, GamepadButtonData>
+        +negative: std::variant<std::monostate, EKey, EMouseButton, GamepadButtonData>
+    }
+
+    class Axis {
+        +axis: std::variant<AxisButton, GamepadAxisData>
+        +dead_zone: float
+        +weight: float
+    }
+
+    class ActionData {
+        +actions: std::vector<std::variant<std::monostate, EKey, EMouseButton, GamepadButtonData>>
+        +state: EActionState
+    }
+
+    class AxisData {
+        +axes: std::vector<Axis>
+        +value: float
+    }
+
+    class InputManager {
+        -actions_: std::unordered_map<std::string, ActionData>
+        -axes_: std::unordered_map<std::string, AxisData>
+
+        +update()
+        +is_key_down(key: EKey): bool
+        +is_key_up(key: EKey): bool
+        +is_key_pressed(key: EKey): bool
+        +is_key_released(key: EKey): bool
+        +is_mouse_button_down(button: EMouseButton): bool
+        +is_mouse_button_up(button: EMouseButton): bool
+        +is_mouse_button_pressed(button: EMouseButton): bool
+        +is_mouse_button_released(button: EMouseButton): bool
+        +is_gamepad_button_down(gamepad: int, button: EGamepadButton): bool
+        +is_gamepad_button_up(gamepad: int, button: EGamepadButton): bool
+        +is_gamepad_button_pressed(gamepad: int, button: EGamepadButton): bool
+        +is_gamepad_button_released(gamepad: int, button: EGamepadButton): bool
+        +get_gamepad_axis(gamepad: int, axis: EGamepadAxis): float
+        +add_action(name: std::string_view, action: std::variant<std::monostate, EKey, EMouseButton, GamepadButtonData>)
+        +clear_action(name: std::string_view)
+        +get_action(name: std::string_view): EActionState
+        +is_action_down(name: std::string_view): bool
+        +is_action_up(name: std::string_view): bool
+        +is_action_pressed(name: std::string_view): bool
+        +is_action_released(name: std::string_view): bool
+        +add_axis(name: std::string_view, axis: Axis)
+        +clear_axis(name: std::string_view)
+        +get_axis(name: std::string_view): float
+        -process_actions()
+        -process_axis()
+    }
+
+    Game *- - InputManager
+    InputManager *- - ActionData
+    InputManager *- - AxisData
+    InputManager ..> EKey
+    InputManager ..> EMouseButton
+    InputManager ..> EGamepadButton
+    InputManager ..> EGamepadAxis
+    InputManager ..> EActionState
+    InputManager ..> Axis
+    InputManager ..> AxisButton
+    InputManager ..> GamepadAxisData
+    InputManager ..> GamepadButtonData
+
+    AxisData *- - Axis
+    Axis *- - AxisButton
+    Axis *- - GamepadAxisData
+    AxisButton *- - GamepadButtonData
+    AxisButton *- - EKey
+    AxisButton *- - EMouseButton
+
+    GamepadButtonData *- - EGamepadButton
+    GamepadAxisData *- - EGamepadAxis
+
+    class SceneDescriptor {
+        +name: std::string
+        +systems: std::vector<std::string>
+    }
+
+    class Scene {
+        -scene_entities_: entt::registry
+        -systems_: std::vector<std::unique_ptr<BaseSystem>>
+        -game_: missileengine.Game*
+
+        +Scene()
+        +~Scene()
+        +add_system<T, Args...>(args: Args...)
+        +add_system(system: std::unique_ptr<BaseSystem>)
+        +on_start()
+        +on_destroy()
+        +update(delta_time: float)
+        +fixed_update(delta_time: float)
+        +render()
+        +get_registry(): entt::registry&
+        +get_systems(): std::vector<std::unique_ptr<BaseSystem>>&
+    }
+
+    Scene *- - BaseSystem
+    Scene *.. missileengine.Game
+
+    class SceneManager {
+        -active_scene_: std::unique_ptr<Scene>
+        -next_scene_: std::optional<std::string>
+        -game_: missileengine.Game*
+
+        +SceneManager(game: missileengine.Game*)
+        +~SceneManager()
+        +load_scene(name: std::string_view)
+        +add_descriptor(descriptor: SceneDescriptor&&)
+        +get_current_scene(): Scene&
+    }
+
+    SceneManager *- - SceneDescriptor
+    SceneManager *- - Scene
+    SceneManager ..> missileengine.Game
+
+    class Texture {
+        -texture_: raylib::Texture
+
+        +Texture()
+        +Texture(texture: raylib::Texture&&)
+        +Texture(texture: Texture&&)
+        +~Texture()
+        +operator=(texture: Texture&&): Texture&
+        +operator=(texture: raylib::Texture&&): Texture&
+        +get_texture(): raylib::Texture&
+        +set_texture(texture: raylib::Texture&&)
+    }
+
+    class TextureLoader {
+        +operator()(name: std::string_view): std::shared_ptr<Texture>
+    }
+
+    TextureLoader ..> Texture
+
+    class Timer {
+        -callback_: std::function<void()>
+        -interval_: std::chrono::duration<float>
+        -time_left_: std::chrono::duration<float>
+        -is_running_: bool
+        -loop_: bool
+        +Timer(callback: std::function<void()>)
+        +tick(delta_time: std::chrono::duration<float>)
+        +start()
+        +stop()
+        +reset()
+        +set_interval(interval: std::chrono::duration<float>)
+        +set_loop(loop: bool)
+        +is_running(): bool
+        +is_looping(): bool
+        +get_interval(): std::chrono::duration<float>
+        +get_time_left(): std::chrono::duration<float>
+    }
+
+    class TimerBuilder {
+        -callback_: std::function<void()>
+        -interval_: std::chrono::duration<float>
+        -loop_: bool
+
+        -TimerBuilder(builder: TimerBuilder&&)
+        +TimerBuilder()
+        +with_callback(callback: std::function<void()>): TimerBuilder&
+        +with_interval(interval: std::chrono::duration<float>): TimerBuilder&
+        +with_loop(loop: bool): TimerBuilder&
+        +build(): Timer
+    }
+
+    TimerBuilder ..> Timer
+
+    class Music {
+        -music_: raylib::Music
+        -buffer_: std::unique_ptr<uint8_t[]>
+        +Music(music: raylib::Music&&, buffer: std::unique_ptr<uint8_t[]>&&)
+        +get_music(): raylib::Music&
+        +set_music(music: raylib::Music&&)
+    }
+
+    class MusicLoader {
+        +operator()(name: std::string_view): std::shared_ptr<Music>
+    }
+
+    MusicLoader ..> Music
+
+
+    class BoxCollider2dComponent {
+        -fixture: b2Fixture*
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +BoxCollider2dComponent()
+        +set_sensor(sensor: bool)
+        +set_friction(friction: float)
+        +set_restitution(restitution: float)
+        +set_density(density: float)
+        +set_size(size: glm::vec2)
+        +get_fixture(): b2Fixture*
+        +is_sensor(): bool
+        +get_friction(): float
+        +get_restitution(): float
+        +get_density(): float
+    }
+
+    class CircleCollider2dComponent {
+        -fixture: b2Fixture*
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +CircleCollider2dComponent()
+        +set_sensor(sensor: bool)
+        +set_friction(friction: float)
+        +set_restitution(restitution: float)
+        +set_density(density: float)
+        +set_radius(radius: float)
+        +get_fixture(): b2Fixture*
+        +is_sensor(): bool
+        +get_friction(): float
+        +get_restitution(): float
+        +get_density(): float
+    }
+
+    class Collision2dComponent {
+        +callback: std::function<void(entt::entity self, entt::entity other, ECollisionStatus status)>
+    }
+
+    class DisabledComponent {
+        {static} +register_component(ctx: entt::meta_ctx&)
+    }
+
+    class LineRendererComponent {
+        +start: glm::vec2
+        +end: glm::vec2
+        +color: glm::u8vec4
+        +width: float
+    }
+
+    class Camer2dComponent {
+        -camera_: raylib::Camera2D
+
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +set_zoom(zoom: float)
+        +set_target(target: glm::vec2)
+        +set_offset(offset: glm::vec2)
+        +get_zoom(): float
+        +get_target(): glm::vec2
+        +get_offset(): glm::vec2
+        +get_screen_to_world(point: glm::vec2): glm::vec2
+        +get_world_to_screen(point: glm::vec2): glm::vec2
+        +get_camera(): raylib::Camera2D&
+    }
+
+    class Rigidbody2dComponent {
+        -body_: b2Body*
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +set_static(is_static: bool)
+        +set_linear_velocity(velocity: glm::vec2)
+        +apply_force(force: glm::vec2, point: glm::vec2)
+        +apply_force_to_center(force: glm::vec2)
+        +apply_torque(torque: float)
+        +apply_linear_impulse(impulse: glm::vec2, point: glm::vec2)
+        +apply_linear_impulse_to_center(impulse: glm::vec2)
+        +set_is_bullet(is_bullet: bool)
+        +get_body(): b2Body*
+        +is_static(): bool
+        +is_dynamic(): bool
+        +get_linear_velocity(): glm::vec2
+        +get_angular_velocity(): float
+        +is_bullet(): bool
+        +is_fixed_rotation(): bool
+    }
+
+    class SpriteComponent {
+       {static} +register_component(ctx: entt::meta_ctx&)
+        +texture: entt::resource<Texture>
+        +z_index: uint32_t
+    }
+
+    SpriteComponent *.. Texture
+
+    class TransformComponent {
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +position: glm::vec2
+        +scale: glm::vec2
+        +rotation: float
+    }
+
+    class AudioComponent {
+        +sound_: entt::resource<Music>
+        {static} +register_component(ctx: entt::meta_ctx&)
+    }
+
+    AudioComponent *.. Music
+
+    class SpriteAnimation {
+        -frame_timer: Timer
+        -current_frame: uint32_t
+        -is_playing: bool
+        -loop: bool
+
+        {static} +register_component(ctx: entt::meta_ctx&)
+        +texture_frames: std::vector<entt::resource<Texture>>
+        +play()
+        +stop()
+        +update()
+        +reset()
+        +set_loop(loop: bool)
+        +is_playing(): bool
+        +get_current_frame(): uint32_t
+        +get_frame_timer(): Timer&
+    }
+
+    SpriteAnimation *.. Texture
+    SpriteAnimation *- - Timer
+
+
+
+    class PhysicsSystem extends BaseSystem {
+        -world_: b2World
+        -transform_observer_: entt::observer
+        -registry_: entt::registry*
+        -game_: Game*
+        {static} +register_system(ctx: entt::meta_ctx&)
+        +PhysicsSystem(game: Game*)
+        +~PhysicsSystem()
+        +on_fixed_update(delta_time: float)
+        -on_box_collider_created(entt::registry&, entt::entity)
+        -on_rigidbody_created(entt::registry&, entt::entity)
+    }
+
+    PhysicsSystem *.. Game
+    PhysicsSystem ..> BoxCollider2dComponent
+    PhysicsSystem ..> Rigidbody2dComponent
+    PhysicsSystem ..> TransformComponent
+    PhysicsSystem ..> Camer2dComponent
+    PhysicsSystem ..> CircleCollider2dComponent
+    PhysicsSystem ..> Collision2dComponent
+    PhysicsSystem ..> DisabledComponent
+
+    class RendererSystem extends BaseSystem {
+        -registry_: entt::registry*
+
+        {static} +register_system(ctx: entt::meta_ctx&)
+        +RendererSystem(game: Game*)
+        +on_render()
+    }
+
+    RendererSystem *.. Game
+    RendererSystem ..> SpriteComponent
+    RendererSystem ..> TransformComponent
+    RendererSystem ..> Camer2dComponent
+    RendererSystem ..> BoxCollider2dComponent
+    RendererSystem ..> Rigidbody2dComponent
+    RendererSystem ..> CircleCollider2dComponent
+    RendererSystem ..> LineRendererComponent
+    RendererSystem ..> SpriteAnimation
+    RendererSystem ..> DisabledComponent
+
+    class SpriteAnimationSystem extends BaseSystem {
+        -registry: entt::registry*
+
+        {static} +register_system(ctx: entt::meta_ctx&)
+        +SpriteAnimationSystem(game: missileengine.Game*)
+        +on_update(delta_time: float)
+    }
+
+    SpriteAnimationSystem *.. missileengine.Game
+    SpriteAnimationSystem ..> SpriteAnimation
+    SpriteAnimationSystem ..> SpriteComponent
+    SpriteAnimationSystem ..> DisabledComponent
+
+    class AudioSystem extends BaseSystem {
+        -registry: entt::registry*
+
+        {static} +register_system(ctx: entt::meta_ctx&)
+        +AudioSystem(game: missileengine.Game*)
+        +on_update(delta_time: float)
+    }
+
+    AudioSystem *.. missileengine.Game
+    AudioSystem ..> AudioComponent
+    AudioSystem ..> DisabledComponent
+
+    class Game {
+        -systems_meta_ctx_: entt::meta_ctx
+        -components_meta_ctx_: entt::meta_ctx
+        -systems_: std::vector<std::unique_ptr<missileengine.BaseSystem>>
+        -asset_manager_: missileengine.AssetManager
+        -scene_manager_: std::unique_ptr<missileengine.SceneManager>
+        -input_manager_: std::unique_ptr<missileengine.InputManager>
+        -nuklear_context_: std::unique_ptr<nk_context, void(*)(nk_context*)>
+        -window: raylib::Window
+        -debug_mode_: bool
+
+        +Game(argc: int, argv: char**)
+        +~Game()
+        +{static} get_instance(): Game&
+        +run(): int
+        +close()
+        +asset_manager(): missileengine.AssetManager&
+        +scene_manager(): missileengine.SceneManager&
+        +input_manager(): missileengine.InputManager&
+        +systems_meta_ctx(): entt::meta_ctx&
+        +components_meta_ctx(): entt::meta_ctx&
+        -update(delta_time: float)
+        -fixed_update(delta_time: float)
+        -render()
+        -debug_gui()
+    }
+
+    Game *- - SceneManager
+    Game *- - AssetManager
+    Game *- - BaseSystem
+    Game ..> GameDescriptor
+}
+
+@enduml
+
+PlantUML version 1.2020.02(Sun Mar 01 04:22:07 CST 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 11.0.20.1+1-post-Ubuntu-0ubuntu122.04
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

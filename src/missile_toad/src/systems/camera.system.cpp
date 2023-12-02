@@ -45,7 +45,7 @@ void missiletoad::CameraSystem::on_start()
                 camera.set_is_main_camera(true);
             },
             glm::vec2{static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())})
-        .with_component<missileengine::TransformComponent>()
+        .with_component<missileengine::TransformComponent>(glm::vec2{10.0F, 10.0F})
         .with_component<missiletoad::BetterCameraComponent>(0.0F, 0.0F, better_camera_follow_speed)
         .build();
 }
@@ -58,7 +58,7 @@ bool hit_raycast(const glm::vec2 &start, const glm::vec2 &end, float distance)
         if (auto *tag =
                 missileengine::Game::get_instance().active_scene().try_get_component<missileengine::TagComponent>(
                     result.entity);
-            tag != nullptr && tag->tag == "Room")
+            tag != nullptr && (tag->tag == "Room" || tag->tag == "DoorLayer"))
         {
             return true;
         }

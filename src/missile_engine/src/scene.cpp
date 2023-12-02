@@ -86,48 +86,55 @@ void missileengine::Scene::on_post_init()
     this->systems_.emplace_back(std::make_unique<RendererSystem>(game_));
 }
 
-void missileengine::Scene::segment_loader(ldtk::Project &project, std::string_view ldtk_world, int level_id,
-                                          const std::vector<LayerInfo> &layers)
+void missileengine::Scene::segment_loader(const ldtk::World &ldtk_world, std::string_view level_name,
+                                          const std::vector<LayerInfo>             &layers,
+                                          std::function<void(const ldtk::Entity &)> on_entity_create)
 {
-    // get a world
-    const auto &world = project.getWorld(ldtk_world.data());
-
     // get a level
-    const auto &level = world.getLevel(level_id);
+    const auto &level = ldtk_world.getLevel(level_name.data());
+
+    const auto level_position = glm::vec2{level.position.x, level.position.y} / missileengine::PIXELS_PER_UNIT;
 
     // get a layer
-
     for (const auto &[layer_name, z_index, has_collider] : layers)
     {
         const auto &current_layer = level.getLayer(layer_name);
-        auto        texture       = game_->asset_manager().load<missileengine::Texture>("/assets/sprites/map/" +
-                                                                           current_layer.getTileset().path);
-
-        // iterate on the tiles of the layer
-        for (const auto &tile : current_layer.allTiles())
+        if (current_layer.hasTileset())
         {
-            const auto &position     = tile.getGridPosition();
-            const auto &texture_rect = tile.getTextureRect();
+            auto texture = game_->asset_manager().load<missileengine::Texture>("/assets/levels/" +
+                                                                               current_layer.getTileset().path);
 
-            auto &registry = game_->active_scene().get_registry();
-            auto  entity   = registry.create();
-
-            auto &transform    = registry.emplace<missileengine::TransformComponent>(entity);
-            transform.position = {position.x, position.y};
-            transform.rotation = 0.0f;
-            transform.scale    = {1.0f, 1.0f};
-
-            auto &sprite    = registry.emplace<missileengine::SpriteComponent>(entity, texture);
-            sprite.texture  = texture;
-            sprite.scissors = {texture_rect.x, texture_rect.y, texture_rect.width, texture_rect.height};
-            sprite.z_index  = z_index;
-
-            if (has_collider)
+            // iterate on the tiles of the layer
+            for (const auto &tile : current_layer.allTiles())
             {
-                registry.emplace<missileengine::BoxCollider2dComponent>(entity);
-            }
+                const auto &position     = tile.getGridPosition();
+                const auto &texture_rect = tile.getTextureRect();
 
-            registry.emplace<missileengine::TagComponent>(entity, layer_name);
+                auto &registry = game_->active_scene().get_registry();
+                auto  entity   = registry.create();
+
+                auto &transform    = registry.emplace<missileengine::TransformComponent>(entity);
+                transform.position = glm::vec2{position.x, position.y} + level_position;
+                transform.rotation = 0.0f;
+                transform.scale    = {1.0f, 1.0f};
+
+                auto &sprite    = registry.emplace<missileengine::SpriteComponent>(entity, texture);
+                sprite.texture  = texture;
+                sprite.scissors = {texture_rect.x, texture_rect.y, texture_rect.width, texture_rect.height};
+                sprite.z_index  = z_index;
+
+                if (has_collider)
+                {
+                    registry.emplace<missileengine::BoxCollider2dComponent>(entity);
+                }
+
+                registry.emplace<missileengine::TagComponent>(entity, layer_name);
+            }
+        }
+
+        for (const auto &entity : current_layer.allEntities())
+        {
+            on_entity_create(entity);
         }
     }
 }

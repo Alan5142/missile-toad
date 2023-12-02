@@ -18,6 +18,11 @@ namespace missileengine
     class PhysicsSystem : public missileengine::BaseSystem
     {
         /**
+         * @brief Save in a list rigid bodies to be destroyed
+         */
+        std::vector<b2Body *> rigidbodies_to_destroy_;
+
+        /**
          * @brief The physics world.
          */
         b2World *world_;
@@ -85,5 +90,7 @@ namespace missileengine
          * @param entity entity
          */
         void on_entity_enabled(entt::registry &registry, entt::entity entity);
+
+        void on_rigidbody_destroyed(entt::registry &registry, entt::entity entity);
     };
 } // namespace missileengine
