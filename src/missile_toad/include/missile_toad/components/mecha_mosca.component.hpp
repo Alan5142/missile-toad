@@ -27,6 +27,6 @@ namespace missiletoad
 
         float enemy_speed = 1.2F;
 
-        boost::sml::sm<MechaMoscaState> state_machine;
+        boost::sml::sm<MechaMoscaState> state_machine{};
     };
 } // namespace missiletoad

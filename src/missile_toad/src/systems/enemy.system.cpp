@@ -140,7 +140,7 @@ void missiletoad::EnemySystem::on_update(float delta_time)
 
             if (!sprite_animation.is_playing())
             {
-                createBullet(transform.position, player_transform.position, 5.0F, 10.0F, true);
+                create_bullet(transform.position, player_transform.position, 5.0F, 10.0F, true);
                 enemy.state_machine.process_event(missiletoad::ExperimentoMIdleEvent());
                 animation.get_state().play(true);
                 animation.force_transition_to("idle");

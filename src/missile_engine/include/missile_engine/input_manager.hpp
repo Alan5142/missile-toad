@@ -243,19 +243,19 @@ namespace missileengine
     {
         struct ActionData
         {
-            std::vector<Action> actions;
+            std::vector<Action> actions{};
             EActionState        state;
         };
 
         struct AxisData
         {
-            std::vector<Axis> axes;
-            float             value;
+            std::vector<Axis> axes{};
+            float             value{};
         };
 
     private:
-        std::unordered_map<std::string, ActionData> actions_;
-        std::unordered_map<std::string, AxisData>   axes_;
+        std::unordered_map<std::string, ActionData> actions_{};
+        std::unordered_map<std::string, AxisData>   axes_{};
 
     public:
         void update();
@@ -482,7 +482,7 @@ namespace missileengine
          * @brief Gets the mouse position.
          * @return The mouse position.
          */
-        glm::vec2 get_mouse_position() const;
+        [[nodiscard]] glm::vec2 get_mouse_position() const;
 
     private:
         void process_actions();

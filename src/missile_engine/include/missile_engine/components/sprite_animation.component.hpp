@@ -135,7 +135,7 @@ namespace missileengine
          */
         void set_timer(Timer timer);
 
-        bool is_playing() const
+        [[nodiscard]] bool is_playing() const
         {
             return is_playing_;
         }
@@ -240,7 +240,7 @@ namespace missileengine
          * Gets the hash of the name of the state.
          * @return
          */
-        std::size_t name_hash() const
+        [[nodiscard]] std::size_t name_hash() const
         {
             return name_hash_;
         }
@@ -314,12 +314,12 @@ namespace missileengine
          */
         void update(std::chrono::duration<float> delta_time) noexcept;
 
-        bool is_finished() const
+        [[nodiscard]] bool is_finished() const
         {
             return this->get_state().get_frame() == this->get_state().get_frame_count() - 1;
         }
 
-        bool is_playing() const
+        [[nodiscard]] bool is_playing() const
         {
             return this->get_state().is_playing();
         }

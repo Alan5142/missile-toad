@@ -7,8 +7,8 @@
 
 #include <glm/glm.hpp>
 
-void missiletoad::createBullet(glm::vec2 start_position, glm::vec2 objetive_position, float velocity, float damage,
-                               bool is_enemy_bullet)
+void missiletoad::create_bullet(glm::vec2 start_position, glm::vec2 objetive_position, float velocity, float damage,
+                                bool is_enemy_bullet)
 {
     auto &game  = missileengine::Game::get_instance();
     auto &scene = game.active_scene();

@@ -41,13 +41,13 @@ void on_create_entity(const ldtk::Entity &entity)
 {
     if (entity.getName() == "MechaMosca")
     {
-        missiletoad::createMechaMosquito(static_cast<float>(entity.getPosition().x) / missileengine::PIXELS_PER_UNIT,
-                                         static_cast<float>(entity.getPosition().y) / missileengine::PIXELS_PER_UNIT);
+        missiletoad::create_mecha_mosquito(static_cast<float>(entity.getPosition().x) / missileengine::PIXELS_PER_UNIT,
+                                           static_cast<float>(entity.getPosition().y) / missileengine::PIXELS_PER_UNIT);
     }
     else if (entity.getName() == "Experimento_M")
     {
-        missiletoad::createExpM(static_cast<float>(entity.getPosition().x) / missileengine::PIXELS_PER_UNIT,
-                                static_cast<float>(entity.getPosition().y) / missileengine::PIXELS_PER_UNIT);
+        missiletoad::create_exp_m(static_cast<float>(entity.getPosition().x) / missileengine::PIXELS_PER_UNIT,
+                                  static_cast<float>(entity.getPosition().y) / missileengine::PIXELS_PER_UNIT);
     }
 }
 

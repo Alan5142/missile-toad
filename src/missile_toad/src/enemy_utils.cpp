@@ -8,7 +8,7 @@
 #include "missile_toad/components/king_mecha_rat.component.hpp"
 #include "missile_toad/components/mecha_mosca.component.hpp"
 
-void missiletoad::createExpM(float pos_x, float pos_y)
+void missiletoad::create_exp_m(float pos_x, float pos_y)
 {
     auto          &game                   = missileengine::Game::get_instance();
     auto          &scene                  = game.active_scene();
@@ -105,7 +105,7 @@ void missiletoad::createExpM(float pos_x, float pos_y)
         .build();
 }
 
-void missiletoad::createMechaMosquito(float pos_x, float pos_y)
+void missiletoad::create_mecha_mosquito(float pos_x, float pos_y)
 {
     auto          &game                   = missileengine::Game::get_instance();
     auto          &scene                  = game.active_scene();

@@ -114,7 +114,7 @@ void missiletoad::TurretSystem::on_fixed_update(float delta_time)
 
                 if (is_shooting == missileengine::EActionState::PRESSED)
                 {
-                    createBullet(turret_transform.position, mouse_position, 5.0F, 10.0F, false);
+                    create_bullet(turret_transform.position, mouse_position, 5.0F, 10.0F, false);
                 }
             }
         }
