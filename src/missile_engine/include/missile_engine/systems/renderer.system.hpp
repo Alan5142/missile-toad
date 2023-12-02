@@ -47,11 +47,34 @@ namespace missileengine
         void on_render() override;
 
     private:
+        /**
+         * Draw a sprite.
+         * @param entity The entity to draw.
+         */
         void draw_sprite(entt::entity entity);
 
+        /**
+         * Draw a line.
+         * @param entity The entity to draw.
+         */
         void draw_line(entt::entity entity);
+
+        /**
+         * Draw a box collider (Debug)
+         * @param entity The entity to draw.
+         */
         void debug_draw_physics(entt::entity entity);
+
+        /**
+         *Draw a circle collider. (Debug)
+         * @param entity The entity to draw.
+         */
         void debug_draw_circle_physics(entt::entity entity);
+
+        /**
+         * Draws a movie.
+         * @param entity The entity to draw.
+         */
         void draw_movie(entt::entity entity);
     };
 } // namespace missileengine

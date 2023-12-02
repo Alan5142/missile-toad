@@ -28,36 +28,93 @@ namespace missileengine
         Movie(Movie &&other) noexcept;
         Movie &operator=(Movie &&other) noexcept;
 
+        /**
+         * @brief Plays the movie.
+         */
         void play();
 
+        /**
+         * @brief Pauses the movie.
+         */
         void pause();
 
+        /**
+         * @brief Seek to a specific time.
+         * @param time The time to seek to.
+         */
         void seek(std::chrono::milliseconds time);
 
+        /**
+         * @brief Updates the movie, decoding the video and audio to the buffers.
+         * @param delta_time The delta time.
+         */
         void update(float delta_time);
 
+        /**
+         * @brief Gets the texture of the movie.
+         * @return The texture of the movie.
+         */
         [[nodiscard]] const raylib::Texture &get_texture() const noexcept
         {
             return texture_;
         }
 
+        /**
+         * @brief Gets the size of the movie.
+         * @return The size of the movie.
+         */
         [[nodiscard]] glm::u32vec2 get_size() const noexcept
         {
             return size_;
         }
 
     private:
+        /**
+         * Handles the decoding of the video.
+         * @param self pointer to the movie
+         * @param frame the frame
+         * @param user_data user data (pointer to this)
+         */
         static void decode_video(plm_t *self, plm_frame_t *frame, void *user_data);
+
+        /**
+         * Handles the decoding of the audio.
+         * @param self pointer to the movie
+         * @param samples the samples
+         * @param user_data user data (pointer to this)
+         */
         static void decode_audio(plm_t *self, plm_samples_t *samples, void *user_data);
 
+        /**
+         * @brief The memory buffer of the video.
+         */
         std::unique_ptr<uint8_t[]> video_buffer_;
-        raylib::Texture            texture_;
-        raylib::Image              image_;
+
+        /**
+         * @brief the texture of the movie, this is what gets rendered.
+         */
+        raylib::Texture texture_;
+
+        /**
+         * @brief A CPU bound image, used to decode the video. This is copied to the texture.
+         */
+        raylib::Image image_;
         // raylib::AudioStream        audio_stream_;
 
-        plm_t       *movie_;
+        /**
+         * @brief decoder for the movie.
+         */
+        plm_t *movie_;
+
+        /**
+         * @brief The size of the movie.
+         */
         glm::u32vec2 size_;
-        bool         playing_{false};
+
+        /**
+         * @brief Wether the movie is playing or not.
+         */
+        bool playing_{false};
 
         friend class MoviePlayerSystem;
     };

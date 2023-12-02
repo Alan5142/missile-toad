@@ -11,12 +11,30 @@ namespace missileengine
 {
     class Game;
 
+    /**
+     * @brief The physics system.
+     * This system handles all physics in the game.
+     */
     class PhysicsSystem : public missileengine::BaseSystem
     {
-        b2World              *world_;
-        entt::observer        transform_observer_;
-        entt::registry       *registry_;
+        /**
+         * @brief Save in a list rigid bodies to be destroyed
+         */
         std::vector<b2Body *> rigidbodies_to_destroy_;
+
+        /**
+         * @brief The physics world.
+         */
+        b2World *world_;
+        /**
+         * @brief The observer for the transform component.
+         */
+        entt::observer transform_observer_;
+
+        /**
+         * @brief The registry.
+         */
+        entt::registry *registry_;
 
     public:
         PhysicsSystem(Game *game);
@@ -30,6 +48,11 @@ namespace missileengine
 
         static void register_system(entt::meta_ctx &ctx);
 
+        /**
+         * @brief Updates the physics system. It uses a fixed timestep, that's why
+         * it uses fixed_update instead of update.
+         * @param delta_time The delta time.
+         */
         void on_fixed_update(float delta_time) override;
 
     private:

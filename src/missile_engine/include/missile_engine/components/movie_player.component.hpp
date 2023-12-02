@@ -19,6 +19,10 @@ namespace missileengine
 
         static void register_component(entt::meta_ctx &ctx);
 
+        /**
+         * @brief Construct a new Movie Player Component object
+         * @param movie A reference to the movie resource to play.
+         */
         explicit MoviePlayerComponent(entt::resource<Movie> movie) : movie(std::move(movie))
         {
         }

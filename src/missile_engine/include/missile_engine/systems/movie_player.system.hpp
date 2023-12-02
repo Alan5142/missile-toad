@@ -11,6 +11,10 @@ namespace missileengine
 
 namespace missileengine
 {
+    /**
+     * @brief A system that plays movies.
+     * This decompresses the movie frames and renders them to a texture.
+     */
     class MoviePlayerSystem final : public missileengine::BaseSystem
     {
     public:
@@ -25,6 +29,9 @@ namespace missileengine
 
         static void register_system(entt::meta_ctx &ctx);
 
+        /**
+         * @brief Updates the system, allowing it to play movies.
+         */
         void on_update(float delta_time) override;
     };
 } // namespace missileengine
