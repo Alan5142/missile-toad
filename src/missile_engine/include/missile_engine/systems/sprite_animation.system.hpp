@@ -9,8 +9,14 @@ namespace missileengine
 {
     class Game;
 
+    /**
+     * @brief The sprite animation system.
+     */
     class SpriteAnimationSystem : public missileengine::BaseSystem
     {
+        /**
+         * @brief a pointer to the registry.
+         */
         entt::registry *registry_;
 
     public:
@@ -24,6 +30,10 @@ namespace missileengine
         ~SpriteAnimationSystem() override;
         static void register_system(entt::meta_ctx &ctx);
 
+        /**
+         * @brief Updates the system, allowing it to play sounds.
+         * @param delta_time
+         */
         void on_update(float delta_time) override;
 
     private:

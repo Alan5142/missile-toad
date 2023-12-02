@@ -7,6 +7,11 @@
 
 namespace missileengine
 {
+    /**
+     * @brief A component that can be attached to an entity to play audio.
+     * In essence, this is a wrapper around the Music class.
+     * @see missileengine::Music
+     */
     class AudioComponent
     {
     public:

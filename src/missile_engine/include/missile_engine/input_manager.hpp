@@ -485,8 +485,14 @@ namespace missileengine
         [[nodiscard]] glm::vec2 get_mouse_position() const;
 
     private:
+        /**
+         * @brief Processes the actions.
+         */
         void process_actions();
 
+        /**
+         * @brief Processes the axes.
+         */
         void process_axis();
     };
 } // namespace missileengine

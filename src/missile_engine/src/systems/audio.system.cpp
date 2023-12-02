@@ -24,7 +24,9 @@ void missileengine::AudioSystem::register_system(entt::meta_ctx &ctx)
 
 void missileengine::AudioSystem::on_update(float delta_time)
 {
-    auto view = registry_->view<AudioComponent>(entt::exclude<missileengine::DisabledComponent>);
+    lear
+
+        auto view = registry_->view<AudioComponent>(entt::exclude<missileengine::DisabledComponent>);
 
     unused(delta_time);
 

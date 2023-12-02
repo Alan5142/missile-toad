@@ -7,6 +7,9 @@
 namespace missileengine
 {
 
+    /**
+     * @brief Loads a ldtk file.
+     */
     class LdtkLoader final
     {
     public:
