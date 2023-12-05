@@ -12,5 +12,5 @@ DESC TODO
 See [building](docs/Building.md) for more information.
 
 ## Video
+https://github.com/Alan5142/missile-toad/assets/13205973/92e8f541-104c-4e2c-9fb8-99fd4eec9e18
 
-![Video](docs/video.mp4)
