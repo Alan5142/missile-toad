@@ -10,3 +10,7 @@ DESC TODO
 ## Build
 
 See [building](docs/Building.md) for more information.
+
+## Video
+
+![Video](docs/video.mp4)
